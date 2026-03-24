@@ -8,8 +8,6 @@ dependencies:
     - field.field.node.pedidos.field_camara_de_frio
     - field.field.node.pedidos.field_carga_adr
     - field.field.node.pedidos.field_certificacao_alfandega
-    - field.field.node.pedidos.field_certificados
-    - field.field.node.pedidos.field_controlo_acesso
     - field.field.node.pedidos.field_equipamento_carga_descarga
     - field.field.node.pedidos.field_espaco
     - field.field.node.pedidos.field_estado
@@ -82,21 +80,6 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 26
-    region: content
-  field_certificados:
-    type: string
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 25
-    region: content
-  field_controlo_acesso:
-    type: list_default
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    weight: 21
     region: content
   field_equipamento_carga_descarga:
     type: entity_reference_revisions_entity_view

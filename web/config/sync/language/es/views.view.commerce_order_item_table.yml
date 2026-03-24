@@ -1,4 +1,5 @@
 label: 'Elementos de la orden'
+description: 'Mostrar un conjunto de artículos en una tabla.'
 display:
   default:
     display_title: Máster
@@ -23,6 +24,9 @@ display:
         total_price__number:
           label: 'Precio total'
           separator: ', '
+      empty:
+        area_text_custom:
+          content: 'Todavía no hay elementos de pedido.'
       arguments:
         order_item_id:
           exception:

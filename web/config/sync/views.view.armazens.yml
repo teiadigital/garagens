@@ -8,6 +8,7 @@ dependencies:
     - field.storage.user.field_nome
     - image.style.large
     - node.type.armazem
+    - user.role.authenticated
     - user.role.gestor
   content:
     - 'block_content:block_suggestions_warehouses_pag:929b9446-8ddc-442c-9c31-d24c140ee586'
@@ -304,7 +305,9 @@ display:
                   sort_options: false
                   rewrite:
                     filter_rewrite_values: "- Qualquer -|País\r\n- Any -|Country"
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
               field_localidade_administrative_area:
                 plugin_id: default
@@ -312,18 +315,22 @@ display:
                   sort_options: false
                   rewrite:
                     filter_rewrite_values: "- Qualquer -|Distrito\r\n- Any -|Administrative Area"
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
               field_localidade_locality:
                 plugin_id: default
                 advanced:
                   placeholder_text: Cidade
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
       access:
-        type: perm
+        type: role
         options:
-          perm: 'access content'
+          role:
+            authenticated: authenticated
       cache:
         type: tag
         options: {  }
@@ -539,7 +546,7 @@ display:
         - 'languages:language_interface'
         - url
         - 'user.node_grants:view'
-        - user.permissions
+        - user.roles
       tags:
         - 'config:field.storage.node.field_fotos'
   block_armazens_homepage:
@@ -903,6 +910,9 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+      access:
+        type: none
+        options: {  }
       sorts:
         delta:
           id: delta
@@ -1095,6 +1105,7 @@ display:
         groups:
           1: AND
       defaults:
+        access: false
         group_by: false
         fields: false
         sorts: false
@@ -1110,7 +1121,6 @@ display:
         - 'languages:language_interface'
         - url
         - 'user.node_grants:view'
-        - user.permissions
       tags:
         - 'config:field.storage.node.field_fotos'
   block_armazens_perfil:
@@ -1119,6 +1129,7 @@ display:
     display_plugin: block
     position: 2
     display_options:
+      title: ' garagens'
       fields:
         title:
           id: title
@@ -1420,6 +1431,7 @@ display:
         groups:
           1: AND
       defaults:
+        title: false
         fields: false
         arguments: false
         filters: false
@@ -1436,7 +1448,7 @@ display:
           plugin_id: text
           empty: false
           content:
-            value: armazéns
+            value: garagens
             format: basic_html
           tokenize: false
       display_extenders: {  }
@@ -1448,7 +1460,7 @@ display:
         - url
         - user
         - 'user.node_grants:view'
-        - user.permissions
+        - user.roles
       tags:
         - 'config:field.storage.node.field_estado'
         - 'config:field.storage.node.field_fotos'
@@ -1831,7 +1843,7 @@ display:
         - url
         - url.query_args
         - 'user.node_grants:view'
-        - user.permissions
+        - user.roles
       tags:
         - 'config:field.storage.node.field_fotos'
   page_gestao_armazens:
@@ -3030,7 +3042,7 @@ display:
         - url
         - user
         - 'user.node_grants:view'
-        - user.permissions
+        - user.roles
       tags:
         - 'config:field.storage.node.field_estado'
         - 'config:field.storage.node.field_fotos'

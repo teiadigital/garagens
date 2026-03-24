@@ -1,0 +1,19 @@
+uuid: 3e13c4ac-6ea1-435e-8628-aa04f7a963cb
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_desc_seguros
+field_name: field_desc_seguros
+entity_type: node
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

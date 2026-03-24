@@ -1,8 +1,0 @@
-settings:
-  allowed_values:
-    -
-      label: 'Sin limitación de horario'
-    -
-      label: ' responsabilidad del cliente'
-    -
-      label: 'Cuadrante del horario de acceso'

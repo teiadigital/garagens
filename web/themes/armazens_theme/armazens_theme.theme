@@ -48,7 +48,29 @@ function armazens_theme_form_user_login_form_alter(&$form, FormStateInterface $f
 
 function armazens_theme_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
 
-   if (!empty($form['#entity_form_steps']) || preg_match('/^node_armazem_step_\d+_form$/', $form_id)) {
+  $fields = [
+    'field_certificados',
+    'field_controlo_acesso',
+    'field_espaco',
+    'field_incluir_espaco_exterior',
+    'field_licenca_de_utilizacao',
+    'field_licenca_utilizacao',
+    'field_limitacoes_de_acesso',
+    'field_limitacoes_horario_acesso',
+    'field_recursos',
+    'field_seguranca',
+    'field_seguro',
+    'field_sistema_detecao_incendios',
+  ];
+
+  foreach ($fields as $field) {
+    if (isset($form[$field]['widget'])) {
+      $form[$field]['widget']['#empty_option'] = '-- Selecionar --';
+      $form[$field]['widget']['#empty_value'] = '_none';
+    }
+  }
+
+  if (!empty($form['#entity_form_steps']) || preg_match('/^node_armazem_step_\d+_form$/', $form_id)) {
     return;
   }
 

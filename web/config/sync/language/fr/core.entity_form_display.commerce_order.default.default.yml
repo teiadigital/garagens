@@ -1,0 +1,5 @@
+content:
+  order_items:
+    settings:
+      label_singular: 'élément de commande'
+      label_plural: 'éléments de commande'

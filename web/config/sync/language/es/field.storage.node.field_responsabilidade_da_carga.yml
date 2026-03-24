@@ -1,6 +1,0 @@
-settings:
-  allowed_values:
-    -
-      label: 'Responsabilidad del cliente'
-    -
-      label: 'Asumo la responsabilidad, en las condiciones indicadas en el documento adjunto'

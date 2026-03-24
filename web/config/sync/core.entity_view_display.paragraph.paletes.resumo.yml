@@ -1,0 +1,43 @@
+uuid: 93ce582d-f2b2-4cbc-a066-5d2cdba19db7
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.resumo
+    - field.field.paragraph.paletes.field_preco_ano
+    - field.field.paragraph.paletes.field_preco_dia
+    - field.field.paragraph.paletes.field_preco_in
+    - field.field.paragraph.paletes.field_preco_mes
+    - field.field.paragraph.paletes.field_preco_out
+    - paragraphs.paragraphs_type.paletes
+id: paragraph.paletes.resumo
+targetEntityType: paragraph
+bundle: paletes
+mode: resumo
+content:
+  field_preco_in:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_preco_out:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  field_preco_ano: true
+  field_preco_dia: true
+  field_preco_mes: true

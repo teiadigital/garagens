@@ -1,0 +1,21 @@
+uuid: 697469e1-c128-44f3-8c05-f88b213d1895
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_sistema_detecao_incendios
+    - node.type.armazem
+  module:
+    - options
+id: node.armazem.field_sistema_detecao_incendios
+field_name: field_sistema_detecao_incendios
+entity_type: node
+bundle: armazem
+label: 'Sistema deteção incêndios'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

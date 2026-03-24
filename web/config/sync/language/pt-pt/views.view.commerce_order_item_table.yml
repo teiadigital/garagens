@@ -1,18 +1,19 @@
 label: 'Itens da encomenda'
+description: 'Mostra um conjunto de items de uma encomenda numa tabela.'
 display:
   default:
-    display_title: Principal
+    display_title: Master
     display_options:
       exposed_form:
         options:
-          submit_button: Aplicar
-          reset_button_label: Reiniciar
-          exposed_sorts_label: 'Ordenar por'
+          submit_button: Apply
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
           sort_asc_label: Asc
           sort_desc_label: Desc
       fields:
         title:
-          label: Título
+          label: Title
           separator: ', '
         unit_price__number:
           label: 'Preço unitário'
@@ -23,7 +24,10 @@ display:
         total_price__number:
           label: 'Preço total'
           separator: ', '
+      empty:
+        area_text_custom:
+          content: 'Não existem ainda items de encomenda.'
       arguments:
         order_item_id:
           exception:
-            title: Todos
+            title: All

@@ -4,5 +4,5 @@ status: true
 dependencies: {  }
 id: banner_basic_page
 label: 'Banner Basic page'
-revision: 0
+revision: false
 description: ''

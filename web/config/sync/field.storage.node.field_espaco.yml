@@ -12,11 +12,11 @@ type: list_string
 settings:
   allowed_values:
     -
-      value: aberto
-      label: 'Aberto/ar livre'
-    -
       value: fechado
       label: Fechado
+    -
+      value: comum
+      label: 'Comum c/marcação no piso'
   allowed_values_function: ''
 module: options
 locked: false

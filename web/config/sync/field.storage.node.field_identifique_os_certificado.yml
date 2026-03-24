@@ -1,0 +1,19 @@
+uuid: 85e16b3a-0d01-4ed8-9309-55e1a3001f88
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_identifique_os_certificado
+field_name: field_identifique_os_certificado
+entity_type: node
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

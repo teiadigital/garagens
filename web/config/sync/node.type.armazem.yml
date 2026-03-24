@@ -17,10 +17,10 @@ third_party_settings:
       bookable_type: daily
       availability: available
       payment_default_value: 0
-name: Armazém
+name: Garage
 type: armazem
-description: ''
-help: ''
+description: null
+help: null
 new_revision: false
 preview_mode: 0
 display_submitted: false

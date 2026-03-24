@@ -1,47 +1,50 @@
 label: Lojas
 display:
   default:
-    display_title: Principal
+    display_title: Master
     display_options:
       title: Lojas
       fields:
         commerce_store_bulk_form:
           action_title: 'Com seleção'
         is_default:
-          label: 'Por defeito'
+          label: Default
           separator: ', '
         name:
-          label: Nome
+          label: Name
           separator: ', '
         changed:
-          label: Atualizado
+          label: Updated
           separator: ', '
         type:
-          label: Tipo
+          label: Type
           separator: ', '
         operations:
-          label: Operações
+          label: Operations
       pager:
         options:
           tags:
-            next: 'seguinte ›'
-            previous: '‹ anterior'
-            first: '« primeira'
-            last: 'última »'
+            next: 'next ›'
+            previous: '‹ previous'
+            first: '« first'
+            last: 'last »'
           expose:
-            items_per_page_label: 'Itens por página'
-            items_per_page_options_all_label: '- Todos -'
-            offset_label: Deslocamento
+            items_per_page_label: 'Items per page'
+            items_per_page_options_all_label: '- All -'
+            offset_label: Offset
       exposed_form:
         options:
-          submit_button: Aplicar
-          reset_button_label: Reiniciar
-          exposed_sorts_label: 'Ordenar por'
+          submit_button: Apply
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
           sort_asc_label: Asc
           sort_desc_label: Desc
+      empty:
+        area_text_custom:
+          content: 'Nenhuma loja disponível'
       filters:
         type:
           expose:
-            label: Tipo
+            label: Type
   page_1:
-    display_title: Página
+    display_title: Page

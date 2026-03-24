@@ -1,0 +1,19 @@
+uuid: 3b98ebae-0eda-4ab2-86dd-80285dd4037f
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_desc_seguranca
+    - node.type.armazem
+id: node.armazem.field_desc_seguranca
+field_name: field_desc_seguranca
+entity_type: node
+bundle: armazem
+label: 'Descreva a segurança'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

@@ -1,3 +1,4 @@
+label: 'Pedidos del usuario'
 display:
   default:
     display_title: Máster
@@ -37,11 +38,16 @@ display:
           label: Estado
           separator: ', '
       title: Pedidos
+      empty:
+        area:
+          content:
+            value: 'No ha realizado ningún pedido con nosotros todavía.'
       arguments:
         uid:
           exception:
             title: Todo(s)
   order_page:
+    display_title: 'Pedidos del usuario'
     display_options:
       menu:
         title: Pedidos

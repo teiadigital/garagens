@@ -1,0 +1,57 @@
+label: Watchdog
+description: 'Mensagens de registo recentes'
+display:
+  default:
+    display_title: Default
+    display_options:
+      title: 'Mensagens de registo recentes'
+      fields:
+        nothing:
+          admin_label: Ícone
+        wid:
+          label: WID
+        severity:
+          label: Severidade
+        type:
+          label: Type
+        timestamp:
+          label: Data
+        message:
+          label: Mensagem
+          alter:
+            path: 'admin/reports/dblog/event/{{ wid }}'
+            alt: '{{ message }}'
+        name:
+          label: Utilizador
+          separator: ', '
+        link:
+          label: Operations
+      pager:
+        options:
+          tags:
+            next: ››
+            previous: ‹‹
+          expose:
+            items_per_page_label: 'Items per page'
+            items_per_page_options_all_label: '- All -'
+            offset_label: Offset
+      exposed_form:
+        options:
+          submit_button: Filter
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      empty:
+        area:
+          admin_label: 'Não há mensagens no registo.'
+          content: 'Não há mensagens no registo.'
+      filters:
+        type:
+          expose:
+            label: Type
+        severity:
+          expose:
+            label: Severidade
+  page:
+    display_title: Page

@@ -1,0 +1,16 @@
+uuid: 6de6a132-8b3b-493b-b685-1f927bc83c9d
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: nominatim
+label: Nominatim
+plugin: nominatim
+configuration:
+  throttle:
+    period: 2
+    limit: 1
+  geocoder:
+    locale: ''
+  rootUrl: 'https://nominatim.openstreetmap.org'
+  userAgent: 'storitflex-drupal/1.0 (geral@storitflex.com)'
+  referer: 'https://storitflex.com'

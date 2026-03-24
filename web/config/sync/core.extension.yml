@@ -1,6 +1,5 @@
 _core:
   default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc
-langcode: pt-pt
 module:
   address: 0
   address_portugal: 0
@@ -23,7 +22,6 @@ module:
   block_exclude_pages: 0
   breakpoint: 0
   bws: 0
-  captcha: 0
   ckeditor5: 0
   color_field: 0
   comment: 0
@@ -41,6 +39,7 @@ module:
   ctools: 0
   datetime: 0
   datetime_range: 0
+  dblog: 0
   dropzonejs: 0
   dropzonejs_eb_widget: 0
   dynamic_page_cache: 0
@@ -56,8 +55,10 @@ module:
   field_ui: 0
   file: 0
   filter: 0
-  forms_steps: 0
   fullcalendar_library: 0
+  geocoder: 0
+  geocoder_field: 0
+  geofield: 0
   geolocation: 0
   google_analytics: 0
   help: 0
@@ -74,12 +75,17 @@ module:
   jquery_ui_touch_punch: 0
   language: 0
   language_switcher_langcode: 0
+  leaflet: 0
+  leaflet_markercluster: 0
+  leaflet_more_maps: 0
+  leaflet_views: 0
   link: 0
   locale: 0
   mailchimp: 0
   mailchimp_signup: 0
   mailsystem: 0
   management_armazens: 0
+  masquerade: 0
   media: 0
   media_library: 0
   menu_link_content: 0
@@ -99,8 +105,8 @@ module:
   phone_international: 0
   postal_code_validator: 0
   profile: 0
-  recaptcha_v3: 0
   registration_role: 0
+  reroute_email: 0
   responsive_image: 0
   rest: 0
   search: 0
@@ -114,6 +120,7 @@ module:
   simple_password_policy: 0
   smtp: 0
   state_machine: 0
+  storitflex_geocode: 0
   subpathauto: 0
   svg_image: 0
   system: 0

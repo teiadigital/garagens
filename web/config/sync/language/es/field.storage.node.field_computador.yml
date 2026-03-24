@@ -1,8 +1,0 @@
-settings:
-  allowed_values:
-    -
-      label: 'No'
-    -
-      label: 'Sí, con acceso a Internet'
-    -
-      label: 'Sí, sin acceso a Internet'

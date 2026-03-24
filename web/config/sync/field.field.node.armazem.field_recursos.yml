@@ -1,0 +1,21 @@
+uuid: 2a0586b4-7fed-49f4-8f6b-0c17f4ac655e
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_recursos
+    - node.type.armazem
+  module:
+    - options
+id: node.armazem.field_recursos
+field_name: field_recursos
+entity_type: node
+bundle: armazem
+label: Recursos
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

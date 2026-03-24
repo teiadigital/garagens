@@ -4,5 +4,5 @@ status: true
 dependencies: {  }
 id: block_suggestions_warehouses_pag
 label: 'Block Suggestions warehouses page'
-revision: 0
+revision: false
 description: ''

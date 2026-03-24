@@ -3,6 +3,8 @@ langcode: pt-pt
 status: true
 dependencies:
   config:
+    - entity_browser.browser.ficheiros
+    - entity_browser.browser.images
     - filter.format.basic_html
     - filter.format.webform_default
     - media.type.document
@@ -29,6 +31,7 @@ dependencies:
     - shortcut
     - system
     - taxonomy
+    - view_unpublished
 _core:
   default_config_hash: cFrlqjtkTfvY3RGccjJkPf1SGIfJ942IrxTLWAO4mgA
 id: authenticated
@@ -68,6 +71,7 @@ permissions:
   - 'view any homepage content'
   - 'view any page content'
   - 'view any termos_e_condicoes content'
+  - 'view any unpublished armazem content'
   - 'view calendar data for any availability_daily event'
   - 'view commerce_product'
   - 'view media'

@@ -1,0 +1,115 @@
+uuid: 36a8a060-09ac-416d-bd55-e424bfb5c5f7
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.mapa_popup
+    - field.field.node.armazem.field_area
+    - field.field.node.armazem.field_area_individual
+    - field.field.node.armazem.field_availability_daily
+    - field.field.node.armazem.field_certificados
+    - field.field.node.armazem.field_controlo_acesso
+    - field.field.node.armazem.field_coordenadas
+    - field.field.node.armazem.field_desc_controlo_acesso
+    - field.field.node.armazem.field_desc_lim_horario_acesso
+    - field.field.node.armazem.field_desc_limitacoes_acesso
+    - field.field.node.armazem.field_desc_seguranca
+    - field.field.node.armazem.field_desc_seguros
+    - field.field.node.armazem.field_desc_sistema_det_incendios
+    - field.field.node.armazem.field_descreva_servicos_incluido
+    - field.field.node.armazem.field_descricao
+    - field.field.node.armazem.field_descricao_espaco_exterior
+    - field.field.node.armazem.field_espaco
+    - field.field.node.armazem.field_estado
+    - field.field.node.armazem.field_fotos
+    - field.field.node.armazem.field_geo_coordenadas
+    - field.field.node.armazem.field_identifique_os_certificado
+    - field.field.node.armazem.field_incluir_espaco_exterior
+    - field.field.node.armazem.field_licenca_de_utilizacao
+    - field.field.node.armazem.field_licenca_utilizacao
+    - field.field.node.armazem.field_limitacoes_de_acesso
+    - field.field.node.armazem.field_limitacoes_horario_acesso
+    - field.field.node.armazem.field_localidade
+    - field.field.node.armazem.field_peso_maximo_piso
+    - field.field.node.armazem.field_piso
+    - field.field.node.armazem.field_recursos
+    - field.field.node.armazem.field_seguranca
+    - field.field.node.armazem.field_seguro
+    - field.field.node.armazem.field_sistema_detecao_incendios
+    - field.field.node.armazem.field_termos_e_condicoes
+    - field.field.node.armazem.field_tipo_de_controlo
+    - field.field.node.armazem.field_titulo
+    - node.type.armazem
+  module:
+    - address
+    - entity_form_field_label
+    - media
+    - user
+id: node.armazem.mapa_popup
+targetEntityType: node
+bundle: armazem
+mode: mapa_popup
+content:
+  field_estado:
+    type: number_unformatted
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 9
+    region: content
+  field_fotos:
+    type: media_thumbnail
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings:
+      entity_form_field_label:
+        new_label: ''
+        rewrite_label: 0
+    weight: 0
+    region: content
+  field_localidade:
+    type: address_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 8
+    region: content
+hidden:
+  field_area: true
+  field_area_individual: true
+  field_availability_daily: true
+  field_certificados: true
+  field_controlo_acesso: true
+  field_coordenadas: true
+  field_desc_controlo_acesso: true
+  field_desc_lim_horario_acesso: true
+  field_desc_limitacoes_acesso: true
+  field_desc_seguranca: true
+  field_desc_seguros: true
+  field_desc_sistema_det_incendios: true
+  field_descreva_servicos_incluido: true
+  field_descricao: true
+  field_descricao_espaco_exterior: true
+  field_espaco: true
+  field_geo_coordenadas: true
+  field_identifique_os_certificado: true
+  field_incluir_espaco_exterior: true
+  field_licenca_de_utilizacao: true
+  field_licenca_utilizacao: true
+  field_limitacoes_de_acesso: true
+  field_limitacoes_horario_acesso: true
+  field_peso_maximo_piso: true
+  field_piso: true
+  field_recursos: true
+  field_seguranca: true
+  field_seguro: true
+  field_sistema_detecao_incendios: true
+  field_termos_e_condicoes: true
+  field_tipo_de_controlo: true
+  field_titulo: true
+  langcode: true
+  links: true

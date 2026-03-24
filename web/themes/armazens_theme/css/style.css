@@ -1,0 +1,7 @@
+.field--name-field-area-individual .paragraph-top {
+  display: none !important;
+}
+
+.field--name-field-area-individual thead th:last-child {
+  display: none;
+}

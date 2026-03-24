@@ -89,17 +89,8 @@ function management_armazens_form_alter(&$form, FormStateInterface $form_state, 
     \Drupal::request()->getSession()->set('temp_var_precos_validation', NULL);
   }
 
-   if (isset($form['field_espaco']['widget'])) {
-    $form['field_espaco']['widget']['#empty_option'] = t('-- Selecionar --');
-    $form['field_espaco']['widget']['#empty_value'] = '_none';
-  }
-   if (isset($form['field_carga_adr']['widget'])) {
-    $form['field_carga_adr']['widget']['#empty_option'] = t('-- Selecionar --');
-    $form['field_carga_adr']['widget']['#empty_value'] = '_none';
-  }
-  if (isset($form['field_limitacoes_carga_descarga']['widget'])) {
-    $form['field_limitacoes_carga_descarga']['widget']['#empty_option'] = t('-- Selecionar --');
-    $form['field_limitacoes_carga_descarga']['widget']['#empty_value'] = '_none';
+  if($form_id == "node_armazem_edit_form") {
+    $form['field_fotos']['widget']['#type'] = 'fieldset';
   }
 }
 
@@ -735,47 +726,47 @@ function management_armazens_validate_prices_aluguer_paletes_ameri(&$entity_form
   }
 }
 
-function management_armazens_validate_area_partilhada(&$entity_form, &$form_state) {
-  $altura_i = (float) ($form_state->getValues()['field_area_individual'][0]['inline_entity_form']['field_altura'][0]['value'] ?? 0);
-  $comp_i   = (float) ($form_state->getValues()['field_area_individual'][0]['inline_entity_form']['field_comprimento'][0]['value'] ?? 0);
-  $larg_i   = (float) ($form_state->getValues()['field_area_individual'][0]['inline_entity_form']['field_largura'][0]['value'] ?? 0);
+// function management_armazens_validate_area_partilhada(&$entity_form, &$form_state) {
+//   $altura_i = (float) ($form_state->getValues()['field_area_individual'][0]['inline_entity_form']['field_altura'][0]['value'] ?? 0);
+//   $comp_i   = (float) ($form_state->getValues()['field_area_individual'][0]['inline_entity_form']['field_comprimento'][0]['value'] ?? 0);
+//   $larg_i   = (float) ($form_state->getValues()['field_area_individual'][0]['inline_entity_form']['field_largura'][0]['value'] ?? 0);
 
-  if (($form_state->getValues()['field_permite_ser_partilhado'][0]['value'] ?? '') === 'sim') {
-    $comp = (float) ($entity_form['field_comprimento']['widget'][0]['value']['#value'] ?? 0);
-    $larg = (float) ($entity_form['field_largura']['widget'][0]['value']['#value'] ?? 0);
-    $alt  = (float) ($entity_form['field_altura']['widget'][0]['value']['#value'] ?? 0);
+//   if (($form_state->getValues()['field_permite_ser_partilhado'][0]['value'] ?? '') === 'sim') {
+//     $comp = (float) ($entity_form['field_comprimento']['widget'][0]['value']['#value'] ?? 0);
+//     $larg = (float) ($entity_form['field_largura']['widget'][0]['value']['#value'] ?? 0);
+//     $alt  = (float) ($entity_form['field_altura']['widget'][0]['value']['#value'] ?? 0);
 
-    if ($comp > $comp_i) {
-      $form_state->setError($entity_form, t('The length of the shared area cannot be greater than the length of the total area.'));
-    }
-    if ($larg > $larg_i) {
-      $form_state->setError($entity_form, t('The width of the shared area cannot be greater than the width of the total area.'));
-    }
-    if ($alt  > $altura_i) {
-      $form_state->setError($entity_form, t('The height of the shared area cannot be greater than the height of the total area.'));
-    }
-  }
-}
+//     if ($comp > $comp_i) {
+//       $form_state->setError($entity_form, t('The length of the shared area cannot be greater than the length of the total area.'));
+//     }
+//     if ($larg > $larg_i) {
+//       $form_state->setError($entity_form, t('The width of the shared area cannot be greater than the width of the total area.'));
+//     }
+//     if ($alt  > $altura_i) {
+//       $form_state->setError($entity_form, t('The height of the shared area cannot be greater than the height of the total area.'));
+//     }
+//   }
+// }
 
-function management_armazens_validate_raques(&$entity_form, &$form_state) {
-  $comp = (float) ($entity_form['field_comprimento']['widget'][0]['value']['#value'] ?? 0);
-  $larg = (float) ($entity_form['field_largura']['widget'][0]['value']['#value'] ?? 0);
-  $alt  = (float) ($entity_form['field_altura']['widget'][0]['value']['#value'] ?? 0);
+// function management_armazens_validate_raques(&$entity_form, &$form_state) {
+//   $comp = (float) ($entity_form['field_comprimento']['widget'][0]['value']['#value'] ?? 0);
+//   $larg = (float) ($entity_form['field_largura']['widget'][0]['value']['#value'] ?? 0);
+//   $alt  = (float) ($entity_form['field_altura']['widget'][0]['value']['#value'] ?? 0);
 
-  $alt_i  = (float) ($form_state->getValues()['field_area_individual'][0]['inline_entity_form']['field_altura'][0]['value'] ?? 0);
-  $comp_i = (float) ($form_state->getValues()['field_area_individual'][0]['inline_entity_form']['field_comprimento'][0]['value'] ?? 0);
-  $larg_i = (float) ($form_state->getValues()['field_area_individual'][0]['inline_entity_form']['field_largura'][0]['value'] ?? 0);
+//   $alt_i  = (float) ($form_state->getValues()['field_area_individual'][0]['inline_entity_form']['field_altura'][0]['value'] ?? 0);
+//   $comp_i = (float) ($form_state->getValues()['field_area_individual'][0]['inline_entity_form']['field_comprimento'][0]['value'] ?? 0);
+//   $larg_i = (float) ($form_state->getValues()['field_area_individual'][0]['inline_entity_form']['field_largura'][0]['value'] ?? 0);
 
-  if ($comp > $comp_i) {
-    $form_state->setError($entity_form, t('The length of the racks must not be greater than the length of the total area.'));
-  }
-  if ($larg > $larg_i) {
-    $form_state->setError($entity_form, t('The width of the racks must not be greater than the width of the total area.'));
-  }
-  if ($alt  > $alt_i) {
-    $form_state->setError($entity_form, t('The height of the racks must not be greater than the height of the total area.'));
-  }
-}
+//   if ($comp > $comp_i) {
+//     $form_state->setError($entity_form, t('The length of the racks must not be greater than the length of the total area.'));
+//   }
+//   if ($larg > $larg_i) {
+//     $form_state->setError($entity_form, t('The width of the racks must not be greater than the width of the total area.'));
+//   }
+//   if ($alt  > $alt_i) {
+//     $form_state->setError($entity_form, t('The height of the racks must not be greater than the height of the total area.'));
+//   }
+// }
 
 function management_armazens_preprocess_links(&$variables) {
   $variables['current_language'] = \Drupal::languageManager()->getCurrentLanguage()->getId();

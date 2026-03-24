@@ -1,0 +1,19 @@
+uuid: 43f6f80f-1f1b-4802-b65c-cae1b89e31dd
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_desc_seguros
+    - node.type.armazem
+id: node.armazem.field_desc_seguros
+field_name: field_desc_seguros
+entity_type: node
+bundle: armazem
+label: 'Descreva os seguros'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

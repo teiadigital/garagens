@@ -1,20 +1,26 @@
-uuid: 000bbe07-591c-49e3-98d2-d2fb94cb202e
+uuid: d46401b0-04e1-437e-a895-9a122ef5b657
 langcode: pt-pt
 status: true
 dependencies:
   module:
     - node
+    - options
 id: node.field_certificados
 field_name: field_certificados
 entity_type: node
-type: string
+type: list_string
 settings:
-  max_length: 255
-  case_sensitive: false
-  is_ascii: false
-module: core
+  allowed_values:
+    -
+      value: sim
+      label: Sim
+    -
+      value: nao
+      label: Não
+  allowed_values_function: ''
+module: options
 locked: false
-cardinality: -1
+cardinality: 1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false

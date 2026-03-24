@@ -8,8 +8,6 @@ dependencies:
     - field.field.node.pedidos.field_camara_de_frio
     - field.field.node.pedidos.field_carga_adr
     - field.field.node.pedidos.field_certificacao_alfandega
-    - field.field.node.pedidos.field_certificados
-    - field.field.node.pedidos.field_controlo_acesso
     - field.field.node.pedidos.field_equipamento_carga_descarga
     - field.field.node.pedidos.field_espaco
     - field.field.node.pedidos.field_estado
@@ -194,20 +192,6 @@ content:
   field_certificacao_alfandega:
     type: options_buttons
     weight: 7
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_certificados:
-    type: string_textfield
-    weight: 6
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  field_controlo_acesso:
-    type: options_buttons
-    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }

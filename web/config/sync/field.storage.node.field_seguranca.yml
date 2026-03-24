@@ -1,20 +1,26 @@
-uuid: 73726692-f36c-428e-9df0-157f5aa92ef8
+uuid: edcd5ac7-6498-49bd-a1ad-c69fe9caca13
 langcode: pt-pt
 status: true
 dependencies:
   module:
     - node
+    - options
 id: node.field_seguranca
 field_name: field_seguranca
 entity_type: node
-type: string
+type: list_string
 settings:
-  max_length: 255
-  case_sensitive: false
-  is_ascii: false
-module: core
+  allowed_values:
+    -
+      value: sim
+      label: Sim
+    -
+      value: nao
+      label: Não
+  allowed_values_function: ''
+module: options
 locked: false
-cardinality: -1
+cardinality: 1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false

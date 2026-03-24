@@ -11,8 +11,8 @@ settings:
   default_ajax_effect: fade
   default_ajax_speed: 500
   default_submit_button_label: Enviar
-  default_reset_button_label: Reiniciar
-  default_delete_button_label: Eliminar
+  default_reset_button_label: Reset
+  default_delete_button_label: Delete
   default_form_submit_once: false
   default_form_open_message: 'Este formulário ainda não foi aberto a submissões.'
   default_form_close_message: 'Desculpe… Este formulário está encerrado a novas submissões.'
@@ -294,6 +294,4 @@ requirements:
   clientside_validation: true
   bootstrap: true
   spam: true
-third_party_settings:
-  captcha:
-    replace_administration_mode: true
+third_party_settings: {  }

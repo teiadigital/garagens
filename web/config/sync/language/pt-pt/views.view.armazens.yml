@@ -4,7 +4,7 @@ display:
       header:
         area:
           content:
-            value: '<p>armazéns</p>'
+            value: '<p>garagens</p>'
             format: basic_html
   page_armazens:
     display_options:
@@ -12,3 +12,16 @@ display:
         options:
           views_infinite_scroll:
             button_text: 'Carregar mais'
+  default:
+    display_options:
+      title: ' garagens'
+  page_gestao_armazens:
+    display_options:
+      filters:
+        field_estado_value:
+          expose:
+            description: ''
+            min_placeholder: ''
+            max_placeholder: ''
+            placeholder: ''
+label: Garagens

@@ -1,6 +1,5 @@
 _core:
   default_config_hash: uZHsLrDp1ThO0RvupHKcPzLOyVvWexm58JTTHNDo7yc
-langcode: pt-pt
 display_extenders: {  }
 sql_signature: false
 ui:

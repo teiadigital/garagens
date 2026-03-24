@@ -1,0 +1,11 @@
+uuid: 8a9187cb-447e-4fdd-b70f-48ff56029279
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - paragraphs
+id: paragraph.resumo
+label: Resumo
+description: ''
+targetEntityType: paragraph
+cache: true

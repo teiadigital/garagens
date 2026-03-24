@@ -1,7 +1,0 @@
-uuid: 3a4393c3-1b8e-424e-871d-d8c35ce1ca92
-langcode: pt-pt
-status: false
-dependencies: {  }
-formId: node_advertising_form
-captchaType: default
-label: node_advertising_form

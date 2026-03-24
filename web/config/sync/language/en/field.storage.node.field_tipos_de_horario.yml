@@ -1,8 +1,0 @@
-settings:
-  allowed_values:
-    -
-      label: 'no time limits'
-    -
-      label: "the customer's responsibility"
-    -
-      label: 'access times grid'

@@ -1,19 +1,21 @@
-uuid: 9692850d-30f1-489c-b721-01e37267c6c9
+uuid: 131ef1f0-3b61-4b83-92db-33e5e253f092
 langcode: pt-pt
 status: true
 dependencies:
   config:
     - field.storage.node.field_certificados
     - node.type.armazem
+  module:
+    - options
 id: node.armazem.field_certificados
 field_name: field_certificados
 entity_type: node
 bundle: armazem
 label: Certificados
-description: "Se tem algum tipo de certificado adicional, descreva-o (i.e., APPCC; LOGISTICA IFS, etc. )\r\n"
-required: false
-translatable: true
+description: ''
+required: true
+translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: string
+field_type: list_string

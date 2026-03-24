@@ -1,0 +1,19 @@
+uuid: e17830a9-13f5-4b41-8560-2d23fa3ae27a
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_desc_lim_horario_acesso
+    - node.type.armazem
+id: node.armazem.field_desc_lim_horario_acesso
+field_name: field_desc_lim_horario_acesso
+entity_type: node
+bundle: armazem
+label: 'Descreva as limitações de Horário de Acesso'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

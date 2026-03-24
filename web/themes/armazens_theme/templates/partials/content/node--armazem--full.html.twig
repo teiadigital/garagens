@@ -137,18 +137,7 @@
                         data-tabs-target="#informacao-geral" type="button" role="tab" aria-controls="informacao-geral"
                         aria-selected="false">{{ 'General Information'|t }}</button>
                 </li>
-                <li class="me-2" role="presentation">
-                    <button class="tab-btn inline-block p-4 border-b-2 rounded-t-lg  hover:text-black hover:border-black "
-                        id="tipos-armazenamento-tab" data-tabs-target="#tipos-armazenamento" type="button" role="tab"
-                        aria-controls="tipos-armazenamento" aria-selected="false">{{ 'Types of storage'|t }}</button>
-                </li>
-                <li class="me-2" role="presentation">
-                    <button
-                        class="tab-btn inline-block p-4 border-b-2 rounded-t-lg  hover:text-black hover:border-black "
-                        id="informacao-recursos-tab" data-tabs-target="#informacao-recursos" type="button" role="tab"
-                        aria-controls="informacao-recursos" aria-selected="false">{{ 'Information on existing resources'|t }}</button>
-                </li>
-                <li class="me-2" role="presentation">
+                {# <li class="me-2" role="presentation">
                     <button
                         class="tab-btn inline-block p-4 border-b-2 rounded-t-lg  hover:text-black hover:border-black "
                         id="acessos-tab" data-tabs-target="#acessos" type="button" role="tab" aria-controls="acessos"
@@ -159,14 +148,14 @@
                         class="tab-btn inline-block p-4 border-b-2 rounded-t-lg  hover:text-black hover:border-black "
                         id="seguranca-garantias-tab" data-tabs-target="#seguranca-garantias" type="button" role="tab"
                         aria-controls="seguranca-garantias" aria-selected="false">{{ 'Security and guarantees'|t }}</button>
-                </li>
-                {% if ('gestor' in user.getroles(TRUE) ) or ( is_author == true ) or ('administrator' in user.getroles(TRUE) ) %}
+                </li> #}
+                {# {% if ('gestor' in user.getroles(TRUE) ) or ( is_author == true ) or ('administrator' in user.getroles(TRUE) ) %}
                 <li role="presentation">
                     <button class="tab-btn inline-block p-4 border-b-2 rounded-t-lg  hover:text-black hover:border-black "
                         id="precos-tab" data-tabs-target="#precos" type="button" role="tab"
                         aria-controls="precos" aria-selected="false">{{ 'Prices'|t }}</button>
                 </li>
-                {% endif %}
+                {% endif %} #}
             </ul>
         </div>
         
@@ -174,293 +163,119 @@
             <div class="hidden p-4" id="informacao-geral" role="tabpanel" aria-labelledby="informacao-geral-tab">
                 
                 <div class="py-10 grid gap-y-5 gap-x-7 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-
+                
                     <div class="col-span-full md:col-span-1">
 
                         <div class="relative">
 
-                            {% if elements['#node'].field_espaco.value == 'aberto' %}
-
-                                <div class="field field--name-field-espaco field--type-list-string field--label-above">
-                                    <div class="field__label">
-                                        {{content.field_espaco['#title']}}
-                                    </div>
-                                    <div class="field__item">
-                                        {{content.field_espaco.0['#markup']}}
-                                        <span class="lowercase">, {{content.field_vedacao.0['#markup']}}</span>
-                                    </div>
-                                </div>
-                            {% else %}
-                                {{content.field_espaco}}
-                            {% endif %}
-                        </div>
-
-                        <div class="relative flex items-start gap-3">
-                            
-                            {% if elements['#node'].field_incluir_espaco_exterior.value == 'sim' %} 
-                                {{ content.field_descricao_espaco_exterior }}
-                            {% else %}
-                                {{ content.field_incluir_espaco_exterior }}
-                            {% endif %}
-                        
-                        </div>
-
-                        <div class="relative flex items-start gap-3">
-                            
-                            {% if elements['#node'].field_carga_adr.value == 'sim' %}
-                                {{content.field_descricao_classes_adr}}
-                            {% else %}
-                                {{content.field_carga_adr}}
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    <div class="col-span-full md:col-span-1">
-
-                        <div class="relative">
-                            {% if content.field_piso.0['#plain_text'] %}
-                            <div class="field field--name-field-piso field--type-list-string field--label-above">
-                                <div class="field__label">
-                                    {{content.field_piso['#title']}}
-                                </div>
-                                <div class="field__item">
-                                    {{content.field_piso.0['#plain_text']}}
-                                    <span class="lowercase">, com peso máximo do piso por m² de {{content.field_peso_maximo_piso.0['#markup']}}</span>
-                                </div>
-                            </div>
-                            {% endif %}
+                            {{content.field_espaco}}
                         </div>
 
                         <div class="relative">
-                            
-                            {% if elements['#node'].field_cais_carga.value == 'sim' %}
-                                {{content.field_quantos_cais_carga}}
-                            {% else %}
-                                {{content.field_cais_carga}}
-                            {% endif %}
-                        
+                            {{ content.field_incluir_espaco_exterior }}
+                        </div>
+
+                        <div class="relative">
+                            {{ content.field_piso }}
+                        </div>
+
+                        <div class="relative">
+                            {{ content.field_peso_maximo_piso }}
                         </div>
 
                         <div class="relative flex items-start gap-3">
-                            
-                            {% if elements['#node'].field_limitacoes_carga_descarga.value == 'com_limitacoes' %}
-                                {{content.field_lista_limitacoes_des_carga}}
+                            {% if elements['#node'].field_limitacoes_de_acesso.value == 'sim' %} 
+                                {{ content.field_desc_limitacoes_acesso }}
                             {% else %}
-                                {{content.field_limitacoes_carga_descarga}}
+                                {{ content.field_limitacoes_de_acesso }}
                             {% endif %}
                         </div>
                     </div>
-                    
+
                     <div class="col-span-full md:col-span-1">
-                        <div class=" relative flex items-start gap-3">
-                            {% if elements['#node'].field_permite_ser_partilhado.value == 'sim' %}
-                                {{ content.field_area_partilhada }}
+
+                      <div class="relative">
+                            {{ content.field_recursos }}
+                        </div>
+
+                        <div class="relative flex items-start gap-3">
+                            {% if elements['#node'].field_controlo_acesso.value == 'sim' %} 
+                                {{ content.field_desc_controlo_acesso }}
                             {% else %}
-                                {{ content.field_permite_ser_partilhado }}
+                                {{ content.field_controlo_acesso }}
                             {% endif %}
                         </div>
-                        
+
+                        <div class="relative flex items-start gap-3">
+                            {% if elements['#node'].field_limitacoes_horario_acesso.value == 'sim' %} 
+                                {{ content.field_desc_lim_horario_acesso }}
+                            {% else %}
+                                {{ content.field_limitacoes_horario_acesso }}
+                            {% endif %}
+                        </div>
+
+                        <div class="relative flex items-start gap-3">
+                            {% if elements['#node'].field_seguranca.value == 'sim' %} 
+                                {{ content.field_desc_seguranca }}
+                            {% else %}
+                                {{ content.field_seguranca }}
+                            {% endif %}
+                        </div>
+
+                    </div>
+                    
+                    <div class="col-span-full md:col-span-1">
+
+                        <div class="relative flex items-start gap-3">
+                            {% if elements['#node'].field_sistema_detecao_incendios.value == 'sim' %} 
+                                {{ content.field_desc_sistema_det_incendios }}
+                            {% else %}
+                                {{ content.field_sistema_detecao_incendios }}
+                            {% endif %}
+                        </div>
+
+                        <div class="relative flex items-start gap-3">
+                            {{ content.field_licenca_de_utilizacao }}
+                        </div>
+
+                        <div class="relative flex items-start gap-3">
+                            {% if elements['#node'].field_certificados.value == 'sim' %} 
+                                {{ content.field_identifique_os_certificado }}
+                            {% else %}
+                                {{ content.field_certificados }}
+                            {% endif %}
+                        </div>
+
+                        <div class="relative flex items-start gap-3">
+                            {% if elements['#node'].field_seguro.value == 'sim' %} 
+                                {{ content.field_desc_seguros }}
+                            {% else %}
+                                {{ content.field_seguro }}
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="hidden p-4" id="tipos-armazenamento" role="tabpanel" aria-labelledby="tipos-armazenamento-tab">
-
-                <div class="py-10 grid gap-y-5 gap-x-7 grid-cols-1">
-
-                    <div class="col-span-full md:col-span-1 relative flex items-start">
-                        
-                        {% if elements['#node'].field_tem_camaras_de_frio.value == 'sim' %}
-                            
-
-                            {% if content.field_camara_de_frio[0]['#paragraph'].field_capacidade.value is not empty %}
-                                {{ content.field_camara_de_frio }}
-                            {% else %}
-                                {{ content.field_tem_camaras_de_frio }}
-                            {% endif %}
-
-                        {% else %}
-                            {{ content.field_tem_camaras_de_frio }}
-                        {% endif %}
-                    </div>
-                    
-                    <div class="col-span-full md:col-span-1 relative flex items-start">
-                        
-                        {% if elements['#node'].field_tem_raques.value == 'sim' %}
-                           
-                            {% if content.field_raques[0]['#paragraph'].field_quantidade.value is not empty %}
-                                {{ content.field_raques }}
-                            {% else %}
-                                {{ content.field_tem_raques }}
-                            {% endif %}
-                            
-                        {% else %}
-                            {{ content.field_tem_raques }}
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-
-            <div class="hidden" id="informacao-recursos" role="tabpanel" aria-labelledby="informacao-recursos-tab">
-
-                <div class="py-10 grid gap-y-5 gap-x-7 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-
-                    <div class="col-span-full md:col-span-1 relative flex items-start gap-3">
-                        
-                        {% if elements['#node'].field_recursos_humanos.value == 'sim' %}
-                    
-                            {% if content.field_quais_recursos_humanos.0 %}
-                                {{ content.field_quais_recursos_humanos }}
-                            {% else %}
-                                {{ content.field_recursos_humanos }}
-                            {% endif %}
-                        
-                        {% else %}
-                            {{content.field_recursos_humanos}}
-                        {% endif %}
-                    
-                    </div>
-
-                    {% if content.field_infraestruturas.0 %}
-                        <div class="col-span-full md:col-span-1">
-                            {{ content.field_infraestruturas }}
-                        </div>
-                    {% endif %}
-
-                    {% if content.field_equipamento_carga_descarga[0]['#paragraph'].field_equipamento.value is not empty %}
-                        <div class="col-span-full md:col-span-1">
-                            {{ content.field_equipamento_carga_descarga }}
-                        </div>
-                    {% endif %}
-                    
-                    
-                    <div class="col-span-full md:col-span-1">
-      
-                        {% if elements['#node'].field_wc.value == 'sim' %}
-
-                            <div class="field field--name-field-wc field--type-list-string field--label-above">
-                                <div class="field__label">
-                                    {{content.field_wc['#title']}}
-                                </div>
-                                <div class="field__item">
-                                    {{content.field_wc.0['#markup']}}
-
-                                    {% if elements['#node'].field_wc.value == 'sim' %}
-                                        <span class="lowercase">{{ ', with a shower room.'|t }}</span>
-                                    {% endif %}
-                                </div>
-                            </div>
-
-                        {% else %}
-                            {{content.field_wc}}
-                        {% endif %}
-                    
-                    </div>
-
-                    <div class="col-span-full md:col-span-1">
-
-                        {% if elements['#node'].field_tem_area_administrativa.value == 'sim' %}
-
-                            {% if content.field_espaco_area_administrativa.0 %}
-                                {{ content.field_espaco_area_administrativa }}
-                            {% else %}
-                                {{ content.field_tem_area_administrativa }}
-                            {% endif %}
-                        {% else %}
-                            {{ content.field_tem_area_administrativa }}
-                        {% endif %}
-                    </div>
-
-                    <div class="col-span-full md:col-span-1">
-                        {{ content.field_servicos_picking }}
-                    </div>
-                </div>
-            </div>
-            <div class="hidden" id="acessos" role="tabpanel" aria-labelledby="acessos-tab">
+            
+            {# <div class="hidden" id="acessos" role="tabpanel" aria-labelledby="acessos-tab">
 
                 <div class="py-10 grid gap-y-5 gap-x-7 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
                 
                     <div class="col-span-full md:col-span-1 relative flex items-start gap-3">
-                        
-                        {% if elements['#node'].field_controlo_acesso.value == 'com_controlo' %}
-                            {% if content.field_tipo_de_controlo.0 %}
-                                {{content.field_tipo_de_controlo}}
-                            {% else %}
-                                {{content.field_controlo_acesso}}
-                            {% endif %}
-                        {% else %}
-                            {{content.field_controlo_acesso}}
-                        {% endif %}
                     
-                    </div>
-
-                    <div class="col-span-full md:col-span-1">
-
-                        {% if elements['#node'].field_tipos_de_horario.value == 'grelha_horarios' %}
-                            {{content.field_grelha_horarios}}
-                        {% else %}
-                            {{content.field_tipos_de_horario}}
-                        {% endif %}
-
+                    
                     </div>
                 </div>
     
             </div>
             <div class="hidden" id="seguranca-garantias" role="tabpanel" aria-labelledby="seguranca-garantias-tab">
                 <div class="py-10 grid gap-y-5 gap-x-7 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-
-                    {% if content.field_seguranca.0 %}
-                    <div class="col-span-full md:col-span-1">
-                        {{content.field_seguranca}}
-                    </div>
-                    {% endif %}
-
-                    {% if content.field_sprinklers.0 %}
-                        <div class="col-span-full md:col-span-1">
-                            {{content.field_sprinklers}}
-                        </div>
-                    {% endif %}
-                    
-                    {% if content.field_certificados.0 %}
-                    <div class="col-span-full md:col-span-1">
-                        {{content.field_certificados}}
-                    </div>
-                    {% endif %}
-
-                    <div class="col-span-full md:col-span-1">
-                        {{content.field_certificacao_alfandega}}
-                    </div>
-
-                    <div class="col-span-full md:col-span-1">
-                        {{content.field_licenca_utilizacao}}
-
-                        {% if 'gestor' in user.getroles(TRUE) %}
-                            {{content.field_documento_licenca}}
-                        {% endif %}
-                    </div>
-                    
-                    <div class="col-span-full md:col-span-1">
-                        {{content.field_seguro_imovel}}
-
-                        {% if 'gestor' in user.getroles(TRUE) %}
-                            {{content.field_documento_seguro_imovel}}
-                        {% endif %}
-
-                    </div>
-                    
-                    <div class="col-span-full md:col-span-1">
-                        {{content.field_seguro}}
-
-                        {% if 'gestor' in user.getroles(TRUE) %}
-                            {{content.field_comprovativo_do_seguro}}
-                        {% endif %}
-                        
-                    </div>
                     
                 </div>
-            </div>
+            </div> #}
 
-            {% if ('gestor' in user.getroles(TRUE) ) or ( is_author == true ) or ('administrator' in user.getroles(TRUE) ) %}
+            {# {% if ('gestor' in user.getroles(TRUE) ) or ( is_author == true ) or ('administrator' in user.getroles(TRUE) ) %}
                 <div class="hidden" id="precos" role="tabpanel" aria-labelledby="precos-tab">
 
                     <div class="py-10 grid gap-y-5 gap-x-7 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
@@ -508,7 +323,7 @@
                         </div>
                     </div>
                 </div>
-            {% endif %}
+            {% endif %} #}
         </div>
 
         {% if ('gestor' in user.getroles(TRUE) ) or ('administrator' in user.getroles(TRUE) ) %}

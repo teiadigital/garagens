@@ -39,6 +39,9 @@ display:
           exposed_sorts_label: 'Ordenar por'
           sort_asc_label: Asc
           sort_desc_label: Desc
+      empty:
+        area_text_custom:
+          content: 'No hay tiendas disponibles.'
       filters:
         type:
           expose:

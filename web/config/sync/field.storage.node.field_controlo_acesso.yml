@@ -12,11 +12,11 @@ type: list_string
 settings:
   allowed_values:
     -
-      value: sem_controlo
-      label: 'Sem controlo'
+      value: sim
+      label: Sim
     -
-      value: com_controlo
-      label: 'Com controlo'
+      value: nao
+      label: Não
   allowed_values_function: ''
 module: options
 locked: false

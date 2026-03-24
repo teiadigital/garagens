@@ -9,10 +9,10 @@ label: Armazem
 type: 'canonical_entities:node'
 pattern: '[node:title]'
 selection_criteria:
-  5a672a8c-c1cc-4272-b47d-154d8887831d:
+  8f413a7d-8466-4322-8f60-91c727e274a6:
     id: 'entity_bundle:node'
     negate: false
-    uuid: 5a672a8c-c1cc-4272-b47d-154d8887831d
+    uuid: 8f413a7d-8466-4322-8f60-91c727e274a6
     context_mapping:
       node: node
     bundles:

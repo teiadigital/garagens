@@ -1,0 +1,21 @@
+uuid: 9bbe6d41-c79e-4009-b544-4a0f19044a60
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_licenca_de_utilizacao
+    - node.type.armazem
+  module:
+    - options
+id: node.armazem.field_licenca_de_utilizacao
+field_name: field_licenca_de_utilizacao
+entity_type: node
+bundle: armazem
+label: 'Licença de utilização'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

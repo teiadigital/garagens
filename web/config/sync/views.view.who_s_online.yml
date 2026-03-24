@@ -16,7 +16,7 @@ base_field: uid
 display:
   default:
     id: default
-    display_title: 'Por defeito'
+    display_title: Default
     display_plugin: default
     position: 0
     display_options:
@@ -64,10 +64,10 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: Aplicar
+          submit_button: Apply
           reset_button: false
-          reset_button_label: Reiniciar
-          exposed_sorts_label: 'Ordenar por'
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
@@ -142,7 +142,7 @@ display:
           exposed: false
           expose:
             operator_id: access_op
-            label: 'Último acesso'
+            label: 'Last access'
             description: 'Um utilizador é considerado "ligado" por este intervalo de tempo, após ter visualizado uma página pela última vez.'
             use_operator: false
             operator: access_op

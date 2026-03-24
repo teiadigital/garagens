@@ -61,6 +61,9 @@ display:
           expose:
             label: Estado
       title: Pedidos
+      empty:
+        area_text_custom:
+          content: 'No hay pedidos disponibles.'
   page_1:
     display_title: Página
     display_options:

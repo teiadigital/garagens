@@ -1,25 +1,27 @@
+label: 'Encomendas dos utilizador'
+description: 'Mostra a lista de encomendas colocadas para um utilizador.'
 display:
   default:
-    display_title: Principal
+    display_title: Master
     display_options:
       exposed_form:
         options:
-          submit_button: Aplicar
-          reset_button_label: Reiniciar
-          exposed_sorts_label: 'Ordenar por'
+          submit_button: Apply
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
           sort_asc_label: Asc
           sort_desc_label: Desc
       pager:
         options:
           tags:
-            previous: '‹ Anterior'
-            next: 'Seguinte ›'
-            first: '« Primeira'
-            last: 'Última »'
+            previous: '‹ Previous'
+            next: 'Next ›'
+            first: '« First'
+            last: 'Last »'
           expose:
-            items_per_page_label: 'Itens por página'
-            items_per_page_options_all_label: '- Todos -'
-            offset_label: Deslocamento
+            items_per_page_label: 'Items per page'
+            items_per_page_options_all_label: '- All -'
+            offset_label: Offset
       fields:
         order_id:
           label: ID
@@ -37,11 +39,16 @@ display:
           label: Estado
           separator: ', '
       title: Encomendas
+      empty:
+        area:
+          content:
+            value: 'Ainda não tem nenhuma encomenda connosco.'
       arguments:
         uid:
           exception:
-            title: Todos
+            title: All
   order_page:
+    display_title: 'Encomendas dos utilizador'
     display_options:
       menu:
         title: Encomendas

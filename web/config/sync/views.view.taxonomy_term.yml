@@ -11,16 +11,16 @@ dependencies:
 _core:
   default_config_hash: YKgw0f77GEmCu6_6Om9Mbig0mON9JdfVuMxTtd0WQaI
 id: taxonomy_term
-label: 'Termo de taxonomia'
+label: 'Taxonomy term'
 module: taxonomy
-description: 'Conteúdo pertencente a um certo termo de taxonomia.'
+description: 'Content belonging to a certain taxonomy term.'
 tag: default
 base_table: node_field_data
 base_field: nid
 display:
   default:
     id: default
-    display_title: 'Por defeito'
+    display_title: Default
     display_plugin: default
     position: 0
     display_options:
@@ -29,6 +29,7 @@ display:
         type: mini
         options:
           offset: 0
+          pagination_heading_level: h4
           items_per_page: 10
           total_pages: 0
           id: 0
@@ -37,19 +38,19 @@ display:
             previous: ‹‹
           expose:
             items_per_page: false
-            items_per_page_label: 'Itens por página'
+            items_per_page_label: 'Items per page'
             items_per_page_options: '5, 10, 25, 50'
             items_per_page_options_all: false
-            items_per_page_options_all_label: '- Todos -'
+            items_per_page_options_all_label: '- All -'
             offset: false
-            offset_label: Deslocamento
+            offset_label: Offset
       exposed_form:
         type: basic
         options:
-          submit_button: Aplicar
+          submit_button: Apply
           reset_button: false
-          reset_button_label: Reiniciar
-          exposed_sorts_label: 'Ordenar por'
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
@@ -102,7 +103,7 @@ display:
           exception:
             value: ''
             title_enable: false
-            title: Todos
+            title: All
           title_enable: true
           title: '{{ arguments.tid }}'
           default_argument_type: fixed
@@ -298,7 +299,7 @@ display:
       tags: {  }
   page_1:
     id: page_1
-    display_title: Página
+    display_title: Page
     display_plugin: page
     position: 1
     display_options:

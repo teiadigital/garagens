@@ -1,0 +1,15 @@
+uuid: 77d26b59-41cd-41ed-8e29-3e12c416f227
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: googlemaps
+label: GoogleMaps
+plugin: googlemaps
+configuration:
+  throttle:
+    period: null
+    limit: null
+  geocoder:
+    locale: ''
+  apiKey: AIzaSyDJ4nDUcLGzYnmyKuVYeAHx2d7eXYNJKNE
+  region: ''

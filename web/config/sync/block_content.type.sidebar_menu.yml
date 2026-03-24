@@ -4,5 +4,5 @@ status: true
 dependencies: {  }
 id: sidebar_menu
 label: 'Sidebar menu'
-revision: 0
+revision: false
 description: ''

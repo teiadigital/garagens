@@ -11,7 +11,7 @@ id: node.armazem.field_seguro
 field_name: field_seguro
 entity_type: node
 bundle: armazem
-label: 'Tem seguro de responsabilidade civil?'
+label: Seguros
 description: ''
 required: true
 translatable: true

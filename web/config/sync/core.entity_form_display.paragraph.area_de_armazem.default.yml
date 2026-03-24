@@ -6,7 +6,6 @@ dependencies:
     - field.field.paragraph.area_de_armazem.field_altura
     - field.field.paragraph.area_de_armazem.field_comprimento
     - field.field.paragraph.area_de_armazem.field_largura
-    - field.field.paragraph.area_de_armazem.field_peso_suportado
     - paragraphs.paragraphs_type.area_de_armazem
   module:
     - field_group
@@ -17,7 +16,6 @@ third_party_settings:
         - field_comprimento
         - field_largura
         - field_altura
-        - field_peso_suportado
       label: Grid
       region: content
       parent_name: ''
@@ -42,31 +40,29 @@ mode: default
 content:
   field_altura:
     type: number
-    weight: 3
+    weight: 2
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_comprimento:
     type: number
-    weight: 1
+    weight: 0
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_largura:
     type: number
-    weight: 2
+    weight: 1
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
-  field_peso_suportado:
-    type: number
-    weight: 4
+  translation:
+    weight: 1
     region: content
-    settings:
-      placeholder: ''
+    settings: {  }
     third_party_settings: {  }
 hidden:
   created: true

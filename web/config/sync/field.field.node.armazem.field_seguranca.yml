@@ -1,19 +1,21 @@
-uuid: 9d577991-f9bc-4a15-91df-bf143298e9a5
+uuid: 88f1f204-a88a-4720-b6d4-4fc0a59ddf60
 langcode: pt-pt
 status: true
 dependencies:
   config:
     - field.storage.node.field_seguranca
     - node.type.armazem
+  module:
+    - options
 id: node.armazem.field_seguranca
 field_name: field_seguranca
 entity_type: node
 bundle: armazem
 label: Segurança
-description: "se tem alguma tido de segurança adicional descreva-o (i.e., Cerca externa, videovigilância, Protetor fogo, etc) \r\n"
-required: false
-translatable: true
+description: ''
+required: true
+translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: string
+field_type: list_string

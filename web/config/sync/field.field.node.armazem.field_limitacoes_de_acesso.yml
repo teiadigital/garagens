@@ -1,0 +1,21 @@
+uuid: a1143bd9-7e35-4787-bcb7-f35eb87ce197
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_limitacoes_de_acesso
+    - node.type.armazem
+  module:
+    - options
+id: node.armazem.field_limitacoes_de_acesso
+field_name: field_limitacoes_de_acesso
+entity_type: node
+bundle: armazem
+label: 'Limitações de Acesso'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

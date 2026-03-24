@@ -1,7 +1,0 @@
-uuid: af2f56dc-9bda-4f0b-92a4-1bc55730c755
-langcode: pt-pt
-status: false
-dependencies: {  }
-formId: node_armazem_form
-captchaType: default
-label: node_armazem_form

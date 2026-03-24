@@ -1,0 +1,19 @@
+uuid: 09132b30-960c-4cdd-a30d-29a75772917e
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_desc_limitacoes_acesso
+field_name: field_desc_limitacoes_acesso
+entity_type: node
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

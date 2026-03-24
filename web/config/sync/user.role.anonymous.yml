@@ -3,9 +3,11 @@ langcode: pt-pt
 status: true
 dependencies:
   config:
+    - entity_browser.browser.ficheiros
     - filter.format.restricted_html
     - media.type.document
     - media.type.image
+    - node.type.armazem
   module:
     - bws
     - comment
@@ -18,6 +20,7 @@ dependencies:
     - node_view_permissions
     - search
     - system
+    - view_unpublished
 _core:
   default_config_hash: 6WavjUYXIegP9AAg2zXGx54MWIVoomC3SZhNiqe-Dyk
 id: anonymous
@@ -43,6 +46,7 @@ permissions:
   - 'view any homepage content'
   - 'view any page content'
   - 'view any termos_e_condicoes content'
+  - 'view any unpublished armazem content'
   - 'view calendar data for any availability_daily event'
   - 'view commerce_product'
   - 'view media'

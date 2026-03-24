@@ -1,0 +1,21 @@
+uuid: 61e101b0-7787-426b-97b8-cdb1845ca4a3
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_geo_coordenadas
+    - node.type.armazem
+  module:
+    - geofield
+id: node.armazem.field_geo_coordenadas
+field_name: field_geo_coordenadas
+entity_type: node
+bundle: armazem
+label: 'Geo Coordenadas'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: geofield

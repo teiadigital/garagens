@@ -9,8 +9,6 @@ dependencies:
     - field.field.node.pedidos.field_camara_de_frio
     - field.field.node.pedidos.field_carga_adr
     - field.field.node.pedidos.field_certificacao_alfandega
-    - field.field.node.pedidos.field_certificados
-    - field.field.node.pedidos.field_controlo_acesso
     - field.field.node.pedidos.field_equipamento_carga_descarga
     - field.field.node.pedidos.field_espaco
     - field.field.node.pedidos.field_estado
@@ -46,12 +44,6 @@ content:
   created:
     type: datetime_timestamp
     weight: 10
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_controlo_acesso:
-    type: options_buttons
-    weight: 0
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -125,7 +117,6 @@ hidden:
   field_camara_de_frio: true
   field_carga_adr: true
   field_certificacao_alfandega: true
-  field_certificados: true
   field_equipamento_carga_descarga: true
   field_espaco: true
   field_incluir_espaco_exterior: true

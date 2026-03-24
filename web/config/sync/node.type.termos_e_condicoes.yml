@@ -1,0 +1,17 @@
+uuid: d424f039-1a62-47d5-b416-00d9859493a0
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: 'Termos e condições'
+type: termos_e_condicoes
+description: ''
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: false

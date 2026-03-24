@@ -1,0 +1,81 @@
+uuid: 96ce34d8-7a39-45e2-aacf-47a78d783df6
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_localidade
+    - node.type.armazem
+  module:
+    - address
+id: node.armazem.field_localidade
+field_name: field_localidade
+entity_type: node
+bundle: armazem
+label: Localidade
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    langcode: null
+    country_code: PT
+    administrative_area: ''
+    locality: ''
+    dependent_locality: null
+    postal_code: ''
+    sorting_code: null
+    address_line1: ''
+    address_line2: null
+    address_line3: null
+    organization: null
+    given_name: null
+    additional_name: null
+    family_name: null
+default_value_callback: ''
+settings:
+  available_countries:
+    DE: DE
+    AT: AT
+    BE: BE
+    BG: BG
+    CZ: CZ
+    CY: CY
+    HR: HR
+    DK: DK
+    SK: SK
+    SI: SI
+    ES: ES
+    EE: EE
+    FI: FI
+    FR: FR
+    GR: GR
+    HU: HU
+    IE: IE
+    IT: IT
+    LV: LV
+    LT: LT
+    LU: LU
+    MT: MT
+    NL: NL
+    PL: PL
+    PT: PT
+    GB: GB
+    RO: RO
+    SE: SE
+    CH: CH
+  langcode_override: ''
+  field_overrides:
+    givenName:
+      override: hidden
+    additionalName:
+      override: hidden
+    familyName:
+      override: hidden
+    organization:
+      override: hidden
+    addressLine2:
+      override: hidden
+    addressLine3:
+      override: hidden
+  fields: {  }
+field_type: address

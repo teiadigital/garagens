@@ -1,0 +1,23 @@
+uuid: f7d58363-a94f-488e-bb2f-e351300a2b21
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_quantidade
+    - paragraphs.paragraphs_type.raques
+id: paragraph.raques.field_quantidade
+field_name: field_quantidade
+entity_type: paragraph
+bundle: raques
+label: Quantidade
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

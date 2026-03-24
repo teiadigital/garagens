@@ -1,0 +1,48 @@
+uuid: 14bb0922-19e9-4229-a15a-c9dda95fe91b
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - media.type.image
+  module:
+    - dropzonejs_eb_widget
+    - media
+name: images
+label: Images
+display: iframe
+display_configuration:
+  width: 100%
+  height: '260'
+  link_text: 'Select entities'
+  auto_open: true
+selection_display: multi_step_display
+selection_display_configuration:
+  entity_type: media
+  display: rendered_entity
+  display_settings:
+    view_mode: default
+  select_text: 'Use selected'
+  selection_hidden: true
+  automatic_selection_submit: 1
+widget_selector: single
+widget_selector_configuration: {  }
+widgets:
+  46a7a03f-e223-4344-9748-cdc1698b6688:
+    id: dropzonejs_media_entity
+    uuid: 46a7a03f-e223-4344-9748-cdc1698b6688
+    label: dropzonejs_media_entity
+    weight: 2
+    settings:
+      submit_text: 'Select entities'
+      auto_select: true
+      upload_location: 'public://[date:custom:Y]-[date:custom:m]'
+      dropzone_description: 'Drop files here to upload them'
+      max_filesize: 100M
+      extensions: 'jpg jpeg gif png txt doc xls pdf ppt pps odt ods odp'
+      clientside_resize: false
+      resize_width: null
+      resize_height: null
+      resize_quality: 1.0
+      resize_method: contain
+      thumbnail_method: contain
+      media_type: image

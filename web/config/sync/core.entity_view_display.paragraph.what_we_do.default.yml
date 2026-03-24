@@ -1,0 +1,42 @@
+uuid: 79f5fa45-aa91-44fb-a877-0cae396cd021
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.what_we_do.field_col_icon_title_text
+    - field.field.paragraph.what_we_do.field_pre_title
+    - field.field.paragraph.what_we_do.field_title
+    - paragraphs.paragraphs_type.what_we_do
+  module:
+    - entity_reference_revisions
+    - text
+id: paragraph.what_we_do.default
+targetEntityType: paragraph
+bundle: what_we_do
+mode: default
+content:
+  field_col_icon_title_text:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_pre_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_title:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }

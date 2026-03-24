@@ -1,0 +1,33 @@
+uuid: 6872114b-1f2a-4d33-a705-2660296939b9
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.advertising.field_data_de_fim
+    - field.field.node.advertising.field_data_de_inicio
+    - field.field.node.advertising.field_image
+    - field.field.node.advertising.field_link
+    - field.field.node.advertising.field_pre_title
+    - field.field.node.advertising.field_text
+    - node.type.advertising
+  module:
+    - user
+id: node.advertising.teaser
+targetEntityType: node
+bundle: advertising
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_data_de_fim: true
+  field_data_de_inicio: true
+  field_image: true
+  field_link: true
+  field_pre_title: true
+  field_text: true
+  langcode: true

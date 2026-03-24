@@ -1,0 +1,32 @@
+# Default value.
+field.value.price_field_warehouses_example:
+  type: mapping
+  label: Default value
+  mapping:
+    preco_full_day:
+      type: float
+      label: Preço dia
+    preco_full_month:
+      type: float
+      label: Preço mes
+    preco_full_year:
+      type: float
+      label: Preço ano
+    preco_share_day:
+      type: float
+      label: Preço dia
+    preco_share_month:
+      type: float
+      label: Preço mes
+    preco_share_year:
+      type: float
+      label: Preço ano
+    preco_temp_day:
+      type: float
+      label: Preço dia
+    preco_temp_month:
+      type: float
+      label: Preço mes
+    preco_temp_year:
+      type: float
+      label: Preço ano

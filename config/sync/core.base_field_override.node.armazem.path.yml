@@ -1,0 +1,20 @@
+uuid: 2640072e-33a4-4fb5-9849-fa950b174bcc
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.armazem
+  module:
+    - path
+id: node.armazem.path
+field_name: path
+entity_type: node
+bundle: armazem
+label: 'URL alternativo'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

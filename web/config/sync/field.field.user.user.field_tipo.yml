@@ -1,0 +1,21 @@
+uuid: ffa49589-3a83-4bb0-8a4d-9e44a019920b
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_tipo
+  module:
+    - options
+    - user
+id: user.user.field_tipo
+field_name: field_tipo
+entity_type: user
+bundle: user
+label: Tipo
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

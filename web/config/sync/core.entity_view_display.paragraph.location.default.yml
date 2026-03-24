@@ -1,0 +1,31 @@
+uuid: 5439d134-0517-4e30-af7e-e36e165f44b2
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.location.field_pre_title
+    - field.field.paragraph.location.field_title
+    - paragraphs.paragraphs_type.location
+  module:
+    - text
+id: paragraph.location.default
+targetEntityType: paragraph
+bundle: location
+mode: default
+content:
+  field_pre_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_title:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }

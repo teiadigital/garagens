@@ -1,0 +1,26 @@
+uuid: a31c5fea-1861-4738-be70-c806fa235dc1
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - bws
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+  bws:
+    bws:
+      bookable: 1
+      payment: 0
+      type_id: '2'
+      bookable_type: daily
+      availability: available
+      payment_default_value: 0
+name: Warehouse
+type: armazem
+description: null
+help: null
+new_revision: false
+preview_mode: 0
+display_submitted: false

@@ -1,0 +1,13 @@
+uuid: bc6c6298-0578-43cf-8eeb-45c08f26427c
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - webform
+_core:
+  default_config_hash: AK83C-dOZEPruvi6GbkuhihWLnO4VtrbesqSC6izf4o
+id: webform_open_action
+label: 'Abrir formulário'
+type: webform
+plugin: webform_open_action
+configuration: {  }

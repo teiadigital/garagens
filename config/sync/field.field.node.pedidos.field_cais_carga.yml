@@ -1,0 +1,21 @@
+uuid: 16f6362a-8264-4525-84b4-d1ea4394f5a7
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_cais_carga
+    - node.type.pedidos
+  module:
+    - options
+id: node.pedidos.field_cais_carga
+field_name: field_cais_carga
+entity_type: node
+bundle: pedidos
+label: 'Possui cais de carga?'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

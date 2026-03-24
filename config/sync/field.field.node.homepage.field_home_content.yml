@@ -1,0 +1,111 @@
+uuid: dc8d55b8-524d-4cc0-86b3-a7f0294ce005
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_home_content
+    - node.type.homepage
+    - paragraphs.paragraphs_type.advertising
+    - paragraphs.paragraphs_type.armazens_homepage
+    - paragraphs.paragraphs_type.contact
+    - paragraphs.paragraphs_type.image
+    - paragraphs.paragraphs_type.location
+    - paragraphs.paragraphs_type.what_we_do
+    - paragraphs.paragraphs_type.why_choose_us
+    - paragraphs.paragraphs_type.why_our_solution
+  module:
+    - entity_reference_revisions
+id: node.homepage.field_home_content
+field_name: field_home_content
+entity_type: node
+bundle: homepage
+label: 'Home Content'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      why_our_solution: why_our_solution
+      image: image
+      advertising: advertising
+      contact: contact
+      location: location
+      what_we_do: what_we_do
+      armazens_homepage: armazens_homepage
+      why_choose_us: why_choose_us
+    negate: 0
+    target_bundles_drag_drop:
+      advertising:
+        weight: 21
+        enabled: true
+      advertising_carousel:
+        weight: 20
+        enabled: false
+      aluguer_livre:
+        weight: 26
+        enabled: false
+      area_de_armazem:
+        weight: 6
+        enabled: false
+      armazens_homepage:
+        weight: 23
+        enabled: true
+      banner:
+        weight: 7
+        enabled: false
+      block_registo:
+        weight: 7
+        enabled: false
+      camaras_de_frio:
+        weight: 8
+        enabled: false
+      carousel_banner:
+        weight: 17
+        enabled: false
+      contact:
+        weight: 21
+        enabled: true
+      contacts_icon_text_text:
+        weight: 25
+        enabled: false
+      equipamentos_carga_descarga:
+        weight: 9
+        enabled: false
+      icon_text:
+        weight: 15
+        enabled: false
+      icon_title_text:
+        weight: 12
+        enabled: false
+      image:
+        weight: 18
+        enabled: true
+      location:
+        weight: 21
+        enabled: true
+      paletes:
+        weight: 40
+        enabled: false
+      preco_imovel:
+        weight: 19
+        enabled: false
+      raques:
+        weight: 10
+        enabled: false
+      sidebar_menu:
+        weight: 21
+        enabled: false
+      what_we_do:
+        weight: 22
+        enabled: true
+      why_choose_us:
+        weight: 27
+        enabled: true
+      why_our_solution:
+        weight: 13
+        enabled: true
+field_type: entity_reference_revisions

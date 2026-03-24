@@ -1,0 +1,14 @@
+administer bws settings:
+  title: "Administer bws settings"
+  description: "Administer bws settings"
+
+create bws reservation:
+  title: "Create bws reservation"
+  description: "Create bws reservation"
+
+view calendar data for any availability_daily event:
+  title: "View calendar data for any availability_daily event"
+  description: "View calendar data for any availability_daily event"
+
+permission_callbacks:
+  - Drupal\bws\BwsPermissions::permissions

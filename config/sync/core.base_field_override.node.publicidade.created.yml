@@ -1,0 +1,18 @@
+uuid: c9bcf062-7f08-4303-8ec3-143d41a35172
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.publicidade
+id: node.publicidade.created
+field_name: created
+entity_type: node
+bundle: publicidade
+label: 'Criado em'
+description: 'The date and time that the content was created.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

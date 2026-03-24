@@ -1,0 +1,11 @@
+uuid: 23f47593-9414-4d59-b08b-8d7f5c7d6034
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - bat_unit.type_bundle.padel
+id: bat_unit_type.padel
+target_entity_type_id: bat_unit_type
+target_bundle: padel
+default_langcode: site_default
+language_alterable: false

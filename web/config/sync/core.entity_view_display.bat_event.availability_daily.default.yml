@@ -1,0 +1,145 @@
+uuid: 1cece149-9c00-4851-89fb-9ccb7aac1551
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - bat_event.event_type.availability_daily
+    - field.field.bat_event.availability_daily.event_bat_unit_reference
+    - field.field.bat_event.availability_daily.event_dates
+    - field.field.bat_event.availability_daily.event_series
+    - field.field.bat_event.availability_daily.event_state_reference
+    - field.field.bat_event.availability_daily.field_armazem
+    - field.field.bat_event.availability_daily.field_comprimento
+    - field.field.bat_event.availability_daily.field_incluir_in
+    - field.field.bat_event.availability_daily.field_incluir_out
+    - field.field.bat_event.availability_daily.field_largura
+    - field.field.bat_event.availability_daily.field_paletes_altura
+    - field.field.bat_event.availability_daily.field_price
+    - field.field.bat_event.availability_daily.field_quantidade
+    - field.field.bat_event.availability_daily.field_type
+    - field.field.bat_event.availability_daily.field_unidades_medida
+    - field.field.bat_event.availability_daily.field_user
+  module:
+    - user
+id: bat_event.availability_daily.default
+targetEntityType: bat_event
+bundle: availability_daily
+mode: default
+content:
+  field_armazem:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_comprimento:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_incluir_in:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_incluir_out:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_largura:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_paletes_altura:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_price:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 9
+    region: content
+  field_quantidade:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_type:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  field_unidades_medida:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_user:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 11
+    region: content
+  uid:
+    type: author
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  event_bat_unit_reference: true
+  event_dates: true
+  event_series: true
+  event_state_reference: true
+  langcode: true

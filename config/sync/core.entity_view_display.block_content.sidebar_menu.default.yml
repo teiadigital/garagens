@@ -1,0 +1,25 @@
+uuid: ffcc7d76-3a5a-426b-b9e6-ab18dbbfb1bd
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - block_content.type.sidebar_menu
+    - field.field.block_content.sidebar_menu.field_p_sidebar_menu
+  module:
+    - entity_reference_revisions
+id: block_content.sidebar_menu.default
+targetEntityType: block_content
+bundle: sidebar_menu
+mode: default
+content:
+  field_p_sidebar_menu:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  langcode: true

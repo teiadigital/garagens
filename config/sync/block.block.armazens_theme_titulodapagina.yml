@@ -1,0 +1,24 @@
+uuid: c9be78f7-5748-4f3c-b82a-915dbf3131c7
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - armazens_theme
+id: armazens_theme_titulodapagina
+theme: armazens_theme
+region: title
+weight: -4
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Título da página'
+  label_display: '0'
+  provider: core
+visibility:
+  request_path:
+    id: request_path
+    negate: true
+    pages: '<front>'

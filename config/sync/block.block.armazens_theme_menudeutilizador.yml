@@ -1,0 +1,25 @@
+uuid: 346e49de-d3e8-4929-b78c-28f5251bd652
+langcode: pt-pt
+status: false
+dependencies:
+  config:
+    - system.menu.account
+  module:
+    - system
+  theme:
+    - armazens_theme
+id: armazens_theme_menudeutilizador
+theme: armazens_theme
+region: header
+weight: -3
+provider: null
+plugin: 'system_menu_block:account'
+settings:
+  id: 'system_menu_block:account'
+  label: 'Menu de utilizador'
+  label_display: '0'
+  provider: system
+  level: 1
+  depth: 0
+  expand_all_items: false
+visibility: {  }

@@ -1,0 +1,8 @@
+terms_field_terms_and_conditions:
+  css:
+    component:
+      css/terms-field-terms-and-conditions-widget.css: {}
+  js:
+    js/script.js: {}
+  dependencies:
+    - core/jquery

@@ -1,0 +1,18 @@
+uuid: 9e585e7c-24de-4eba-b68b-a594d358a8b1
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.infraestruturas
+id: taxonomy_term.infraestruturas.changed
+field_name: changed
+entity_type: taxonomy_term
+bundle: infraestruturas
+label: Alterado
+description: 'A hora em que o termo foi editado pela última vez.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

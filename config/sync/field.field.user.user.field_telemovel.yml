@@ -1,0 +1,21 @@
+uuid: fe750190-f3e9-4d96-9ead-61cdb8783ecc
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_telemovel
+  module:
+    - phone_international
+    - user
+id: user.user.field_telemovel
+field_name: field_telemovel
+entity_type: user
+bundle: user
+label: Telemóvel
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: phone_international

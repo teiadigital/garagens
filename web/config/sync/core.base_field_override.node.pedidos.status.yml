@@ -1,0 +1,22 @@
+uuid: 4b0457ba-b1da-40fb-86eb-3c9b0e05709c
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.pedidos
+id: node.pedidos.status
+field_name: status
+entity_type: node
+bundle: pedidos
+label: Publicado
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

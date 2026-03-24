@@ -1,0 +1,72 @@
+uuid: a0d7fbaf-13cc-4312-9c25-1b4193bdf39b
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.paletes.field_preco_ano
+    - field.field.paragraph.paletes.field_preco_dia
+    - field.field.paragraph.paletes.field_preco_in
+    - field.field.paragraph.paletes.field_preco_mes
+    - field.field.paragraph.paletes.field_preco_out
+    - paragraphs.paragraphs_type.paletes
+id: paragraph.paletes.default
+targetEntityType: paragraph
+bundle: paletes
+mode: default
+content:
+  field_preco_ano:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_preco_dia:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_preco_in:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_preco_mes:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_preco_out:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
+hidden: {  }

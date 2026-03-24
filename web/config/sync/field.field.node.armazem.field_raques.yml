@@ -1,0 +1,37 @@
+uuid: c9ecbe3f-4133-47b1-ba9b-525b1e9bee7e
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_raques
+    - node.type.armazem
+    - paragraphs.paragraphs_type.raques
+  module:
+    - entity_reference_revisions
+id: node.armazem.field_raques
+field_name: field_raques
+entity_type: node
+bundle: armazem
+label: Raques
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      raques: raques
+    negate: 0
+    target_bundles_drag_drop:
+      area_de_armazem:
+        weight: 5
+        enabled: false
+      camaras_de_frio:
+        weight: 6
+        enabled: false
+      raques:
+        weight: 4
+        enabled: true
+field_type: entity_reference_revisions

@@ -1,0 +1,84 @@
+uuid: 60c223ca-0e2d-46ce-8a2c-65a52136f273
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - entity_browser.browser.ficheiros
+    - entity_browser.browser.images
+    - filter.format.basic_html
+    - filter.format.webform_default
+    - media.type.document
+    - media.type.image
+    - node.type.armazem
+    - node.type.pedidos
+    - taxonomy.vocabulary.equipamentos_carga_descarga
+    - taxonomy.vocabulary.piso
+  module:
+    - bws
+    - comment
+    - commerce_order
+    - commerce_product
+    - contact
+    - dropzonejs
+    - entity_browser
+    - file
+    - filter
+    - google_analytics
+    - media
+    - node
+    - node_view_permissions
+    - search
+    - shortcut
+    - system
+    - taxonomy
+    - view_unpublished
+_core:
+  default_config_hash: cFrlqjtkTfvY3RGccjJkPf1SGIfJ942IrxTLWAO4mgA
+id: authenticated
+label: 'Utilizador autenticado'
+weight: -9
+is_admin: false
+permissions:
+  - 'access comments'
+  - 'access content'
+  - 'access ficheiros entity browser pages'
+  - 'access images entity browser pages'
+  - 'access shortcuts'
+  - 'access site-wide contact form'
+  - 'change own username'
+  - 'create armazem content'
+  - 'create bws reservation'
+  - 'create document media'
+  - 'create image media'
+  - 'create media'
+  - 'create pedidos content'
+  - 'create terms in equipamentos_carga_descarga'
+  - 'create terms in piso'
+  - 'delete own files'
+  - 'dropzone upload files'
+  - 'edit own armazem content'
+  - 'edit own pedidos content'
+  - 'opt-in or out of google analytics tracking'
+  - 'post comments'
+  - 'search content'
+  - 'skip comment approval'
+  - 'use text format basic_html'
+  - 'use text format webform_default'
+  - 'view any advertising content'
+  - 'view any armazem content'
+  - 'view any article content'
+  - 'view any faqs content'
+  - 'view any homepage content'
+  - 'view any page content'
+  - 'view any termos_e_condicoes content'
+  - 'view any unpublished armazem content'
+  - 'view calendar data for any availability_daily event'
+  - 'view commerce_product'
+  - 'view media'
+  - 'view own armazem content'
+  - 'view own article content'
+  - 'view own commerce_order'
+  - 'view own homepage content'
+  - 'view own page content'
+  - 'view own pedidos content'
+  - 'view own unpublished content'

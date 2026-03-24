@@ -1,0 +1,20 @@
+uuid: 513aca68-1973-47aa-9123-f08210a809fe
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - media.type.document
+  module:
+    - path
+id: media.document.path
+field_name: path
+entity_type: media
+bundle: document
+label: 'URL alternativo'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

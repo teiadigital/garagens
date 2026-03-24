@@ -1,0 +1,22 @@
+uuid: 93c7c8c9-39ad-4c98-b9a6-74237f8c1314
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_morada_de_faturacao_bool
+  module:
+    - user
+id: user.user.field_morada_de_faturacao_bool
+field_name: field_morada_de_faturacao_bool
+entity_type: user
+bundle: user
+label: 'Morada de faturação diferente da morada'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

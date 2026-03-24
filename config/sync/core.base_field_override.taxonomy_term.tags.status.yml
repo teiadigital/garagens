@@ -1,0 +1,22 @@
+uuid: cfe9cbe6-330f-40d5-8a51-2b7ac3eb05f1
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.tags
+id: taxonomy_term.tags.status
+field_name: status
+entity_type: taxonomy_term
+bundle: tags
+label: Publicado
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

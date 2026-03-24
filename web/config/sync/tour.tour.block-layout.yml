@@ -1,0 +1,42 @@
+uuid: bd42c874-d2b6-47a7-a346-834dc3d93cef
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - block
+_core:
+  default_config_hash: pG6QAggTrD7RQWb79PT3NH48GSvTiePly_l53f3OENs
+id: block-layout
+label: 'Página de disposição de bloco'
+module: block
+routes:
+  -
+    route_name: block.admin_display
+tips:
+  block-layout:
+    id: block-layout
+    plugin: text
+    label: 'Disposição do bloco'
+    weight: 1
+    body: 'Blocos são caixas de conteúdo renderizadas numa área, ou região, duma página da web que pode ser exibida em regiões (como rodapé ou barra lateral) na sua página.'
+  place-block:
+    id: place-block
+    plugin: text
+    label: 'Colocar Blocos'
+    weight: 2
+    selector: .button--small
+    body: 'Qualquer bloco personalizado ou contribuído pode ser adicionado a uma região específica clicando num botão Colocar bloco. Um novo bloco também pode ser criado clicando em Colocar Bloco'
+  block-region:
+    id: block-region
+    plugin: text
+    label: 'Região do Bloco'
+    weight: 3
+    selector: .block-region-select
+    body: 'Atribua ou altere a região de um bloco clicando aqui. Uma lista suspensa com todas as regiões aparecerá. Pode colocar um bloco em várias regiões.'
+  configure-block:
+    id: configure-block
+    plugin: text
+    label: 'Configurar Bloco'
+    weight: 4
+    selector: .dropbutton-widget
+    body: 'Ao clicar em "Configurar" você pode ir em frente e editar o conteúdo do bloco, lidar com as configurações de visibilidade e até mesmo alterar o posicionamento de onde está no seu tema.'

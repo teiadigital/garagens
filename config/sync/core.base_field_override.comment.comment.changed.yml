@@ -1,0 +1,18 @@
+uuid: 2e9f1ece-1360-40cb-bc10-63c3eab6a75d
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - comment.type.comment
+id: comment.comment.changed
+field_name: changed
+entity_type: comment
+bundle: comment
+label: Alterado
+description: 'A hora da ultima edição do comentário.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

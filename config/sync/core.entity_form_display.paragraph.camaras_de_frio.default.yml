@@ -1,0 +1,71 @@
+uuid: cdf6696c-1354-43e4-9e8d-aa26d7c7c48d
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.camaras_de_frio.field_capacidade
+    - field.field.paragraph.camaras_de_frio.field_quantidade
+    - field.field.paragraph.camaras_de_frio.field_temperatura_maxima
+    - field.field.paragraph.camaras_de_frio.field_temperatura_minima
+    - paragraphs.paragraphs_type.camaras_de_frio
+  module:
+    - field_group
+third_party_settings:
+  field_group:
+    group_grid:
+      children:
+        - field_capacidade
+        - field_temperatura_maxima
+        - field_temperatura_minima
+      label: Grid
+      region: content
+      parent_name: ''
+      weight: 0
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: true
+id: paragraph.camaras_de_frio.default
+targetEntityType: paragraph
+bundle: camaras_de_frio
+mode: default
+content:
+  field_capacidade:
+    type: number
+    weight: 7
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_temperatura_maxima:
+    type: number
+    weight: 8
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_temperatura_minima:
+    type: number
+    weight: 9
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  translation:
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  created: true
+  field_quantidade: true
+  status: true

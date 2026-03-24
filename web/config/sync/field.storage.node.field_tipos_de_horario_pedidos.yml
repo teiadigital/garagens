@@ -1,0 +1,27 @@
+uuid: 90cfa944-3e73-4bcd-8896-6ad4901a3e12
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_tipos_de_horario_pedidos
+field_name: field_tipos_de_horario_pedidos
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: sem_limitacao_de_horarios
+      label: 'sem limitação de horários'
+    -
+      value: da_responsabilidade_do_cliente
+      label: 'da responsabilidade do cliente'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,22 @@
+uuid: 8af899cd-83ea-4aab-b32b-887675825de1
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.contacts_icon_text_text
+id: paragraph.contacts_icon_text_text.status
+field_name: status
+entity_type: paragraph
+bundle: contacts_icon_text_text
+label: Publicado
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

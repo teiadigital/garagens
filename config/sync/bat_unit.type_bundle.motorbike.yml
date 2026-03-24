@@ -1,0 +1,7 @@
+uuid: 178f4723-4324-41cc-ba7b-3e45831e6a3f
+langcode: pt-pt
+status: true
+dependencies: {  }
+name: Motorbike
+type: motorbike
+default_event_value_field_ids: null

@@ -1,0 +1,8 @@
+uuid: e525ee72-b393-4a2a-9015-13b05a733504
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: sidebar_menu
+label: 'Sidebar menu'
+revision: 0
+description: ''

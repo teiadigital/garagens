@@ -1,0 +1,92 @@
+{#
+/**
+* @file
+* Default theme implementation to display a paragraph.
+*
+* Available variables:
+* - paragraph: Full paragraph entity.
+* Only method names starting with "get", "has", or "is" and a few common
+* methods such as "id", "label", and "bundle" are available. For example:
+* - paragraph.getCreatedTime() will return the paragraph creation timestamp.
+* - paragraph.id(): The paragraph ID.
+* - paragraph.bundle(): The type of the paragraph, for example, "image" or "text".
+* - paragraph.getOwnerId(): The user ID of the paragraph author.
+* See Drupal\paragraphs\Entity\Paragraph for a full list of public properties
+* and methods for the paragraph object.
+* - content: All paragraph items. Use {{ content }} to print them all,
+* or print a subset such as {{ content.field_example }}. Use
+* {{ content|without('field_example') }} to temporarily suppress the printing
+* of a given child element.
+* - attributes: HTML attributes for the containing element.
+* The attributes.class element may contain one or more of the following
+* classes:
+* - paragraphs: The current template type (also known as a "theming hook").
+* - paragraphs--type-[type]: The current paragraphs type. For example, if the paragraph is an
+* "Image" it would result in "paragraphs--type--image". Note that the machine
+* name will often be in a short form of the human readable label.
+* - paragraphs--view-mode--[view_mode]: The View Mode of the paragraph; for example, a
+* preview would result in: "paragraphs--view-mode--preview", and
+* default: "paragraphs--view-mode--default".
+* - view_mode: View mode; for example, "preview" or "full".
+* - logged_in: Flag for authenticated user status. Will be true when the
+* current user is a logged-in member.
+* - is_admin: Flag for admin user status. Will be true when the current user
+* is an administrator.
+*
+* @see template_preprocess_paragraph()
+*
+* @ingroup themeable
+*/
+#}
+{%
+set classes = [
+        'paragraph',
+        'paragraph--type--' ~ paragraph.bundle|clean_class,
+        view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+        not paragraph.isPublished() ? 'paragraph--unpublished',
+        'p-4 md:p-10 mt-20 md:mt-0 mb-36',
+    ]
+%}
+
+{% block paragraph %}
+    <div{{ attributes.addClass(classes) }}>
+        {% block content %}
+
+            <div class="container">
+                {{content}}
+                <br><br>
+                {{ drupal_view('mapa_armazens', 'block_1') }}
+
+                <div class="map-legend-mapa">
+
+                <div class="mt-4" style="font-size: 14px; font-weight: bold;">
+                    {{'Caption:'|t}}
+                </div>
+                <div class="map-legend flex gap-6 items-center" style="font-size: 12px">
+                  <span class="flex items-center gap-2">
+                    <img src="/themes/armazens_theme/images/icons/picking.svg" alt="Picking" width="18" height="18">
+                    {{'Picking'|t}}
+                  </span>
+                  <span class="flex items-center gap-2">
+                    <img src="/themes/armazens_theme/images/icons/raques.svg" alt="Raques" width="18" height="18">
+                    {{'Raques'|t}}
+                  </span>
+                  <span class="flex items-center gap-2">
+                    <img src="/themes/armazens_theme/images/icons/camara.svg" alt="Câmaras de Frio" width="18" height="18">
+                    {{'Cold rooms'|t}}
+                  </span>
+                  <span class="flex items-center gap-2">
+                    <img src="/themes/armazens_theme/images/icons/in.svg" alt="In" width="18" height="18">
+                    In
+                  </span>
+                    <span class="flex items-center gap-2">
+                    <img src="/themes/armazens_theme/images/icons/out.svg" alt="Out" width="18" height="18">
+                    Out
+                  </span>
+                </div>
+
+                </div>
+            </div>
+        {% endblock %}
+    </div>
+{% endblock paragraph %}

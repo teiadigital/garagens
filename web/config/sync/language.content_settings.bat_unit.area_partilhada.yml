@@ -1,0 +1,11 @@
+uuid: acf7b419-5efd-4681-8ed9-a546a04b2f41
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - bat_unit.unit_bundle.area_partilhada
+id: bat_unit.area_partilhada
+target_entity_type_id: bat_unit
+target_bundle: area_partilhada
+default_langcode: site_default
+language_alterable: false

@@ -1,0 +1,21 @@
+uuid: d25a9c65-6d5f-4eff-a404-b6428799f8f3
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_servicos_picking
+    - node.type.pedidos
+  module:
+    - options
+id: node.pedidos.field_servicos_picking
+field_name: field_servicos_picking
+entity_type: node
+bundle: pedidos
+label: 'Serviços picking'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

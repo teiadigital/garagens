@@ -1,0 +1,81 @@
+uuid: fcc7f50f-091f-45d8-a4e8-a8914cadce65
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.pedidos.field_area_individual
+    - field.field.node.pedidos.field_cais_carga
+    - field.field.node.pedidos.field_camara_de_frio
+    - field.field.node.pedidos.field_carga_adr
+    - field.field.node.pedidos.field_certificacao_alfandega
+    - field.field.node.pedidos.field_certificados
+    - field.field.node.pedidos.field_controlo_acesso
+    - field.field.node.pedidos.field_equipamento_carga_descarga
+    - field.field.node.pedidos.field_espaco
+    - field.field.node.pedidos.field_estado
+    - field.field.node.pedidos.field_incluir_espaco_exterior
+    - field.field.node.pedidos.field_infraestruturas
+    - field.field.node.pedidos.field_licenca_utilizacao
+    - field.field.node.pedidos.field_limitacoes_carga_descarga
+    - field.field.node.pedidos.field_localidade
+    - field.field.node.pedidos.field_permite_ser_partilhado
+    - field.field.node.pedidos.field_peso_maximo_piso
+    - field.field.node.pedidos.field_piso
+    - field.field.node.pedidos.field_raques
+    - field.field.node.pedidos.field_recursos_humanos
+    - field.field.node.pedidos.field_seguro
+    - field.field.node.pedidos.field_seguro_imovel
+    - field.field.node.pedidos.field_servicos_picking
+    - field.field.node.pedidos.field_sprinklers
+    - field.field.node.pedidos.field_tem_area_administrativa
+    - field.field.node.pedidos.field_tem_camaras_de_frio
+    - field.field.node.pedidos.field_tem_raques
+    - field.field.node.pedidos.field_tipos_de_horario_pedidos
+    - field.field.node.pedidos.field_vedacao
+    - field.field.node.pedidos.field_wc
+    - node.type.pedidos
+  module:
+    - user
+id: node.pedidos.teaser
+targetEntityType: node
+bundle: pedidos
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_area_individual: true
+  field_cais_carga: true
+  field_camara_de_frio: true
+  field_carga_adr: true
+  field_certificacao_alfandega: true
+  field_certificados: true
+  field_controlo_acesso: true
+  field_equipamento_carga_descarga: true
+  field_espaco: true
+  field_estado: true
+  field_incluir_espaco_exterior: true
+  field_infraestruturas: true
+  field_licenca_utilizacao: true
+  field_limitacoes_carga_descarga: true
+  field_localidade: true
+  field_permite_ser_partilhado: true
+  field_peso_maximo_piso: true
+  field_piso: true
+  field_raques: true
+  field_recursos_humanos: true
+  field_seguro: true
+  field_seguro_imovel: true
+  field_servicos_picking: true
+  field_sprinklers: true
+  field_tem_area_administrativa: true
+  field_tem_camaras_de_frio: true
+  field_tem_raques: true
+  field_tipos_de_horario_pedidos: true
+  field_vedacao: true
+  field_wc: true
+  langcode: true

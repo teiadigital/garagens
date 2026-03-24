@@ -1,0 +1,21 @@
+uuid: 4aeb7466-bbaa-490d-91cf-618f42b96beb
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_servicos_picking
+    - node.type.armazem
+  module:
+    - options
+id: node.armazem.field_servicos_picking
+field_name: field_servicos_picking
+entity_type: node
+bundle: armazem
+label: 'Serviços picking'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

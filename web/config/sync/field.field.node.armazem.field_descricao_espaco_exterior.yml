@@ -1,0 +1,19 @@
+uuid: 379c16c4-bdcd-480d-bd68-a4f65fb1cbdf
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_descricao_espaco_exterior
+    - node.type.armazem
+id: node.armazem.field_descricao_espaco_exterior
+field_name: field_descricao_espaco_exterior
+entity_type: node
+bundle: armazem
+label: 'Descreva o espaço exterior'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

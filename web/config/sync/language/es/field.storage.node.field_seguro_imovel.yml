@@ -1,0 +1,6 @@
+settings:
+  allowed_values:
+    -
+      label: ' Si, en las condiciones indicadas en el documento anexo'
+    -
+      label: 'No'

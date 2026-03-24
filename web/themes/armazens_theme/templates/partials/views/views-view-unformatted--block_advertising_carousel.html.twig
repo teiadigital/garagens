@@ -1,0 +1,58 @@
+{#
+/**
+ * @file
+ * Theme override to display a view of unformatted rows.
+ *
+ * Available variables:
+ * - title: The title of this group of rows. May be empty.
+ * - rows: A list of the view's row items.
+ *   - attributes: The row's HTML attributes.
+ *   - content: The row's content.
+ * - view: The view object.
+ * - default_row_class: A flag indicating whether default classes should be
+ *   used on rows.
+ *
+ * @see template_preprocess_views_view_unformatted()
+ */
+#}
+{% if title %}
+  <h3>{{ title }}</h3>
+{% endif %}
+
+<div class="owl-carousel owl-carousel-advertising w-full relative">
+
+  {% for key,row in rows %}
+    <div class="relative h-96 lg:h-64 overflow-hidden rounded-3xl">
+      <div class="h-full flex flex-col justify-center py-4 px-4 md:px-20">
+     
+        <div class="field--name-field-p-image absolute block w-full h-full top-0 left-0 object-cover object-center">
+            {{ view.style_plugin.getField(key, 'field_image') }}
+        </div>
+
+        <div class="bg-gradient-to-r via-20% from-black absolute top-0 left-0 w-full h-full"></div>
+    
+        <div class="grid grid-cols-12 relative items-center gap-y-5">
+          <div class="col-span-12 lg:col-span-9 xl:col-span-6">
+    
+            <div class="text-white text-lg md:text-xl border-none bg-transparent p-0 w-fit mb-1">
+              {{ view.style_plugin.getField(key, 'field_pre_title') }}
+            </div>
+            <div class="text-white bg-transparent ml-0 p-0 font-bold text-xl md:text-4xl mb-1">
+              {{ view.style_plugin.getField(key, 'title') }}
+            </div>
+            <div class="text-white font-normal text-base">
+              {{ view.style_plugin.getField(key, 'field_text') }}
+            </div>
+          </div>
+          <div class="col-span-12 xl:col-start-10 lg:col-span-3">
+            <div class="field_link">
+              <a href="{{view.style_plugin.getField(key, 'field_link')|render|striptags|spaceless}}" target="_blank">
+                Saber mais
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>

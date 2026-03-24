@@ -1,0 +1,20 @@
+uuid: 377f3e32-4afb-46f9-baae-1cebc52b2689
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - mailchimp_signup
+  theme:
+    - armazens_theme
+id: armazens_theme_mailchimpsubscriptionformsubscribe
+theme: armazens_theme
+region: footer
+weight: -5
+provider: null
+plugin: 'mailchimp_signup_subscribe_block:subscribe'
+settings:
+  id: 'mailchimp_signup_subscribe_block:subscribe'
+  label: Subscrever
+  label_display: visible
+  provider: mailchimp_signup
+visibility: {  }

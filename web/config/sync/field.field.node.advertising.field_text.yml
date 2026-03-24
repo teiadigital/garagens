@@ -1,0 +1,24 @@
+uuid: e74d5af2-832a-4745-9599-7777c2d06c1b
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_text
+    - filter.format.basic_html
+    - node.type.advertising
+  module:
+    - text
+id: node.advertising.field_text
+field_name: field_text
+entity_type: node
+bundle: advertising
+label: Texto
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

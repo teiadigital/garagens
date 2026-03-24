@@ -1,0 +1,1389 @@
+<?php
+
+use Drupal\bat_booking\Entity\Booking;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\Entity\EntityViewDisplay;
+use Drupal\Core\Render\Markup;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\views\ViewExecutable;
+use Drupal\office_hours\OfficeHoursDateHelper;
+use Drupal\commerce_price\Price;
+use Drupal\commerce_product\Entity\ProductType;
+use Drupal\commerce_product\Entity\ProductVariationType;
+use Drupal\commerce_product\Entity\Product;
+use Drupal\commerce_product\Entity\ProductVariation;
+use Drupal\commerce_order\Entity\OrderItemType;
+use Drupal\commerce_order\Entity\OrderItemInterface;
+use Drupal\commerce_store\Entity\Store;
+use Drupal\node\Entity\Node;
+use Drupal\node\Entity\NodeType;
+
+/**
+ * Implements hook_form_alter().
+ */
+function bws_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  if ($form_id == 'node_type_edit_form' || $form_id == 'node_type_add_form') {
+    if (\Drupal::currentUser()->hasPermission('administer bws settings')) {
+      $node_type = $form_state->getFormObject()->getEntity();
+      assert($node_type instanceof NodeType);
+
+      $bws_settings = $node_type->getThirdPartySetting('bws', 'bws');
+
+      $form['bws'] = [
+        '#type' => 'details',
+        '#title' => t('BWS'),
+        '#group' => 'additional_settings',
+        '#tree' => TRUE,
+      ];
+      $form['bws']['bookable'] = [
+        '#type' => 'checkbox',
+        '#title' => t('Make this entity type bookable'),
+        '#default_value' => isset($bws_settings['bookable']) ? $bws_settings['bookable'] : 0,
+      ];
+
+      $form['bws']['payment'] = [
+        '#type' => 'checkbox',
+        '#title' => t('Enable payment for bookings'),
+        '#default_value' => isset($bws_settings['payment']) ? $bws_settings['payment'] : 0,
+        '#states' => [
+          'visible' => [
+            ':input[name="bws[bookable]"]' => ['checked' => TRUE],
+          ],
+        ],
+      ];
+
+      if (!(\Drupal::moduleHandler()->moduleExists('commerce_checkout') &&
+            \Drupal::moduleHandler()->moduleExists('commerce_payment'))) {
+        $form['bws']['payment']['#disabled'] = TRUE;
+        $form['bws']['payment']['#description'] = t('To enable payments for bookings, install and enable the Drupal Commerce checkout and payment modules and configure a Commerce Store.');
+      }
+      elseif (\Drupal::moduleHandler()->moduleExists('commerce')) {
+        if (empty(Store::loadMultiple())) {
+          $form['bws']['payment']['#disabled'] = TRUE;
+          $form['bws']['payment']['#description'] = t('To enable payments for bookings, install and enable the Drupal Commerce checkout and payment modules and configure a Commerce Store.');
+        }
+      }
+
+      if (isset($bws_settings['type_id'])) {
+        $form['bws']['type_id'] = [
+          '#type' => 'hidden',
+          '#value' => $bws_settings['type_id'],
+        ];
+      }
+
+      $form['actions']['submit']['#submit'][] = 'bws_node_type_edit_form_submit';
+
+      $form['#attached']['library'][] = 'bws/bws';
+    }
+  }
+
+   
+  if($form_id == "node_booking_armazens_step_3_form") {
+   
+    $form['actions']['submit']['#submit'][] = 'bws_node_insert_add_booking';
+  }
+}
+
+
+function bws_node_insert_add_booking($node) {
+
+  $node_type = NodeType::load($node->bundle());
+  assert($node_type instanceof NodeType);
+  $bws_settings = $node_type->getThirdPartySetting('bws', 'bws');
+
+  if (isset($bws_settings['bookable']) && $bws_settings['bookable']) {
+
+    $units_ids = $node->get('field_availability_' . $bws_settings['bookable_type'])->getValue();
+
+    $units = get_units_in_armazem($node);
+
+    if(!empty($units)) {
+      foreach($units as $unit) {
+
+        if($unit['unit_bundle'] == 'area_partilhada') {
+
+          $bat_unit = bat_unit_create(
+            [
+              'name' => $unit['name'],
+              'type' => $unit['unit_bundle'],
+              'unit_type_id' => $bws_settings['type_id'],
+              'field_comprimento' => $unit['comprimento'],
+              'field_largura' => $unit['largura'],
+              'field_area_total' => $unit['area_disponivel'],
+              'field_area_disponivel' => $unit['area_disponivel'],
+            ]
+          );
+        } else {
+          
+          $bat_unit = bat_unit_create(
+            [
+              'name' => $unit['name'],
+              'type' => $unit['unit_bundle'],
+              'unit_type_id' => $bws_settings['type_id'],
+            ]
+          );
+        }
+        
+        
+
+        bat_unit_save($bat_unit);
+
+        $units_ids[]['target_id'] = $bat_unit->id();
+      }
+
+      $node->set('field_availability_' . $bws_settings['bookable_type'], $units_ids);
+      // $node->changed_time = $form_state->getValue('changed');
+      $node->setNewRevision(FALSE);
+      $node->save();
+    }
+  }
+}
+
+function get_units_in_armazem($node) {
+
+  $units = array();
+
+  if($node->get('field_bool_aluguer_do_imovel')->getString() == "1") {
+      $units[] = array(
+          "tipo" => "aluguer_imovel",
+          "unit_bundle" => "area_total",
+          "name" => "Aluguer do Imóvel"
+      );
+  }
+
+  if($node->get('field_bool_aluguer_por_area')->getString() == "1") {
+
+    $field_area_partilhada = $node->get('field_area_partilhada')->getValue();
+
+    foreach($field_area_partilhada as $area_partilhada) {
+
+      $p = \Drupal\paragraphs\Entity\Paragraph::load( $area_partilhada['target_id'] );
+
+      $comprimento = $p->get('field_comprimento')->getString();
+      $largura = $p->get('field_largura')->getString();
+    }
+
+    $area_disponivel = floatval($comprimento) * floatval($largura);
+    
+
+    $units[] = array(
+      "tipo" => "aluguer_parcial",
+      "unit_bundle" => "area_partilhada",
+      "name" => "Aluguer de espaço",
+      "comprimento" => floatval($comprimento),
+      "largura" => floatval($largura),
+      "area_disponivel" => $area_disponivel
+    );
+  }
+
+  if($node->get('field_bool_aluguer_camara_de_fri')->getString() == "1") {
+
+    $camaras_frio = $node->get('field_camara_de_frio')->getValue();
+
+    foreach($camaras_frio as $camara_frio) {
+      
+      $p = \Drupal\paragraphs\Entity\Paragraph::load( $camara_frio['target_id'] );
+
+      $units[] = array(
+        "tipo" => "aluguer_camaras_de_frio",
+        "unit_bundle" => "camara_de_frio",
+        "name" => t("Camara de frio") ." (". $p->get('field_capacidade')->getString() . " m³)"
+      );
+
+    }
+  }
+
+  return $units;
+}
+
+
+/**
+ * Custom submit function for the node_type_edit_form and node_type_add_form.
+ */
+function bws_node_type_edit_form_submit(array &$form, FormStateInterface $form_state) {
+  $node_type = $form_state->getFormObject()->getEntity();
+  assert($node_type instanceof NodeType);
+
+  $bws_settings = $form_state->getValue('bws');
+
+  $bws_settings['bookable_type'] = "daily";
+  $bws_settings['availability'] = "available";
+  $bws_settings['payment_default_value'] = $form['bws']['payment']['#default_value'];
+
+  bws_set_bws_to_node($node_type, $bws_settings);
+  return;
+
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ */
+function bws_node_presave(EntityInterface $node) {
+  if (isset($node->changed_time)) {
+    $node->setChangedTime($node->changed_time);
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete().
+ */
+function bws_node_delete(EntityInterface $node) {
+  $node_type = NodeType::load($node->bundle());
+  assert($node_type instanceof NodeType);
+  $bws_settings = $node_type->getThirdPartySetting('bws', 'bws');
+
+  if (!empty($bws_settings['bookable_type']) && $node->hasField('field_availability_' . $bws_settings['bookable_type'])) {
+    if ($bat_unit = $node->get('field_availability_' . $bws_settings['bookable_type'])->entity) {
+      bat_unit_delete($bat_unit);
+    }
+
+    if ($bws_settings['payment']) {
+      if ($product = $node->get('field_product')->entity) {
+        $product->delete();
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete().
+ */
+function bws_commerce_order_item_delete(OrderItemInterface $order_item) {
+  if ($order_item->bundle() == 'bws') {
+    if ($booking = $order_item->get('field_booking')->entity) {
+      $booking->delete();
+    }
+  }
+}
+
+/**
+ * Implements hook_theme_registry_alter().
+ */
+function bws_theme_registry_alter(&$theme_registry) {
+
+  $theme_registry['field__node__field_availability_daily'] = [
+    'template' => 'field-availability-daily',
+    'path' => \Drupal::service('extension.list.module')->getPath('bws') . '/templates',
+    'render element' => 'element',
+    'base hook' => 'field',
+    'type' => 'module',
+    'theme path' => \Drupal::service('extension.list.module')->getPath('bws'),
+    'preprocess functions' => [
+      'template_preprocess',
+      'template_preprocess_field',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_entity_view_display_alter().
+ */
+function bws_entity_view_display_alter(EntityViewDisplayInterface $display, $context) {
+  if ($context['entity_type'] == 'node') {
+    if ($node = \Drupal::routeMatch()->getParameter('node')) {
+      if ($display->getComponent('field_open_hours')) {
+        if (!($node->get('field_use_open_hours')->value)) {
+          $display->removeComponent('field_open_hours');
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_view_alter().
+ */
+function bws_entity_view_alter(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
+  if ($entity->getEntityTypeId() == 'bat_unit') {
+
+    if ($display->id() == 'bat_unit.default.daily_calendar' || $display->id() == 'bat_unit.area_total.daily_calendar' || $display->id() == 'bat_unit.area_partilhada.daily_calendar' || $display->id() == 'bat_unit.camara_de_frio.daily_calendar') {
+
+      $bat_type = $entity->get('unit_type_id')->entity;
+
+      $unit_type = $bat_type->id();
+
+      $node = $build['#bat_unit']->_referringItem->getEntity();
+
+      $units_ids = [];
+      foreach ($node->get('field_availability_' . $bat_type->bundle()) as $unit) {
+        if ($unit->entity) {
+          $units_ids[] = $unit->entity->id();
+        }
+      }
+      
+
+      if ($bat_type->bundle() == 'daily') {
+        $event_type = 'availability_daily';
+        $event_granularity = 'bat_daily';
+
+        $fc_user_settings = [
+          'batCalendar' => [
+            [
+              'unitType' => $unit_type,
+              'unitIds' => implode(',', $units_ids),
+              'eventType' => $event_type,
+              'eventGranularity' => $event_granularity,
+              'editable' => FALSE,
+              'selectable' => FALSE,
+              'defaultView' => 'month',
+              'views' => 'month',
+              'headerLeft' => 'today',
+              'headerCenter' => 'title',
+              'headerRight' => 'prev, next',
+              'resourceLabelText' => ' ',
+            ],
+          ],
+        ];
+      }
+      
+      $calendar_settings['user_settings'] = $fc_user_settings;
+      $calendar_settings['calendar_id'] = 'fullcalendar-scheduler';
+
+      $render_array = [
+        'calendar' => [
+          '#theme' => 'bat_fullcalendar',
+          '#calendar_settings' => $calendar_settings,
+          '#attached' => ['library' => ['bat_event_ui/bat_event_ui', 'bat_fullcalendar/bat-fullcalendar-scheduler']],
+        ],
+      ];
+
+      $build = [
+        '#markup' => \Drupal::service('renderer')->render($render_array),
+      ];
+    }
+  }
+}
+
+/**
+ * Implements hook_bat_api_events_index_calendar_alter().
+ */
+function bws_bat_api_events_index_calendar_alter(&$events, $context) {
+  if ($context['background'] == 'hide-book') {
+    foreach ($events as $id => $event) {
+      if ($event['type'] == 'availability_daily') {
+        unset($events[$id]['rendering']);
+
+        if ($event['blocking']) {
+          if ($event['type'] == 'availability_daily') {
+            $state = bat_event_load_state_by_machine_name('bws_daily_not_available');
+          }
+
+          $events[$id]['color'] = $state->getColor();
+          $events[$id]['title'] = $state->getCalendarLabel();
+        }
+
+        $start_date = new DateTime($event['start']);
+        $end_date = new DateTime($event['end']);
+
+        if ($start_date->format('Y-m-d') != $end_date->format('Y-m-d')) {
+          $events[$id]['end'] = $end_date->add(new DateInterval('P1D'))->format('Y-m-d') . 'T00:00:00';
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_views_pre_render().
+ */
+function bws_views_pre_render(ViewExecutable $view) {
+  if ($view->id() == 'commerce_order_item_table') {
+    foreach ($view->result as $id => $result) {
+      if ($result->_entity->bundle() == 'bws') {
+        if (($booking = $result->_entity->get('field_booking')->entity) &&
+            ($node = $result->_entity->get('field_node')->entity)) {
+          $url = Url::fromRoute('entity.node.canonical', ['node' => $node->id()]);
+          $link = Link::fromTextAndUrl($node->label(), $url)->toString();
+
+          $start_date = $booking->get('booking_start_date')->value;
+          $end_date = $booking->get('booking_end_date')->value;
+
+          $title = Markup::create('Booking for ' . $link . ' from ' . $start_date . ' to ' . $end_date);
+
+          $view->result[$id]->_entity->set('title', $title);
+        }
+      }
+    }
+  }
+}
+
+function bws_mail($key, &$message, $params) {
+ $options = array(
+   'langcode' => $message['langcode'],
+ );
+ switch ($key) {
+   case 'general_mail':
+     $message['from'] = $params['headers']['From'] ?? NULL;
+     $message['subject'] = isset($params['subject']) ? str_replace(["\r\n", "\r", "\n"], ' ', $params['subject']) : NULL;
+    $message['body'][] = $params['body'];
+     break;
+ }
+}
+
+/**
+ * Add "Availability" field to the node type.
+ *
+ * @param string $field_name
+ * @param \Drupal\node\Entity\NodeType $node_type
+ */
+function bws_add_availability_field($field_name, NodeType $node_type) {
+  $field_storage = FieldStorageConfig::loadByName('node', $field_name);
+  $field = FieldConfig::loadByName('node', $node_type->id(), $field_name);
+
+  if (empty($field_storage)) {
+    $field_storage = FieldStorageConfig::create([
+      'field_name' => $field_name,
+      'entity_type' => 'node',
+      'type' => 'entity_reference',
+      'cardinality' => -1,
+      'locked' => 1,
+      'settings' => [
+        'target_type' => 'bat_unit',
+      ],
+    ]);
+    $field_storage->save();
+  }
+
+  if (empty($field)) {
+    $field = FieldConfig::create([
+      'field_storage' => $field_storage,
+      'entity_type' => 'node',
+      'label' => 'Availability',
+      'bundle' => $node_type->id(),
+      'required' => FALSE,
+      'settings' => [
+        'handler' => 'default',
+        'handler_settings' => [],
+      ],
+    ]);
+    $field->save();
+  }
+}
+
+/**
+ * Add "Open Hours" field to the node type.
+ *
+ * @param string $field_name
+ * @param \Drupal\node\Entity\NodeType $node_type
+ */
+function bws_add_open_hours_field($field_name, NodeType $node_type) {
+  $field_storage = FieldStorageConfig::loadByName('node', $field_name);
+  $field = FieldConfig::loadByName('node', $node_type->id(), $field_name);
+
+  if (empty($field_storage)) {
+    $field_storage = FieldStorageConfig::create([
+      'field_name' => $field_name,
+      'entity_type' => 'node',
+      'type' => 'office_hours',
+      'cardinality' => -1,
+      'locked' => 1,
+      'settings' => [
+        'cardinality_per_day' => 2,
+        'time_format' => 'G',
+        'element_type' => 'office_hours_datetime',
+        'increment' => 60,
+        'comment' => FALSE,
+        'valhrs' => FALSE,
+        'limit_start' => '',
+        'limit_end' => '',
+      ],
+    ]);
+    $field_storage->save();
+  }
+
+  if (empty($field)) {
+    $field = FieldConfig::create([
+      'field_storage' => $field_storage,
+      'entity_type' => 'node',
+      'label' => 'Open Hours',
+      'bundle' => $node_type->id(),
+      'required' => FALSE,
+      'settings' => [
+        'handler' => 'default',
+        'handler_settings' => [],
+      ],
+    ]);
+    $field->save();
+
+    $form_display = \Drupal::entityTypeManager()->getStorage('entity_form_display')->load('node.' . $node_type->id() . '.default');
+    if ($form_display !== NULL) {
+      $form_display->setComponent($field_name, [
+        'type' => 'office_hours_default',
+        'weight' => 3,
+      ]);
+      $form_display->save();
+    }
+
+    $view_display = \Drupal::entityTypeManager()->getStorage('entity_view_display')->load('node.' . $node_type->id() . '.default');
+    if ($view_display !== NULL) {
+      $view_display->setComponent($field_name, [
+        'type' => 'office_hours_table',
+        'region' => 'content',
+        'label' => 'above',
+        'settings' => [],
+      ]);
+      $view_display->save();
+    }
+  }
+}
+
+/**
+ * Add "Set Open Hours" field to the node type.
+ *
+ * @param string $field_name
+ * @param \Drupal\node\Entity\NodeType $node_type
+ */
+function bws_add_use_open_hours_field($field_name, NodeType $node_type) {
+  $field_storage = FieldStorageConfig::loadByName('node', $field_name);
+  $field = FieldConfig::loadByName('node', $node_type->id(), $field_name);
+
+  if (empty($field_storage)) {
+    $field_storage = FieldStorageConfig::create([
+      'field_name' => $field_name,
+      'entity_type' => 'node',
+      'type' => 'boolean',
+      'cardinality' => 1,
+      'locked' => 1,
+      'settings' => [],
+    ]);
+    $field_storage->save();
+  }
+
+  if (empty($field)) {
+    $field = FieldConfig::create([
+      'field_storage' => $field_storage,
+      'entity_type' => 'node',
+      'label' => 'Set Open Hours',
+      'bundle' => $node_type->id(),
+      'required' => FALSE,
+      'settings' => [
+        'handler' => 'default',
+        'handler_settings' => [],
+      ],
+    ]);
+    $field->save();
+
+    $form_display = \Drupal::entityTypeManager()->getStorage('entity_form_display')->load('node.' . $node_type->id() . '.default');
+    if ($form_display !== NULL) {
+      $form_display->setComponent($field_name, [
+        'type' => 'boolean_checkbox',
+        'weight' => 2,
+      ]);
+      $form_display->save();
+    }
+  }
+}
+
+/**
+ * Add "Product" field to the node type.
+ *
+ * @param string $field_name
+ * @param \Drupal\node\Entity\NodeType $node_type
+ */
+function bws_add_product_reference_field($field_name, NodeType $node_type) {
+  $field_storage = FieldStorageConfig::loadByName('node', $field_name);
+  $field = FieldConfig::loadByName('node', $node_type->id(), $field_name);
+
+  if (empty($field_storage)) {
+    $field_storage = FieldStorageConfig::create([
+      'field_name' => $field_name,
+      'entity_type' => 'node',
+      'type' => 'entity_reference',
+      'cardinality' => 1,
+      'locked' => 1,
+      'settings' => [
+        'target_type' => 'commerce_product',
+      ],
+    ]);
+    $field_storage->save();
+  }
+
+  if (empty($field)) {
+    $field = FieldConfig::create([
+      'field_storage' => $field_storage,
+      'entity_type' => 'node',
+      'label' => 'Product',
+      'bundle' => $node_type->id(),
+      'required' => FALSE,
+      'settings' => [
+        'handler' => 'default:commerce_product',
+        'handler_settings' => [
+          'target_bundles' => [
+            'bws_' . $node_type->id() => 'bws_' . $node_type->id(),
+          ],
+        ],
+      ],
+    ]);
+    $field->save();
+  }
+}
+
+/**
+ * Add "Price" field to the node type.
+ *
+ * @param string $field_name
+ * @param \Drupal\node\Entity\NodeType $node_type
+ */
+function bws_add_price_field($field_name, NodeType $node_type) {
+  $field_storage = FieldStorageConfig::loadByName('node', $field_name);
+  $field = FieldConfig::loadByName('node', $node_type->id(), $field_name);
+
+  if (empty($field_storage)) {
+    $field_storage = FieldStorageConfig::create([
+      'field_name' => $field_name,
+      'entity_type' => 'node',
+      'type' => 'commerce_price',
+      'cardinality' => 1,
+      'locked' => 1,
+      'settings' => [],
+    ]);
+    $field_storage->save();
+  }
+
+  if (empty($field)) {
+    $store_storage = \Drupal::entityTypeManager()->getStorage('commerce_store');
+    $default_store = $store_storage->loadDefault();
+
+    $field = FieldConfig::create([
+      'field_storage' => $field_storage,
+      'entity_type' => 'node',
+      'label' => 'Price',
+      'bundle' => $node_type->id(),
+      'required' => TRUE,
+      'default_value' => [
+        'number' => 0,
+        'currency_code' => $default_store->getDefaultCurrencyCode(),
+      ],
+      'settings' => [],
+    ]);
+    $field->save();
+
+    $form_display = \Drupal::entityTypeManager()->getStorage('entity_form_display')->load('node.' . $node_type->id() . '.default');
+    if ($form_display !== NULL) {
+      $form_display->setComponent($field_name, [
+        'type' => 'commerce_price_default',
+        'weight' => 3,
+      ]);
+      $form_display->save();
+    }
+  }
+}
+
+/**
+ * Add "Price frequency" field to the node type.
+ *
+ * @param string $field_name
+ * @param \Drupal\node\Entity\NodeType $node_type
+ */
+function bws_add_price_frequency_field($field_name, $node_type) {
+  $field_storage = FieldStorageConfig::loadByName('node', $field_name);
+  $field = FieldConfig::loadByName('node', $node_type->id(), $field_name);
+
+  if (empty($field_storage)) {
+    $field_storage = FieldStorageConfig::create([
+      'field_name' => $field_name,
+      'entity_type' => 'node',
+      'type' => 'list_string',
+      'cardinality' => 1,
+      'locked' => 1,
+      'settings' => [
+        'allowed_values' => [
+          'hour' => 'Hour',
+          'minute' => 'Minute',
+        ],
+      ],
+    ]);
+    $field_storage->save();
+  }
+
+  if (empty($field)) {
+    $field = FieldConfig::create([
+      'field_storage' => $field_storage,
+      'entity_type' => 'node',
+      'label' => 'Price frequency',
+      'bundle' => $node_type->id(),
+      'required' => FALSE,
+      'settings' => [],
+    ]);
+    $field->save();
+
+    $form_display = \Drupal::entityTypeManager()->getStorage('entity_form_display')->load('node.' . $node_type->id() . '.default');
+    if ($form_display !== NULL) {
+      $form_display->setComponent($field_name, [
+        'type' => 'options_select',
+        'weight' => 4,
+      ]);
+      $form_display->save();
+    }
+  }
+}
+
+/**
+ * Create "Product variation" type for BWS.
+ */
+function bws_create_bws_product_variation_type() {
+  if (ProductVariationType::load('bws') === NULL) {
+    $variation_type = ProductVariationType::create([
+      'id' => 'bws',
+      'label' => 'BWS',
+      'orderItemType' => 'default',
+      'generateTitle' => TRUE,
+    ]);
+    $variation_type->save();
+
+    $view_display = \Drupal::entityTypeManager()->getStorage('entity_view_display')->load('commerce_product_variation.bws.default');
+    if (!$view_display) {
+      $view_display = EntityViewDisplay::create([
+        'targetEntityType' => 'commerce_product_variation',
+        'bundle' => 'bws',
+        'mode' => 'default',
+        'status' => TRUE,
+      ]);
+    }
+    $view_display->setComponent('price', ['type' => 'commerce_price_calculated']);
+    $view_display->save();
+  }
+}
+
+/**
+ * Create a "Product" type for each node type in BWS.
+ *
+ * @param \Drupal\node\Entity\NodeType $node_type
+ */
+function bws_create_node_product_type(NodeType $node_type) {
+  $id = 'bws_' . $node_type->id();
+
+  if (ProductType::load($id) === NULL) {
+    $product_type = ProductType::create([
+      'id' => $id,
+      'label' => $node_type->label(),
+      'variationType' => 'bws',
+    ]);
+    $product_type->save();
+  }
+}
+
+/**
+ * Create "Order item" type for BWS.
+ */
+function bws_create_bws_order_item_type() {
+  $id = 'bws';
+
+  if (OrderItemType::load($id) === NULL) {
+    OrderItemType::create([
+      'id' => $id,
+      'label' => 'BWS',
+      'purchasableEntityType' => 'commerce_product_variation',
+      'orderType' => 'default',
+    ])->save();
+
+    $view_display = \Drupal::entityTypeManager()->getStorage('entity_view_display')->load('commerce_order_item.bws.default');
+    if (!$view_display) {
+      $view_display = EntityViewDisplay::create([
+        'targetEntityType' => 'commerce_order_item',
+        'bundle' => 'bws',
+        'mode' => 'default',
+        'status' => TRUE,
+      ]);
+      $view_display->setComponent('total_price', [
+        'type' => 'commerce_price_default',
+        'region' => 'content',
+        'label' => 'above',
+        'settings' => [
+          'strip_trailing_zeroes' => FALSE,
+          'display_currency_code' => FALSE,
+        ],
+      ]);
+      $view_display->setComponent('purchased_entity', [
+        'type' => 'entity_reference_entity_view',
+        'region' => 'content',
+        'label' => 'above',
+        'settings' => [
+          'view_mode' => 'default',
+          'link' => FALSE,
+        ],
+      ]);
+      $view_display->setComponent('quantity', [
+        'type' => 'number_decimal',
+        'region' => 'content',
+        'label' => 'above',
+        'settings' => [
+          'thousand_separator' => '',
+          'decimal_separator' => '.',
+          'scale' => 2,
+          'prefix_suffix' => TRUE,
+        ],
+      ]);
+      $view_display->setComponent('unit_price', [
+        'type' => 'commerce_price_default',
+        'region' => 'content',
+        'label' => 'above',
+        'settings' => [
+          'strip_trailing_zeroes' => FALSE,
+          'display_currency_code' => FALSE,
+        ],
+      ]);
+      $view_display->save();
+    }
+  }
+
+  $field_name = 'field_booking';
+
+  $field_storage = FieldStorageConfig::loadByName('commerce_order_item', $field_name);
+  $field = FieldConfig::loadByName('commerce_order_item', 'bws', $field_name);
+
+  if (empty($field_storage)) {
+    $field_storage = FieldStorageConfig::create([
+      'field_name' => $field_name,
+      'entity_type' => 'commerce_order_item',
+      'type' => 'entity_reference',
+      'cardinality' => 1,
+      'locked' => 1,
+      'settings' => [
+        'target_type' => 'bat_booking',
+      ],
+    ]);
+    $field_storage->save();
+  }
+
+  if (empty($field)) {
+    $field = FieldConfig::create([
+      'field_storage' => $field_storage,
+      'entity_type' => 'commerce_order_item',
+      'label' => 'Booking',
+      'bundle' => 'bws',
+      'required' => FALSE,
+      'settings' => [
+        'handler' => 'default:bat_booking',
+        'handler_settings' => [
+          'target_bundles' => [
+            'bws' => 'bws',
+          ],
+        ],
+      ],
+    ]);
+    $field->save();
+  }
+
+  $field_name = 'field_node';
+
+  $field_storage = FieldStorageConfig::loadByName('commerce_order_item', $field_name);
+  $field = FieldConfig::loadByName('commerce_order_item', 'bws', $field_name);
+
+  if (empty($field_storage)) {
+    $field_storage = FieldStorageConfig::create([
+      'field_name' => $field_name,
+      'entity_type' => 'commerce_order_item',
+      'type' => 'entity_reference',
+      'cardinality' => 1,
+      'locked' => 1,
+      'settings' => [
+        'target_type' => 'node',
+      ],
+    ]);
+    $field_storage->save();
+  }
+
+  if (empty($field)) {
+    $field = FieldConfig::create([
+      'field_storage' => $field_storage,
+      'entity_type' => 'commerce_order_item',
+      'label' => 'Node',
+      'bundle' => 'bws',
+      'required' => FALSE,
+      'settings' => [
+        'handler' => 'default:node',
+        'handler_settings' => [
+          'target_bundles' => [],
+        ],
+      ],
+    ]);
+    $field->save();
+  }
+}
+
+/**
+ * Create "Booking" type for BWS.
+ */
+function bws_create_bws_booking_type() {
+  $id = 'bws';
+
+  if (bat_booking_type_load($id) === NULL) {
+    $booking_type = bat_booking_type_create([
+      'name' => 'BWS',
+      'type' => $id,
+    ]);
+    $booking_type->save();
+
+    bws_set_booking_event_reference_field_cardinality();
+    bws_create_booking_capacity_field();
+    bws_create_booking_repeat_frequency_field();
+    bws_create_booking_repeat_until_field();
+    bws_create_booking_event_series_reference_field();
+  }
+}
+
+/**
+ * Set cardinality as unlimited for the "booking_event_reference" field.
+ */
+function bws_set_booking_event_reference_field_cardinality() {
+  $field_storage = FieldStorageConfig::loadByName('bat_booking', 'booking_event_reference');
+  $field_storage->setCardinality(-1);
+  $field_storage->save();
+}
+
+/**
+ * Add booking "Repeat frequency" field.
+ */
+function bws_create_booking_repeat_frequency_field() {
+  $field_name = 'booking_repeat_frequency';
+
+  $field_storage = FieldStorageConfig::loadByName('bat_booking', $field_name);
+  $field = FieldConfig::loadByName('bat_booking', 'bws', $field_name);
+
+  if (empty($field_storage)) {
+    $field_storage = FieldStorageConfig::create([
+      'field_name' => $field_name,
+      'entity_type' => 'bat_booking',
+      'type' => 'list_string',
+      'cardinality' => 1,
+      'locked' => 1,
+      'settings' => [
+        'allowed_values' => [
+          'daily' => 'Daily',
+          'weekly' => 'Weekly',
+          'monthly' => 'Monthly',
+        ],
+        'allowed_values_function' => '',
+      ],
+    ]);
+    $field_storage->save();
+  }
+
+  if (empty($field)) {
+    $field = FieldConfig::create([
+      'field_storage' => $field_storage,
+      'entity_type' => 'bat_booking',
+      'label' => 'Repeat frequency',
+      'bundle' => 'bws',
+      'required' => FALSE,
+    ]);
+    $field->save();
+  }
+}
+
+/**
+ * Add booking "Repeat until" field.
+ */
+function bws_create_booking_repeat_until_field() {
+  $field_name = 'booking_repeat_until';
+
+  $field_storage = FieldStorageConfig::loadByName('bat_booking', $field_name);
+  $field = FieldConfig::loadByName('bat_booking', 'bws', $field_name);
+
+  if (empty($field_storage)) {
+    $field_storage = FieldStorageConfig::create([
+      'field_name' => $field_name,
+      'entity_type' => 'bat_booking',
+      'type' => 'datetime',
+      'cardinality' => 1,
+      'locked' => 1,
+      'settings' => [
+        'datetime_type' => 'date',
+      ],
+    ]);
+    $field_storage->save();
+  }
+
+  if (empty($field)) {
+    $field = FieldConfig::create([
+      'field_storage' => $field_storage,
+      'entity_type' => 'bat_booking',
+      'label' => 'Repeat until',
+      'bundle' => 'bws',
+      'required' => FALSE,
+    ]);
+    $field->save();
+  }
+}
+
+/**
+ * Add booking "Capacity" field.
+ */
+function bws_create_booking_capacity_field() {
+  $field_name = 'booking_capacity';
+
+  $field_storage = FieldStorageConfig::loadByName('bat_booking', $field_name);
+  $field = FieldConfig::loadByName('bat_booking', 'bws', $field_name);
+
+  if (empty($field_storage)) {
+    $field_storage = FieldStorageConfig::create([
+      'field_name' => $field_name,
+      'entity_type' => 'bat_booking',
+      'type' => 'integer',
+      'cardinality' => 1,
+      'locked' => 1,
+      'settings' => [
+        'unsigned' => TRUE,
+        'size' => 'normal',
+      ],
+    ]);
+    $field_storage->save();
+  }
+
+  if (empty($field)) {
+    $field = FieldConfig::create([
+      'field_storage' => $field_storage,
+      'entity_type' => 'bat_booking',
+      'label' => 'Capacity',
+      'bundle' => 'bws',
+      'required' => FALSE,
+      'settings' => [
+        'min' => NULL,
+        'max' => NULL,
+        'prefix' => '',
+        'suffix' => '',
+      ],
+    ]);
+    $field->save();
+  }
+}
+
+/**
+ * Add booking "Event series" reference field.
+ */
+function bws_create_booking_event_series_reference_field() {
+  $field_name = 'booking_event_series_reference';
+
+  $field_storage = FieldStorageConfig::loadByName('bat_booking', $field_name);
+  $field = FieldConfig::loadByName('bat_booking', 'bws', $field_name);
+
+  if (empty($field_storage)) {
+    $field_storage = FieldStorageConfig::create([
+      'field_name' => $field_name,
+      'entity_type' => 'bat_booking',
+      'type' => 'entity_reference',
+      'cardinality' => 1,
+      'locked' => 1,
+      'settings' => [
+        'target_type' => 'bat_event_series',
+      ],
+    ]);
+    $field_storage->save();
+  }
+
+  if (empty($field)) {
+    $field = FieldConfig::create([
+      'field_name' => $field_name,
+      'entity_type' => 'bat_booking',
+      'label' => 'Event series',
+      'bundle' => 'bws',
+      'required' => FALSE,
+    ]);
+    $field->save();
+  }
+}
+
+/**
+ * Create a Product instance for this node.
+ */
+function bws_create_node_product($node) {
+  $store_storage = \Drupal::entityTypeManager()->getStorage('commerce_store');
+  $default_store = $store_storage->loadDefault();
+
+  $variation = ProductVariation::create([
+    'type' => 'bws',
+    'sku' => 'bws_' . $node->bundle() . '_' . $node->id(),
+    'price' => [
+      'number' => 0,
+      'currency_code' => $default_store->getDefaultCurrencyCode(),
+    ],
+  ]);
+  $variation->save();
+  $product = Product::create([
+    'type' => 'bws_' . $node->bundle(),
+    'title' => $node->label(),
+    'variations' => [$variation],
+    'stores' => Store::loadMultiple(),
+  ]);
+  $product->save();
+
+  return $product;
+}
+
+function bws_event_series_types_add_fields() {
+  bat_event_series_type_add_event_dates_field('availability_daily');
+  bat_event_series_type_add_target_entity_field('availability_daily', 'bat_unit');
+  bat_event_series_type_add_event_state_reference('availability_daily');
+}
+
+/**
+ * Implements template_preprocess_bat_event_series().
+ */
+function bws_preprocess_bat_event_series(array &$variables) {
+  // Fetch Event series Entity Object.
+  $event_series = $variables['elements']['#bat_event_series'];
+
+  if (!in_array($event_series->bundle(), ['availability_daily'])) {
+    return;
+  }
+
+  $bat_unit = $event_series->get('event_bat_unit_reference')->entity;
+
+  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+
+  $query = \Drupal::entityQuery('node')->accessCheck(FALSE);
+  if ($event_series->bundle() == 'availability_daily') {
+    $query->condition('field_availability_daily', $bat_unit->id());
+  }
+
+  $query->accessCheck(FALSE);
+
+  $nids = $query->execute();
+
+  $node = $node_storage->load(reset($nids));
+
+  $variables['content']['add_reservation'] = [
+    '#theme' => 'menu_local_action',
+    '#link' => [
+      'title' => t('Add reservation'),
+      'url' => Url::fromRoute('bws.bat_event_series.add_reservation', [
+        'node' => $node->id(),
+        'bat_event_series' => $event_series->id(),
+      ]),
+    ],
+    '#prefix' => '<div class="action-links">',
+    '#suffix' => '</div>',
+    '#weight' => -100,
+  ];
+}
+
+/**
+ * @param \Drupal\node\Entity\Node $node
+ * @param \Drupal\bat_booking\Entity\Booking $booking
+ * @param DateTime $start_date
+ * @param DateTime $end_date
+ *
+ * @return \Drupal\commerce_price\Price
+ */
+function bws_get_unit_price(Node $node, Booking $booking, DateTime $start_date, DateTime $end_date) {
+  $node_type = NodeType::load($node->bundle());
+  assert($node_type instanceof NodeType);
+  $bws_settings = $node_type->getThirdPartySetting('bws', 'bws');
+
+  $interval = $start_date->diff($end_date);
+
+  $reservation_context = [
+    'booking' => $booking,
+    'node' => $node,
+  ];
+
+  $base_price = $node->get('field_price')->number;
+  $currency_code = $node->get('field_price')->currency_code;
+
+  if ($bws_settings['bookable_type'] == 'daily') {
+    $days = $interval->days;
+    $amount = number_format($base_price * $days, 2, '.', '');
+  }
+  else {
+    $field_price_frequency = $node->get('field_price_frequency')->value;
+
+    if ($field_price_frequency == 'hour') {
+      $hours = ($interval->days * 24) + $interval->h;
+      $amount = number_format($base_price * $hours, 2, '.', '');
+    }
+    else {
+      $minutes = ($interval->days * 24 * 60) + ($interval->h * 60) + $interval->i;
+      $amount = number_format($base_price * $minutes, 2, '.', '');
+    }
+  }
+
+  $price = new Price($amount, $currency_code);
+
+  \Drupal::moduleHandler()->alter('bws_reservation_price', $price, $reservation_context);
+
+  return $price;
+}
+
+/**
+  * Validate bws settings on nodes
+  * @param \Drupal\node\Entity\NodeType $node_type
+  *
+  * @return array $bws_settings
+  */
+function bws_validate_thirdpartysetting(NodeType $node_type) {
+
+  $bws_settings = $node_type->getThirdPartySetting('bws', 'bws');
+
+  if (!isset($bws_settings)) {
+    \Drupal::messenger()->addwarning(t('@nodetype content type has no valid BWS setting.', ['@nodetype' => $node_type->Id()]));
+    $url = Drupal\Core\URL::fromUserInput('/admin/structure/types/manage/' . $node_type->Id());
+    $link = Link::fromTextAndUrl(t('Update BWS  settings'), $url);
+  }
+  return $bws_settings;
+
+}
+
+
+/**
+ * Add BWS features to a given instance of NodeType.
+ *
+ * @param string $node_type
+ *   ................
+ * @param array $bws_settings
+ *   An associative array containing:
+ *   - bookable: integer.
+ *   - bookable_type: string.
+ *   - availability: string.
+ *   - payment: integer.
+ *   - payment_default_value: integer.
+ */
+function bws_set_bws_to_node($node_type, $bws_settings) {
+
+  if ($bws_settings['bookable']) {
+
+    bws_add_availability_field('field_availability_' . $bws_settings['bookable_type'], $node_type);
+
+    $view_display = \Drupal::entityTypeManager()->getStorage('entity_view_display')->load('node.' . $node_type->id() . '.default');
+    if ($view_display !== NULL) {
+      $view_display->setComponent('field_availability_' . $bws_settings['bookable_type'], [
+        'type' => 'entity_reference_entity_view',
+        'region' => 'content',
+        'label' => 'above',
+        'settings' => [
+          'view_mode' => $bws_settings['bookable_type'] . '_calendar',
+        ],
+      ]);
+      $view_display->save();
+    }
+
+    if (!isset($bws_settings['type_id'])) {
+      $bat_type = bat_unit_type_create(
+        [
+          'name' => $node_type->label(),
+          'type' => $bws_settings['bookable_type'],
+        ]
+      );
+
+      if ($bws_settings['availability'] == 'available') {
+        $state = bat_event_load_state_by_machine_name('bws_' . $bws_settings['bookable_type'] . '_available');
+      }
+      else {
+        $state = bat_event_load_state_by_machine_name('bws_' . $bws_settings['bookable_type'] . '_not_available');
+      }
+
+      $bat_type->set('field_availability_' . $bws_settings['bookable_type'], $state->id());
+
+      bat_unit_type_save($bat_type);
+
+      $bws_settings['type_id'] = $bat_type->id();
+    }
+
+    if ($bws_settings['payment']) {
+      bws_create_bws_product_variation_type();
+      bws_create_bws_order_item_type();
+      bws_create_bws_booking_type();
+
+      bws_create_node_product_type($node_type);
+
+      bws_add_product_reference_field('field_product', $node_type);
+      bws_add_price_field('field_price', $node_type);
+      bws_add_price_frequency_field('field_price_frequency', $node_type);
+
+      if (!$bws_settings['payment_default_value']) {
+        $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+
+        $query = \Drupal::entityQuery('node')
+          ->accessCheck(FALSE)
+          ->condition('type', $node_type->id());
+
+        $nids = $query->execute();
+        foreach ($node_storage->loadMultiple($nids) as $node) {
+          if (!$node->get('field_product')->entity) {
+            $product = bws_create_node_product($node);
+
+            $node->set('field_product', $product->id());
+            $node->save();
+          }
+        }
+      }
+    }
+
+    $node_type->setThirdPartySetting('bws', 'bws', $bws_settings)->save();
+  }
+  else {
+    if (isset($bws_settings['type_id'])) {
+      $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+
+      $query = \Drupal::entityQuery('node')
+        ->accessCheck(FALSE)
+        ->condition('type', $node_type->id());
+
+      $nids = $query->execute();
+      foreach ($node_storage->loadMultiple($nids) as $node) {
+        if ($node->hasField('field_availability_' . $bws_settings['bookable_type'])) {
+          if ($bat_unit = $node->get('field_availability_' . $bws_settings['bookable_type'])->entity) {
+            bat_unit_delete($bat_unit);
+          }
+        }
+      }
+
+      $bat_type = bat_unit_type_load($bws_settings['type_id']);
+      $bat_type->delete();
+    }
+
+    $node_type->unsetThirdPartySetting('bws', 'bws')->save();
+  }
+
+}
+
+
+
+function bws_create_require_bat_states() {
+
+  $states = [
+    'bws_daily_available' => [
+      'name' => 'Available',
+      'color' => '#42f649',
+      'calendar_label' => 'AV',
+      'blocking' => 0,
+      'machine_name' => 'bws_daily_available',
+      'event_type' => 'availability_daily',
+    ],
+    'bws_daily_not_available' => [
+      'name' => 'Not available',
+      'color' => '#f04b4b',
+      'calendar_label' => 'N/A',
+      'blocking' => 0,
+      'machine_name' => 'bws_daily_not_available',
+      'event_type' => 'availability_daily',
+    ],
+    'bws_daily_booked' => [
+      'name' => 'Booked',
+      'color' => '#4b3cea',
+      'calendar_label' => 'BOOK',
+      'blocking' => 1,
+      'machine_name' => 'bws_daily_booked',
+      'event_type' => 'availability_daily',
+    ],
+    'bws_daily_pending' => [
+      'name' => 'Pending',
+      'color' => '#FAFAC2',
+      'calendar_label' => 'PENDING',
+      'blocking' => 1,
+      'machine_name' => 'bws_daily_pending',
+      'event_type' => 'availability_daily',
+    ],
+  ];
+
+  foreach ($states as $state) {
+    bat_event_create_state($state)->save();
+  }
+
+}

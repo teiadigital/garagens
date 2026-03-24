@@ -1,0 +1,27 @@
+uuid: fd01d3c6-ecb0-4073-a2cd-7ae1f37f539c
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_certificacao_alfandega
+field_name: field_certificacao_alfandega
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: sim
+      label: Sim
+    -
+      value: nao
+      label: Não
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

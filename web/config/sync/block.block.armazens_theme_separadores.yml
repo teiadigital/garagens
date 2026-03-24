@@ -1,0 +1,29 @@
+uuid: a9eb13f6-a966-41c4-8983-6b568c4fef5c
+langcode: pt-pt
+status: false
+dependencies:
+  module:
+    - node
+  theme:
+    - armazens_theme
+id: armazens_theme_separadores
+theme: armazens_theme
+region: sidebar_right
+weight: -8
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: Separadores
+  label_display: '0'
+  provider: core
+  primary: true
+  secondary: true
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      armazem: armazem

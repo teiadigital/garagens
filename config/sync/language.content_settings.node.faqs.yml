@@ -1,0 +1,18 @@
+uuid: 52f96f85-4818-4c0c-bd52-02c08d135d29
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.faqs
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: node.faqs
+target_entity_type_id: node
+target_bundle: faqs
+default_langcode: current_interface
+language_alterable: true

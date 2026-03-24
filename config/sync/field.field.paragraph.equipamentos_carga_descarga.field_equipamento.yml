@@ -1,0 +1,29 @@
+uuid: bf286d8b-3d9a-4209-9498-1aa361b4295c
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_equipamento
+    - paragraphs.paragraphs_type.equipamentos_carga_descarga
+    - taxonomy.vocabulary.equipamentos_carga_descarga
+id: paragraph.equipamentos_carga_descarga.field_equipamento
+field_name: field_equipamento
+entity_type: paragraph
+bundle: equipamentos_carga_descarga
+label: Equipamento
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      equipamentos_carga_descarga: equipamentos_carga_descarga
+    sort:
+      field: name
+      direction: asc
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference

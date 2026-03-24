@@ -1,0 +1,20 @@
+uuid: 2a00e122-6554-4e12-85f7-4b73f9ca603c
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.armazem
+id: node.armazem.menu_link
+field_name: menu_link
+entity_type: node
+bundle: armazem
+label: 'Ligação de Menu'
+description: 'Ligação do menu calculado para o nó (disponível apenas durante a gravação do nó).'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

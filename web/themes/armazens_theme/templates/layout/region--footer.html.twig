@@ -1,0 +1,47 @@
+{#
+/**
+ * @file
+ * Theme override to display a region.
+ *
+ * Available variables:
+ * - content: The content for this region, typically blocks.
+ * - attributes: HTML attributes for the region <div>.
+ * - region: The name of the region variable as defined in the theme's
+ *   .info.yml file.
+ *
+ * @see template_preprocess_region()
+ */
+#}
+{%
+  set classes = [
+    'region',
+    'region-' ~ region|clean_class,
+  ]
+%}
+{% if content %}
+  <div{{ attributes.addClass(classes) }}>
+    <div class="container">
+        <div class="grid grid-cols-12 gap-y-7">
+            <div class="col-span-12 lg:col-span-6 xl:col-span-4">
+                {{ elements.armazens_theme_imagemdemarcadositio_3 }}
+                {{ elements.armazens_theme_footercontacts }}
+            </div>
+            <div class="col-span-12 lg:col-span-6 xl:col-start-6 xl:col-span-8">
+                {{ elements.armazens_theme_mailchimpsubscriptionformsubscribe }}
+                
+               
+            </div>
+
+            <div class="col-span-12 py-5">
+              <div class="flex justify-between gap-5 items-center flex-wrap">
+                <p class="text-white font-medium text-base" style="">2024 © Resultados & Escolhas - Armazéns Online, Lda | Designed by <a href="https://teia-digital.pt" target="_blank">Teia Digital</a></p>
+                 <a href="/construir-futuro" style="width: 30%" target="_blank"><img src="https://www.storitflex.com/sites/default/files/2025-02/unnamed.png" alt="Projeto Financiado | Construir o Futuro"></a>
+                {{ elements.armazens_theme_footermenu }}
+              </div>
+                
+            </div>
+        </div>
+        
+    </div>
+  </div>
+{% endif %}

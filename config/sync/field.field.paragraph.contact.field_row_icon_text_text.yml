@@ -1,0 +1,76 @@
+uuid: 140ce8ae-d218-4920-9256-62b7d938a0d5
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_row_icon_text_text
+    - paragraphs.paragraphs_type.contact
+    - paragraphs.paragraphs_type.contacts_icon_text_text
+  module:
+    - entity_reference_revisions
+id: paragraph.contact.field_row_icon_text_text
+field_name: field_row_icon_text_text
+entity_type: paragraph
+bundle: contact
+label: 'Row icon + text + text'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      contacts_icon_text_text: contacts_icon_text_text
+    negate: 0
+    target_bundles_drag_drop:
+      area_de_armazem:
+        weight: 18
+        enabled: false
+      banner:
+        weight: 19
+        enabled: false
+      block_registo:
+        weight: 20
+        enabled: false
+      camaras_de_frio:
+        weight: 21
+        enabled: false
+      carousel_banner:
+        weight: 22
+        enabled: false
+      contact:
+        weight: 23
+        enabled: false
+      contacts_icon_text_text:
+        weight: 17
+        enabled: true
+      equipamentos_carga_descarga:
+        weight: 24
+        enabled: false
+      icon_text:
+        weight: 25
+        enabled: false
+      icon_title_text:
+        weight: 26
+        enabled: false
+      preco_imovel:
+        weight: 27
+        enabled: false
+      raques:
+        weight: 28
+        enabled: false
+      sidebar_menu:
+        weight: 29
+        enabled: false
+      what_we_do:
+        weight: 30
+        enabled: false
+      why_choose_us:
+        weight: 31
+        enabled: false
+      why_our_solution:
+        weight: 32
+        enabled: false
+field_type: entity_reference_revisions

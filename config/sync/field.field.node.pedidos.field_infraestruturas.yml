@@ -1,0 +1,29 @@
+uuid: a02ee1f2-d967-45fe-8ce9-f1fe35e5d6b8
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_infraestruturas
+    - node.type.pedidos
+    - taxonomy.vocabulary.infraestruturas
+id: node.pedidos.field_infraestruturas
+field_name: field_infraestruturas
+entity_type: node
+bundle: pedidos
+label: 'outros recursos'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      infraestruturas: infraestruturas
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

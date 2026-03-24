@@ -1,0 +1,10 @@
+uuid: f166954e-2436-4c19-9930-ccadb7457a83
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: faqs
+label: Faqs
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

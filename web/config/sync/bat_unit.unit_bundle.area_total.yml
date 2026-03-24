@@ -1,0 +1,6 @@
+uuid: f5c63d12-79e8-4bfc-ae7f-1af87d4b2b7d
+langcode: pt-pt
+status: true
+dependencies: {  }
+name: 'Aluguer do Imóvel'
+type: area_total

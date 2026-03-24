@@ -1,0 +1,16 @@
+uuid: 8820058d-6d22-403b-9b9a-28eeeb9f62f4
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.pedidos
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+id: node.pedidos
+target_entity_type_id: node
+target_bundle: pedidos
+default_langcode: current_interface
+language_alterable: true

@@ -1,0 +1,25 @@
+uuid: c4c55062-21e4-4c71-987d-8ba8226058fd
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_estado
+    - node.type.armazem
+id: node.armazem.field_estado
+field_name: field_estado
+entity_type: node
+bundle: armazem
+label: Estado
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: -1
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

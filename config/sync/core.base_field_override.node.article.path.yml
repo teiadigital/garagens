@@ -1,0 +1,20 @@
+uuid: 07647bb5-3198-4304-9936-ce5e4efc9b84
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.article
+  module:
+    - path
+id: node.article.path
+field_name: path
+entity_type: node
+bundle: article
+label: 'URL alternativo'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

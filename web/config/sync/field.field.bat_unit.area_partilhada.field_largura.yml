@@ -1,0 +1,23 @@
+uuid: 228b99ec-4536-424d-b657-1e0c359b37d7
+langcode: en
+status: true
+dependencies:
+  config:
+    - bat_unit.unit_bundle.area_partilhada
+    - field.storage.bat_unit.field_largura
+id: bat_unit.area_partilhada.field_largura
+field_name: field_largura
+entity_type: bat_unit
+bundle: area_partilhada
+label: largura
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

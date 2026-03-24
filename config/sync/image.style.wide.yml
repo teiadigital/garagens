@@ -1,0 +1,23 @@
+uuid: 231c9d2f-a947-47f3-9a13-7cfae2685262
+langcode: pt-pt
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: LswCVLg8z4Zk1u6pV1Dpj1qUj5YY2CQ7_ojx7bJQ8qk
+name: wide
+label: 'Largo (1090)'
+effects:
+  09959c15-59ce-4f6d-90df-e2d7cf32bce5:
+    uuid: 09959c15-59ce-4f6d-90df-e2d7cf32bce5
+    id: image_scale
+    weight: 1
+    data:
+      width: 1090
+      height: null
+      upscale: false
+  92d98b25-f097-45e4-8e91-dffbdf83f613:
+    uuid: 92d98b25-f097-45e4-8e91-dffbdf83f613
+    id: image_convert
+    weight: 2
+    data:
+      extension: webp

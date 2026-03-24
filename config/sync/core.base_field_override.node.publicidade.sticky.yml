@@ -1,0 +1,22 @@
+uuid: b2f23e72-d9a5-4a60-8f4f-08d997e70946
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.publicidade
+id: node.publicidade.sticky
+field_name: sticky
+entity_type: node
+bundle: publicidade
+label: 'Destacado no topo das listas'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

@@ -1,0 +1,7 @@
+uuid: 1de16921-abac-41c6-a672-0d64aac2972a
+langcode: pt-pt
+status: false
+dependencies: {  }
+formId: node_pedidos_form
+captchaType: default
+label: node_pedidos_form

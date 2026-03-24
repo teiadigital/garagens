@@ -1,0 +1,22 @@
+uuid: a9813ad1-2798-4092-855d-f086578f00d0
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.advertising_carousel
+id: paragraph.advertising_carousel.status
+field_name: status
+entity_type: paragraph
+bundle: advertising_carousel
+label: Publicado
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

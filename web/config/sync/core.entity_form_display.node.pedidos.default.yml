@@ -1,0 +1,393 @@
+uuid: 4f702d23-af8b-4f4c-bad4-393934f4c36a
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.node.pedidos.field_area_individual
+    - field.field.node.pedidos.field_cais_carga
+    - field.field.node.pedidos.field_camara_de_frio
+    - field.field.node.pedidos.field_carga_adr
+    - field.field.node.pedidos.field_certificacao_alfandega
+    - field.field.node.pedidos.field_certificados
+    - field.field.node.pedidos.field_controlo_acesso
+    - field.field.node.pedidos.field_equipamento_carga_descarga
+    - field.field.node.pedidos.field_espaco
+    - field.field.node.pedidos.field_estado
+    - field.field.node.pedidos.field_incluir_espaco_exterior
+    - field.field.node.pedidos.field_infraestruturas
+    - field.field.node.pedidos.field_licenca_utilizacao
+    - field.field.node.pedidos.field_limitacoes_carga_descarga
+    - field.field.node.pedidos.field_localidade
+    - field.field.node.pedidos.field_permite_ser_partilhado
+    - field.field.node.pedidos.field_peso_maximo_piso
+    - field.field.node.pedidos.field_piso
+    - field.field.node.pedidos.field_raques
+    - field.field.node.pedidos.field_recursos_humanos
+    - field.field.node.pedidos.field_seguro
+    - field.field.node.pedidos.field_seguro_imovel
+    - field.field.node.pedidos.field_servicos_picking
+    - field.field.node.pedidos.field_sprinklers
+    - field.field.node.pedidos.field_tem_area_administrativa
+    - field.field.node.pedidos.field_tem_camaras_de_frio
+    - field.field.node.pedidos.field_tem_raques
+    - field.field.node.pedidos.field_tipos_de_horario_pedidos
+    - field.field.node.pedidos.field_vedacao
+    - field.field.node.pedidos.field_wc
+    - node.type.pedidos
+  module:
+    - address
+    - entity_form_field_label
+    - field_group
+    - field_hidden
+    - inline_entity_form
+    - select_or_other
+third_party_settings:
+  field_group:
+    group_step_1:
+      children:
+        - title
+        - field_localidade
+        - field_espaco
+        - field_vedacao
+        - field_incluir_espaco_exterior
+        - field_piso
+        - field_peso_maximo_piso
+        - field_carga_adr
+        - field_limitacoes_carga_descarga
+      label: 'Step 1'
+      region: content
+      parent_name: ''
+      weight: 0
+      format_type: steps
+      format_settings:
+        add_label: ''
+        edit_label: ''
+        cancel_button: ''
+        cancel_path: ''
+        previous_button: ''
+        next_button: Seguinte
+        submit_button: ''
+        preview_button: ''
+        delete_button: ''
+        delete_path: ''
+    group_step_2:
+      children:
+        - field_area_individual
+        - field_permite_ser_partilhado
+        - field_tem_camaras_de_frio
+        - field_camara_de_frio
+        - field_tem_raques
+        - field_raques
+      label: 'Step 2'
+      region: content
+      parent_name: ''
+      weight: 1
+      format_type: steps
+      format_settings:
+        add_label: ''
+        edit_label: ''
+        cancel_button: ''
+        cancel_path: ''
+        previous_button: Anterior
+        next_button: Seguinte
+        submit_button: ''
+        preview_button: ''
+        delete_button: ''
+        delete_path: ''
+    group_step_3:
+      children:
+        - field_infraestruturas
+        - field_cais_carga
+        - field_recursos_humanos
+        - field_equipamento_carga_descarga
+        - field_servicos_picking
+        - field_wc
+        - field_tem_area_administrativa
+        - field_controlo_acesso
+        - field_tipos_de_horario_pedidos
+      label: 'Step 3'
+      region: content
+      parent_name: ''
+      weight: 2
+      format_type: steps
+      format_settings:
+        add_label: ''
+        edit_label: ''
+        cancel_button: ''
+        cancel_path: ''
+        previous_button: Anterior
+        next_button: Seguinte
+        submit_button: ''
+        preview_button: ''
+        delete_button: ''
+        delete_path: ''
+    group_step_4:
+      children:
+        - field_sprinklers
+        - field_licenca_utilizacao
+        - field_certificados
+        - field_certificacao_alfandega
+        - field_seguro
+        - field_seguro_imovel
+      label: 'Step 4'
+      region: content
+      parent_name: ''
+      weight: 3
+      format_type: steps
+      format_settings:
+        add_label: ''
+        edit_label: ''
+        cancel_button: ''
+        cancel_path: ''
+        previous_button: Anterior
+        next_button: Seguinte
+        submit_button: ''
+        preview_button: ''
+        delete_button: ''
+        delete_path: ''
+id: node.pedidos.default
+targetEntityType: node
+bundle: pedidos
+mode: default
+content:
+  field_area_individual:
+    type: inline_entity_form_simple
+    weight: 2
+    region: content
+    settings:
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      collapsible: false
+      collapsed: false
+      revision: false
+    third_party_settings:
+      entity_form_field_label:
+        new_label: ''
+        rewrite_label: 0
+  field_cais_carga:
+    type: options_buttons
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_camara_de_frio:
+    type: inline_entity_form_simple
+    weight: 5
+    region: content
+    settings:
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      collapsible: false
+      collapsed: false
+      revision: false
+    third_party_settings: {  }
+  field_carga_adr:
+    type: options_buttons
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_certificacao_alfandega:
+    type: options_buttons
+    weight: 7
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_certificados:
+    type: string_textfield
+    weight: 6
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_controlo_acesso:
+    type: options_buttons
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_equipamento_carga_descarga:
+    type: inline_entity_form_simple
+    weight: 6
+    region: content
+    settings:
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      collapsible: false
+      collapsed: false
+      revision: false
+    third_party_settings: {  }
+  field_espaco:
+    type: options_buttons
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_estado:
+    type: field_hidden_number
+    weight: 5
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_incluir_espaco_exterior:
+    type: options_buttons
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_infraestruturas:
+    type: options_buttons
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_licenca_utilizacao:
+    type: options_buttons
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_limitacoes_carga_descarga:
+    type: options_buttons
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_localidade:
+    type: address_default
+    weight: 2
+    region: content
+    settings:
+      wrapper_type: fieldset
+    third_party_settings: {  }
+  field_permite_ser_partilhado:
+    type: options_buttons
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_peso_maximo_piso:
+    type: number
+    weight: 7
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_piso:
+    type: select_or_other_reference
+    weight: 6
+    region: content
+    settings:
+      select_element_type: select_or_other_select
+      sort_options: ''
+      other_placeholder: ''
+      other_option: ''
+      other_field_label: ''
+    third_party_settings:
+      entity_form_field_label:
+        new_label: ''
+        rewrite_label: 0
+  field_raques:
+    type: inline_entity_form_simple
+    weight: 7
+    region: content
+    settings:
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      collapsible: false
+      collapsed: false
+      revision: false
+    third_party_settings: {  }
+  field_recursos_humanos:
+    type: options_buttons
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_seguro:
+    type: options_buttons
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_seguro_imovel:
+    type: options_buttons
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_servicos_picking:
+    type: options_buttons
+    weight: 7
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_sprinklers:
+    type: options_buttons
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_tem_area_administrativa:
+    type: options_buttons
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_tem_camaras_de_frio:
+    type: options_buttons
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_tem_raques:
+    type: options_buttons
+    weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_tipos_de_horario_pedidos:
+    type: options_buttons
+    weight: 11
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_vedacao:
+    type: options_buttons
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_wc:
+    type: options_buttons
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  title:
+    type: field_hidden_string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  langcode: true
+  path: true
+  promote: true
+  status: true
+  sticky: true
+  translation: true
+  uid: true

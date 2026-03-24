@@ -1,0 +1,11 @@
+label: Publicidad
+display:
+  default:
+    display_options:
+      title: Publicidad
+  block_advertising_carousel:
+    display_options:
+      title: Publicidad
+  page_advertising_gestor:
+    display_options:
+      title: Publicidad

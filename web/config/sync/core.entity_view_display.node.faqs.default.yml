@@ -1,0 +1,31 @@
+uuid: 3074d908-6c2d-4ed5-a757-46a3c5060015
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.node.faqs.field_faqs
+    - node.type.faqs
+  module:
+    - entity_reference_revisions
+    - user
+id: node.faqs.default
+targetEntityType: node
+bundle: faqs
+mode: default
+content:
+  field_faqs:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  langcode: true

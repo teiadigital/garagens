@@ -1,0 +1,23 @@
+uuid: 36629811-c1a0-4502-9d4e-01c71bfff009
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_link
+    - paragraphs.paragraphs_type.sidebar_menu
+  module:
+    - link
+id: paragraph.sidebar_menu.field_link
+field_name: field_link
+entity_type: paragraph
+bundle: sidebar_menu
+label: Link
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 0
+  link_type: 1
+field_type: link

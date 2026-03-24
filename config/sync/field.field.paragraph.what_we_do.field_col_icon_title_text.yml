@@ -1,0 +1,61 @@
+uuid: 4609f3f7-1638-4a29-9799-38610b0b1eeb
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_col_icon_title_text
+    - paragraphs.paragraphs_type.icon_title_text
+    - paragraphs.paragraphs_type.what_we_do
+  module:
+    - entity_reference_revisions
+id: paragraph.what_we_do.field_col_icon_title_text
+field_name: field_col_icon_title_text
+entity_type: paragraph
+bundle: what_we_do
+label: 'Col icon + title + text'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      icon_title_text: icon_title_text
+    negate: 0
+    target_bundles_drag_drop:
+      area_de_armazem:
+        weight: 13
+        enabled: false
+      banner:
+        weight: 14
+        enabled: false
+      block_registo:
+        weight: 15
+        enabled: false
+      camaras_de_frio:
+        weight: 16
+        enabled: false
+      carousel_banner:
+        weight: 17
+        enabled: false
+      equipamentos_carga_descarga:
+        weight: 18
+        enabled: false
+      icon_title_text:
+        weight: 12
+        enabled: true
+      preco_imovel:
+        weight: 19
+        enabled: false
+      raques:
+        weight: 20
+        enabled: false
+      sidebar_menu:
+        weight: 21
+        enabled: false
+      what_we_do:
+        weight: 22
+        enabled: false
+field_type: entity_reference_revisions

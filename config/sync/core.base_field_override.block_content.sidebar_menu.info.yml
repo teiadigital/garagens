@@ -1,0 +1,18 @@
+uuid: 32cadbd0-d18a-41f7-9599-ae23995b207f
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - block_content.type.sidebar_menu
+id: block_content.sidebar_menu.info
+field_name: info
+entity_type: block_content
+bundle: sidebar_menu
+label: 'Descrição do bloco'
+description: 'Uma descrição breve do seu bloco.'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

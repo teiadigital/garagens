@@ -1,0 +1,17 @@
+# Field storage.
+field.storage_settings.terms_field_terms_and_conditions:
+  type: mapping
+  label: Example storage settings
+  mapping:
+    terms:
+      type: string
+      label: Foo
+
+# Default value.
+field.value.terms_field_terms_and_conditions:
+  type: mapping
+  label: Default value
+  mapping:
+    agree_to_terms_and_conditions:
+      type: boolean
+      label: Agree to Terms and Conditions

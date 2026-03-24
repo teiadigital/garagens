@@ -1,0 +1,22 @@
+uuid: c750f777-2d2d-40a8-81d8-f00fd797b079
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.why_our_solution
+id: paragraph.why_our_solution.status
+field_name: status
+entity_type: paragraph
+bundle: why_our_solution
+label: Publicado
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

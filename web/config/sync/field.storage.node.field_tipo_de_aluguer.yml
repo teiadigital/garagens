@@ -1,0 +1,36 @@
+uuid: cab30e1e-bda8-4aaf-8b66-5fe45c7f9f5d
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_tipo_de_aluguer
+field_name: field_tipo_de_aluguer
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: imovel
+      label: 'aluguer do imóvel'
+    -
+      value: area
+      label: 'aluguer por área'
+    -
+      value: camara_de_frio
+      label: 'aluguer câmara de frio'
+    -
+      value: euro_paletes
+      label: 'aluguer euro paletes'
+    -
+      value: paletes_americanas
+      label: 'aluguer paletes americanas'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

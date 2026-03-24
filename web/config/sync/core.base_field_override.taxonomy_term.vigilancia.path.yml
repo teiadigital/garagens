@@ -1,0 +1,20 @@
+uuid: 182664c7-3bd6-4cbd-bcaf-8ebd1a4ea689
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.vigilancia
+  module:
+    - path
+id: taxonomy_term.vigilancia.path
+field_name: path
+entity_type: taxonomy_term
+bundle: vigilancia
+label: 'URL alternativo'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

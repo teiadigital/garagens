@@ -1,0 +1,27 @@
+uuid: 834dd824-e9e7-469e-8b49-b7c9e5263583
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_limitacoes_carga_descarga
+field_name: field_limitacoes_carga_descarga
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: sem_limitacoes
+      label: 'Sem limitações'
+    -
+      value: com_limitacoes
+      label: 'Com limitações'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

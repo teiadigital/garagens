@@ -1,0 +1,29 @@
+uuid: a799479b-94f0-4048-b31f-c52cf6af5d1b
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.node.termos_e_condicoes.body
+    - node.type.termos_e_condicoes
+  module:
+    - text
+    - user
+id: node.termos_e_condicoes.default
+targetEntityType: node
+bundle: termos_e_condicoes
+mode: default
+content:
+  body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  langcode: true

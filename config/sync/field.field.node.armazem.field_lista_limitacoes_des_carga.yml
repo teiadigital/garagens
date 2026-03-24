@@ -1,0 +1,19 @@
+uuid: a13988f6-5754-4bd3-b0ca-926a79e6eaae
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_lista_limitacoes_des_carga
+    - node.type.armazem
+id: node.armazem.field_lista_limitacoes_des_carga
+field_name: field_lista_limitacoes_des_carga
+entity_type: node
+bundle: armazem
+label: 'Quais as limitações carga/descarga'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

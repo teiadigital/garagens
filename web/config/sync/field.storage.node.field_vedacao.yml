@@ -1,0 +1,27 @@
+uuid: b0f78b2b-187d-4782-9690-768f0e51f0cb
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_vedacao
+field_name: field_vedacao
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: com_vedacao
+      label: 'Com vedação'
+    -
+      value: sem_vedacao
+      label: 'Sem vedação'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

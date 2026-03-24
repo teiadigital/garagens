@@ -1,0 +1,20 @@
+uuid: c6cbc0b2-7a16-4857-813a-bf4ee96acf22
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.publicidade
+id: node.publicidade.menu_link
+field_name: menu_link
+entity_type: node
+bundle: publicidade
+label: 'Ligação de Menu'
+description: 'Ligação do menu calculado para o nó (disponível apenas durante a gravação do nó).'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

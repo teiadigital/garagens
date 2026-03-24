@@ -1,0 +1,25 @@
+uuid: e7457e21-38bf-452a-8bc0-7e1068b637fc
+langcode: pt-pt
+status: true
+dependencies:
+  content:
+    - 'block_content:footer_contacts:05e337c9-7ae0-47ab-a90f-bc8da5691061'
+  module:
+    - block_content
+  theme:
+    - armazens_theme
+id: armazens_theme_footercontacts
+theme: armazens_theme
+region: footer
+weight: -6
+provider: null
+plugin: 'block_content:05e337c9-7ae0-47ab-a90f-bc8da5691061'
+settings:
+  id: 'block_content:05e337c9-7ae0-47ab-a90f-bc8da5691061'
+  label: 'Footer Contacts'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

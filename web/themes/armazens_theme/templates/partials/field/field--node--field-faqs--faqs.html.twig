@@ -1,0 +1,27 @@
+
+<div id="accordion-flush" data-accordion="collapse"
+    data-active-classes="bg-white text-gray-900 font-bold"
+    data-inactive-classes="text-gray-500 font-medium">
+
+    {% for key,item in items %}
+        <h2 id="accordion-flush-heading-{{key}}">
+            <button type="button"
+                class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border-b border-gray-500 gap-3"
+                data-accordion-target="#accordion-flush-body-{{key}}" aria-expanded="false" aria-controls="accordion-flush-body-1">
+                <span>{{item.content['#paragraph'].field_title_accordion.value}}</span>
+                <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 5 5 1 1 5" />
+                </svg>
+            </button>
+        </h2>
+        <div id="accordion-flush-body-{{key}}" class="hidden" aria-labelledby="accordion-flush-heading-{{key}}">
+            <div class="p-5 border-b border-gray-500">
+                <div class="mb-2 text-gray-500 ">
+                    {{item.content['#paragraph'].field_body.value|raw}}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

@@ -1,0 +1,18 @@
+uuid: deec11c5-da26-4721-9815-015bfb1a330c
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.piso
+id: taxonomy_term.piso.name
+field_name: name
+entity_type: taxonomy_term
+bundle: piso
+label: Nome
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

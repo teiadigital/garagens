@@ -1,0 +1,9 @@
+tr.odd .terms-field-terms-and-conditions-elements .form-item {
+  margin-bottom: 8px;
+}
+
+.container-terms-box {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-bottom: 30px;
+}

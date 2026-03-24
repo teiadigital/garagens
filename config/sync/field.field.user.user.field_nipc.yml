@@ -1,0 +1,24 @@
+uuid: fa1b9d09-d591-4d4d-9ff8-dced9ea06d94
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_nipc
+  module:
+    - user
+id: user.user.field_nipc
+field_name: field_nipc
+entity_type: user
+bundle: user
+label: NIPC
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

@@ -1,0 +1,18 @@
+uuid: db391181-da32-41f9-9ed6-179883d42efa
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.block_registo
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: paragraph.block_registo
+target_entity_type_id: paragraph
+target_bundle: block_registo
+default_langcode: site_default
+language_alterable: true

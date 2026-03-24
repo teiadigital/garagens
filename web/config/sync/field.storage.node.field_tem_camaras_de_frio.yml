@@ -1,0 +1,27 @@
+uuid: d9868f46-4994-4ff5-8741-94b187a19d3d
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_tem_camaras_de_frio
+field_name: field_tem_camaras_de_frio
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: sim
+      label: Sim
+    -
+      value: nao
+      label: Não
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

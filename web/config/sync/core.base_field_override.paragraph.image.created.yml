@@ -1,0 +1,18 @@
+uuid: 973a1a36-e835-42ef-a095-12821cca3814
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.image
+id: paragraph.image.created
+field_name: created
+entity_type: paragraph
+bundle: image
+label: 'Criado em'
+description: 'The time that the Paragraph was created.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

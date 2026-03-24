@@ -1,0 +1,22 @@
+uuid: f0fc8f02-3f85-4eec-ae61-b2ca99d578d6
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_text
+    - paragraphs.paragraphs_type.why_our_solution
+  module:
+    - text
+id: paragraph.why_our_solution.field_text
+field_name: field_text
+entity_type: paragraph
+bundle: why_our_solution
+label: Text
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

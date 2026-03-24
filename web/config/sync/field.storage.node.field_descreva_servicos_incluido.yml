@@ -1,0 +1,21 @@
+uuid: 2fffbaae-36eb-4e38-9563-d4ad0bbd8b94
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_descreva_servicos_incluido
+field_name: field_descreva_servicos_incluido
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

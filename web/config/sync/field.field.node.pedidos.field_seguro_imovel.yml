@@ -1,0 +1,21 @@
+uuid: 37b96a8d-1d1c-47e3-8dba-a289deff8e67
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_seguro_imovel
+    - node.type.pedidos
+  module:
+    - options
+id: node.pedidos.field_seguro_imovel
+field_name: field_seguro_imovel
+entity_type: node
+bundle: pedidos
+label: 'Tem seguro do imóvel?'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

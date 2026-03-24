@@ -1,0 +1,19 @@
+uuid: f3ae1be2-e6c8-4447-8ae1-b54a09db5491
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_tipo_de_controlo
+    - node.type.armazem
+id: node.armazem.field_tipo_de_controlo
+field_name: field_tipo_de_controlo
+entity_type: node
+bundle: armazem
+label: 'Tipo de controlo'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

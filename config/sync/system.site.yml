@@ -1,0 +1,15 @@
+_core:
+  default_config_hash: VDJxTZtQR21qB4lvOq8zszJZLvLKrSPQpdn2E3T71Ww
+langcode: pt-pt
+uuid: 0461e63c-1765-4f82-8401-e0400fb452b6
+name: StorItFlex
+mail: geral@storitflex.com
+slogan: ''
+page:
+  403: /user/login
+  404: ''
+  front: /node/32
+admin_compact_mode: false
+weight_select_max: 100
+default_langcode: en
+mail_notification: ''

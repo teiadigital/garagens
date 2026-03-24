@@ -1,0 +1,18 @@
+uuid: 48532501-f626-42bf-9a1d-cfc4946dd7ad
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.publicidade
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: false
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: node.publicidade
+target_entity_type_id: node
+target_bundle: publicidade
+default_langcode: authors_default
+language_alterable: false

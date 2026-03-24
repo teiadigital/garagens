@@ -1,0 +1,215 @@
+uuid: 18bf626a-c585-435f-bada-59f0204e1ec2
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - entity_browser.browser.images
+    - field.field.node.armazem.field_area_individual
+    - field.field.node.armazem.field_area_partilhada
+    - field.field.node.armazem.field_availability_daily
+    - field.field.node.armazem.field_bool_aluguer_camara_de_fri
+    - field.field.node.armazem.field_bool_aluguer_do_imovel
+    - field.field.node.armazem.field_bool_aluguer_euro_paletes
+    - field.field.node.armazem.field_bool_aluguer_paletes_ameri
+    - field.field.node.armazem.field_bool_aluguer_por_area
+    - field.field.node.armazem.field_cais_carga
+    - field.field.node.armazem.field_camara_de_frio
+    - field.field.node.armazem.field_carga_adr
+    - field.field.node.armazem.field_certificacao_alfandega
+    - field.field.node.armazem.field_certificados
+    - field.field.node.armazem.field_comprovativo_do_seguro
+    - field.field.node.armazem.field_computador
+    - field.field.node.armazem.field_controlo_acesso
+    - field.field.node.armazem.field_coordenadas
+    - field.field.node.armazem.field_descreva_servicos_incluido
+    - field.field.node.armazem.field_descricao
+    - field.field.node.armazem.field_descricao_classes_adr
+    - field.field.node.armazem.field_descricao_espaco_exterior
+    - field.field.node.armazem.field_documento_licenca
+    - field.field.node.armazem.field_documento_seguro_carga
+    - field.field.node.armazem.field_documento_seguro_imovel
+    - field.field.node.armazem.field_empilhador_x_toneladas
+    - field.field.node.armazem.field_equipamento_carga_descarga
+    - field.field.node.armazem.field_espaco
+    - field.field.node.armazem.field_espaco_area_administrativa
+    - field.field.node.armazem.field_espaco_de_duche
+    - field.field.node.armazem.field_estado
+    - field.field.node.armazem.field_euro_paletes
+    - field.field.node.armazem.field_fotos
+    - field.field.node.armazem.field_grelha_horarios
+    - field.field.node.armazem.field_incluir_espaco_exterior
+    - field.field.node.armazem.field_infraestruturas
+    - field.field.node.armazem.field_licenca_utilizacao
+    - field.field.node.armazem.field_limitacoes_carga_descarga
+    - field.field.node.armazem.field_lista_limitacoes_des_carga
+    - field.field.node.armazem.field_localidade
+    - field.field.node.armazem.field_paletes_americanas
+    - field.field.node.armazem.field_permite_ser_partilhado
+    - field.field.node.armazem.field_peso_maximo_piso
+    - field.field.node.armazem.field_piso
+    - field.field.node.armazem.field_preco_full
+    - field.field.node.armazem.field_preco_minimo
+    - field.field.node.armazem.field_preco_partilhado
+    - field.field.node.armazem.field_preco_temp
+    - field.field.node.armazem.field_quais_recursos_humanos
+    - field.field.node.armazem.field_quantos_cais_carga
+    - field.field.node.armazem.field_raques
+    - field.field.node.armazem.field_recursos_humanos
+    - field.field.node.armazem.field_renda_imovel
+    - field.field.node.armazem.field_renda_parcial
+    - field.field.node.armazem.field_responsabilidade_da_carga
+    - field.field.node.armazem.field_seguranca
+    - field.field.node.armazem.field_seguro
+    - field.field.node.armazem.field_seguro_imovel
+    - field.field.node.armazem.field_servicos_disponiveis
+    - field.field.node.armazem.field_servicos_picking
+    - field.field.node.armazem.field_sprinklers
+    - field.field.node.armazem.field_tem_area_administrativa
+    - field.field.node.armazem.field_tem_camaras_de_frio
+    - field.field.node.armazem.field_tem_fotos
+    - field.field.node.armazem.field_tem_raques
+    - field.field.node.armazem.field_termos_e_condicoes
+    - field.field.node.armazem.field_tipo_de_aluguer
+    - field.field.node.armazem.field_tipo_de_controlo
+    - field.field.node.armazem.field_tipos_de_horario
+    - field.field.node.armazem.field_titulo
+    - field.field.node.armazem.field_vedacao
+    - field.field.node.armazem.field_wc
+    - node.type.armazem
+  module:
+    - address
+    - entity_browser
+    - field_hidden
+id: node.armazem.default
+targetEntityType: node
+bundle: armazem
+mode: default
+content:
+  field_descricao:
+    type: string_textarea
+    weight: 2
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_estado:
+    type: field_hidden_number
+    weight: 5
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_fotos:
+    type: entity_browser_entity_reference
+    weight: 3
+    region: content
+    settings:
+      entity_browser: images
+      field_widget_display: rendered_entity
+      field_widget_edit: true
+      field_widget_remove: true
+      field_widget_replace: false
+      open: true
+      field_widget_display_settings:
+        view_mode: default
+      selection_mode: selection_append
+    third_party_settings: {  }
+  field_localidade:
+    type: address_default
+    weight: 4
+    region: content
+    settings:
+      wrapper_type: fieldset
+    third_party_settings: {  }
+  field_titulo:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  title:
+    type: field_hidden_string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  field_area_individual: true
+  field_area_partilhada: true
+  field_availability_daily: true
+  field_bool_aluguer_camara_de_fri: true
+  field_bool_aluguer_do_imovel: true
+  field_bool_aluguer_euro_paletes: true
+  field_bool_aluguer_paletes_ameri: true
+  field_bool_aluguer_por_area: true
+  field_cais_carga: true
+  field_camara_de_frio: true
+  field_carga_adr: true
+  field_certificacao_alfandega: true
+  field_certificados: true
+  field_comprovativo_do_seguro: true
+  field_computador: true
+  field_controlo_acesso: true
+  field_coordenadas: true
+  field_descreva_servicos_incluido: true
+  field_descricao_classes_adr: true
+  field_descricao_espaco_exterior: true
+  field_documento_licenca: true
+  field_documento_seguro_carga: true
+  field_documento_seguro_imovel: true
+  field_empilhador_x_toneladas: true
+  field_equipamento_carga_descarga: true
+  field_espaco: true
+  field_espaco_area_administrativa: true
+  field_espaco_de_duche: true
+  field_euro_paletes: true
+  field_grelha_horarios: true
+  field_incluir_espaco_exterior: true
+  field_infraestruturas: true
+  field_licenca_utilizacao: true
+  field_limitacoes_carga_descarga: true
+  field_lista_limitacoes_des_carga: true
+  field_paletes_americanas: true
+  field_permite_ser_partilhado: true
+  field_peso_maximo_piso: true
+  field_piso: true
+  field_preco_full: true
+  field_preco_minimo: true
+  field_preco_partilhado: true
+  field_preco_temp: true
+  field_quais_recursos_humanos: true
+  field_quantos_cais_carga: true
+  field_raques: true
+  field_recursos_humanos: true
+  field_renda_imovel: true
+  field_renda_parcial: true
+  field_responsabilidade_da_carga: true
+  field_seguranca: true
+  field_seguro: true
+  field_seguro_imovel: true
+  field_servicos_disponiveis: true
+  field_servicos_picking: true
+  field_sprinklers: true
+  field_tem_area_administrativa: true
+  field_tem_camaras_de_frio: true
+  field_tem_fotos: true
+  field_tem_raques: true
+  field_termos_e_condicoes: true
+  field_tipo_de_aluguer: true
+  field_tipo_de_controlo: true
+  field_tipos_de_horario: true
+  field_vedacao: true
+  field_wc: true
+  langcode: true
+  path: true
+  promote: true
+  status: true
+  sticky: true
+  translation: true
+  uid: true

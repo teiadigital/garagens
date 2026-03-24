@@ -1,0 +1,18 @@
+uuid: 754b1a31-dc6e-4f5a-b9d3-841cc0c38018
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.paletes
+id: paragraph.paletes.created
+field_name: created
+entity_type: paragraph
+bundle: paletes
+label: 'Criado em'
+description: 'The time that the Paragraph was created.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

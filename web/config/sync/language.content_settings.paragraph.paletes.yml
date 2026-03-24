@@ -1,0 +1,18 @@
+uuid: 32fec98b-037a-4231-af50-f9bb49029544
+langcode: en
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.paletes
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: paragraph.paletes
+target_entity_type_id: paragraph
+target_bundle: paletes
+default_langcode: site_default
+language_alterable: true

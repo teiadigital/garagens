@@ -1,0 +1,273 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply font-Montserrat antialiased;
+}
+
+.form-item {
+  @apply mb-8 mt-0 flex-auto;
+}
+
+/* .region-content a {
+  @apply underline underline-offset-2;
+} */
+
+.field--widget-options-buttons,
+.field--type-boolean {
+  @apply mb-8;
+}
+
+input:focus,
+select:focus {
+  box-shadow: none !important;
+}
+
+.form-item label,
+fieldset .fieldset-legend {
+  @apply block text-base font-bold text-black lowercase;
+}
+
+.form-item input[type="text"],
+.form-item input[type="tel"],
+.form-item input[type="number"],
+.form-item input[type="email"],
+.form-item input[type="password"],
+.form-item textarea {
+  @apply w-full bg-gray-light rounded-3xl p-4 border-none focus:border-black focus:shadow-none text-black text-sm mt-3;
+}
+
+.form-item select {
+  @apply w-full bg-gray-light rounded-3xl py-4 pl-4 pr-10 border-none focus:border-black focus:shadow-none text-black text-sm mt-3;
+}
+
+.form-item input[type="tel"] {
+  @apply pl-14;
+}
+
+.js-form-type-radio label,
+.js-form-type-checkbox label {
+  @apply inline;
+}
+
+.form-type-checkbox input {
+  @apply rounded;
+}
+
+.form-type-checkbox input:checked {
+  @apply bg-black;
+}
+
+.user-form .field--name-field-telemovel {
+  @apply md:mr-4;
+}
+.user-form .field--name-field-telemovel,
+.user-form .field--name-field-telefone {
+  @apply inline-block;
+}
+
+fieldset.form-item {
+  @apply mb-0;
+}
+
+.form-item input.error {
+  @apply border-red border-2;
+}
+
+.form-item-field-piso-other {
+  @apply mt-4;
+}
+.field--widget-paragraphs .paragraphs-tabs,
+.tabledrag-toggle-weight-wrapper,
+.field--widget-paragraphs table .field-multiple-drag {
+  @apply hidden;
+}
+
+.field--widget-paragraphs table,
+.field-multiple-table {
+  @apply w-full;
+}
+
+.field-multiple-table thead {
+  @apply text-left;
+}
+
+.field-multiple-table thead tr th h4,
+.js .paragraph-type-label {
+  @apply text-left text-sm font-medium leading-6 text-black;
+}
+
+.field-multiple-table .field-multiple-drag,
+.field-multiple-table thead tr th .paragraphs-actions {
+  @apply hidden;
+}
+
+.messages--status {
+  @apply text-green bg-green;
+  background-image: url(../../images/icons/check.svg);
+}
+
+.messages--warning {
+  @apply text-yellow bg-yellow;
+
+  background-image: url(../../images/icons/warning.svg);
+}
+
+.messages--error {
+  @apply text-white bg-red;
+  background-image: url(../../images/icons/error.svg);
+}
+
+.messages--error p.error {
+  @apply text-white;
+}
+
+/* Paragraphs */
+
+.js .field--widget-paragraphs .draggable td {
+  @apply p-0;
+}
+
+.field--type-simple-address fieldset .fieldset-wrapper {
+  @apply grid grid-cols-1 gap-x-6 sm:grid-cols-2;
+}
+
+/* Simple address module */
+
+.field--type-simple-address .form-item-field-localidade-0-address-line,
+.form-item-field-morada-0-address-line,
+.form-item-field-morada-faturacao-0-address-line {
+  @apply col-span-full;
+}
+
+.field--type-string
+  .field-multiple-table
+  .has-multiple-fields-remove-button
+  .multiple-fields-remove-button {
+  @apply top-1/3;
+}
+
+.user-login-form .form-item .description {
+  @apply hidden;
+}
+
+form .form-actions {
+  @apply flex flex-wrap gap-4;
+}
+
+.user-form .field--type-address fieldset legend {
+  @apply hidden;
+}
+
+.field--type-boolean label {
+  @apply font-normal;
+}
+
+.user-form .description {
+  @apply hidden;
+}
+
+.block-user-menu-avatar-dropdown {
+  @apply ml-auto;
+}
+
+/* .paragraph--type--banner */
+
+.paragraph--type--banner .field--name-field-title p {
+  @apply text-4xl lg:text-5xl 2xl:text-[56px] 2xl:leading-[68px];
+}
+
+.paragraph--type--banner .field--name-field-bold-title p {
+  @apply text-5xl lg:text-6xl 2xl:text-[70px] 2xl:leading-[86px] font-bold mt-5;
+}
+
+/* .paragraph--type--block-registo */
+
+.paragraph--type--block-registo .field--name-field-title {
+  @apply font-bold text-4xl;
+}
+
+.paragraph--type--block-registo .field--name-field-box-title {
+  @apply font-bold text-base mb-4;
+}
+
+.paragraph--type--block-registo .field--name-field-box-subtitle {
+  @apply text-xl mb-4;
+}
+
+.paragraph--type--block-registo .field--name-field-box-text {
+  @apply text-sm;
+}
+
+.paragraph--type--block-registo .field--name-field-link a {
+  @apply text-base font-bold uppercase no-underline;
+}
+
+/* dashboard utilizador  */
+
+.profile .field .field__label {
+  @apply text-sm font-normal lowercase;
+}
+
+.profile .field .field__item {
+  @apply text-sm md:text-base xl:text-lg font-bold mt-2;
+}
+
+/* Sidebar menu */
+
+.region-sidebar-menu .block-system-branding-block img {
+  @apply m-auto max-h-12;
+}
+
+#block-armazens-sidebarmenu {
+  @apply h-full;
+}
+
+.paragraph--type--sidebar-menu img {
+  @apply m-auto;
+}
+
+.region-sidebar-menu {
+  @apply h-full;
+}
+.field--name-field-p-sidebar-menu {
+  @apply h-full flex flex-col justify-center relative;
+}
+
+.field--name-field-p-sidebar-menu > .field__item:first-child {
+  @apply bg-gray-light;
+}
+
+.field--name-field-p-sidebar-menu > .field__item:last-child {
+  @apply w-full absolute bottom-14;
+}
+
+.field--name-field-p-sidebar-menu .field__item img {
+  @apply w-7;
+}
+
+.form-type-dropzonejs label {
+  @apply hidden;
+}
+
+.dropzone {
+  @apply m-0 bg-transparent border-none rounded-none p-0;
+}
+
+.field--name-field-documentos .entity-type--media .rendered-entity {
+  @apply flex items-center gap-4 flex-wrap;
+}
+
+.field--name-field-documentos
+  .entity-type--media
+  .rendered-entity
+  .remove-button {
+  @apply px-6 py-2 m-0 text-xs;
+}
+
+.field--widget-entity-browser-entity-reference .fieldset-wrapper > p {
+  @apply hidden;
+}

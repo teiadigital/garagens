@@ -1,0 +1,23 @@
+uuid: a0b888c2-5e47-453b-933d-a323d6237d57
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_preco_dia
+    - paragraphs.paragraphs_type.preco_imovel
+id: paragraph.preco_imovel.field_preco_dia
+field_name: field_preco_dia
+entity_type: paragraph
+bundle: preco_imovel
+label: 'Preço dia (€/m²)'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0.01
+  max: null
+  prefix: ''
+  suffix: ' €/m²'
+field_type: decimal

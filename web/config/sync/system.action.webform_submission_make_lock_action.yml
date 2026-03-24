@@ -1,0 +1,13 @@
+uuid: 7f58c81d-c7aa-4f9b-9da4-4d94fee9fa3d
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - webform
+_core:
+  default_config_hash: MKmZlPRk3OJKNcYdYxSeZGQUh7LMah6MRShfkzch4bk
+id: webform_submission_make_lock_action
+label: 'Bloquear submissão'
+type: webform_submission
+plugin: webform_submission_make_lock_action
+configuration: {  }

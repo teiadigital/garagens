@@ -1,0 +1,54 @@
+description: '<p>Basic email contact webform.</p>'
+elements: |-
+  flexbox:
+    '#type': webform_flexbox
+    name:
+      '#type': textfield
+      '#title': Nome
+      '#title_display': invisible
+      '#placeholder': 'Nome*'
+      '#autocomplete': ''
+      '#required': true
+    email:
+      '#type': email
+      '#title': Email
+      '#title_display': invisible
+      '#placeholder': 'Email*'
+      '#autocomplete': ''
+      '#required': true
+      '#default_value': '[current-user:mail]'
+  flexbox_01:
+    '#type': webform_flexbox
+    telemovel:
+      '#type': tel
+      '#title': Telemóvel
+      '#title_display': invisible
+      '#placeholder': 'Telemóvel*'
+      '#required': true
+    localidade:
+      '#type': textfield
+      '#title': Localidade
+      '#title_display': invisible
+      '#placeholder': 'Localidade*'
+      '#required': true
+  message:
+    '#type': textarea
+    '#title': Mensagem
+    '#title_display': invisible
+    '#placeholder': 'Mensagem*'
+    '#required': true
+    '#test': 'Please ignore this email.'
+  captcha:
+    '#type': captcha
+    '#captcha_type': recaptcha_v3/captcha
+  actions:
+    '#type': webform_actions
+    '#title': 'Submit button(s)'
+    '#submit__label': Enviar
+settings:
+  confirmation_message: 'Votre message a été envoyé.'
+handlers:
+  email_confirmation:
+    label: 'Courriel de confirmation'
+  email_notification:
+    label: 'Notification par courriel'

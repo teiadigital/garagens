@@ -1,0 +1,43 @@
+label: "Commandes de l'utilisateur"
+description: 'Affiche une liste des commandes passées pour un utilisateur.'
+display:
+  default:
+    display_title: Principal
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Appliquer
+          reset_button_label: Réinitialiser
+          exposed_sorts_label: 'Trier par'
+      pager:
+        options:
+          tags:
+            previous: '‹ Précédent'
+            next: 'Suivant ›'
+            first: '« Premier'
+            last: 'Dernier »'
+          expose:
+            items_per_page_label: 'Éléments par page'
+            items_per_page_options_all_label: '- Tout -'
+            offset_label: Décalage
+      fields:
+        order_id:
+          label: 'Identifiant (ID)'
+        order_number:
+          label: 'Numéro de commande'
+        state:
+          label: État
+      title: Commandes
+      empty:
+        area:
+          content:
+            value: 'Vous ne nous avez encore rien commandé.'
+      arguments:
+        uid:
+          exception:
+            title: Tout
+  order_page:
+    display_title: "Commandes de l'utilisateur"
+    display_options:
+      menu:
+        title: Commandes

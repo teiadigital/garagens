@@ -1,0 +1,27 @@
+uuid: 436199c6-081a-4d1f-ac94-6104b5b26d9a
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_espaco
+field_name: field_espaco
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: aberto
+      label: 'Aberto/ar livre'
+    -
+      value: fechado
+      label: Fechado
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

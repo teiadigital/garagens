@@ -1,0 +1,20 @@
+uuid: f37523e7-85c2-4c62-a97d-4f194f709a70
+langcode: pt-pt
+status: true
+dependencies:
+  theme:
+    - olivero
+_core:
+  default_config_hash: Q9_2whdOj1YIomfvsIfopROW4FT_X5pY0DjdOiOaQ5U
+id: olivero_primary_admin_actions
+theme: olivero
+region: highlighted
+weight: -5
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Ações principais do administrador'
+  label_display: '0'
+  provider: core
+visibility: {  }

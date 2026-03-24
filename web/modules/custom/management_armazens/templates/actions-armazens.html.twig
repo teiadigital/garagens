@@ -1,0 +1,23 @@
+
+<div class="mb-6">
+
+    {% if data %}
+
+        <div class="flex items-center gap-4">
+            {% if data.estado %}
+                <div class="{{data.estado.class}} text-sm font-bold uppercase py-2 px-5 rounded">
+                    {{data.estado.state}}
+                </div>
+            {% endif%}
+
+            {% if data.edit %}
+        
+                <a class="text-sm uppercase bg-black block rounded-full py-3 px-6 font-bold text-white hover:bg-white border-2 hover:text-black border-black transition-all" href="{{data.edit['#url']}}">{{data.edit['#title']}}</a>
+            {% endif%}
+        </div>
+    
+    {% endif%}
+
+    {{form}}
+
+</div>

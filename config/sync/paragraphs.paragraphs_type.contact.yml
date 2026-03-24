@@ -1,0 +1,10 @@
+uuid: d967dd31-1d86-4cb8-bac1-ae9beb37cc17
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: contact
+label: Contact
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

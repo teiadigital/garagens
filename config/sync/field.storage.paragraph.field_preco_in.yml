@@ -1,0 +1,20 @@
+uuid: 6cf769db-217b-4f6b-9b94-c1be6d98bd67
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - paragraphs
+id: paragraph.field_preco_in
+field_name: field_preco_in
+entity_type: paragraph
+type: decimal
+settings:
+  precision: 10
+  scale: 2
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,29 @@
+uuid: b3b62fec-28aa-47c9-9cf9-82f2b5ca1d62
+langcode: en
+status: true
+dependencies:
+  config:
+    - bat_event.event_type.availability_daily
+    - field.storage.bat_event.field_user
+id: bat_event.availability_daily.field_user
+field_name: field_user
+entity_type: bat_event
+bundle: availability_daily
+label: User
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:user'
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    filter:
+      type: _none
+    include_anonymous: true
+field_type: entity_reference

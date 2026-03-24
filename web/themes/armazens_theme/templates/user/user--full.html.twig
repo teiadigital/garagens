@@ -1,0 +1,41 @@
+{#
+/**
+ * @file
+ * Theme override to present all user data.
+ *
+ * This template is used when viewing a registered user's page,
+ * e.g., example.com/user/123. 123 being the user's ID.
+ *
+ * Available variables:
+ * - content: A list of content items. Use 'content' to print all content, or
+ *   print a subset such as 'content.field_example'. Fields attached to a user
+ *   such as 'user_picture' are available as 'content.user_picture'.
+ * - attributes: HTML attributes for the container element.
+ * - user: A Drupal User entity.
+ *
+ * @see template_preprocess_user()
+ */
+#}
+<article{{ attributes.addClass('profile') }}>
+
+  {{ drupal_block('management_armazens_info_details_user_dashboard') }}
+  
+  <div class="mt-14">
+    {{ drupal_view('armazens', 'block_armazens_perfil') }}
+  </div>
+
+
+  <a href="{{ url('<front>') }}#contacts" class="mt-16 flex items-center bg-white px-8 py-5">
+    <p class="text-lg flex-1">
+      {{ "global warehouse requests"|t }}
+    </p>
+
+    <svg width="46px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#000000" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" />
+    </svg>
+  </a>
+
+
+  
+</article>

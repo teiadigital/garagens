@@ -1,0 +1,57 @@
+{#
+/**
+ * @file
+ * Theme override to present all user data.
+ *
+ * This template is used when viewing a registered user's page,
+ * e.g., example.com/user/123. 123 being the user's ID.
+ *
+ * Available variables:
+ * - content: A list of content items. Use 'content' to print all content, or
+ *   print a subset such as 'content.field_example'. Fields attached to a user
+ *   such as 'user_picture' are available as 'content.user_picture'.
+ * - attributes: HTML attributes for the container element.
+ * - user: A Drupal User entity.
+ *
+ * @see template_preprocess_user()
+ */
+#}
+
+<article{{ attributes.addClass('profile') }}>
+
+
+  <div class="grid grid-cols-12 gap-y-14">
+    <div class="col-span-12">
+      <h1 class="col-span-12 text-4xl lg:text-7xl text-black font-bold ">dashboard</h1>
+    </div>
+    <div class="col-span-full grid grid-cols-12 gap-4 xl:gap-8">
+      {% if content %}
+        <div class="col-span-full md:col-span-2 md:col-start-1">
+          {{ content.field_nome }}
+        </div>
+        <div class="col-span-full  md:col-span-2">
+          {{ content.field_tipo }}
+        </div>
+        <div class="col-span-full  md:col-span-2">
+          {{ content.field_nipc }}
+          {{ content.field_nif }}
+        </div>
+        <div class="col-span-full">
+          {{ content.field_nib }}
+        </div>
+        <div class="col-span-full">
+          {{ content.field_morada }}
+        </div>
+      {% endif %}
+    </div>
+    
+    <div class="col-span-12">
+      {{ drupal_view('armazens', 'block_armazens_perfil') }}
+    </div>
+
+
+  </div>
+
+  
+
+</article>

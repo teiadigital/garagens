@@ -1,0 +1,18 @@
+uuid: fd5da39c-9e78-47ee-a135-3d6b6b16f676
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.armazens_homepage
+id: paragraph.armazens_homepage.created
+field_name: created
+entity_type: paragraph
+bundle: armazens_homepage
+label: 'Criado em'
+description: 'The time that the Paragraph was created.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

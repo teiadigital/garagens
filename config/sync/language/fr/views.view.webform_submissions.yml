@@ -1,0 +1,137 @@
+label: 'Soumissions de webform'
+description: 'Vue par défaut des soumissions de webform.'
+display:
+  default:
+    display_title: Principal
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Appliquer
+          reset_button_label: Réinitialiser
+          exposed_sorts_label: 'Trier par'
+      pager:
+        options:
+          tags:
+            first: '« Premier'
+            last: 'Dernier »'
+          expose:
+            items_per_page_label: 'Éléments par page'
+            items_per_page_options_all_label: '- Tout -'
+            offset_label: Décalage
+      fields:
+        in_draft:
+          label: Brouillon
+        created:
+          label: Créé
+        remote_addr:
+          label: 'Adresse IP'
+        view_webform_submission:
+          label: Actions
+          text: voir
+      header:
+        result:
+          content: 'Affichage de @start à @end sur @total'
+      empty:
+        area_text_custom:
+          content: "Aucune soumission n'est disponible."
+      arguments:
+        in_draft:
+          exception:
+            title: Tout
+      title: 'Soumissions de webform'
+  embed_default:
+    display_title: 'Intégrer : Par défaut'
+    display_options:
+      display_description: 'Afficher les soumissions.'
+  embed_administer:
+    display_title: 'Intégrer : Administrer'
+    display_options:
+      display_description: 'Administrer les soumissions.'
+      fields:
+        in_draft:
+          label: Brouillon
+        sticky:
+          label: 'Épinglé (en haut des listes)'
+        locked:
+          label: Verrouillé
+        created:
+          label: Créé
+        completed:
+          label: Terminé
+        remote_addr:
+          label: 'Adresse IP'
+        operations:
+          label: Actions
+      filters:
+        in_draft:
+          expose:
+            label: 'Est un brouillon'
+        sticky:
+          expose:
+            label: 'Épinglé (en haut des listes)'
+        locked:
+          expose:
+            label: Verrouillé
+  embed_manage:
+    display_title: 'Intégrer : Gérer'
+    display_options:
+      display_description: 'Gérer les soumissions.'
+      fields:
+        in_draft:
+          label: Brouillon
+        sticky:
+          label: 'Épinglé (en haut des listes)'
+        locked:
+          label: Verrouillé
+        created:
+          label: Créé
+        completed:
+          label: Terminé
+        remote_addr:
+          label: 'Adresse IP'
+        view_webform_submission:
+          label: Actions
+          text: voir
+        edit_webform_submission:
+          label: Actions
+          text: modifier
+      filters:
+        in_draft:
+          expose:
+            label: 'Est un brouillon'
+        sticky:
+          expose:
+            label: 'Épinglé (en haut des listes)'
+        locked:
+          expose:
+            label: Verrouillé
+  embed_review:
+    display_title: 'Intégrer : Évaluer'
+    display_options:
+      display_description: 'Évaluer les soumissions.'
+      fields:
+        in_draft:
+          label: Brouillon
+        sticky:
+          label: 'Épinglé (en haut des listes)'
+        locked:
+          label: Verrouillé
+        created:
+          label: Créé
+        completed:
+          label: Terminé
+        remote_addr:
+          label: 'Adresse IP'
+        view_webform_submission:
+          label: Actions
+          text: voir
+      filters:
+        in_draft:
+          expose:
+            label: 'Est un brouillon'
+        sticky:
+          expose:
+            label: 'Épinglé (en haut des listes)'
+        locked:
+          expose:
+            label: Verrouillé

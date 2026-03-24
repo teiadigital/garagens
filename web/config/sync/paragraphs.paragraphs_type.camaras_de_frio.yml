@@ -1,0 +1,10 @@
+uuid: c434e5f6-1d04-4d05-aeea-42c3f4a4d5cf
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: camaras_de_frio
+label: 'Camara(s) de frio'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

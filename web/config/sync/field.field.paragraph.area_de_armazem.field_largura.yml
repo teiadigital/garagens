@@ -1,0 +1,23 @@
+uuid: 86beacda-3d36-4c1b-85ed-48d0ab85db7e
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_largura
+    - paragraphs.paragraphs_type.area_de_armazem
+id: paragraph.area_de_armazem.field_largura
+field_name: field_largura
+entity_type: paragraph
+bundle: area_de_armazem
+label: 'Largura (m)'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ' m'
+field_type: decimal

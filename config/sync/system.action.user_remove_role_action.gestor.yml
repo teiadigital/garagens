@@ -1,0 +1,14 @@
+uuid: 785878ae-6ac7-4e9c-a0b1-41d5e10ecb09
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - user.role.gestor
+  module:
+    - user
+id: user_remove_role_action.gestor
+label: 'Remover o Gestor a algum(s) do(s) utilizador(es) seleccionado(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: gestor

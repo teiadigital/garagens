@@ -1,0 +1,19 @@
+uuid: 07a7edb9-c4a0-41d9-9d59-c7eb046161c4
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_certificados
+    - node.type.pedidos
+id: node.pedidos.field_certificados
+field_name: field_certificados
+entity_type: node
+bundle: pedidos
+label: Certificados
+description: "Se tem algum tipo de certificado adicional, descreva-o (i.e., APPCC; LOGISTICA IFS, etc. )\r\n"
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

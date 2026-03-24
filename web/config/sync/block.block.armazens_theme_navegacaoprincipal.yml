@@ -1,0 +1,29 @@
+uuid: eaf0e55b-6e0a-462f-b599-7dc3254cecdd
+langcode: pt-pt
+status: false
+dependencies:
+  config:
+    - system.menu.main
+  module:
+    - system
+  theme:
+    - armazens_theme
+id: armazens_theme_navegacaoprincipal
+theme: armazens_theme
+region: header
+weight: -4
+provider: null
+plugin: 'system_menu_block:main'
+settings:
+  id: 'system_menu_block:main'
+  label: 'Navegação principal'
+  label_display: '0'
+  provider: system
+  level: 1
+  depth: 0
+  expand_all_items: false
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '<front>'

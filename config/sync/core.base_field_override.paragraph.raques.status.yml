@@ -1,0 +1,22 @@
+uuid: 88582048-7efc-4218-84c3-3befbec3c23e
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.raques
+id: paragraph.raques.status
+field_name: status
+entity_type: paragraph
+bundle: raques
+label: Publicado
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

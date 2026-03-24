@@ -1,0 +1,10 @@
+uuid: 08741bfc-94e9-4d58-a4cf-11269239dfe1
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: area_de_armazem
+label: 'Área de armazem'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

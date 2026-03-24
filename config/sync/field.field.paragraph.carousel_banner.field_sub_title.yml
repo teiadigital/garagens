@@ -1,0 +1,22 @@
+uuid: a515e0f6-2b69-4d8a-b50a-df91cccd0230
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_sub_title
+    - paragraphs.paragraphs_type.carousel_banner
+  module:
+    - text
+id: paragraph.carousel_banner.field_sub_title
+field_name: field_sub_title
+entity_type: paragraph
+bundle: carousel_banner
+label: 'Sub title'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

@@ -1,0 +1,21 @@
+uuid: e08586d6-aae3-461e-8ea5-a980c9216407
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_tipos_de_horario_pedidos
+    - node.type.pedidos
+  module:
+    - options
+id: node.pedidos.field_tipos_de_horario_pedidos
+field_name: field_tipos_de_horario_pedidos
+entity_type: node
+bundle: pedidos
+label: 'Tipos de horário'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

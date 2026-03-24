@@ -1,0 +1,8 @@
+uuid: 53ac2d20-79f8-4475-ad13-cf87ddfc462a
+langcode: pt-pt
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: U5VlGjd_SfV0Qm_EfnaynOfc549cNscFAx48JfYoMRI
+id: default
+label: 'Por defeito'

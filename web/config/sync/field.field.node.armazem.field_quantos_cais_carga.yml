@@ -1,0 +1,23 @@
+uuid: 2bd6ce9d-1a27-42c4-9661-3dd2ac307bcd
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_quantos_cais_carga
+    - node.type.armazem
+id: node.armazem.field_quantos_cais_carga
+field_name: field_quantos_cais_carga
+entity_type: node
+bundle: armazem
+label: 'Quantos cais de carga?'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

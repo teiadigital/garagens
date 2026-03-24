@@ -1,0 +1,13 @@
+uuid: fbd97b7d-881a-4f75-8e1d-1696e658d94d
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - media
+_core:
+  default_config_hash: CsK6TseQ2DatEbZgbd30swOlZ28_HHwAESU2LvEnWq0
+id: media_unpublish_action
+label: 'Despublicar media'
+type: media
+plugin: 'entity:unpublish_action:media'
+configuration: {  }

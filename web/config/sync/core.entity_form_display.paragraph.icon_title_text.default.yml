@@ -1,0 +1,45 @@
+uuid: 789811a6-5449-4785-b501-80ece0e6eb4d
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.icon_title_text.field_icon
+    - field.field.paragraph.icon_title_text.field_text
+    - field.field.paragraph.icon_title_text.field_title
+    - image.style.thumbnail
+    - paragraphs.paragraphs_type.icon_title_text
+  module:
+    - svg_image
+    - text
+id: paragraph.icon_title_text.default
+targetEntityType: paragraph
+bundle: icon_title_text
+mode: default
+content:
+  field_icon:
+    type: image_image
+    weight: 0
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+  field_text:
+    type: text_textarea
+    weight: 2
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_title:
+    type: text_textarea
+    weight: 1
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

@@ -1,0 +1,8 @@
+uuid: 4730f814-b8ab-4cc9-a3da-af70e9a5e23d
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: block_suggestions_warehouses_pag
+label: 'Block Suggestions warehouses page'
+revision: 0
+description: ''

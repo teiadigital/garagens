@@ -1,0 +1,58 @@
+uuid: b7f11725-da61-4fb6-88fb-70aeb219f2f9
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.user.compact
+    - field.field.user.user.field_cartao_cidadao
+    - field.field.user.user.field_documentos
+    - field.field.user.user.field_morada
+    - field.field.user.user.field_morada_de_faturacao_bool
+    - field.field.user.user.field_morada_faturacao
+    - field.field.user.user.field_nib
+    - field.field.user.user.field_nif
+    - field.field.user.user.field_nipc
+    - field.field.user.user.field_nome
+    - field.field.user.user.field_telefone
+    - field.field.user.user.field_telemovel
+    - field.field.user.user.field_tipo
+    - field.field.user.user.user_picture
+    - image.style.thumbnail
+  module:
+    - svg_image
+    - user
+_core:
+  default_config_hash: 00zr_RBdTjPjBGITD3h4c1ESQZimjdVCcHGt1trLqIY
+id: user.user.compact
+targetEntityType: user
+bundle: user
+mode: compact
+content:
+  user_picture:
+    type: image
+    label: hidden
+    settings:
+      image_link: content
+      image_style: thumbnail
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  customer_profiles: true
+  field_cartao_cidadao: true
+  field_documentos: true
+  field_morada: true
+  field_morada_de_faturacao_bool: true
+  field_morada_faturacao: true
+  field_nib: true
+  field_nif: true
+  field_nipc: true
+  field_nome: true
+  field_telefone: true
+  field_telemovel: true
+  field_tipo: true
+  langcode: true
+  mail: true
+  member_for: true

@@ -1,0 +1,29 @@
+name: armazens_theme
+type: theme
+"base theme": stable9
+starterkit: true
+version: VERSION
+libraries:
+  - armazens_theme/base
+  - armazens_theme/messages
+  - core/normalize
+libraries-extend:
+  user/drupal.user:
+    - armazens_theme/user
+  core/drupal.dropbutton:
+    - armazens_theme/dropbutton
+  core/drupal.dialog:
+    - armazens_theme/dialog
+  file/drupal.file:
+    - armazens_theme/file
+  core/drupal.progress:
+    - armazens_theme/progress
+core_version_requirement: ^10
+generator: "starterkit_theme:10.1.6"
+regions:
+  header: Header
+  sidebar_menu: Sidebar Menu
+  sidebar_right: Sidebar Right
+  title: Title
+  content: Content
+  footer: Footer

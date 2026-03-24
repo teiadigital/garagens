@@ -1,0 +1,19 @@
+uuid: 44732f09-d1d9-423b-848c-3230f1861e6c
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_pre_title
+    - paragraphs.paragraphs_type.armazens_homepage
+id: paragraph.armazens_homepage.field_pre_title
+field_name: field_pre_title
+entity_type: paragraph
+bundle: armazens_homepage
+label: 'Pre title'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

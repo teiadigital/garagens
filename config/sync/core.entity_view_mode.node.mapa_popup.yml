@@ -1,0 +1,11 @@
+uuid: 330bf1ba-be52-408a-a1bd-5f77dd338a91
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+id: node.mapa_popup
+label: 'Mapa (Popup)'
+description: ''
+targetEntityType: node
+cache: true

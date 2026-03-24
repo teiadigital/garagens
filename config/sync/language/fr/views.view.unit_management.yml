@@ -1,0 +1,34 @@
+display:
+  default:
+    display_title: Principal
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Appliquer
+          reset_button_label: Réinitialiser
+          exposed_sorts_label: 'Trier par'
+      pager:
+        options:
+          tags:
+            first: '« Premier'
+            last: 'Dernier »'
+          expose:
+            items_per_page_label: 'Éléments par page'
+            items_per_page_options_all_label: '- Tout -'
+            offset_label: Décalage
+      fields:
+        type:
+          label: Type
+        name:
+          label: Nom
+        status:
+          label: Publié
+          settings:
+            format_custom_true: Publié
+            format_custom_false: 'Non publié'
+        operations:
+          label: "Liens d'actions"
+  page_1:
+    display_options:
+      menu:
+        title: Unités

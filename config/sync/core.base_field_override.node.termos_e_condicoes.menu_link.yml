@@ -1,0 +1,20 @@
+uuid: a73cc06e-0e82-46ab-869d-3611dd841406
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.termos_e_condicoes
+id: node.termos_e_condicoes.menu_link
+field_name: menu_link
+entity_type: node
+bundle: termos_e_condicoes
+label: 'Ligação de Menu'
+description: 'Ligação do menu calculado para o nó (disponível apenas durante a gravação do nó).'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

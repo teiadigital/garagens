@@ -1,0 +1,23 @@
+uuid: d3a4e640-ffb0-466d-85bb-79439f31c31b
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_preco_in
+    - paragraphs.paragraphs_type.paletes
+id: paragraph.paletes.field_preco_in
+field_name: field_preco_in
+entity_type: paragraph
+bundle: paletes
+label: 'Preço in (€/un)'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0.01
+  max: null
+  prefix: ''
+  suffix: ' €'
+field_type: decimal

@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for User Menu Avatar Dropdown module.
+ */
+
+
+function user_menu_avatar_dropdown_theme() {
+
+    return [
+        'user_menu_avatar_dropdown_template' => [
+            'variables' => [
+                'is_anonymous' => NULL,
+                'is_user_page' => NULL,
+                'user_name' => NULL,
+                'user_email' => NULL,
+                'user_url' => NULL,
+                'user_picture' => NULL,
+                'dropdown_menu' => NULL,
+                'dropdown_menu_anonymous' => NULL
+            ],
+        ],
+    ];
+
+}

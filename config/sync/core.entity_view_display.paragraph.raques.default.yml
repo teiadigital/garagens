@@ -1,0 +1,70 @@
+uuid: 7b415b27-3c35-44a5-b819-e5480b2b51a4
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.raques.field_altura
+    - field.field.paragraph.raques.field_comprimento
+    - field.field.paragraph.raques.field_largura
+    - field.field.paragraph.raques.field_peso_suportado
+    - field.field.paragraph.raques.field_quantidade
+    - paragraphs.paragraphs_type.raques
+id: paragraph.raques.default
+targetEntityType: paragraph
+bundle: raques
+mode: default
+content:
+  field_altura:
+    type: number_decimal
+    label: inline
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_comprimento:
+    type: number_decimal
+    label: inline
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_largura:
+    type: number_decimal
+    label: inline
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_peso_suportado:
+    type: number_decimal
+    label: inline
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_quantidade:
+    type: number_integer
+    label: inline
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden: {  }

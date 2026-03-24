@@ -1,0 +1,21 @@
+uuid: f9a72336-5127-47cc-a8c6-27e6a36dda54
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_tem_raques
+    - node.type.armazem
+  module:
+    - options
+id: node.armazem.field_tem_raques
+field_name: field_tem_raques
+entity_type: node
+bundle: armazem
+label: 'Tem raques?'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

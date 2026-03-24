@@ -1,0 +1,14 @@
+uuid: c322f1c9-4d7b-462a-a47a-7f6ac2142e82
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.pedidos
+  module:
+    - view_unpublished
+id: utilizador
+label: Utilizador
+weight: -6
+is_admin: null
+permissions:
+  - 'view any unpublished pedidos content'

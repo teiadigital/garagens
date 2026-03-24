@@ -1,0 +1,21 @@
+uuid: db5733f6-a079-4a45-87b3-0b092e0fe7ab
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - bat_event.event_type.availability_hourly
+    - field.storage.bat_event.event_dates
+  module:
+    - datetime_range
+id: bat_event.availability_hourly.event_dates
+field_name: event_dates
+entity_type: bat_event
+bundle: availability_hourly
+label: 'Event Dates'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: daterange

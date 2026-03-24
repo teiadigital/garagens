@@ -1,0 +1,11 @@
+uuid: 91653b1d-f9bd-4cc8-b7f3-87c8f64096cc
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - bat_unit.type_bundle.motorbike
+id: bat_unit_type.motorbike
+target_entity_type_id: bat_unit_type
+target_bundle: motorbike
+default_langcode: site_default
+language_alterable: false

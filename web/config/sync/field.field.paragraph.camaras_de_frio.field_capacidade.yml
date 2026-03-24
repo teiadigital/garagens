@@ -1,0 +1,23 @@
+uuid: bffc852e-6903-4812-8d7b-36c6660387e0
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_capacidade
+    - paragraphs.paragraphs_type.camaras_de_frio
+id: paragraph.camaras_de_frio.field_capacidade
+field_name: field_capacidade
+entity_type: paragraph
+bundle: camaras_de_frio
+label: 'Capacidade (m³)'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ' m³'
+field_type: float

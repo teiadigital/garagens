@@ -1,0 +1,21 @@
+uuid: 36200b52-8eff-4886-bfdf-f0e78342a47d
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_vedacao
+    - node.type.pedidos
+  module:
+    - options
+id: node.pedidos.field_vedacao
+field_name: field_vedacao
+entity_type: node
+bundle: pedidos
+label: Vedação
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

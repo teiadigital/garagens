@@ -1,0 +1,18 @@
+uuid: abd77e82-370b-4e30-8026-404e4199afe2
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.vigilancia
+id: taxonomy_term.vigilancia.changed
+field_name: changed
+entity_type: taxonomy_term
+bundle: vigilancia
+label: Alterado
+description: 'A hora em que o termo foi editado pela última vez.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

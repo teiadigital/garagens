@@ -1,0 +1,48 @@
+uuid: 7180eaf8-1be1-4202-b807-ea3a9c4b17e9
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - language
+_core:
+  default_config_hash: gjYvYwMqulNsq7VmScWKOqEUxar9AX0TvG8vfCCguUQ
+id: language-edit
+label: 'A editar os idiomas'
+module: language
+routes:
+  -
+    route_name: entity.configurable_language.edit_form
+tips:
+  language-edit-overview:
+    id: language-edit-overview
+    plugin: text
+    label: 'A editar os idiomas'
+    weight: 1
+    body: '<p>Esta página oferece a capacidade de editar um idioma no seu site, incluindo idiomas personalizados.</p>'
+  language-edit-langcode:
+    id: language-edit-langcode
+    plugin: text
+    label: 'Código de idioma'
+    weight: 2
+    selector: '#edit-langcode-view'
+    body: '<p>Não é possível alterar o código de um idioma no site, uma vez que este é utilizado pelo sistema para manter o registo de idioma.</p>'
+  language-edit-label:
+    id: language-edit-label
+    plugin: text
+    label: 'Nome do idioma'
+    weight: 3
+    selector: '#edit-label'
+    body: '<p>O nome do idioma é usado em todo o site para todos os utilizadores e é escrito em inglês. Os nomes dos idiomas integrados podem ser traduzidos usando o módulo Interface Translation, e os nomes dos idiomas integrados e personalizados podem ser traduzidos usando o módulo Configuration Translation.</p>'
+  language-edit-direction:
+    id: language-edit-direction
+    plugin: text
+    label: 'Direção do idioma'
+    weight: 4
+    selector: '#edit-direction--wrapper--description'
+    body: '<p>Escolha se o idioma é "da esquerda para a direita" ou "da direita para a esquerda".</p><p>Atenção que nem todos os temas suportam disposições "da direita para a esquerda", por isso teste o seu tema se estiver a utilizar "Direita para a esquerda".</p>'
+  language-edit-continue:
+    id: language-edit-continue
+    plugin: text
+    label: 'Continuando em'
+    weight: 5
+    body: '<p>Agora que tem uma visão geral da funcionalidade "Editar idioma", pode:<ul><li>Editar um idioma</li><li><a href="[site:url]admin/ config/regional/language">Ver idiomas configurados</a></li></ul></p>'

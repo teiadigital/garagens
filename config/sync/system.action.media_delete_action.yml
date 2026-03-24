@@ -1,0 +1,13 @@
+uuid: 5e46af67-4bde-49d2-bf1f-f2bbe937df4a
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - media
+_core:
+  default_config_hash: FrZy1tmuXJcOxhXlBoI1Hsnen5TT-9OCC1iolWH84go
+id: media_delete_action
+label: 'Apagar media'
+type: media
+plugin: 'entity:delete_action:media'
+configuration: {  }

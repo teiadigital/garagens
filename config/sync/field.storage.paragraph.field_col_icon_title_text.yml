@@ -1,0 +1,20 @@
+uuid: 86ac5e9c-87be-4412-9d37-b0175439c735
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - entity_reference_revisions
+    - paragraphs
+id: paragraph.field_col_icon_title_text
+field_name: field_col_icon_title_text
+entity_type: paragraph
+type: entity_reference_revisions
+settings:
+  target_type: paragraph
+module: entity_reference_revisions
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

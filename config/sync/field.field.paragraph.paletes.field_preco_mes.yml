@@ -1,0 +1,23 @@
+uuid: f99e1f6c-7647-48b2-bbaf-21354d0a35bb
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_preco_mes
+    - paragraphs.paragraphs_type.paletes
+id: paragraph.paletes.field_preco_mes
+field_name: field_preco_mes
+entity_type: paragraph
+bundle: paletes
+label: 'Preço mês (€/un)'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ' €'
+field_type: decimal

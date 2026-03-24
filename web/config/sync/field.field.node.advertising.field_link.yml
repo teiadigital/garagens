@@ -1,0 +1,23 @@
+uuid: cb068b3f-8364-42c1-b7a6-a67a03e9d096
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_link
+    - node.type.advertising
+  module:
+    - link
+id: node.advertising.field_link
+field_name: field_link
+entity_type: node
+bundle: advertising
+label: Ligação
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 0
+  link_type: 17
+field_type: link

@@ -1,0 +1,11 @@
+uuid: ecee15e0-2681-4c85-95f1-1ed153ee63a5
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - bat_unit.type_bundle.bus
+id: bat_unit_type.bus
+target_entity_type_id: bat_unit_type
+target_bundle: bus
+default_langcode: site_default
+language_alterable: false

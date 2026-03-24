@@ -1,0 +1,21 @@
+{#
+/**
+* @file
+* Theme override for an 'input' #type form element.
+*
+* Available variables:
+* - attributes: A list of HTML attributes for the input element.
+* - children: Optional additional rendered elements.
+*
+* @see template_preprocess_input()
+*/
+#}
+
+{%
+set classes = [
+        'text-sm uppercase block rounded-3xl py-4 px-20 xl:px-28 font-bold  cursor-pointer  transition-all m-0 w-full sm:w-auto',
+        element['#attributes'].name == 'entity_form_steps_previous' ? 'bg-gray text-black border-2 border-gray hover:border-black hover:bg-black hover:text-white' : ' border-2 bg-black text-white hover:bg-white hover:text-black border-black'
+    ]
+%}
+
+<input{{ attributes.addClass(classes) }} />{{ children }}

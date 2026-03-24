@@ -1,0 +1,23 @@
+uuid: a739a9ef-3780-4c8b-8514-96d90b0774fc
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - bat_event.event_type.availability_daily
+    - field.storage.bat_event.field_comprimento
+id: bat_event.availability_daily.field_comprimento
+field_name: field_comprimento
+entity_type: bat_event
+bundle: availability_daily
+label: comprimento
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

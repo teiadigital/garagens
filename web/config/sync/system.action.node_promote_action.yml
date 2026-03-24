@@ -1,0 +1,13 @@
+uuid: 32eb9d60-375e-47ba-9678-bae331227382
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: N0RDBTqiK4dKoN4p4oW2j0SGWycdHyALUe9M-Ofp89U
+id: node_promote_action
+label: 'Promover conteúdo para a página inicial'
+type: node
+plugin: node_promote_action
+configuration: {  }

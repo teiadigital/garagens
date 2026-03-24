@@ -1,0 +1,18 @@
+uuid: f097eefe-444e-48b1-8409-993c3b8fee50
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.banner
+id: paragraph.banner.created
+field_name: created
+entity_type: paragraph
+bundle: banner
+label: 'Criado em'
+description: 'The time that the Paragraph was created.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

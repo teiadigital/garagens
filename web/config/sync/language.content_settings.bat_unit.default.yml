@@ -1,0 +1,11 @@
+uuid: c1e6b831-12d4-40a8-9ecd-672a3a22bfb2
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - bat_unit.unit_bundle.default
+id: bat_unit.default
+target_entity_type_id: bat_unit
+target_bundle: default
+default_langcode: site_default
+language_alterable: false

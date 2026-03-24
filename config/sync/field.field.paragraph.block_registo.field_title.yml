@@ -1,0 +1,22 @@
+uuid: 8ba8e8d7-c83a-4abd-9b1c-b25ce8150169
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_title
+    - paragraphs.paragraphs_type.block_registo
+  module:
+    - text
+id: paragraph.block_registo.field_title
+field_name: field_title
+entity_type: paragraph
+bundle: block_registo
+label: Title
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

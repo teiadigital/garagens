@@ -1,0 +1,35 @@
+{#
+/**
+ * @file
+ * Default theme implementation for a fieldgroup html element.
+ *
+ * Available variables:
+ * - title: Title of the group.
+ * - title_element: Element to wrap the title.
+ * - children: The children of the group.
+ * - wrapper_element: The html element to use
+ * - attributes: A list of HTML attributes for the group wrapper.
+ *
+ * @see template_preprocess_field_group_html_element()
+ *
+ * @ingroup themeable
+ */
+#}
+
+<div class="p-4 md:p-10 mt-32 sm:mt-44  ">
+
+    <div class=" h-96 flex flex-col justify-center px-5 py-12 relative overflow-hidden rounded-3xl">
+
+        <img src="{{ element.field_image.0['#media']|file_url }}"
+            class="absolute block w-full h-full top-0 left-0 object-cover object-center" alt="slide image">
+        <div class="bg-black/20 absolute top-0 left-0 w-full h-full"></div>
+        
+        <div class="container relative mx-auto mt-auto">
+            <div class="flex flex-col gap-2">
+                {{element.field_pre_title}}
+                {{element.field_title}}
+            </div>
+        </div>
+
+    </div>
+</div>

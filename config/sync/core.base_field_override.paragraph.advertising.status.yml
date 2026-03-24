@@ -1,0 +1,22 @@
+uuid: bc91788c-e27f-4ae7-80bc-4874b3269e19
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.advertising
+id: paragraph.advertising.status
+field_name: status
+entity_type: paragraph
+bundle: advertising
+label: Publicado
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

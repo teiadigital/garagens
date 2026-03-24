@@ -1,0 +1,5 @@
+content:
+  order_items:
+    settings:
+      label_singular: 'item de encomenda'
+      label_plural: 'items de encomenda'

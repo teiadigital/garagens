@@ -1,0 +1,16 @@
+uuid: 9709111d-63ea-4270-a411-96896b4a7768
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+_core:
+  default_config_hash: 0Nq1ieSyFZt7RGahj1fE14jLCFSe7Mf8KYQdarejlf0
+id: bat_api.entity_delete.bat_event
+service_plugin_id: 'entity_delete:bat_event'
+service_endpoint_id: bat_api
+formats:
+  json: json
+  xml: '0'
+authentication:
+  cookie: cookie

@@ -1,0 +1,18 @@
+uuid: 48725696-d6c1-47dc-9991-950a745815e1
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.area_de_armazem
+id: paragraph.area_de_armazem.created
+field_name: created
+entity_type: paragraph
+bundle: area_de_armazem
+label: 'Criado em'
+description: 'The time that the Paragraph was created.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

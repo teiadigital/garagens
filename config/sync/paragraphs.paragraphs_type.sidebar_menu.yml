@@ -1,0 +1,10 @@
+uuid: bed10150-a549-42ad-9d08-b1275f0a5249
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: sidebar_menu
+label: 'Sidebar Menu'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

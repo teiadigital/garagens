@@ -1,0 +1,6 @@
+_core:
+  default_config_hash: o1wWkhSOJotsHFgvzESaUOiTWhLak62cKBDyEtewAIM
+langcode: pt-pt
+role_to_select:
+  utilizador: utilizador
+registration_mode: user

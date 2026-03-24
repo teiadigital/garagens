@@ -1,0 +1,10 @@
+uuid: aafe87db-ceb8-4c86-8332-5800dde0c4f9
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: equipamentos_carga_descarga
+label: 'Equipamentos Carga/Descarga'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

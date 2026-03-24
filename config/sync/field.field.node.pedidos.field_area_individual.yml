@@ -1,0 +1,100 @@
+uuid: 08cab32f-a4fb-4228-b48b-1354dd41e3fb
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_area_individual
+    - node.type.pedidos
+    - paragraphs.paragraphs_type.area_de_armazem
+  module:
+    - entity_reference_revisions
+id: node.pedidos.field_area_individual
+field_name: field_area_individual
+entity_type: node
+bundle: pedidos
+label: 'Área total'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      area_de_armazem: area_de_armazem
+    negate: 0
+    target_bundles_drag_drop:
+      advertising:
+        weight: 25
+        enabled: false
+      advertising_carousel:
+        weight: 26
+        enabled: false
+      aluguer_livre:
+        weight: 27
+        enabled: false
+      area_de_armazem:
+        weight: 3
+        enabled: true
+      armazens_homepage:
+        weight: 29
+        enabled: false
+      banner:
+        weight: 9
+        enabled: false
+      block_registo:
+        weight: 10
+        enabled: false
+      camaras_de_frio:
+        weight: 4
+        enabled: false
+      carousel_banner:
+        weight: 33
+        enabled: false
+      contact:
+        weight: 34
+        enabled: false
+      contacts_icon_text_text:
+        weight: 35
+        enabled: false
+      equipamentos_carga_descarga:
+        weight: 12
+        enabled: false
+      faqs:
+        weight: 37
+        enabled: false
+      icon_text:
+        weight: 38
+        enabled: false
+      icon_title_text:
+        weight: 39
+        enabled: false
+      image:
+        weight: 40
+        enabled: false
+      location:
+        weight: 41
+        enabled: false
+      paletes:
+        weight: 42
+        enabled: false
+      preco_imovel:
+        weight: 43
+        enabled: false
+      raques:
+        weight: 13
+        enabled: false
+      sidebar_menu:
+        weight: 14
+        enabled: false
+      what_we_do:
+        weight: 46
+        enabled: false
+      why_choose_us:
+        weight: 47
+        enabled: false
+      why_our_solution:
+        weight: 48
+        enabled: false
+field_type: entity_reference_revisions

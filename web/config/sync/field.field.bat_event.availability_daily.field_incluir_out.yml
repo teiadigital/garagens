@@ -1,0 +1,21 @@
+uuid: a0d52943-eb7d-4279-9c3e-6048e61bb9aa
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - bat_event.event_type.availability_daily
+    - field.storage.bat_event.field_incluir_out
+id: bat_event.availability_daily.field_incluir_out
+field_name: field_incluir_out
+entity_type: bat_event
+bundle: availability_daily
+label: incluir_out
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

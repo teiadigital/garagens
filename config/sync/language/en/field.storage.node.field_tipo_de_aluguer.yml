@@ -1,0 +1,12 @@
+settings:
+  allowed_values:
+    -
+      label: 'renting the property'
+    -
+      label: 'rent by area'
+    -
+      label: 'cold storage rental'
+    -
+      label: 'euro pallet rental'
+    -
+      label: 'american pallet rental'

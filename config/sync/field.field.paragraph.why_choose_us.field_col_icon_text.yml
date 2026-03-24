@@ -1,0 +1,70 @@
+uuid: ceecd58d-4ce8-4a80-8561-567de813ce72
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_col_icon_text
+    - paragraphs.paragraphs_type.icon_text
+    - paragraphs.paragraphs_type.why_choose_us
+  module:
+    - entity_reference_revisions
+id: paragraph.why_choose_us.field_col_icon_text
+field_name: field_col_icon_text
+entity_type: paragraph
+bundle: why_choose_us
+label: 'Col icon + text'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      icon_text: icon_text
+    negate: 0
+    target_bundles_drag_drop:
+      area_de_armazem:
+        weight: 16
+        enabled: false
+      banner:
+        weight: 17
+        enabled: false
+      block_registo:
+        weight: 18
+        enabled: false
+      camaras_de_frio:
+        weight: 19
+        enabled: false
+      carousel_banner:
+        weight: 20
+        enabled: false
+      equipamentos_carga_descarga:
+        weight: 21
+        enabled: false
+      icon_text:
+        weight: 15
+        enabled: true
+      icon_title_text:
+        weight: 22
+        enabled: false
+      preco_imovel:
+        weight: 23
+        enabled: false
+      raques:
+        weight: 24
+        enabled: false
+      sidebar_menu:
+        weight: 25
+        enabled: false
+      what_we_do:
+        weight: 26
+        enabled: false
+      why_choose_us:
+        weight: 27
+        enabled: false
+      why_our_solution:
+        weight: 28
+        enabled: false
+field_type: entity_reference_revisions

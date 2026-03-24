@@ -1,0 +1,20 @@
+uuid: 10ba4b58-0fd5-40b8-88ec-8a54cb9feab8
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - media.type.document
+id: media.document.uid
+field_name: uid
+entity_type: media
+bundle: document
+label: 'Criado por'
+description: 'O ID do utilizador do autor.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: 'Drupal\media\Entity\Media::getDefaultEntityOwner'
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

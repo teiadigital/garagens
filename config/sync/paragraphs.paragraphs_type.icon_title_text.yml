@@ -1,0 +1,10 @@
+uuid: 7d3d91d5-d907-40aa-8c71-3f5c922b4de7
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: icon_title_text
+label: 'Icon + title + text'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

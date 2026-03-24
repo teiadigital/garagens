@@ -1,0 +1,177 @@
+uuid: 66cd0c6f-d8a7-4999-88ed-13dbc6410d39
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - core.entity_form_mode.node.step_6
+    - field.field.node.pedidos.field_area_individual
+    - field.field.node.pedidos.field_cais_carga
+    - field.field.node.pedidos.field_camara_de_frio
+    - field.field.node.pedidos.field_carga_adr
+    - field.field.node.pedidos.field_certificacao_alfandega
+    - field.field.node.pedidos.field_certificados
+    - field.field.node.pedidos.field_controlo_acesso
+    - field.field.node.pedidos.field_equipamento_carga_descarga
+    - field.field.node.pedidos.field_espaco
+    - field.field.node.pedidos.field_estado
+    - field.field.node.pedidos.field_incluir_espaco_exterior
+    - field.field.node.pedidos.field_infraestruturas
+    - field.field.node.pedidos.field_licenca_utilizacao
+    - field.field.node.pedidos.field_limitacoes_carga_descarga
+    - field.field.node.pedidos.field_localidade
+    - field.field.node.pedidos.field_permite_ser_partilhado
+    - field.field.node.pedidos.field_peso_maximo_piso
+    - field.field.node.pedidos.field_piso
+    - field.field.node.pedidos.field_raques
+    - field.field.node.pedidos.field_recursos_humanos
+    - field.field.node.pedidos.field_seguro
+    - field.field.node.pedidos.field_seguro_imovel
+    - field.field.node.pedidos.field_servicos_picking
+    - field.field.node.pedidos.field_sprinklers
+    - field.field.node.pedidos.field_tem_area_administrativa
+    - field.field.node.pedidos.field_tem_camaras_de_frio
+    - field.field.node.pedidos.field_tem_raques
+    - field.field.node.pedidos.field_tipos_de_horario_pedidos
+    - field.field.node.pedidos.field_vedacao
+    - field.field.node.pedidos.field_wc
+    - node.type.pedidos
+  module:
+    - field_hidden
+    - path
+id: node.pedidos.step_6
+targetEntityType: node
+bundle: pedidos
+mode: step_6
+content:
+  created:
+    type: datetime_timestamp
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_certificacao_alfandega:
+    type: options_buttons
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_certificados:
+    type: string_textfield
+    weight: 4
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_estado:
+    type: field_hidden_number
+    weight: 10
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_licenca_utilizacao:
+    type: options_buttons
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_seguro:
+    type: options_buttons
+    weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_seguro_imovel:
+    type: options_buttons
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_sprinklers:
+    type: options_buttons
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    weight: 15
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 120
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    weight: 16
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  translation:
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  field_area_individual: true
+  field_cais_carga: true
+  field_camara_de_frio: true
+  field_carga_adr: true
+  field_controlo_acesso: true
+  field_equipamento_carga_descarga: true
+  field_espaco: true
+  field_incluir_espaco_exterior: true
+  field_infraestruturas: true
+  field_limitacoes_carga_descarga: true
+  field_localidade: true
+  field_permite_ser_partilhado: true
+  field_peso_maximo_piso: true
+  field_piso: true
+  field_raques: true
+  field_recursos_humanos: true
+  field_servicos_picking: true
+  field_tem_area_administrativa: true
+  field_tem_camaras_de_frio: true
+  field_tem_raques: true
+  field_tipos_de_horario_pedidos: true
+  field_vedacao: true
+  field_wc: true

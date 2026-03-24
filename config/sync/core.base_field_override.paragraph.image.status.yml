@@ -1,0 +1,22 @@
+uuid: 2e519dc0-d214-4696-8ca5-5086abdc7360
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.image
+id: paragraph.image.status
+field_name: status
+entity_type: paragraph
+bundle: image
+label: Publicado
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

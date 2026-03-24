@@ -1,0 +1,23 @@
+uuid: b25aaf48-d059-4916-8c23-ac205ce0b01f
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - armazens_theme
+id: armazens_theme_imagemdemarcadositio
+theme: armazens_theme
+region: header
+weight: -8
+provider: null
+plugin: system_branding_block
+settings:
+  id: system_branding_block
+  label: 'Imagem de marca do sítio'
+  label_display: '0'
+  provider: system
+  use_site_logo: true
+  use_site_name: false
+  use_site_slogan: false
+visibility: {  }

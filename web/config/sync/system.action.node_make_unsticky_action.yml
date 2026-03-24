@@ -1,0 +1,13 @@
+uuid: ccf6c590-7f38-4631-b281-7fe43b147dfb
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: lDM9mvIGAu8Sw8rt-uCO4Sr7yX5VPrDPxYcawkbKd6k
+id: node_make_unsticky_action
+label: 'Tornar o conteúdo não destacado'
+type: node
+plugin: node_make_unsticky_action
+configuration: {  }

@@ -1,0 +1,50 @@
+uuid: 6eac4ed8-ee49-4cf8-b653-4795feeae48f
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.sidebar_menu.field_icon
+    - field.field.paragraph.sidebar_menu.field_link
+    - field.field.paragraph.sidebar_menu.field_tooltip
+    - image.style.thumbnail
+    - paragraphs.paragraphs_type.sidebar_menu
+  module:
+    - link
+    - svg_image
+id: paragraph.sidebar_menu.default
+targetEntityType: paragraph
+bundle: sidebar_menu
+mode: default
+content:
+  field_icon:
+    type: image_image
+    weight: 6
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+  field_link:
+    type: link_default
+    weight: 5
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_tooltip:
+    type: string_textfield
+    weight: 11
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  translation:
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

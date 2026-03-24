@@ -1,0 +1,23 @@
+uuid: ba1a4dbf-6fc4-4b49-82a2-5b8f5ac241fd
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_preco_dia
+    - paragraphs.paragraphs_type.paletes
+id: paragraph.paletes.field_preco_dia
+field_name: field_preco_dia
+entity_type: paragraph
+bundle: paletes
+label: 'Preço dia (€/un)'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0.01
+  max: null
+  prefix: ''
+  suffix: ' €'
+field_type: decimal

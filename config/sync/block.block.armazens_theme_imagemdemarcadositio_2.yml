@@ -1,0 +1,35 @@
+uuid: 0eee8e29-a1c1-4043-a75a-d8e6b0045b55
+langcode: pt-pt
+status: false
+dependencies:
+  module:
+    - system
+    - user
+  theme:
+    - armazens_theme
+id: armazens_theme_imagemdemarcadositio_2
+theme: armazens_theme
+region: sidebar_menu
+weight: -3
+provider: null
+plugin: system_branding_block
+settings:
+  id: system_branding_block
+  label: 'Imagem de marca do sítio'
+  label_display: '0'
+  provider: system
+  use_site_logo: true
+  use_site_name: false
+  use_site_slogan: false
+visibility:
+  request_path:
+    id: request_path
+    negate: true
+    pages: '<front>'
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      authenticated: authenticated

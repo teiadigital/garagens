@@ -1,0 +1,2 @@
+label: 'Time only (ip2country)'
+pattern: 'H:i:s T'

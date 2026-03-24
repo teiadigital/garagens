@@ -1,0 +1,18 @@
+uuid: 72c87a1c-e93e-4481-b49f-58757ede394e
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.publicidade
+id: node.publicidade.title
+field_name: title
+entity_type: node
+bundle: publicidade
+label: Título
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

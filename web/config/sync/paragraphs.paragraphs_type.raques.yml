@@ -1,0 +1,10 @@
+uuid: bec5cdc1-7ce7-423a-90cf-b1a5c2b24f68
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: raques
+label: Raques
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

@@ -1,0 +1,101 @@
+{#
+/**
+ * @file
+ * Theme override to display a view of unformatted rows.
+ *
+ * Available variables:
+ * - title: The title of this group of rows. May be empty.
+ * - rows: A list of the view's row items.
+ *   - attributes: The row's HTML attributes.
+ *   - content: The row's content.
+ * - view: The view object.
+ * - default_row_class: A flag indicating whether default classes should be
+ *   used on rows.
+ *
+ * @see template_preprocess_views_view_unformatted()
+ */
+#}
+{% if title %}
+  <h3>{{ title }}</h3>
+{% endif %}
+
+<div class="flex gap-7 mb-8">
+
+  {% if view.style_plugin.getField(0, 'machine_name')|render|striptags|spaceless != 'bws_daily_booked' %}
+  <a href="#" class="font-bold text-[#E16464]">rejeitar</a>
+  <a href="/node/{{view.style_plugin.getField(0, 'field_armazem')|render|striptags|spaceless}}/{{view.style_plugin.getField(0, 'id')|render|striptags|spaceless}}/accept-reservation"
+    class="font-bold text-[#6EAF5D]">aceitar</a>
+  {% endif %}
+</div>
+
+{% for key,row in rows %}
+
+  <div class="field mb-4">
+    <div class="field__label">Armazem</div>
+    <div class="field__item">{{view.style_plugin.getField(key, 'title')}}</div>
+  </div>
+
+  <div class="field mb-4">
+    <div class="field__label">Datas</div>
+    <div class="field__item">{{view.style_plugin.getField(key, 'event_dates')}}</div>
+  </div>
+
+  <div class="field mb-4">
+    <div class="field__label">Tipo de aluguer</div>
+    <div class="field__item">{{view.style_plugin.getField(key, 'event_bat_unit_reference')}}</div>
+  </div>
+
+  <div class="field mb-4">
+    <div class="field__label">Estado</div>
+    <div class="field__item">{{view.style_plugin.getField(key, 'event_state_reference')}}</div>
+  </div>
+
+  {% if view.style_plugin.getField(key, 'field_type')|render|striptags|spaceless == "0" %}
+
+  {% else %}
+
+    <div class="field mb-4">
+      <div class="field__label">unidades de medida</div>
+      <div class="field__item">{{view.style_plugin.getField(key, 'field_unidades_medida')}}</div>
+    </div>
+
+    <div class="field mb-4">
+      <div class="field__label">comprimento</div>
+      <div class="field__item">{{view.style_plugin.getField(key, 'field_largura')}} m</div>
+    </div>
+
+    <div class="field mb-4">
+      <div class="field__label">largura</div>
+      <div class="field__item">{{view.style_plugin.getField(key, 'field_comprimento')}} m</div>
+    </div>
+
+    <div class="field mb-4">
+      <div class="field__label">quantidade</div>
+      <div class="field__item">{{view.style_plugin.getField(key, 'field_quantidade')}}</div>
+    </div>
+
+    <div class="field mb-4">
+      <div class="field__label">paletes em altura</div>
+      <div class="field__item">{{view.style_plugin.getField(key, 'field_paletes_altura')}}</div>
+    </div>
+      
+    <div class="field mb-4">
+      <div class="field__label">incluir in</div>
+      <div class="field__item">{{view.style_plugin.getField(key, 'field_incluir_in')}}</div>
+    </div>
+
+    <div class="field mb-4">
+      <div class="field__label">incluir out</div>
+      <div class="field__item">{{view.style_plugin.getField(key, 'field_incluir_out')}}</div>
+    </div>
+
+  {% endif %}
+
+  <div class="field mb-4">
+    <div class="field__label">Preço</div>
+    <div class="field__item">{{view.style_plugin.getField(key, 'field_price')}} €</div>
+  </div>
+
+
+  
+{% endfor %}

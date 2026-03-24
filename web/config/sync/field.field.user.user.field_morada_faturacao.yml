@@ -1,0 +1,37 @@
+uuid: 7ca461a9-10c7-4573-8edb-44f194d9f516
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_morada_faturacao
+  module:
+    - address
+    - user
+id: user.user.field_morada_faturacao
+field_name: field_morada_faturacao
+entity_type: user
+bundle: user
+label: 'Dirección de facturación'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  available_countries: {  }
+  langcode_override: ''
+  field_overrides:
+    givenName:
+      override: hidden
+    additionalName:
+      override: hidden
+    familyName:
+      override: hidden
+    organization:
+      override: hidden
+    addressLine2:
+      override: hidden
+    addressLine3:
+      override: hidden
+  fields: {  }
+field_type: address

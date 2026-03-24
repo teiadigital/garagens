@@ -1,0 +1,8 @@
+name: 'Storitflex Geocode'
+type: module
+description: 'Preenche campo geofield com base no campo de morada.'
+core_version_requirement: ^10
+package: Custom
+dependencies:
+  - geocoder
+  - geofield

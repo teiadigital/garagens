@@ -1,0 +1,18 @@
+uuid: effffdff-74cc-4e7f-bb25-81c534720c1e
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.advertising_carousel
+id: paragraph.advertising_carousel.created
+field_name: created
+entity_type: paragraph
+bundle: advertising_carousel
+label: 'Criado em'
+description: 'The time that the Paragraph was created.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

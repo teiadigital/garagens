@@ -1,0 +1,52 @@
+uuid: c709a991-4678-4d2e-aee5-db2e9b0e6fe9
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_renda_imovel
+    - node.type.armazem
+    - paragraphs.paragraphs_type.preco_imovel
+  module:
+    - entity_reference_revisions
+id: node.armazem.field_renda_imovel
+field_name: field_renda_imovel
+entity_type: node
+bundle: armazem
+label: 'Renda do Imóvel'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      preco_imovel: preco_imovel
+    negate: 0
+    target_bundles_drag_drop:
+      area_de_armazem:
+        weight: 10
+        enabled: false
+      banner:
+        weight: 11
+        enabled: false
+      block_registo:
+        weight: 12
+        enabled: false
+      camaras_de_frio:
+        weight: 13
+        enabled: false
+      equipamentos_carga_descarga:
+        weight: 14
+        enabled: false
+      preco_imovel:
+        weight: 9
+        enabled: true
+      raques:
+        weight: 15
+        enabled: false
+      sidebar_menu:
+        weight: 16
+        enabled: false
+field_type: entity_reference_revisions

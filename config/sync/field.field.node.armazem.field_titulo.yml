@@ -1,0 +1,19 @@
+uuid: 31544d0c-3b1f-4a44-814c-ef3a6548ee07
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_titulo
+    - node.type.armazem
+id: node.armazem.field_titulo
+field_name: field_titulo
+entity_type: node
+bundle: armazem
+label: Título
+description: 'adicione um título que identifique o armazém'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

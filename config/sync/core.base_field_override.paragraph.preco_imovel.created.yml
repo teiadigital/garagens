@@ -1,0 +1,18 @@
+uuid: 8974c278-85f2-425f-873e-2758d1c0231b
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.preco_imovel
+id: paragraph.preco_imovel.created
+field_name: created
+entity_type: paragraph
+bundle: preco_imovel
+label: 'Criado em'
+description: 'The time that the Paragraph was created.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

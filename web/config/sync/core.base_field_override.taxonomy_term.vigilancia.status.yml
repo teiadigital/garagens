@@ -1,0 +1,22 @@
+uuid: c0e17297-f2e4-4ce4-96bd-88a067cdac87
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.vigilancia
+id: taxonomy_term.vigilancia.status
+field_name: status
+entity_type: taxonomy_term
+bundle: vigilancia
+label: Publicado
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

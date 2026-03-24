@@ -1,0 +1,23 @@
+uuid: 0145c0ba-b133-4622-a5de-5ef43693f515
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_temperatura_minima
+    - paragraphs.paragraphs_type.camaras_de_frio
+id: paragraph.camaras_de_frio.field_temperatura_minima
+field_name: field_temperatura_minima
+entity_type: paragraph
+bundle: camaras_de_frio
+label: 'Temperatura mínima (°C)'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: °C
+field_type: decimal

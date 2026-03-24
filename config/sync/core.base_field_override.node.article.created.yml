@@ -1,0 +1,18 @@
+uuid: 2a75c1b4-b100-40ac-b946-1234759a8bae
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.article
+id: node.article.created
+field_name: created
+entity_type: node
+bundle: article
+label: 'Criado em'
+description: 'The date and time that the content was created.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

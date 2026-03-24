@@ -1,0 +1,22 @@
+uuid: f0973610-01bd-4633-a5e9-3e994aebaee4
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.piso
+id: taxonomy_term.piso.status
+field_name: status
+entity_type: taxonomy_term
+bundle: piso
+label: Publicado
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

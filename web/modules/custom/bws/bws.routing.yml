@@ -1,0 +1,55 @@
+bws.node.availability:
+  path: "/node/{node}/availability"
+  defaults:
+    _controller: '\Drupal\bws\Controller\BwsController::availability'
+    _title_callback: '\Drupal\bws\Controller\BwsController::availabilityTitle'
+  requirements:
+    _bws_availability_access: "node"
+
+bws.node.add_reservation:
+  path: "/node/{node}/add-reservation"
+  defaults:
+    _form: '\Drupal\bws\Form\AddReservationForm'
+    _title_callback: '\Drupal\bws\Controller\BwsController::addReservationTitle'
+  options:
+    parameters:
+      node:
+        type: entity:node
+  requirements:
+    _bws_add_reservation_access: "node"
+
+bws.bat_event_series.add_reservation:
+  path: "/node/{node}/add-reservation/{bat_event_series}"
+  defaults:
+    _form: '\Drupal\bws\Form\AddReservationForm'
+    _title_callback: '\Drupal\bws\Controller\BwsController::addReservationTitle'
+  options:
+    parameters:
+      node:
+        type: entity:node
+      bat_event_series:
+        type: entity:bat_event_series
+  requirements:
+    _bws_add_reservation_access: "node"
+
+bws.bat_event.accept_reservation:
+  path: "/node/{node}/{bat_event}/accept-reservation"
+  defaults:
+    _controller: '\Drupal\bws\Controller\BwsController::acceptReservation'
+    _title_callback: "Accept reservation"
+  options:
+    parameters:
+      node:
+        type: entity:node
+      bat_event:
+        type: entity:bat_event
+  requirements:
+    _bws_add_reservation_access: "node"
+
+bws.settings:
+  path: "/admin/config/system/settings"
+  defaults:
+    _title: "Settings"
+    _form: 'Drupal\bws\Form\SettingsForm'
+  requirements:
+    _permission: "administer site configuration"

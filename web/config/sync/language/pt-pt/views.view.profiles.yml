@@ -1,0 +1,25 @@
+label: Perfis
+display:
+  default:
+    display_title: Principal
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Aplicar
+          reset_button_label: Reiniciar
+          exposed_sorts_label: 'Ordenar por'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      arguments:
+        uid:
+          exception:
+            title: Todos
+        type:
+          exception:
+            title: Todos
+        status:
+          exception:
+            title: Todos
+      title: Perfis
+  user_page:
+    display_title: 'Página do utilizador'

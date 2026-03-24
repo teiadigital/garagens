@@ -1,0 +1,14 @@
+uuid: 50be6f5e-1bb5-44dc-b50d-5037fcff9ab0
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - user
+id: utilizador
+label: Utilizador
+type: 'canonical_entities:user'
+pattern: '[user:account-name]'
+selection_criteria: {  }
+selection_logic: and
+weight: 0
+relationships: {  }

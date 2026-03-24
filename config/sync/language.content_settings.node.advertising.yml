@@ -1,0 +1,18 @@
+uuid: b68717f9-d4bb-4acf-939e-9dd266a49961
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.advertising
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: node.advertising
+target_entity_type_id: node
+target_bundle: advertising
+default_langcode: pt-pt
+language_alterable: true

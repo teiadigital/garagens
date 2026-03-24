@@ -1,0 +1,19 @@
+uuid: 2053bf16-a8c5-4335-8a18-5b41ed2c22bf
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_box_title
+    - paragraphs.paragraphs_type.block_registo
+id: paragraph.block_registo.field_box_title
+field_name: field_box_title
+entity_type: paragraph
+bundle: block_registo
+label: 'Box title'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

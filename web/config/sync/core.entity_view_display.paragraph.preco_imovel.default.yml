@@ -1,0 +1,48 @@
+uuid: b3326863-32ff-4355-bc02-2c25c44e0116
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.preco_imovel.field_preco_ano
+    - field.field.paragraph.preco_imovel.field_preco_dia
+    - field.field.paragraph.preco_imovel.field_preco_mes
+    - paragraphs.paragraphs_type.preco_imovel
+id: paragraph.preco_imovel.default
+targetEntityType: paragraph
+bundle: preco_imovel
+mode: default
+content:
+  field_preco_ano:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_preco_dia:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_preco_mes:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }

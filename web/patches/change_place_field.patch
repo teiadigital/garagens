@@ -1,0 +1,35 @@
+diff --git a/src/Plugin/Field/FieldWidget/AddressWidget.php b/src/Plugin/Field/FieldWidget/AddressWidget.php
+index 51a03dd..ab31f65 100755
+--- a/src/Plugin/Field/FieldWidget/AddressWidget.php
++++ b/src/Plugin/Field/FieldWidget/AddressWidget.php
+@@ -72,14 +72,6 @@ class AddressWidget extends WidgetBase {
+       ],
+     ];
+ 
+-    $element['city'] = [
+-      '#title' => $this->t('City'),
+-      '#type' => 'textfield',
+-      '#title_display' => $element['#title_display'],
+-      '#default_value' => $items[$delta]->city ?? NULL,
+-      '#placeholder' => $this->t('Enter city'),
+-    ];
+-
+     $element['address_line'] = [
+       '#title' => $this->t('Address'),
+       '#type' => 'textfield',
+@@ -96,6 +88,15 @@ class AddressWidget extends WidgetBase {
+       '#default_value' => $items[$delta]->postal_code ?? NULL,
+     ];
+ 
++    $element['city'] = [
++      '#title' => $this->t('City'),
++      '#type' => 'textfield',
++      '#title_display' => $element['#title_display'],
++      '#default_value' => $items[$delta]->city ?? NULL,
++      '#placeholder' => $this->t('Enter city'),
++    ];
++
++
+     return $element;
+   }
+ 

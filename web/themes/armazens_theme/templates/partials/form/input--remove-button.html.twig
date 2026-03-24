@@ -1,0 +1,20 @@
+{#
+/**
+* @file
+* Theme override for an 'input' #type form element.
+*
+* Available variables:
+* - attributes: A list of HTML attributes for the input element.
+* - children: Optional additional rendered elements.
+*
+* @see template_preprocess_input()
+*/
+#}
+
+{%
+set classes = [
+    'w-10 h-10 rounded-full text-transparent cursor-pointer bg-black bg-[url("/themes/armazens_theme/images/icons/trash.svg")] bg-no-repeat bg-center bg-auto absolute top-0 right-0'
+]
+%}
+
+<input{{ attributes.addClass(classes) }} />{{ children }}

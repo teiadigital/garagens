@@ -1,0 +1,39 @@
+uuid: e344cd4e-5ee3-46a1-b8b9-f48840da4b17
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - management_armazens
+    - node
+    - user
+  theme:
+    - armazens_theme
+id: armazens_theme_actionspedidos
+theme: armazens_theme
+region: content
+weight: -7
+provider: null
+plugin: management_armazens_actions_pedidos
+settings:
+  id: management_armazens_actions_pedidos
+  label: 'Actions Pedidos'
+  label_display: '0'
+  provider: management_armazens
+  context_mapping:
+    node: '@node.node_route_context:node'
+visibility:
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      utilizador: utilizador
+      gestor: gestor
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      pedidos: pedidos

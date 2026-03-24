@@ -1,0 +1,23 @@
+uuid: 6656c8f8-995f-4197-a899-96a34f4f3d73
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_largura
+    - paragraphs.paragraphs_type.raques
+id: paragraph.raques.field_largura
+field_name: field_largura
+entity_type: paragraph
+bundle: raques
+label: 'Largura (m)'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ' m'
+field_type: decimal

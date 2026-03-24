@@ -1,0 +1,21 @@
+uuid: bfa76e61-20ea-4a53-aecb-a9e8bb3b28c1
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_bool_aluguer_euro_paletes
+    - node.type.armazem
+id: node.armazem.field_bool_aluguer_euro_paletes
+field_name: field_bool_aluguer_euro_paletes
+entity_type: node
+bundle: armazem
+label: 'Bool aluguer euro paletes'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

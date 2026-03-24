@@ -1,0 +1,13 @@
+uuid: 55449f42-9544-4a71-9800-1e0684dfe565
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - media
+_core:
+  default_config_hash: nh83qNNrmWE-CDdHz2MdFOAk60T9mzv3R-MaKfZR2jw
+id: media_publish_action
+label: 'Publicar media'
+type: media
+plugin: 'entity:publish_action:media'
+configuration: {  }

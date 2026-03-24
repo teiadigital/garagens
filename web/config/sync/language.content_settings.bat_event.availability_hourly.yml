@@ -1,0 +1,11 @@
+uuid: 9a691868-62fd-492b-b674-04fa0fc760d4
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - bat_event.event_type.availability_hourly
+id: bat_event.availability_hourly
+target_entity_type_id: bat_event
+target_bundle: availability_hourly
+default_langcode: site_default
+language_alterable: false

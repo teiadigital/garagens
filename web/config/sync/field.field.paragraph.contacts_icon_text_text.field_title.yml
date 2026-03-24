@@ -1,0 +1,22 @@
+uuid: 06db7433-85dd-4da2-a9e4-71086e6c64c2
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_title
+    - paragraphs.paragraphs_type.contacts_icon_text_text
+  module:
+    - text
+id: paragraph.contacts_icon_text_text.field_title
+field_name: field_title
+entity_type: paragraph
+bundle: contacts_icon_text_text
+label: Title
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

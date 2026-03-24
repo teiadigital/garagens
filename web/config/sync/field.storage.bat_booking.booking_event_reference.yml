@@ -1,0 +1,20 @@
+uuid: f37aa36d-c4dc-429a-bcb3-80c088ceabc9
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - bat_booking
+    - bat_event
+id: bat_booking.booking_event_reference
+field_name: booking_event_reference
+entity_type: bat_booking
+type: entity_reference
+settings:
+  target_type: bat_event
+module: core
+locked: true
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

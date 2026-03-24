@@ -1,0 +1,29 @@
+uuid: 7b4a3377-c5fb-4840-883b-d6ce81223cbb
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_comprovativo_do_seguro
+    - media.type.document
+    - node.type.armazem
+id: node.armazem.field_comprovativo_do_seguro
+field_name: field_comprovativo_do_seguro
+entity_type: node
+bundle: armazem
+label: 'Documento comprovativo do seguro'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      document: document
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

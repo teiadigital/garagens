@@ -1,0 +1,19 @@
+uuid: 8a5261a8-8787-4c19-9e81-0e8864216a1a
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_coordenadas
+    - node.type.armazem
+id: node.armazem.field_coordenadas
+field_name: field_coordenadas
+entity_type: node
+bundle: armazem
+label: Coordenadas
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

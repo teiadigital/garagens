@@ -1,0 +1,6 @@
+uuid: baf01126-6a79-4b7d-88c2-3a94617026fb
+langcode: pt-pt
+status: true
+dependencies: {  }
+name: 'Aluguer camaras de frio'
+type: camara_de_frio

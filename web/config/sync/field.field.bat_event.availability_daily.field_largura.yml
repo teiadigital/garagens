@@ -1,0 +1,23 @@
+uuid: e9ae31b8-1f3d-4297-ab40-4dab8e56429d
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - bat_event.event_type.availability_daily
+    - field.storage.bat_event.field_largura
+id: bat_event.availability_daily.field_largura
+field_name: field_largura
+entity_type: bat_event
+bundle: availability_daily
+label: largura
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

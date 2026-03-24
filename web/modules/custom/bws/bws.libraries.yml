@@ -1,0 +1,13 @@
+bws:
+  version: VERSION
+  js:
+    js/bws.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+
+bws_form:
+  version: VERSION
+  css:
+    theme:
+      css/bws.css: {}

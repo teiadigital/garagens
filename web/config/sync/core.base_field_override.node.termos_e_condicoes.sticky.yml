@@ -1,0 +1,22 @@
+uuid: 06609dc2-aa33-4bd4-b8bd-72a73f4a144c
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.termos_e_condicoes
+id: node.termos_e_condicoes.sticky
+field_name: sticky
+entity_type: node
+bundle: termos_e_condicoes
+label: 'Destacado no topo das listas'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

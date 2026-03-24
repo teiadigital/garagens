@@ -1,0 +1,22 @@
+uuid: a1814d1e-9fec-4af4-8a45-c7b77b3da1c1
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.advertising
+id: node.advertising.promote
+field_name: promote
+entity_type: node
+bundle: advertising
+label: 'Promovido à página principal'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

@@ -1,0 +1,16 @@
+uuid: 000db8e7-72cf-45ae-9727-f288deca3799
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - pathauto
+  enforced:
+    module:
+      - user
+_core:
+  default_config_hash: x_ok_ZsfA4Xk4B_hVW3O4-3PcNoK57nXLz_Dlletidg
+id: pathauto_update_alias_user
+label: 'Atualizar um caminho alternativo'
+type: user
+plugin: pathauto_update_alias
+configuration: {  }

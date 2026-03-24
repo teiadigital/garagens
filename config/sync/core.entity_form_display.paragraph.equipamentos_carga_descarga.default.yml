@@ -1,0 +1,58 @@
+uuid: 3ca0abd0-5c2f-43ef-a17c-72e94ece4375
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.equipamentos_carga_descarga.field_equipamento
+    - field.field.paragraph.equipamentos_carga_descarga.field_peso_suportado
+    - paragraphs.paragraphs_type.equipamentos_carga_descarga
+  module:
+    - field_group
+third_party_settings:
+  field_group:
+    group_grid:
+      children:
+        - field_equipamento
+        - field_peso_suportado
+      label: Grid
+      region: content
+      parent_name: ''
+      weight: 0
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: true
+id: paragraph.equipamentos_carga_descarga.default
+targetEntityType: paragraph
+bundle: equipamentos_carga_descarga
+mode: default
+content:
+  field_equipamento:
+    type: entity_reference_autocomplete
+    weight: 1
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_peso_suportado:
+    type: number
+    weight: 10
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

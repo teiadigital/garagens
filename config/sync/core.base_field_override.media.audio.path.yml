@@ -1,0 +1,20 @@
+uuid: 30b5bbf7-d928-4030-91a3-d2454a36ffd7
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - media.type.audio
+  module:
+    - path
+id: media.audio.path
+field_name: path
+entity_type: media
+bundle: audio
+label: 'URL alternativo'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

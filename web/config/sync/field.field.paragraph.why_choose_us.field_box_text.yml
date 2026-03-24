@@ -1,0 +1,22 @@
+uuid: e098f2d2-a221-41c5-a6fb-8edfaf60f815
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_box_text
+    - paragraphs.paragraphs_type.why_choose_us
+  module:
+    - text
+id: paragraph.why_choose_us.field_box_text
+field_name: field_box_text
+entity_type: paragraph
+bundle: why_choose_us
+label: 'Box text'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

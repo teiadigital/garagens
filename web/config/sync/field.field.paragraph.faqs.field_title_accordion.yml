@@ -1,0 +1,19 @@
+uuid: 6a9b1702-17ff-4900-9793-47dd9b50eae9
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_title_accordion
+    - paragraphs.paragraphs_type.faqs
+id: paragraph.faqs.field_title_accordion
+field_name: field_title_accordion
+entity_type: paragraph
+bundle: faqs
+label: Title
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

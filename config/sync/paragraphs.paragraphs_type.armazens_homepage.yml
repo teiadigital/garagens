@@ -1,0 +1,10 @@
+uuid: a7d8084a-584b-49ae-9b6c-b5057f57fd71
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: armazens_homepage
+label: 'Armazens Homepage'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

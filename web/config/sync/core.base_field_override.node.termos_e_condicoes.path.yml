@@ -1,0 +1,20 @@
+uuid: 547b92ec-87f8-4f78-af18-f88af8c76345
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.termos_e_condicoes
+  module:
+    - path
+id: node.termos_e_condicoes.path
+field_name: path
+entity_type: node
+bundle: termos_e_condicoes
+label: 'URL alternativo'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

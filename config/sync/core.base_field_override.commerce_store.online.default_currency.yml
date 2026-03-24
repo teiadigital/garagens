@@ -1,0 +1,20 @@
+uuid: acd7a29c-eded-42f6-85f5-874a11858999
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - commerce_store.commerce_store_type.online
+id: commerce_store.online.default_currency
+field_name: default_currency
+entity_type: commerce_store
+bundle: online
+label: 'Moeda predefinida'
+description: 'A moeda por defeito da loja'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

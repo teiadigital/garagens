@@ -1,0 +1,12 @@
+diff --git a/modules/bat_event/src/Entity/Event.php b/modules/bat_event/src/Entity/Event.php
+index f4ded0a..1e0cb6d 100644
+--- a/modules/bat_event/src/Entity/Event.php
++++ b/modules/bat_event/src/Entity/Event.php
+@@ -39,7 +39,6 @@ use Roomify\Bat\Event\Event as BatEvent;
+  *     "access" = "Drupal\bat_event\EventAccessControlHandler",
+  *   },
+  *   base_table = "event",
+- *   data_table = "bat_event__event_dates",
+  *   admin_permission = "administer event entity",
+  *   entity_keys = {
+  *     "id" = "id",

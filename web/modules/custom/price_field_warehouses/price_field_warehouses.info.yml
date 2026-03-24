@@ -1,0 +1,5 @@
+name: 'Price field warehouses'
+type: module
+description: 'Field for form warehouses'
+package: Custom
+core_version_requirement: ^10

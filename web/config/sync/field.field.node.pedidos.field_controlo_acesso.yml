@@ -1,0 +1,21 @@
+uuid: 76929f7d-6603-4718-bea5-28f6683869ac
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_controlo_acesso
+    - node.type.pedidos
+  module:
+    - options
+id: node.pedidos.field_controlo_acesso
+field_name: field_controlo_acesso
+entity_type: node
+bundle: pedidos
+label: 'Controlo Acesso'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

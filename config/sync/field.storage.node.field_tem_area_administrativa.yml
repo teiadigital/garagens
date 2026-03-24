@@ -1,0 +1,27 @@
+uuid: b13b4845-b1c6-42ee-83cc-4f9f34d06550
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_tem_area_administrativa
+field_name: field_tem_area_administrativa
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: sim
+      label: Sim
+    -
+      value: nao
+      label: Não
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

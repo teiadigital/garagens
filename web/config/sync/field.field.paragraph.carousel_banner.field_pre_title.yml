@@ -1,0 +1,19 @@
+uuid: 12626b7f-1077-4ee8-88ba-b05e6a68ef6a
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_pre_title
+    - paragraphs.paragraphs_type.carousel_banner
+id: paragraph.carousel_banner.field_pre_title
+field_name: field_pre_title
+entity_type: paragraph
+bundle: carousel_banner
+label: 'Pre title'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

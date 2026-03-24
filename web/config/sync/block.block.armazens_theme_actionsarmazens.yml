@@ -1,0 +1,35 @@
+uuid: 504ad02d-e3d3-43c6-b5b6-3d65f515b63b
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - management_armazens
+    - node
+    - system
+  theme:
+    - armazens_theme
+id: armazens_theme_actionsarmazens
+theme: armazens_theme
+region: content
+weight: -8
+provider: null
+plugin: management_armazens_actions_armazens
+settings:
+  id: management_armazens_actions_armazens
+  label: 'Actions Armazens'
+  label_display: '0'
+  provider: management_armazens
+  context_mapping:
+    node: '@node.node_route_context:node'
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      armazem: armazem
+  request_path:
+    id: request_path
+    negate: true
+    pages: '/*/add-reservation'

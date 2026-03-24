@@ -1,0 +1,18 @@
+uuid: 24d78f56-5c7a-45bf-97a2-c179a4ae445b
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.carousel_banner
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: paragraph.carousel_banner
+target_entity_type_id: paragraph
+target_bundle: carousel_banner
+default_langcode: site_default
+language_alterable: true

@@ -1,0 +1,21 @@
+uuid: a24ee455-3909-49be-8770-4d1fcc9cb5e0
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_telefone
+  module:
+    - phone_international
+    - user
+id: user.user.field_telefone
+field_name: field_telefone
+entity_type: user
+bundle: user
+label: Telefone
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: phone_international

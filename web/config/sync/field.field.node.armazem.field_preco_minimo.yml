@@ -1,0 +1,23 @@
+uuid: 7b213d1e-1da8-4af7-84bd-19d3be4ad492
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_preco_minimo
+    - node.type.armazem
+id: node.armazem.field_preco_minimo
+field_name: field_preco_minimo
+entity_type: node
+bundle: armazem
+label: 'Preço mínimo de aluguer (€)'
+description: 'Este valor aplica-se se o total do aluguer não atingir o mínimo estipulado'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ' €'
+field_type: decimal

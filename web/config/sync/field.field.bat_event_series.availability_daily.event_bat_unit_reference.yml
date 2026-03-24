@@ -1,0 +1,21 @@
+uuid: 2d0f78e7-0fc0-4cce-9c71-24857da2ee79
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - bat_event_series.event_series_type.availability_daily
+    - field.storage.bat_event_series.event_bat_unit_reference
+id: bat_event_series.availability_daily.event_bat_unit_reference
+field_name: event_bat_unit_reference
+entity_type: bat_event_series
+bundle: availability_daily
+label: 'BAT Unit'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:bat_unit'
+  handler_settings: {  }
+field_type: entity_reference

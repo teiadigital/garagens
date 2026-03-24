@@ -1,0 +1,21 @@
+uuid: e9772623-ae2f-4f40-95c4-e55d9c382c6d
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.vigilancia
+  module:
+    - text
+id: taxonomy_term.vigilancia.description
+field_name: description
+entity_type: taxonomy_term
+bundle: vigilancia
+label: Descrição
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

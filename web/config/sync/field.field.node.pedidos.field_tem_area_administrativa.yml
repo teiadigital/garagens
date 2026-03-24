@@ -1,0 +1,21 @@
+uuid: a7307837-7810-4ca0-822d-19cfde2d5739
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_tem_area_administrativa
+    - node.type.pedidos
+  module:
+    - options
+id: node.pedidos.field_tem_area_administrativa
+field_name: field_tem_area_administrativa
+entity_type: node
+bundle: pedidos
+label: 'Tem um espaço de área administrativa?'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

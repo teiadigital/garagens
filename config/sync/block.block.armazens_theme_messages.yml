@@ -1,0 +1,27 @@
+uuid: 8b9a2409-e75f-44f7-818f-26c4362b12ae
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - armazens_theme
+_core:
+  default_config_hash: '-Ac3ISpIT0PQ-whzD7_dw0SdKi6dAbRFNWdSjOiVDqg'
+id: armazens_theme_messages
+theme: armazens_theme
+region: content
+weight: -9
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Mensagens de estado'
+  label_display: '0'
+  provider: system
+visibility:
+  response_status:
+    id: response_status
+    negate: false
+    status_codes:
+      - 200

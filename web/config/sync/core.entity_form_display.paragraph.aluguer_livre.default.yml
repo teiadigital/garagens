@@ -1,0 +1,66 @@
+uuid: bb62c7c8-64dd-45e7-b230-f6157fc8839e
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.aluguer_livre.field_descricao
+    - field.field.paragraph.aluguer_livre.field_preco_eu_un
+    - field.field.paragraph.aluguer_livre.field_unidade
+    - paragraphs.paragraphs_type.aluguer_livre
+  module:
+    - field_group
+third_party_settings:
+  field_group:
+    group_flex:
+      children:
+        - field_descricao
+        - field_unidade
+        - field_preco_eu_un
+      label: flex
+      region: content
+      parent_name: ''
+      weight: 0
+      format_type: html_element
+      format_settings:
+        classes: grid-columns-3
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: true
+id: paragraph.aluguer_livre.default
+targetEntityType: paragraph
+bundle: aluguer_livre
+mode: default
+content:
+  field_descricao:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_preco_eu_un:
+    type: number
+    weight: 3
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_unidade:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

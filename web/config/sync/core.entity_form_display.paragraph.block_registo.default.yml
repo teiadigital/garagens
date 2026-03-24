@@ -1,0 +1,71 @@
+uuid: 26a9dd22-2e9d-44a1-a0a8-fb348a690f8a
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.block_registo.field_box_subtitle
+    - field.field.paragraph.block_registo.field_box_text
+    - field.field.paragraph.block_registo.field_box_title
+    - field.field.paragraph.block_registo.field_link
+    - field.field.paragraph.block_registo.field_p_image
+    - field.field.paragraph.block_registo.field_title
+    - paragraphs.paragraphs_type.block_registo
+  module:
+    - link
+    - media_library
+    - text
+id: paragraph.block_registo.default
+targetEntityType: paragraph
+bundle: block_registo
+mode: default
+content:
+  field_box_subtitle:
+    type: string_textfield
+    weight: 3
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_box_text:
+    type: text_textarea
+    weight: 4
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_box_title:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_link:
+    type: link_default
+    weight: 5
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_p_image:
+    type: media_library_widget
+    weight: 0
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings: {  }
+  field_title:
+    type: text_textarea
+    weight: 1
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

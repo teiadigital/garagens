@@ -1,0 +1,21 @@
+uuid: f444e0d4-0cca-4066-b329-c37c1f2700ac
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - entity_reference_revisions
+    - node
+    - paragraphs
+id: node.field_area_individual
+field_name: field_area_individual
+entity_type: node
+type: entity_reference_revisions
+settings:
+  target_type: paragraph
+module: entity_reference_revisions
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

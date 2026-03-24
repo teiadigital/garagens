@@ -1,0 +1,22 @@
+uuid: 3d29c53e-7c10-4f2f-a29a-96216f9097c1
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.aluguer_livre
+id: paragraph.aluguer_livre.status
+field_name: status
+entity_type: paragraph
+bundle: aluguer_livre
+label: Publicado
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

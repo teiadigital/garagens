@@ -1,0 +1,49 @@
+uuid: af87f0dc-3ccf-4ef7-823a-0dd0118ce2be
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - block_content.type.sidebar_menu
+    - field.storage.block_content.field_p_sidebar_menu
+    - paragraphs.paragraphs_type.sidebar_menu
+  module:
+    - entity_reference_revisions
+id: block_content.sidebar_menu.field_p_sidebar_menu
+field_name: field_p_sidebar_menu
+entity_type: block_content
+bundle: sidebar_menu
+label: 'Sidebar Menu'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      sidebar_menu: sidebar_menu
+    negate: 0
+    target_bundles_drag_drop:
+      area_de_armazem:
+        weight: 8
+        enabled: false
+      banner:
+        weight: 9
+        enabled: false
+      block_registo:
+        weight: 10
+        enabled: false
+      camaras_de_frio:
+        weight: 11
+        enabled: false
+      equipamentos_carga_descarga:
+        weight: 12
+        enabled: false
+      raques:
+        weight: 13
+        enabled: false
+      sidebar_menu:
+        weight: 14
+        enabled: true
+field_type: entity_reference_revisions

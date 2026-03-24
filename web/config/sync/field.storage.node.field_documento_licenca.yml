@@ -1,0 +1,20 @@
+uuid: 6567f009-7bba-4b02-9ca9-5e46a4670b7c
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - media
+    - node
+id: node.field_documento_licenca
+field_name: field_documento_licenca
+entity_type: node
+type: entity_reference
+settings:
+  target_type: media
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

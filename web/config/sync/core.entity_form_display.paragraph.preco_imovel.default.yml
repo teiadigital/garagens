@@ -1,0 +1,65 @@
+uuid: c1d14248-f367-4e3f-a9e2-c66ab4d3d1d7
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.preco_imovel.field_preco_ano
+    - field.field.paragraph.preco_imovel.field_preco_dia
+    - field.field.paragraph.preco_imovel.field_preco_mes
+    - paragraphs.paragraphs_type.preco_imovel
+  module:
+    - field_group
+third_party_settings:
+  field_group:
+    group_flex:
+      children:
+        - field_preco_dia
+        - field_preco_mes
+        - field_preco_ano
+        - field_teste
+      label: flex
+      region: content
+      parent_name: ''
+      weight: 0
+      format_type: html_element
+      format_settings:
+        classes: grid-columns-3
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: true
+id: paragraph.preco_imovel.default
+targetEntityType: paragraph
+bundle: preco_imovel
+mode: default
+content:
+  field_preco_ano:
+    type: number
+    weight: 3
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_preco_dia:
+    type: number
+    weight: 1
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_preco_mes:
+    type: number
+    weight: 2
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

@@ -1,0 +1,20 @@
+uuid: fae97748-c583-47f5-b6a3-bf4bbbf3d56c
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - media.type.document
+id: media.document.name
+field_name: name
+entity_type: media
+bundle: document
+label: Nome
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: ''
+default_value_callback: ''
+settings: {  }
+field_type: string

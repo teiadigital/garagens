@@ -1,0 +1,22 @@
+uuid: 9e03b65f-817d-4bd3-93a7-a596c444569a
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.publicidade
+id: node.publicidade.status
+field_name: status
+entity_type: node
+bundle: publicidade
+label: Publicado
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

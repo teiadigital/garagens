@@ -1,0 +1,7 @@
+uuid: c79369d6-1ac6-494f-bfae-004d839c6676
+langcode: pt-pt
+status: true
+dependencies: {  }
+name: 'Bus (multiunits)'
+type: bus
+default_event_value_field_ids: null

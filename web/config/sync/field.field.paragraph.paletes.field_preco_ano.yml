@@ -1,0 +1,23 @@
+uuid: ee731799-8ba1-4338-860d-391613349950
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_preco_ano
+    - paragraphs.paragraphs_type.paletes
+id: paragraph.paletes.field_preco_ano
+field_name: field_preco_ano
+entity_type: paragraph
+bundle: paletes
+label: 'Preço ano (€/un)'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0.01
+  max: null
+  prefix: ''
+  suffix: ' €'
+field_type: decimal

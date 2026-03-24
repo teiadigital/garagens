@@ -1,0 +1,19 @@
+uuid: d6a52eb5-3745-45f3-b7c9-7b0a80afe6f9
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_pre_title
+    - paragraphs.paragraphs_type.why_choose_us
+id: paragraph.why_choose_us.field_pre_title
+field_name: field_pre_title
+entity_type: paragraph
+bundle: why_choose_us
+label: 'Pre title'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

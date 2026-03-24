@@ -1,0 +1,10 @@
+uuid: ed62abef-0c82-4035-b054-4b4432b71b7d
+langcode: pt-pt
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: nzL5d024NjXIX_8TlT6uFAu973lmfkmHklJC-2i9rAE
+id: medium
+label: 'Data intermédia predefinida'
+locked: false
+pattern: 'D, Y-m-d H:i'

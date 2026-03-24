@@ -1,0 +1,18 @@
+uuid: 6b285a0a-663f-4bb5-bac8-e17eaa8a4f06
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.why_our_solution
+id: paragraph.why_our_solution.created
+field_name: created
+entity_type: paragraph
+bundle: why_our_solution
+label: 'Criado em'
+description: 'The time that the Paragraph was created.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

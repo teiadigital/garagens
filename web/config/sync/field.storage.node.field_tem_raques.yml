@@ -1,0 +1,27 @@
+uuid: 848e8b38-998a-4699-9265-9b1873fe3602
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_tem_raques
+field_name: field_tem_raques
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: sim
+      label: Sim
+    -
+      value: nao
+      label: Não
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

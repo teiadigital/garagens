@@ -1,0 +1,8 @@
+uuid: 1582124c-5aae-4585-b3bf-4252afcbdf83
+langcode: pt-pt
+status: true
+dependencies: {  }
+name: 'Equipamentos Carga/Descarga'
+vid: equipamentos_carga_descarga
+description: ''
+weight: 0

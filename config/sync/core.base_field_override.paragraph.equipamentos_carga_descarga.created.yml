@@ -1,0 +1,18 @@
+uuid: 46cfb7d0-d940-4653-9817-ed1a3bb0d1c4
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.equipamentos_carga_descarga
+id: paragraph.equipamentos_carga_descarga.created
+field_name: created
+entity_type: paragraph
+bundle: equipamentos_carga_descarga
+label: 'Criado em'
+description: 'The time that the Paragraph was created.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

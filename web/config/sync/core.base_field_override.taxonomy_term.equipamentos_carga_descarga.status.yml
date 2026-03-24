@@ -1,0 +1,22 @@
+uuid: 864ceceb-4385-43fd-932b-449a847c0290
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.equipamentos_carga_descarga
+id: taxonomy_term.equipamentos_carga_descarga.status
+field_name: status
+entity_type: taxonomy_term
+bundle: equipamentos_carga_descarga
+label: Publicado
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

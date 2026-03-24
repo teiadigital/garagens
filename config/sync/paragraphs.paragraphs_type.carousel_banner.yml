@@ -1,0 +1,10 @@
+uuid: 24d4f9f0-51d7-4635-abec-3d7164cd4c10
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: carousel_banner
+label: 'Carousel Banner'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

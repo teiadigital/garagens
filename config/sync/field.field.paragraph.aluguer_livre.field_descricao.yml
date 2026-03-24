@@ -1,0 +1,19 @@
+uuid: afe84810-c74c-4a84-bb6e-6ee7472f53d6
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_descricao
+    - paragraphs.paragraphs_type.aluguer_livre
+id: paragraph.aluguer_livre.field_descricao
+field_name: field_descricao
+entity_type: paragraph
+bundle: aluguer_livre
+label: Descrição
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,21 @@
+uuid: 6b8a941e-4a0d-4924-bca7-9d8d8f8ecfc2
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_carga_adr
+    - node.type.pedidos
+  module:
+    - options
+id: node.pedidos.field_carga_adr
+field_name: field_carga_adr
+entity_type: node
+bundle: pedidos
+label: 'Carga ADR'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

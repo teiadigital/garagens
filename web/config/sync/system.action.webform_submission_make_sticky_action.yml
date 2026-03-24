@@ -1,0 +1,13 @@
+uuid: 313ca5fb-7653-4189-96fd-a471ad3f76ed
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - webform
+_core:
+  default_config_hash: mPWBT52fKHyINRl9S3cCWFxY3rKbwkIRxaK6sIA26oo
+id: webform_submission_make_sticky_action
+label: 'Colocar estrela/sinalizador na submissão'
+type: webform_submission
+plugin: webform_submission_make_sticky_action
+configuration: {  }

@@ -1,0 +1,17 @@
+uuid: 01e10e3c-2eaf-459b-887c-5645069d0686
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: Request
+type: pedidos
+description: null
+help: null
+new_revision: false
+preview_mode: 1
+display_submitted: false

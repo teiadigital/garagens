@@ -1,0 +1,38 @@
+{#
+/**
+ * @file
+ * Theme implementation for the dropzonejs form element.
+ *
+ * Available variables:
+ * - attributes: A list of HTML attributes for the element.
+ * - dropzone_description: A message to be displayed in the dropzone field.
+ * - or_text: A translatable string of the word 'or'.
+ * - select_files_button_text: The text shown on the 'Select files' button.
+ * - children: Optional additional rendered elements.
+ * - uploaded_files: Hidden element that holds uploaded files.
+ *
+ * @see template_preprocess_dropzonejs()
+ */
+#}
+
+<div{{ attributes.addClass('relative') }}>
+    <div class="dz-message flex flex-col sm:flex-row items-center gap-4 sm:w-5/6 h-36 ps-6 py-4 pr-6 sm:pr-52 border-2 border-blue-light border-dashed rounded-3xl cursor-pointer bg-[#F4F8FB]">
+        <svg width="83" height="69" viewBox="0 0 83 69" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M74.396 9.48881H37.658L29.494 0.560059H9.08404C4.59384 0.560059 0.920044 4.578 0.920044 9.48881V27.3463H82.56V18.4176C82.56 13.5067 78.8862 9.48881 74.396 9.48881Z"
+                fill="black" />
+            <rect x="7.98157" y="6.62" width="49" height="61" rx="2" transform="rotate(-4 7.98157 6.62)" fill="#D5D5D5" />
+            <rect x="16.6978" y="3.39417" width="49" height="61" rx="2" transform="rotate(3 16.6978 3.39417)" fill="#EBEBEB" />
+            <rect x="25.014" y="10.3628" width="49" height="56.0824" rx="2" transform="rotate(-6 25.014 10.3628)"
+                fill="white" />
+            <path
+                d="M74.8 14H9.2C4.69 14 1 17.5357 1 21.8571V61.1429C1 65.4643 4.69 69 9.2 69H74.8C79.31 69 83 65.4643 83 61.1429V21.8571C83 17.5357 79.31 14 74.8 14Z"
+                fill="#4A4A4A" />
+        </svg>
+        <p class="text-[9px] text-[#B9BED1]">{{ dropzone_description }}</p>
+        <a href="#" onclick="event.preventDefault();"
+           class="button text-xs sm:text-sm uppercase block rounded-3xl py-2 sm:py-4 px-12 font-bold cursor-pointer transition-all border-2 bg-black text-white border-black sm:absolute sm:top-1/2 sm:-translate-y-1/2 sm:right-0">{{ select_files_button_text }}</a>
+    </div>
+</div>
+{{ uploaded_files }}
+{{ children }}

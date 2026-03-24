@@ -1,0 +1,21 @@
+uuid: 998f9d22-740d-49ce-a59d-d83b725ba70d
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_licenca_utilizacao
+    - node.type.pedidos
+  module:
+    - options
+id: node.pedidos.field_licenca_utilizacao
+field_name: field_licenca_utilizacao
+entity_type: node
+bundle: pedidos
+label: 'Licença de utilização?'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

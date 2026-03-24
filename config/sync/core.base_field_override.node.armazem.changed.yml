@@ -1,0 +1,18 @@
+uuid: 606bc2b9-3b48-4812-87bd-81b6b8f72889
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.armazem
+id: node.armazem.changed
+field_name: changed
+entity_type: node
+bundle: armazem
+label: Alterado
+description: 'A hora em que o nó foi editado pela última vez.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

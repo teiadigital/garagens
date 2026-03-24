@@ -1,0 +1,29 @@
+uuid: e97c5c43-9321-471d-9c50-2cca85d4300f
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_piso
+    - node.type.pedidos
+    - taxonomy.vocabulary.piso
+id: node.pedidos.field_piso
+field_name: field_piso
+entity_type: node
+bundle: pedidos
+label: Piso
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      piso: piso
+    sort:
+      field: name
+      direction: asc
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference

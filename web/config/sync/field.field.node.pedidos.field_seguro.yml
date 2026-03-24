@@ -1,0 +1,21 @@
+uuid: d0aa2cc2-4c63-453a-870c-337dcc3976c1
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_seguro
+    - node.type.pedidos
+  module:
+    - options
+id: node.pedidos.field_seguro
+field_name: field_seguro
+entity_type: node
+bundle: pedidos
+label: 'Tem seguro de responsabilidade civil?'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

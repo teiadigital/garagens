@@ -1,0 +1,46 @@
+display:
+  default:
+    display_title: Máster
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Aplicar
+          reset_button_label: Restablecer
+          exposed_sorts_label: 'Ordenar por'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      pager:
+        options:
+          tags:
+            previous: ‹‹
+            next: ››
+            first: '« Primero'
+            last: 'Último »'
+          expose:
+            items_per_page_label: 'Elementos por página'
+            items_per_page_options_all_label: '- Todo -'
+            offset_label: Desplazamiento
+      fields:
+        id:
+          separator: ', '
+        type:
+          label: Paquete
+          separator: ', '
+        name:
+          label: Nombre
+          separator: ', '
+        status:
+          label: Publicado
+          settings:
+            format_custom_true: Publicado
+            format_custom_false: 'Sin publicar'
+          separator: ', '
+        calendars:
+          label: 'Gestor de eventos'
+        operations:
+          label: 'Enlaces de operación'
+  page_1:
+    display_title: Página
+    display_options:
+      menu:
+        title: Unidades

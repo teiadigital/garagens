@@ -1,0 +1,20 @@
+uuid: f70a4669-7402-44f4-8004-02176219a1e3
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - language
+  theme:
+    - armazens_theme
+id: armazens_theme_seletordeidioma
+theme: armazens_theme
+region: header
+weight: -6
+provider: null
+plugin: 'language_block:language_interface'
+settings:
+  id: 'language_block:language_interface'
+  label: 'Seletor de idioma'
+  label_display: '0'
+  provider: language
+visibility: {  }

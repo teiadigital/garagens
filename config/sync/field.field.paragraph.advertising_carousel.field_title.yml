@@ -1,0 +1,22 @@
+uuid: 88e697eb-ed23-461b-ad79-c73c793a7f09
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_title
+    - paragraphs.paragraphs_type.advertising_carousel
+  module:
+    - text
+id: paragraph.advertising_carousel.field_title
+field_name: field_title
+entity_type: paragraph
+bundle: advertising_carousel
+label: Title
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

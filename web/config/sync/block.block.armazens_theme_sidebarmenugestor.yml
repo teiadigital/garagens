@@ -1,0 +1,39 @@
+uuid: 5c2c91a7-0ee9-49a9-9eaf-b4f99c9c9ab3
+langcode: pt-pt
+status: true
+dependencies:
+  content:
+    - 'block_content:sidebar_menu:6dd04f56-59da-4087-8bac-72cf5b014363'
+  module:
+    - block_content
+    - system
+    - user
+  theme:
+    - armazens_theme
+id: armazens_theme_sidebarmenugestor
+theme: armazens_theme
+region: sidebar_menu
+weight: -4
+provider: null
+plugin: 'block_content:6dd04f56-59da-4087-8bac-72cf5b014363'
+settings:
+  id: 'block_content:6dd04f56-59da-4087-8bac-72cf5b014363'
+  label: 'Sidebar Menu Gestor'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    negate: true
+    pages: '<front>'
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      administrator: administrator
+      gestor: gestor

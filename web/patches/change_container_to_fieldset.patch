@@ -1,0 +1,13 @@
+diff --git a/src/Plugin/Field/FieldWidget/AddressWidget.php b/src/Plugin/Field/FieldWidget/AddressWidget.php
+index 51a03dd..de226c8 100755
+--- a/src/Plugin/Field/FieldWidget/AddressWidget.php
++++ b/src/Plugin/Field/FieldWidget/AddressWidget.php
+@@ -40,7 +40,7 @@ class AddressWidget extends WidgetBase {
+     $state_field_id_array[] = $delta;
+     $state_field_id = Html::getId(implode('-', $state_field_id_array));
+ 
+-    $element['#type'] = 'container';
++    $element['#type'] = 'fieldset';
+     $element['#address_widget'] = TRUE;
+     $element['country_code'] = [
+       '#type' => 'select',

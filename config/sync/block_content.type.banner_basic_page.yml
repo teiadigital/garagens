@@ -1,0 +1,8 @@
+uuid: a76aa9d6-1504-4f61-a600-f7cde841f34e
+langcode: en
+status: true
+dependencies: {  }
+id: banner_basic_page
+label: 'Banner Basic page'
+revision: false
+description: ''

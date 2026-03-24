@@ -1,0 +1,19 @@
+uuid: 80ef6082-b1c9-406d-a461-d8eddbc52fb3
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_tooltip
+    - paragraphs.paragraphs_type.sidebar_menu
+id: paragraph.sidebar_menu.field_tooltip
+field_name: field_tooltip
+entity_type: paragraph
+bundle: sidebar_menu
+label: Tooltip
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

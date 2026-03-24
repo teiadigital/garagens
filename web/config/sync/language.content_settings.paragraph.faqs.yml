@@ -1,0 +1,18 @@
+uuid: 72880ed7-ab09-4df7-8ed6-edd76ade6680
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.faqs
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: paragraph.faqs
+target_entity_type_id: paragraph
+target_bundle: faqs
+default_langcode: site_default
+language_alterable: true

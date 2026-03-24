@@ -1,0 +1,11 @@
+uuid: 3d6f4133-2b79-471e-8e40-05c9b9e51606
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - bat_unit.type_bundle.ticket
+id: bat_unit_type.ticket
+target_entity_type_id: bat_unit_type
+target_bundle: ticket
+default_langcode: site_default
+language_alterable: false

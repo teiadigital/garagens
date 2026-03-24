@@ -1,0 +1,21 @@
+{#
+/**
+ * @file
+ * Theme override to display a region.
+ *
+ * Available variables:
+ * - content: The content for this region, typically blocks.
+ * - attributes: HTML attributes for the region <div>.
+ * - region: The name of the region variable as defined in the theme's
+ *   .info.yml file.
+ *
+ * @see template_preprocess_region()
+ */
+#}
+{% if content %}
+  <nav class=" ml-0 xl:ml-36 grid grid-cols-12 px-4" aria-label="Global">
+    <div class="col-span-12 {% if is_front %} xl:col-span-7 md:pr-5 {% else %} md:col-span-10 {% endif %} relative flex justify-between items-center py-8">
+      {{ content }}
+    </div>
+  </nav>
+{% endif %}

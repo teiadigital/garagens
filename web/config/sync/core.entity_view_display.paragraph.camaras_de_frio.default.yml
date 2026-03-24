@@ -1,0 +1,58 @@
+uuid: 339ff602-5892-43c5-ad36-ec7c67ace083
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.camaras_de_frio.field_capacidade
+    - field.field.paragraph.camaras_de_frio.field_quantidade
+    - field.field.paragraph.camaras_de_frio.field_temperatura_maxima
+    - field.field.paragraph.camaras_de_frio.field_temperatura_minima
+    - paragraphs.paragraphs_type.camaras_de_frio
+id: paragraph.camaras_de_frio.default
+targetEntityType: paragraph
+bundle: camaras_de_frio
+mode: default
+content:
+  field_capacidade:
+    type: number_decimal
+    label: inline
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_quantidade:
+    type: number_integer
+    label: inline
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_temperatura_maxima:
+    type: number_decimal
+    label: inline
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_temperatura_minima:
+    type: number_decimal
+    label: inline
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+hidden: {  }

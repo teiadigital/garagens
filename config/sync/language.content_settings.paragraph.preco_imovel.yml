@@ -1,0 +1,18 @@
+uuid: 13cb7ee9-0e71-4a59-ba21-2424906b0a34
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.preco_imovel
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: paragraph.preco_imovel
+target_entity_type_id: paragraph
+target_bundle: preco_imovel
+default_langcode: site_default
+language_alterable: true

@@ -1,0 +1,21 @@
+uuid: 3a055636-90bc-4fb6-8180-6fe738d639d2
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_position
+    - paragraphs.paragraphs_type.why_choose_us
+  module:
+    - options
+id: paragraph.why_choose_us.field_position
+field_name: field_position
+entity_type: paragraph
+bundle: why_choose_us
+label: Position
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

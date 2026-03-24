@@ -1,0 +1,1515 @@
+diff --git a/resources/state_province.json b/resources/state_province.json
+index e68a738..3b73684 100755
+--- a/resources/state_province.json
++++ b/resources/state_province.json
+@@ -11458,7 +11458,85 @@
+    "Portugal": [
+       {
+          "state": "Aveiro",
+-         "state_code": "PT-01"
++         "state_code": "PT-01",
++         "conselhos": [
++            {
++               "conselho": "Águeda",
++               "conselho_code": 101
++            },
++            {
++               "conselho": "Albergaria-a-Velha",
++               "conselho_code": 102
++            },
++            {
++               "conselho": "Anadia",
++               "conselho_code": 103
++            },
++            {
++               "conselho": "Arouca",
++               "conselho_code": 104
++            },
++            {
++               "conselho": "Aveiro",
++               "conselho_code": 105
++            },
++            {
++               "conselho": "Castelo de Paiva",
++               "conselho_code": 106
++            },
++            {
++               "conselho": "Espinho",
++               "conselho_code": 107
++            },
++            {
++               "conselho": "Estarreja",
++               "conselho_code": 108
++            },
++            {
++               "conselho": "Santa Maria da Feira",
++               "conselho_code": 109
++            },
++            {
++               "conselho": "Ílhavo",
++               "conselho_code": 110
++            },
++            {
++               "conselho": "Mealhada",
++               "conselho_code": 111
++            },
++            {
++               "conselho": "Murtosa",
++               "conselho_code": 112
++            },
++            {
++               "conselho": "Oliveira de Azeméis",
++               "conselho_code": 113
++            },
++            {
++               "conselho": "Oliveira do Bairro",
++               "conselho_code": 114
++            },
++            {
++               "conselho": "Ovar",
++               "conselho_code": 115
++            },
++            {
++               "conselho": "São João da Madeira",
++               "conselho_code": 116
++            },
++            {
++               "conselho": "Sever do Vouga",
++               "conselho_code": 117
++            },
++            {
++               "conselho": "Vagos",
++               "conselho_code": 118
++            },
++            {
++               "conselho": "Vale de Cambra",
++               "conselho_code": 119
++            }
++         ]
+       },
+       {
+          "state": "Azores",
+@@ -11466,43 +11544,639 @@
+       },
+       {
+          "state": "Beja",
+-         "state_code": "PT-02"
++         "state_code": "PT-02",
++         "conselhos": [
++            {
++               "conselho": "Aljustrel",
++               "conselho_code": 201
++            },
++            {
++               "conselho": "Almodôvar",
++               "conselho_code": 202
++            },
++            {
++               "conselho": "Alvito",
++               "conselho_code": 203
++            },
++            {
++               "conselho": "Barrancos",
++               "conselho_code": 204
++            },
++            {
++               "conselho": "Beja",
++               "conselho_code": 205
++            },
++            {
++               "conselho": "Castro Verde",
++               "conselho_code": 206
++            },
++            {
++               "conselho": "Cuba",
++               "conselho_code": 207
++            },
++            {
++               "conselho": "Ferreira do Alentejo",
++               "conselho_code": 208
++            },
++            {
++               "conselho": "Mértola",
++               "conselho_code": 209
++            },
++            {
++               "conselho": "Moura",
++               "conselho_code": 210
++            },
++            {
++               "conselho": "Odemira",
++               "conselho_code": 211
++            },
++            {
++               "conselho": "Ourique",
++               "conselho_code": 212
++            },
++            {
++               "conselho": "Serpa",
++               "conselho_code": 213
++            },
++            {
++               "conselho": "Vidigueira",
++               "conselho_code": 214
++            }
++         ]
+       },
+       {
+          "state": "Braga",
+-         "state_code": "PT-03"
++         "state_code": "PT-03",
++         "conselhos": [
++            {
++               "conselho": "Amares",
++               "conselho_code": 301
++            },
++            {
++               "conselho": "Barcelos",
++               "conselho_code": 302
++            },
++            {
++               "conselho": "Braga",
++               "conselho_code": 303
++            },
++            {
++               "conselho": "Cabeceiras de Basto",
++               "conselho_code": 304
++            },
++            {
++               "conselho": "Celorico de Basto",
++               "conselho_code": 305
++            },
++            {
++               "conselho": "Esposende",
++               "conselho_code": 306
++            },
++            {
++               "conselho": "Fafe",
++               "conselho_code": 307
++            },
++            {
++               "conselho": "Guimarães",
++               "conselho_code": 308
++            },
++            {
++               "conselho": "Póvoa de Lanhoso",
++               "conselho_code": 309
++            },
++            {
++               "conselho": "Terras de Bouro",
++               "conselho_code": 310
++            },
++            {
++               "conselho": "Vieira do Minho",
++               "conselho_code": 311
++            },
++            {
++               "conselho": "Vila Nova de Famalicão",
++               "conselho_code": 312
++            },
++            {
++               "conselho": "Vila Verde",
++               "conselho_code": 313
++            },
++            {
++               "conselho": "Vizela",
++               "conselho_code": 314
++            }
++         ]
+       },
+       {
+          "state": "Braganca",
+-         "state_code": "PT-04"
++         "state_code": "PT-04",
++         "conselhos": [
++            {
++               "conselho": "Alfândega da Fé",
++               "conselho_code": 401
++            },
++            {
++               "conselho": "Bragança",
++               "conselho_code": 402
++            },
++            {
++               "conselho": "Carrazeda de Ansiães",
++               "conselho_code": 403
++            },
++            {
++               "conselho": "Freixo de Espada à Cinta",
++               "conselho_code": 404
++            },
++            {
++               "conselho": "Macedo de Cavaleiros",
++               "conselho_code": 405
++            },
++            {
++               "conselho": "Miranda do Douro",
++               "conselho_code": 406
++            },
++            {
++               "conselho": "Mirandela",
++               "conselho_code": 407
++            },
++            {
++               "conselho": "Mogadouro",
++               "conselho_code": 408
++            },
++            {
++               "conselho": "Torre de Moncorvo",
++               "conselho_code": 409
++            },
++            {
++               "conselho": "Vila Flor",
++               "conselho_code": 410
++            },
++            {
++               "conselho": "Vimioso",
++               "conselho_code": 411
++            },
++            {
++               "conselho": "Vinhais",
++               "conselho_code": 412
++            }
++         ]
+       },
+       {
+          "state": "Castelo Branco",
+-         "state_code": "PT-05"
++         "state_code": "PT-05",
++         "conselhos": [
++            {
++               "conselho": "Belmonte",
++               "conselho_code": 501
++            },
++            {
++               "conselho": "Castelo Branco",
++               "conselho_code": 502
++            },
++            {
++               "conselho": "Covilhã",
++               "conselho_code": 503
++            },
++            {
++               "conselho": "Fundão",
++               "conselho_code": 504
++            },
++            {
++               "conselho": "Idanha-a-Nova",
++               "conselho_code": 505
++            },
++            {
++               "conselho": "Oleiros",
++               "conselho_code": 506
++            },
++            {
++               "conselho": "Penamacor",
++               "conselho_code": 507
++            },
++            {
++               "conselho": "Proença-a-Nova",
++               "conselho_code": 508
++            },
++            {
++               "conselho": "Sertã",
++               "conselho_code": 509
++            },
++            {
++               "conselho": "Vila de Rei",
++               "conselho_code": 510
++            },
++            {
++               "conselho": "Vila Velha de Ródão",
++               "conselho_code": 511
++            }
++         ]
+       },
+       {
+          "state": "Coimbra",
+-         "state_code": "PT-06"
++         "state_code": "PT-06",
++         "conselhos": [
++            {
++               "conselho": "Arganil",
++               "conselho_code": 601
++            },
++            {
++               "conselho": "Cantanhede",
++               "conselho_code": 602
++            },
++            {
++               "conselho": "Coimbra",
++               "conselho_code": 603
++            },
++            {
++               "conselho": "Condeixa-a-Nova",
++               "conselho_code": 604
++            },
++            {
++               "conselho": "Figueira da Foz",
++               "conselho_code": 605
++            },
++            {
++               "conselho": "Góis",
++               "conselho_code": 606
++            },
++            {
++               "conselho": "Lousã",
++               "conselho_code": 607
++            },
++            {
++               "conselho": "Mira",
++               "conselho_code": 608
++            },
++            {
++               "conselho": "Miranda do Corvo",
++               "conselho_code": 609
++            },
++            {
++               "conselho": "Montemor-o-Velho",
++               "conselho_code": 610
++            },
++            {
++               "conselho": "Oliveira do Hospital",
++               "conselho_code": 611
++            },
++            {
++               "conselho": "Pampilhosa da Serra",
++               "conselho_code": 612
++            },
++            {
++               "conselho": "Penacova",
++               "conselho_code": 613
++            },
++            {
++               "conselho": "Penela",
++               "conselho_code": 614
++            },
++            {
++               "conselho": "Soure",
++               "conselho_code": 615
++            },
++            {
++               "conselho": "Tábua",
++               "conselho_code": 616
++            },
++            {
++               "conselho": "Vila Nova de Poiares",
++               "conselho_code": 617
++            }
++         ]
+       },
+       {
+          "state": "Evora",
+-         "state_code": "PT-07"
++         "state_code": "PT-07",
++         "conselhos": [
++            {
++               "conselho": "Alandroal",
++               "conselho_code": 701
++            },
++            {
++               "conselho": "Arraiolos",
++               "conselho_code": 702
++            },
++            {
++               "conselho": "Borba",
++               "conselho_code": 703
++            },
++            {
++               "conselho": "Estremoz",
++               "conselho_code": 704
++            },
++            {
++               "conselho": "Évora",
++               "conselho_code": 705
++            },
++            {
++               "conselho": "Montemor-o-Novo",
++               "conselho_code": 706
++            },
++            {
++               "conselho": "Mora",
++               "conselho_code": 707
++            },
++            {
++               "conselho": "Mourão",
++               "conselho_code": 708
++            },
++            {
++               "conselho": "Portel",
++               "conselho_code": 709
++            },
++            {
++               "conselho": "Redondo",
++               "conselho_code": 710
++            },
++            {
++               "conselho": "Reguengos de Monsaraz",
++               "conselho_code": 711
++            },
++            {
++               "conselho": "Vendas Novas",
++               "conselho_code": 712
++            },
++            {
++               "conselho": "Viana do Alentejo",
++               "conselho_code": 713
++            },
++            {
++               "conselho": "Vila Viçosa",
++               "conselho_code": 714
++            }
++         ]
+       },
+       {
+          "state": "Faro",
+-         "state_code": "PT-08"
++         "state_code": "PT-08",
++         "conselhos": [
++            {
++               "conselho": "Albufeira",
++               "conselho_code": 801
++            },
++            {
++               "conselho": "Alcoutim",
++               "conselho_code": 802
++            },
++            {
++               "conselho": "Aljezur",
++               "conselho_code": 803
++            },
++            {
++               "conselho": "Castro Marim",
++               "conselho_code": 804
++            },
++            {
++               "conselho": "Faro",
++               "conselho_code": 805
++            },
++            {
++               "conselho": "Lagoa",
++               "conselho_code": 806
++            },
++            {
++               "conselho": "Lagos",
++               "conselho_code": 807
++            },
++            {
++               "conselho": "Loulé",
++               "conselho_code": 808
++            },
++            {
++               "conselho": "Monchique",
++               "conselho_code": 809
++            },
++            {
++               "conselho": "Olhão",
++               "conselho_code": 810
++            },
++            {
++               "conselho": "Portimão",
++               "conselho_code": 811
++            },
++            {
++               "conselho": "São Brás de Alportel",
++               "conselho_code": 812
++            },
++            {
++               "conselho": "Silves",
++               "conselho_code": 813
++            },
++            {
++               "conselho": "Tavira",
++               "conselho_code": 814
++            },
++            {
++               "conselho": "Vila do Bispo",
++               "conselho_code": 815
++            },
++            {
++               "conselho": "Vila Real de Santo António",
++               "conselho_code": 816
++            }
++         ]
+       },
+       {
+          "state": "Guarda",
+-         "state_code": "PT-09"
++         "state_code": "PT-09",
++         "conselhos": [
++            {
++               "conselho": "Aguiar da Beira",
++               "conselho_code": 901
++            },
++            {
++               "conselho": "Almeida",
++               "conselho_code": 902
++            },
++            {
++               "conselho": "Celorico da Beira",
++               "conselho_code": 903
++            },
++            {
++               "conselho": "Figueira de Castelo Rodrigo",
++               "conselho_code": 904
++            },
++            {
++               "conselho": "Fornos de Algodres",
++               "conselho_code": 905
++            },
++            {
++               "conselho": "Gouveia",
++               "conselho_code": 906
++            },
++            {
++               "conselho": "Guarda",
++               "conselho_code": 907
++            },
++            {
++               "conselho": "Manteigas",
++               "conselho_code": 908
++            },
++            {
++               "conselho": "Mêda",
++               "conselho_code": 909
++            },
++            {
++               "conselho": "Pinhel",
++               "conselho_code": 910
++            },
++            {
++               "conselho": "Sabugal",
++               "conselho_code": 911
++            },
++            {
++               "conselho": "Seia",
++               "conselho_code": 912
++            },
++            {
++               "conselho": "Trancoso",
++               "conselho_code": 913
++            },
++            {
++               "conselho": "Vila Nova de Foz Côa",
++               "conselho_code": 914
++            }
++         ]
+       },
+       {
+          "state": "Leiria",
+-         "state_code": "PT-10"
++         "state_code": "PT-10",
++         "conselhos": [
++            {
++               "conselho": "Alcobaça",
++               "conselho_code": 1001
++            },
++            {
++               "conselho": "Alvaiázere",
++               "conselho_code": 1002
++            },
++            {
++               "conselho": "Ansião",
++               "conselho_code": 1003
++            },
++            {
++               "conselho": "Batalha",
++               "conselho_code": 1004
++            },
++            {
++               "conselho": "Bombarral",
++               "conselho_code": 1005
++            },
++            {
++               "conselho": "Caldas da Rainha",
++               "conselho_code": 1006
++            },
++            {
++               "conselho": "Castanheira de Pêra",
++               "conselho_code": 1007
++            },
++            {
++               "conselho": "Figueiró dos Vinhos",
++               "conselho_code": 1008
++            },
++            {
++               "conselho": "Leiria",
++               "conselho_code": 1009
++            },
++            {
++               "conselho": "Marinha Grande",
++               "conselho_code": 1010
++            },
++            {
++               "conselho": "Nazaré",
++               "conselho_code": 1011
++            },
++            {
++               "conselho": "Óbidos",
++               "conselho_code": 1012
++            },
++            {
++               "conselho": "Pedrógão Grande",
++               "conselho_code": 1013
++            },
++            {
++               "conselho": "Peniche",
++               "conselho_code": 1014
++            },
++            {
++               "conselho": "Pombal",
++               "conselho_code": 1015
++            },
++            {
++               "conselho": "Porto de Mós",
++               "conselho_code": 1016
++            }
++         ]
+       },
+       {
+          "state": "Lisboa",
+-         "state_code": "PT-11"
++         "state_code": "PT-11",
++         "conselhos": [
++            {
++               "conselho": "Alenquer",
++               "conselho_code": 1101
++            },
++            {
++               "conselho": "Arruda dos Vinhos",
++               "conselho_code": 1102
++            },
++            {
++               "conselho": "Azambuja",
++               "conselho_code": 1103
++            },
++            {
++               "conselho": "Cadaval",
++               "conselho_code": 1104
++            },
++            {
++               "conselho": "Cascais",
++               "conselho_code": 1105
++            },
++            {
++               "conselho": "Lisboa",
++               "conselho_code": 1106
++            },
++            {
++               "conselho": "Loures",
++               "conselho_code": 1107
++            },
++            {
++               "conselho": "Lourinhã",
++               "conselho_code": 1108
++            },
++            {
++               "conselho": "Mafra",
++               "conselho_code": 1109
++            },
++            {
++               "conselho": "Oeiras",
++               "conselho_code": 1110
++            },
++            {
++               "conselho": "Sintra",
++               "conselho_code": 1111
++            },
++            {
++               "conselho": "Sobral de Monte Agraço",
++               "conselho_code": 1112
++            },
++            {
++               "conselho": "Torres Vedras",
++               "conselho_code": 1113
++            },
++            {
++               "conselho": "Vila Franca de Xira",
++               "conselho_code": 1114
++            },
++            {
++               "conselho": "Amadora",
++               "conselho_code": 1115
++            },
++            {
++               "conselho": "Odivelas",
++               "conselho_code": 1116
++            }
++         ]
+       },
+       {
+          "state": "Madeira",
+@@ -11510,31 +12184,505 @@
+       },
+       {
+          "state": "Portalegre",
+-         "state_code": "PT-12"
++         "state_code": "PT-12",
++         "conselhos": [
++            {
++               "conselho": "Alter do Chão",
++               "conselho_code": 1201
++            },
++            {
++               "conselho": "Arronches",
++               "conselho_code": 1202
++            },
++            {
++               "conselho": "Avis",
++               "conselho_code": 1203
++            },
++            {
++               "conselho": "Campo Maior",
++               "conselho_code": 1204
++            },
++            {
++               "conselho": "Castelo de Vide",
++               "conselho_code": 1205
++            },
++            {
++               "conselho": "Crato",
++               "conselho_code": 1206
++            },
++            {
++               "conselho": "Elvas",
++               "conselho_code": 1207
++            },
++            {
++               "conselho": "Fronteira",
++               "conselho_code": 1208
++            },
++            {
++               "conselho": "Gavião",
++               "conselho_code": 1209
++            },
++            {
++               "conselho": "Marvão",
++               "conselho_code": 1210
++            },
++            {
++               "conselho": "Monforte",
++               "conselho_code": 1211
++            },
++            {
++               "conselho": "Nisa",
++               "conselho_code": 1212
++            },
++            {
++               "conselho": "Ponte de Sor",
++               "conselho_code": 1213
++            },
++            {
++               "conselho": "Portalegre",
++               "conselho_code": 1214
++            },
++            {
++               "conselho": "Sousel",
++               "conselho_code": 1215
++            }
++         ]
+       },
+       {
+          "state": "Porto",
+-         "state_code": "PT-13"
++         "state_code": "PT-13",
++         "conselhos": [
++            {
++               "conselho": "Amarante",
++               "conselho_code": 1301
++            },
++            {
++               "conselho": "Baião",
++               "conselho_code": 1302
++            },
++            {
++               "conselho": "Felgueiras",
++               "conselho_code": 1303
++            },
++            {
++               "conselho": "Gondomar",
++               "conselho_code": 1304
++            },
++            {
++               "conselho": "Lousada",
++               "conselho_code": 1305
++            },
++            {
++               "conselho": "Maia",
++               "conselho_code": 1306
++            },
++            {
++               "conselho": "Marco de Canaveses",
++               "conselho_code": 1307
++            },
++            {
++               "conselho": "Matosinhos",
++               "conselho_code": 1308
++            },
++            {
++               "conselho": "Paços de Ferreira",
++               "conselho_code": 1309
++            },
++            {
++               "conselho": "Paredes",
++               "conselho_code": 1310
++            },
++            {
++               "conselho": "Penafiel",
++               "conselho_code": 1311
++            },
++            {
++               "conselho": "Porto",
++               "conselho_code": 1312
++            },
++            {
++               "conselho": "Póvoa de Varzim",
++               "conselho_code": 1313
++            },
++            {
++               "conselho": "Santo Tirso",
++               "conselho_code": 1314
++            },
++            {
++               "conselho": "Valongo",
++               "conselho_code": 1315
++            },
++            {
++               "conselho": "Vila do Conde",
++               "conselho_code": 1316
++            },
++            {
++               "conselho": "Vila Nova de Gaia",
++               "conselho_code": 1317
++            },
++            {
++               "conselho": "Trofa",
++               "conselho_code": 1318
++            }
++         ]
+       },
+       {
+          "state": "Santarem",
+-         "state_code": "PT-14"
++         "state_code": "PT-14",
++         "conselhos": [
++            {
++               "conselho": "Abrantes",
++               "conselho_code": 1401
++            },
++            {
++               "conselho": "Alcanena",
++               "conselho_code": 1402
++            },
++            {
++               "conselho": "Almeirim",
++               "conselho_code": 1403
++            },
++            {
++               "conselho": "Alpiarça",
++               "conselho_code": 1404
++            },
++            {
++               "conselho": "Benavente",
++               "conselho_code": 1405
++            },
++            {
++               "conselho": "Cartaxo",
++               "conselho_code": 1406
++            },
++            {
++               "conselho": "Chamusca",
++               "conselho_code": 1407
++            },
++            {
++               "conselho": "Constância",
++               "conselho_code": 1408
++            },
++            {
++               "conselho": "Coruche",
++               "conselho_code": 1409
++            },
++            {
++               "conselho": "Entroncamento",
++               "conselho_code": 1410
++            },
++            {
++               "conselho": "Ferreira do Zêzere",
++               "conselho_code": 1411
++            },
++            {
++               "conselho": "Golegã",
++               "conselho_code": 1412
++            },
++            {
++               "conselho": "Mação",
++               "conselho_code": 1413
++            },
++            {
++               "conselho": "Rio Maior",
++               "conselho_code": 1414
++            },
++            {
++               "conselho": "Salvaterra de Magos",
++               "conselho_code": 1415
++            },
++            {
++               "conselho": "Santarém",
++               "conselho_code": 1416
++            },
++            {
++               "conselho": "Sardoal",
++               "conselho_code": 1417
++            },
++            {
++               "conselho": "Tomar",
++               "conselho_code": 1418
++            },
++            {
++               "conselho": "Torres Novas",
++               "conselho_code": 1419
++            },
++            {
++               "conselho": "Vila Nova da Barquinha",
++               "conselho_code": 1420
++            },
++            {
++               "conselho": "Ourém",
++               "conselho_code": 1421
++            }
++         ]
+       },
+       {
+          "state": "Setubal",
+-         "state_code": "PT-15"
++         "state_code": "PT-15",
++         "conselhos": [
++            {
++               "conselho": "Alcácer do Sal",
++               "conselho_code": 1501
++            },
++            {
++               "conselho": "Alcochete",
++               "conselho_code": 1502
++            },
++            {
++               "conselho": "Almada",
++               "conselho_code": 1503
++            },
++            {
++               "conselho": "Barreiro",
++               "conselho_code": 1504
++            },
++            {
++               "conselho": "Grândola",
++               "conselho_code": 1505
++            },
++            {
++               "conselho": "Moita",
++               "conselho_code": 1506
++            },
++            {
++               "conselho": "Montijo",
++               "conselho_code": 1507
++            },
++            {
++               "conselho": "Palmela",
++               "conselho_code": 1508
++            },
++            {
++               "conselho": "Santiago do Cacém",
++               "conselho_code": 1509
++            },
++            {
++               "conselho": "Seixal",
++               "conselho_code": 1510
++            },
++            {
++               "conselho": "Sesimbra",
++               "conselho_code": 1511
++            },
++            {
++               "conselho": "Setúbal",
++               "conselho_code": 1512
++            },
++            {
++               "conselho": "Sines",
++               "conselho_code": 1513
++            }
++         ]
+       },
+       {
+          "state": "Viana do Castelo",
+-         "state_code": "PT-16"
++         "state_code": "PT-16",
++         "conselhos": [
++            {
++               "conselho": "Arcos de Valdevez",
++               "conselho_code": 1601
++            },
++            {
++               "conselho": "Caminha",
++               "conselho_code": 1602
++            },
++            {
++               "conselho": "Melgaço",
++               "conselho_code": 1603
++            },
++            {
++               "conselho": "Monção",
++               "conselho_code": 1604
++            },
++            {
++               "conselho": "Paredes de Coura",
++               "conselho_code": 1605
++            },
++            {
++               "conselho": "Ponte da Barca",
++               "conselho_code": 1606
++            },
++            {
++               "conselho": "Ponte de Lima",
++               "conselho_code": 1607
++            },
++            {
++               "conselho": "Valença",
++               "conselho_code": 1608
++            },
++            {
++               "conselho": "Viana do Castelo",
++               "conselho_code": 1609
++            },
++            {
++               "conselho": "Vila Nova de Cerveira",
++               "conselho_code": 1610
++            }
++         ]
+       },
+       {
+          "state": "Vila Real",
+-         "state_code": "PT-17"
++         "state_code": "PT-17",
++         "conselhos": [
++            {
++               "conselho": "Alijó",
++               "conselho_code": 1701
++            },
++            {
++               "conselho": "Boticas",
++               "conselho_code": 1702
++            },
++            {
++               "conselho": "Chaves",
++               "conselho_code": 1703
++            },
++            {
++               "conselho": "Mesão Frio",
++               "conselho_code": 1704
++            },
++            {
++               "conselho": "Mondim de Basto",
++               "conselho_code": 1705
++            },
++            {
++               "conselho": "Montalegre",
++               "conselho_code": 1706
++            },
++            {
++               "conselho": "Murça",
++               "conselho_code": 1707
++            },
++            {
++               "conselho": "Peso da Régua",
++               "conselho_code": 1708
++            },
++            {
++               "conselho": "Ribeira de Pena",
++               "conselho_code": 1709
++            },
++            {
++               "conselho": "Sabrosa",
++               "conselho_code": 1710
++            },
++            {
++               "conselho": "Santa Marta de Penaguião",
++               "conselho_code": 1711
++            },
++            {
++               "conselho": "Valpaços",
++               "conselho_code": 1712
++            },
++            {
++               "conselho": "Vila Pouca de Aguiar",
++               "conselho_code": 1713
++            },
++            {
++               "conselho": "Vila Real",
++               "conselho_code": 1714
++            }
++         ]
+       },
+       {
+          "state": "Viseu",
+-         "state_code": "PT-18"
++         "state_code": "PT-18",
++         "conselhos": [
++            {
++               "conselho": "Armamar",
++               "conselho_code": 1801
++            },
++            {
++               "conselho": "Carregal do Sal",
++               "conselho_code": 1802
++            },
++            {
++               "conselho": "Castro Daire",
++               "conselho_code": 1803
++            },
++            {
++               "conselho": "Cinfães",
++               "conselho_code": 1804
++            },
++            {
++               "conselho": "Lamego",
++               "conselho_code": 1805
++            },
++            {
++               "conselho": "Mangualde",
++               "conselho_code": 1806
++            },
++            {
++               "conselho": "Moimenta da Beira",
++               "conselho_code": 1807
++            },
++            {
++               "conselho": "Mortágua",
++               "conselho_code": 1808
++            },
++            {
++               "conselho": "Nelas",
++               "conselho_code": 1809
++            },
++            {
++               "conselho": "Oliveira de Frades",
++               "conselho_code": 1810
++            },
++            {
++               "conselho": "Penalva do Castelo",
++               "conselho_code": 1811
++            },
++            {
++               "conselho": "Penedono",
++               "conselho_code": 1812
++            },
++            {
++               "conselho": "Resende",
++               "conselho_code": 1813
++            },
++            {
++               "conselho": "Santa Comba Dão",
++               "conselho_code": 1814
++            },
++            {
++               "conselho": "São João da Pesqueira",
++               "conselho_code": 1815
++            },
++            {
++               "conselho": "São Pedro do Sul",
++               "conselho_code": 1816
++            },
++            {
++               "conselho": "Sátão",
++               "conselho_code": 1817
++            },
++            {
++               "conselho": "Sernancelhe",
++               "conselho_code": 1818
++            },
++            {
++               "conselho": "Tabuaço",
++               "conselho_code": 1819
++            },
++            {
++               "conselho": "Tarouca",
++               "conselho_code": 1820
++            },
++            {
++               "conselho": "Tondela",
++               "conselho_code": 1821
++            },
++            {
++               "conselho": "Vila Nova de Paiva",
++               "conselho_code": 1822
++            },
++            {
++               "conselho": "Viseu",
++               "conselho_code": 1823
++            },
++            {
++               "conselho": "Vouzela",
++               "conselho_code": 1824
++            }
++         ]
+       }
+    ],
+    "Puerto Rico": [
+@@ -13515,7 +14663,7 @@
+          "state_code": "SD-NW"
+       }
+    ],
+-   "Suriname": [
++   "Suriconselho": [
+       {
+          "state": "Brokopondo",
+          "state_code": "SR-BR"
+@@ -17519,4 +18667,4 @@
+          "state_code": "ZW-MI"
+       }
+    ]
+-}
++}
+\ No newline at end of file
+diff --git a/src/AddressRepository.php b/src/AddressRepository.php
+index 51f6a4e..8aa6a37 100755
+--- a/src/AddressRepository.php
++++ b/src/AddressRepository.php
+@@ -78,6 +78,31 @@ class AddressRepository {
+     }
+   }
+ 
++    /**
++   * Find the locality for a given country.
++   */
++  public function findConselho(string $country_code, string $state_code): array {
++    $countries = $this->getCountries();
++    $country = $countries[$country_code];
++
++    $states = $this->findSubDivision($country_code);
++    $state_codes = array_column($states, 'state_code');
++    $current_state_key = array_search($state_code, $state_codes);
++
++    if (isset($states[$current_state_key]['conselhos'])) {
++      
++      return $states[$current_state_key]['conselhos'];
++    }
++    else {
++      return [
++        [
++          'conselho_code' => $state_code,
++          'conselho' => 'No states associated with this country.',
++        ],
++      ];
++    }
++  }
++
+   /**
+    * Get file of countries with mapping like alpha-2 => alpha-3 codes.
+    */
+diff --git a/src/Plugin/Field/FieldFormatter/AddressFormatter.php b/src/Plugin/Field/FieldFormatter/AddressFormatter.php
+index cf75edd..85eb978 100755
+--- a/src/Plugin/Field/FieldFormatter/AddressFormatter.php
++++ b/src/Plugin/Field/FieldFormatter/AddressFormatter.php
+@@ -32,7 +32,7 @@ class AddressFormatter extends FormatterBase {
+       $view = '';
+       $full_address = [
+         ['address_line'],
+-        ['state', 'city', 'postal_code'],
++        ['state', 'conselho', 'city', 'postal_code'],
+         ['country_code'],
+       ];
+       foreach ($full_address as $column) {
+@@ -41,7 +41,7 @@ class AddressFormatter extends FormatterBase {
+           if (!$value) {
+             continue;
+           }
+-          if ($field == "state" || $field == 'city') {
++          if ($field == "state" || $field == "conselho" || $field == 'city') {
+             $view .= $this->viewValue($item, $field) . ", ";
+           }
+           else {
+@@ -81,6 +81,10 @@ class AddressFormatter extends FormatterBase {
+     if ($column == 'state') {
+       $value = $item->getStateName();
+     }
++
++    if ($column == 'conselho') {
++      $value = $item->getConselhoName();
++    }
+     return nl2br(Html::escape($value));
+   }
+ 
+diff --git a/src/Plugin/Field/FieldType/Address.php b/src/Plugin/Field/FieldType/Address.php
+index 2d67f68..80b0d4c 100755
+--- a/src/Plugin/Field/FieldType/Address.php
++++ b/src/Plugin/Field/FieldType/Address.php
+@@ -39,6 +39,10 @@ class Address extends FieldItemBase {
+           'type' => 'varchar',
+           'length' => 255,
+         ],
++        'conselho' => [
++          'type' => 'varchar',
++          'length' => 255,
++        ],
+         'postal_code' => [
+           'type' => 'varchar',
+           'length' => 255,
+@@ -68,6 +72,10 @@ class Address extends FieldItemBase {
+       ->setLabel(new TranslatableMarkup('State/province'))
+       ->setRequired(FALSE);
+ 
++    $properties['conselho'] = DataDefinition::create('string')
++      ->setLabel(new TranslatableMarkup('Conselho'))
++      ->setRequired(FALSE);
++
+     $properties['postal_code'] = DataDefinition::create('string')
+       ->setLabel(new TranslatableMarkup('Postal Code'))
+       ->setRequired(FALSE);
+@@ -161,6 +169,30 @@ class Address extends FieldItemBase {
+     return $states[$current_state_key]['state'];
+   }
+ 
++  /**
++   * Get the conselho code.
++   */
++  public function getConselhoCode() {
++    return $this->get('conselho')->getValue();
++  }
++
++  /**
++   * Get the conselho human name.
++   */
++  public function getConselhoName() {
++    $address_repository = \Drupal::service('simple_address.address_repository');
++    $country = $this->getCountryCode();
++    $states = $address_repository->findSubDivision($country);
++    $state_codes = array_column($states, 'state_code');
++    $current_state_key = array_search($this->getStateCode(), $state_codes);
++
++    $conselhos = $states[$current_state_key]['conselhos'];
++    $conselhos_codes = array_column($conselhos, 'conselho_code');
++    $current_conselho_key = array_search($this->getConselhoCode(), $conselhos_codes);
++    
++    return $conselhos[$current_conselho_key]['conselho'];
++  }
++
+   /**
+    * {@inheritdoc}
+    */
+diff --git a/src/Plugin/Field/FieldWidget/AddressWidget.php b/src/Plugin/Field/FieldWidget/AddressWidget.php
+index 51a03dd..446f137 100755
+--- a/src/Plugin/Field/FieldWidget/AddressWidget.php
++++ b/src/Plugin/Field/FieldWidget/AddressWidget.php
+@@ -40,7 +40,13 @@ class AddressWidget extends WidgetBase {
+     $state_field_id_array[] = $delta;
+     $state_field_id = Html::getId(implode('-', $state_field_id_array));
+ 
+-    $element['#type'] = 'container';
++    $conselho_field_id_array = ['conselho'];
++    $conselho_field_id_array += $element['#field_parents'];
++    $conselho_field_id_array[] = $items->getName();
++    $conselho_field_id_array[] = $delta;
++    $conselho_field_id = Html::getId(implode('-', $conselho_field_id_array));
++
++    $element['#type'] = 'fieldset';
+     $element['#address_widget'] = TRUE;
+     $element['country_code'] = [
+       '#type' => 'select',
+@@ -70,6 +76,27 @@ class AddressWidget extends WidgetBase {
+       '#wrapper_attributes' => [
+         'id' => $state_field_id,
+       ],
++      '#ajax' => [
++        'callback' => [$this, 'conselhoAjaxCallback'],
++        'wrapper' => $conselho_field_id,
++        'method' => 'replace',
++      ],
++    ];
++
++    $state_code = $element['state']['#default_value'];
++
++    $conselho_options = $empty_option;
++    $conselho_options += $this->getConselhoOptions($country_code,$state_code);
++    $element['conselho'] = [
++      '#type' => 'select',
++      '#title' => $this->t('Conselho'),
++      '#default_value' => $items[$delta]->conselho ?? NULL,
++      '#options' => $conselho_options,
++      '#title_display' => $element['#title_display'],
++      '#validated' => TRUE,
++      '#wrapper_attributes' => [
++        'id' => $conselho_field_id,
++      ],
+     ];
+ 
+     $element['city'] = [
+@@ -131,6 +158,40 @@ class AddressWidget extends WidgetBase {
+     return $state_element;
+   }
+ 
++  /**
++   * {@inheritdoc}
++   */
++  public function conselhoAjaxCallback(array &$form, FormStateInterface $form_state) {
++    $form_state->setRebuild();
++
++    $empty_option = ['' => $this->t('Choose option')];
++    $conselho_options = $empty_option;
++
++    $country_code = 'PRT';
++    $triggering_element = $form_state->getTriggeringElement();
++
++    $parents = $triggering_element['#array_parents'];
++    array_pop($parents);
++    $parents[] = 'conselho';
++    $conselho_element = NestedArray::getValue($form, $parents);
++
++    $added_conselho_options = $this->getConselhoOptions($country_code,$triggering_element['#value']);
++    if (reset($added_conselho_options) === 'No states associated with this country.' || empty($added_conselho_options)) {
++      $conselho_options = $this->getConselhoOptions($country_code,$triggering_element['#value']);
++      if (empty($conselho_options)) {
++        $conselho_options = $empty_option;
++      }
++    }
++    else {
++      $conselho_element["#required"] = TRUE;
++      $conselho_options += $this->getConselhoOptions($country_code,$triggering_element['#value']);
++    }
++
++    $conselho_element['#options'] = $conselho_options;
++
++    return $conselho_element;
++  }
++
+   /**
+    * Construct the countries options.
+    *
+@@ -178,4 +239,30 @@ class AddressWidget extends WidgetBase {
+     return $options;
+   }
+ 
++      /**
++   * Build options for country element.
++   *
++   * @param string|null $country_code
++   *   The country alpha 3 code.
++   *
++   * @return array
++   *   The options array.
++   */
++  private function getConselhoOptions(string $country_code = NULL, string $state_code = NULL): array {
++    $options = [];
++    if (!$country_code && !$state_code) {
++      return $options;
++    }
++    // phpcs:disable
++    // For some reasons DI doesn't work here with ajax.
++    $repository = \Drupal::service('simple_address.address_repository');
++    // phpcs:enable
++    $conselhos = $repository->findConselho($country_code, $state_code);
++    foreach ($conselhos as $conselho) {
++      $options[$conselho['conselho_code']] = $conselho['conselho'];
++    }
++
++    return $options;
++  }
++
+ }

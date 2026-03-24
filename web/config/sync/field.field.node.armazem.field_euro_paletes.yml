@@ -1,0 +1,97 @@
+uuid: 3a9255c3-2b76-4288-ba11-cf039fc3bc23
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_euro_paletes
+    - node.type.armazem
+    - paragraphs.paragraphs_type.paletes
+  module:
+    - entity_reference_revisions
+id: node.armazem.field_euro_paletes
+field_name: field_euro_paletes
+entity_type: node
+bundle: armazem
+label: 'Euro paletes'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      paletes: paletes
+    negate: 0
+    target_bundles_drag_drop:
+      advertising:
+        weight: 24
+        enabled: false
+      advertising_carousel:
+        weight: 25
+        enabled: false
+      aluguer_livre:
+        weight: 26
+        enabled: false
+      area_de_armazem:
+        weight: 27
+        enabled: false
+      armazens_homepage:
+        weight: 28
+        enabled: false
+      banner:
+        weight: 29
+        enabled: false
+      block_registo:
+        weight: 30
+        enabled: false
+      camaras_de_frio:
+        weight: 31
+        enabled: false
+      carousel_banner:
+        weight: 32
+        enabled: false
+      contact:
+        weight: 33
+        enabled: false
+      contacts_icon_text_text:
+        weight: 34
+        enabled: false
+      equipamentos_carga_descarga:
+        weight: 35
+        enabled: false
+      icon_text:
+        weight: 36
+        enabled: false
+      icon_title_text:
+        weight: 37
+        enabled: false
+      image:
+        weight: 38
+        enabled: false
+      location:
+        weight: 39
+        enabled: false
+      paletes:
+        weight: 40
+        enabled: true
+      preco_imovel:
+        weight: 41
+        enabled: false
+      raques:
+        weight: 42
+        enabled: false
+      sidebar_menu:
+        weight: 43
+        enabled: false
+      what_we_do:
+        weight: 44
+        enabled: false
+      why_choose_us:
+        weight: 45
+        enabled: false
+      why_our_solution:
+        weight: 46
+        enabled: false
+field_type: entity_reference_revisions

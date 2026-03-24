@@ -1,0 +1,10 @@
+uuid: 55f8241a-bff2-46ae-8eea-1463750834c5
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: advertising_carousel
+label: 'Advertising carousel'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

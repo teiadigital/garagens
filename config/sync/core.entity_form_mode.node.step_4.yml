@@ -1,0 +1,11 @@
+uuid: 418a728f-3f10-4bda-a28c-a96c34a51cec
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+id: node.step_4
+label: 'Step 4'
+description: ''
+targetEntityType: node
+cache: true

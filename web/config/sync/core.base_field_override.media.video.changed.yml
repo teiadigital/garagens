@@ -1,0 +1,18 @@
+uuid: 3ec05eef-7513-452b-8642-70373fcac005
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - media.type.video
+id: media.video.changed
+field_name: changed
+entity_type: media
+bundle: video
+label: Alterado
+description: 'A hora em que o item de media foi editado pela última vez.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

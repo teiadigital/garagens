@@ -1,0 +1,52 @@
+uuid: 7f737c4e-bf58-40ee-b946-120eb8ece9c1
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_morada
+  module:
+    - address
+    - user
+id: user.user.field_morada
+field_name: field_morada
+entity_type: user
+bundle: user
+label: Dirección
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    langcode: null
+    country_code: PT
+    administrative_area: ''
+    locality: ''
+    dependent_locality: null
+    postal_code: ''
+    sorting_code: null
+    address_line1: ''
+    address_line2: null
+    address_line3: null
+    organization: null
+    given_name: null
+    additional_name: null
+    family_name: null
+default_value_callback: ''
+settings:
+  available_countries: {  }
+  langcode_override: ''
+  field_overrides:
+    givenName:
+      override: hidden
+    additionalName:
+      override: hidden
+    familyName:
+      override: hidden
+    organization:
+      override: hidden
+    addressLine2:
+      override: hidden
+    addressLine3:
+      override: hidden
+  fields: {  }
+field_type: address

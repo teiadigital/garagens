@@ -1,0 +1,51 @@
+uuid: 392948b5-f827-486e-aeca-ffe4fe0b2eaa
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.why_our_solution.field_big_image
+    - field.field.paragraph.why_our_solution.field_p_image
+    - field.field.paragraph.why_our_solution.field_pre_title
+    - field.field.paragraph.why_our_solution.field_text
+    - paragraphs.paragraphs_type.why_our_solution
+  module:
+    - text
+id: paragraph.why_our_solution.default
+targetEntityType: paragraph
+bundle: why_our_solution
+mode: default
+content:
+  field_big_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_p_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_pre_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_text:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden: {  }

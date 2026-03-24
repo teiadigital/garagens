@@ -1,0 +1,23 @@
+uuid: 27cc4f4e-5473-4d73-afbc-8a39a85cec50
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_peso_maximo_piso
+    - node.type.pedidos
+id: node.pedidos.field_peso_maximo_piso
+field_name: field_peso_maximo_piso
+entity_type: node
+bundle: pedidos
+label: 'Peso máximo do piso por m² (kg)'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ' kg'
+field_type: decimal

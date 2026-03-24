@@ -1,0 +1,13 @@
+uuid: 33220a95-749a-4889-83d0-fa8da30a5ca8
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - webform
+_core:
+  default_config_hash: Dl-1T9PDkraB7MyMUjTJAioPEx6UNvIB9gqmnB1CRkk
+id: webform_close_action
+label: 'Fechar formulário'
+type: webform
+plugin: webform_close_action
+configuration: {  }

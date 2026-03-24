@@ -1,0 +1,18 @@
+uuid: f2be7614-397f-4c96-b22e-81625a96febe
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - block_content.type.footer_contacts
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: block_content.footer_contacts
+target_entity_type_id: block_content
+target_bundle: footer_contacts
+default_langcode: und
+language_alterable: true

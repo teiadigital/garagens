@@ -1,0 +1,27 @@
+uuid: d2a254a5-8dfd-4f57-8f7b-9da7d44830d5
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_seguro
+field_name: field_seguro
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: sim
+      label: 'Sim, nas condições indicadas no documento anexo'
+    -
+      value: nao
+      label: Não
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

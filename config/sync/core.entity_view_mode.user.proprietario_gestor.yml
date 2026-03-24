@@ -1,0 +1,11 @@
+uuid: ff851944-3fba-462c-8bdf-158680975a87
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - user
+id: user.proprietario_gestor
+label: 'Proprietario Gestor'
+description: ''
+targetEntityType: user
+cache: true

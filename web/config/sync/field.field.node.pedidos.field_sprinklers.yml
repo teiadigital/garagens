@@ -1,0 +1,21 @@
+uuid: 18712406-cb9c-4e39-9c2b-4e752ae610e0
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_sprinklers
+    - node.type.pedidos
+  module:
+    - options
+id: node.pedidos.field_sprinklers
+field_name: field_sprinklers
+entity_type: node
+bundle: pedidos
+label: 'Tem Sprinklers?'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

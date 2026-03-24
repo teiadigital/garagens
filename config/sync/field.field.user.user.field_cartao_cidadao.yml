@@ -1,0 +1,20 @@
+uuid: ab12020f-0a64-4f0a-95b0-b46fb1f04d5d
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_cartao_cidadao
+  module:
+    - user
+id: user.user.field_cartao_cidadao
+field_name: field_cartao_cidadao
+entity_type: user
+bundle: user
+label: 'Cartão de cidadão'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

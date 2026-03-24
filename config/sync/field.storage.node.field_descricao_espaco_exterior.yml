@@ -1,0 +1,19 @@
+uuid: c102177d-20a5-44e4-ba48-f11486043f9e
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_descricao_espaco_exterior
+field_name: field_descricao_espaco_exterior
+entity_type: node
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

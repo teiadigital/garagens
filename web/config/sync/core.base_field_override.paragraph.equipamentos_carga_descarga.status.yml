@@ -1,0 +1,22 @@
+uuid: c08dad6d-6f8d-49bb-8cec-1bad18ebe562
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.equipamentos_carga_descarga
+id: paragraph.equipamentos_carga_descarga.status
+field_name: status
+entity_type: paragraph
+bundle: equipamentos_carga_descarga
+label: Publicado
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

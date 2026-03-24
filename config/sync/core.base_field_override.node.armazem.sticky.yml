@@ -1,0 +1,22 @@
+uuid: be601ebf-70d8-4cb6-b274-9c60a132c909
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.armazem
+id: node.armazem.sticky
+field_name: sticky
+entity_type: node
+bundle: armazem
+label: 'Destacado no topo das listas'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

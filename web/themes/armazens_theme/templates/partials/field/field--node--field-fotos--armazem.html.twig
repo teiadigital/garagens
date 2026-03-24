@@ -1,0 +1,155 @@
+{#
+/**
+* @file
+* Theme override for a field.
+*
+* To override output, copy the "field.html.twig" from the templates directory
+* to your theme's directory and customize it, just like customizing other
+* Drupal templates such as page.html.twig or node.html.twig.
+*
+* Instead of overriding the theming for all fields, you can also just override
+* theming for a subset of fields using
+* @link themeable Theme hook suggestions. @endlink For example,
+* here are some theme hook suggestions that can be used for a field_foo field
+* on an article node type:
+* - field--node--field-foo--article.html.twig
+* - field--node--field-foo.html.twig
+* - field--node--article.html.twig
+* - field--field-foo.html.twig
+* - field--text-with-summary.html.twig
+* - field.html.twig
+*
+* Available variables:
+* - attributes: HTML attributes for the containing element.
+* - label_hidden: Whether to show the field label or not.
+* - title_attributes: HTML attributes for the title.
+* - label: The label for the field.
+* - multiple: TRUE if a field can contain multiple items.
+* - items: List of all the field items. Each item contains:
+* - attributes: List of HTML attributes for each item.
+* - content: The field item's content.
+* - entity_type: The entity type to which the field belongs.
+* - field_name: The name of the field.
+* - field_type: The type of the field.
+* - label_display: The display settings for the label.
+*
+*
+* @see template_preprocess_field()
+*/
+#}
+{%
+set classes = [
+'field',
+'field--name-' ~ field_name|clean_class,
+'field--type-' ~ field_type|clean_class,
+'field--label-' ~ label_display,
+label_display == 'inline' ? 'clearfix',
+]
+%}
+{%
+set title_classes = [
+'field__label',
+label_display == 'visually_hidden' ? 'visually-hidden',
+]
+%}
+
+
+{% if items|length > 1 %}
+    <div id="default-carousel" class="relative w-full" data-carousel="static">
+        <div class="relative h-56 overflow-hidden md:h-96">
+            {% for item in items %}
+                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                    <div{{ item.attributes.addClass('field__item') }}>
+                        <button  data-modal-target="extralarge-modal-{{ loop.index }}" data-modal-toggle="extralarge-modal-{{ loop.index }}"
+                            class="block"
+                            type="button">
+
+                            <div class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                                {{ item.content }}
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        {% for item in items %}
+            <div id="extralarge-modal-{{ loop.index }}" tabindex="-1"
+                class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                <div class="relative w-full max-w-7xl max-h-full">
+                    <div class="relative ">
+                        <div class="flex items-center justify-end py-4 md:p-5 ">
+                            <button type="button"
+                                class="text-white bg-transparent  rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center "
+                                data-modal-hide="extralarge-modal-{{ loop.index }}">
+                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                </svg>
+                                <span class="sr-only">{{ 'Close modal'|t }}</span>
+                            </button>
+                        </div>
+                        <div class="py-4 md:py-5 space-y-4 flex justify-center items-center">
+                            <div class="block max-w-full">
+                                {{ item.content }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        <button type="button"
+            class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+            data-carousel-prev>
+            <span
+                class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M5 1 1 5l4 4" />
+                </svg>
+                <span class="sr-only">{{ 'Previous'|t }}</span>
+            </span>
+        </button>
+        <button type="button"
+            class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+            data-carousel-next>
+            <span
+                class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m1 9 4-4-4-4" />
+                </svg>
+                <span class="sr-only">{{ 'Next'|t }}</span>
+            </span>
+        </button>
+    </div>
+{% else %}
+    {% if label_hidden %}
+        {% if multiple %}
+            <div{{ attributes.addClass(classes, 'field__items') }}>
+            {% for item in items %}
+                <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
+            {% endfor %}
+            </div>
+        {% else %}
+            {% for item in items %}
+            <div{{ attributes.addClass(classes, 'field__item') }}>{{ item.content }}</div>
+            {% endfor %}
+        {% endif %}
+        {% else %}
+        <div{{ attributes.addClass(classes) }}>
+            <div{{ title_attributes.addClass(title_classes) }}>{{ label }}</div>
+            {% if multiple %}
+            <div class="field__items">
+            {% endif %}
+            {% for item in items %}
+            <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
+            {% endfor %}
+            {% if multiple %}
+            </div>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endif %}

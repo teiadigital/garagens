@@ -1,0 +1,100 @@
+uuid: a2bc9b18-d987-46af-8485-fda4a9bcf3c2
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_camara_de_frio
+    - node.type.pedidos
+    - paragraphs.paragraphs_type.camaras_de_frio
+  module:
+    - entity_reference_revisions
+id: node.pedidos.field_camara_de_frio
+field_name: field_camara_de_frio
+entity_type: node
+bundle: pedidos
+label: 'Camara de frio'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      camaras_de_frio: camaras_de_frio
+    negate: 0
+    target_bundles_drag_drop:
+      advertising:
+        weight: 25
+        enabled: false
+      advertising_carousel:
+        weight: 26
+        enabled: false
+      aluguer_livre:
+        weight: 27
+        enabled: false
+      area_de_armazem:
+        weight: 28
+        enabled: false
+      armazens_homepage:
+        weight: 29
+        enabled: false
+      banner:
+        weight: 30
+        enabled: false
+      block_registo:
+        weight: 31
+        enabled: false
+      camaras_de_frio:
+        weight: 2
+        enabled: true
+      carousel_banner:
+        weight: 33
+        enabled: false
+      contact:
+        weight: 34
+        enabled: false
+      contacts_icon_text_text:
+        weight: 35
+        enabled: false
+      equipamentos_carga_descarga:
+        weight: 36
+        enabled: false
+      faqs:
+        weight: 37
+        enabled: false
+      icon_text:
+        weight: 38
+        enabled: false
+      icon_title_text:
+        weight: 39
+        enabled: false
+      image:
+        weight: 40
+        enabled: false
+      location:
+        weight: 41
+        enabled: false
+      paletes:
+        weight: 42
+        enabled: false
+      preco_imovel:
+        weight: 43
+        enabled: false
+      raques:
+        weight: 44
+        enabled: false
+      sidebar_menu:
+        weight: 45
+        enabled: false
+      what_we_do:
+        weight: 46
+        enabled: false
+      why_choose_us:
+        weight: 47
+        enabled: false
+      why_our_solution:
+        weight: 48
+        enabled: false
+field_type: entity_reference_revisions

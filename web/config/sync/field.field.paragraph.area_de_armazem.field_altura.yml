@@ -1,0 +1,23 @@
+uuid: 88473fed-85a8-4906-b260-127dcaf1c409
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_altura
+    - paragraphs.paragraphs_type.area_de_armazem
+id: paragraph.area_de_armazem.field_altura
+field_name: field_altura
+entity_type: paragraph
+bundle: area_de_armazem
+label: 'Altura (m)'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ' m'
+field_type: decimal

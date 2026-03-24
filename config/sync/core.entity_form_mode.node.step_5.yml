@@ -1,0 +1,11 @@
+uuid: f9791a35-dec3-43b1-8fb6-f9402d8c6c35
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+id: node.step_5
+label: 'Step 5'
+description: ''
+targetEntityType: node
+cache: true

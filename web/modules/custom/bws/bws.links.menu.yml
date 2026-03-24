@@ -1,0 +1,5 @@
+bws.settings:
+  title: BWS settings
+  parent: system.admin_config_system
+  route_name: bws.settings
+  weight: 10

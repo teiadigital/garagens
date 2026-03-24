@@ -1,0 +1,21 @@
+uuid: 5355ad3c-53a6-42d2-be46-1ed66e497539
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_incluir_espaco_exterior
+    - node.type.pedidos
+  module:
+    - options
+id: node.pedidos.field_incluir_espaco_exterior
+field_name: field_incluir_espaco_exterior
+entity_type: node
+bundle: pedidos
+label: 'Inclui espaço exterior?'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

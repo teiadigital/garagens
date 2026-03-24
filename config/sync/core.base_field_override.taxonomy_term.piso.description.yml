@@ -1,0 +1,21 @@
+uuid: 69bee8ca-f043-4a5b-9bcd-c5858276d3ed
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.piso
+  module:
+    - text
+id: taxonomy_term.piso.description
+field_name: description
+entity_type: taxonomy_term
+bundle: piso
+label: Descrição
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

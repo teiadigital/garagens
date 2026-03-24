@@ -1,0 +1,55 @@
+uuid: 21ba0800-e84e-41bd-ac98-66501926eb68
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - language
+_core:
+  default_config_hash: Okz8QMYRGvq95nqLGYjp8gLiy93DKoMEzEVZVwEeg4M
+id: language
+label: Idioma
+module: language
+routes:
+  -
+    route_name: entity.configurable_language.collection
+tips:
+  language-overview:
+    id: language-overview
+    plugin: text
+    label: Idiomas
+    weight: 1
+    body: '<p>A página "Idiomas" permite adicionar, editar, eliminar e reordenar idiomas para o site.</p>'
+  language-add:
+    id: language-add
+    plugin: text
+    label: 'Adicionar idiomas'
+    weight: 2
+    selector: .button-action
+    body: '<p>Para adicionar mais idiomas ao seu site, clique no botão "Adicionar idioma".</p><p>Os idiomas adicionados serão exibidos na lista de idiomas e poderão ser editados ou eliminados.</p>'
+  language-reorder:
+    id: language-reorder
+    plugin: text
+    label: 'A reordenar os idiomas'
+    weight: 3
+    selector: .draggable
+    body: '<p>Para reordenar os idiomas do seu site, use os ícones de arrastar ao lado de cada idioma.</p><p>A ordem mostrada aqui é a ordem de exibição das listas de idiomas no site, como por exemplo nos blocos de seleção de idiomas fornecidos pelos módulos Tradução de interface e Tradução de conteúdo.</p><p>Quando terminar de reordenar os idiomas, clique no botão "Gravar configuração" para que as alterações entrem em vigor.</p>'
+  language-default:
+    id: language-default
+    plugin: text
+    label: 'Defina um idioma como predefinido'
+    weight: 4
+    selector: .js-form-item-site-default-language
+    body: '<p>Você pode alterar o idioma padrão do site, escolhendo um dos idiomas configurados como padrão. O site usará o idioma padrão em situações em que nenhuma escolha é feita, mas um idioma deve ser definido, por exemplo, como o idioma da interface exibida.</p>'
+  language-operations:
+    id: language-operations
+    plugin: text
+    label: 'A modificar os idiomas'
+    weight: 5
+    selector: .dropbutton-wrapper
+    body: '<p>São fornecidas operações para editar e eliminar os seus idiomas.</p><p>Pode editar o nome e a direção do idioma.</p><p>Os idiomas eliminados podem ser adicionados novamente. A eliminação de um idioma removerá todas as traduções de interface associadas a ele, e o conteúdo nesse idioma será definido como idioma neutro. Atenção que não pode eliminar o idioma predefinido do site.</p>'
+  language-continue:
+    id: language-continue
+    plugin: text
+    label: 'Continuando em'
+    weight: 6
+    body: '<p>Agora que tem uma visão geral da página "Idiomas", pode:<ul><li><a href="[site:url]admin/config/regional/language/add">Adicionar um idioma</a></li><li>Reordenar idiomas</li><li>Editar um idioma</li><li>Eliminar um idioma</li></ul></p>'

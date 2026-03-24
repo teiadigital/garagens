@@ -1,0 +1,68 @@
+{#
+/**
+ * @file
+ * Theme override to display a view of unformatted rows.
+ *
+ * Available variables:
+ * - title: The title of this group of rows. May be empty.
+ * - rows: A list of the view's row items.
+ *   - attributes: The row's HTML attributes.
+ *   - content: The row's content.
+ * - view: The view object.
+ * - default_row_class: A flag indicating whether default classes should be
+ *   used on rows.
+ *
+ * @see template_preprocess_views_view_unformatted()
+ */
+#}
+{% if title %}
+  <h3>{{ title }}</h3>
+{% endif %}
+
+<div class="grid grid-cols-12 gap-y-8 sm:gap-x-8">
+  {% for key,row in rows %}
+    {%
+      set row_classes = [
+        default_row_class ? 'views-row col-span-12 md:col-span-6 lg:col-span-4 w-full relative bg-[#F4F5F7] cursor-pointer',
+      ]
+    %}
+
+    <div onclick="location.href='{{ view.style_plugin.getField(key, 'view_node_1')|render|striptags|spaceless }}';" {{ row.attributes.addClass(row_classes) }}>
+    
+
+      <div class="image-full-custom block w-full h-64 ">
+
+        {% if row.content['#row']._entity.field_fotos.entity|file_url == null %}
+       
+          <img class="w-full object-cover object-center" src=" /themes/armazens_theme/images/placeholder_armazem.png " alt="">
+        {% else %} 
+          {{view.style_plugin.getField(key, 'field_fotos')}}
+        {% endif %}
+
+      </div>
+
+
+
+
+      <div class="relative p-4 ">
+        <h3 class="text-2xl text-black-text font-bold mb-2 truncate uppercase"> ID: {{
+          view.style_plugin.getField(key, 'title') }}</h3>
+        <div class="flex items-center gap-2 mb-4">
+          <svg width="15" height="19" viewBox="0 0 15 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M7.5 0C5.5116 0.00231156 3.60531 0.781706 2.1993 2.16722C0.793282 3.55272 0.00235375 5.43121 7.97923e-06 7.39062C-0.00237354 8.99185 0.528403 10.5496 1.51092 11.825C1.51092 11.825 1.71546 12.0904 1.74887 12.1287L7.5 18.8125L13.2539 12.1253C13.2839 12.0897 13.4891 11.825 13.4891 11.825L13.4898 11.823C14.4718 10.5482 15.0023 8.99111 15 7.39062C14.9976 5.43121 14.2067 3.55272 12.8007 2.16722C11.3947 0.781706 9.4884 0.00231156 7.5 0ZM7.5 10.0781C6.9606 10.0781 6.43331 9.9205 5.98481 9.62519C5.53631 9.32988 5.18675 8.91015 4.98033 8.41908C4.77391 7.928 4.7199 7.38764 4.82513 6.86631C4.93037 6.34499 5.19011 5.86612 5.57153 5.49027C5.95294 5.11442 6.4389 4.85846 6.96794 4.75476C7.49697 4.65106 8.04534 4.70428 8.54368 4.90769C9.04202 5.1111 9.46797 5.45557 9.76764 5.89752C10.0673 6.33948 10.2273 6.85908 10.2273 7.39062C10.2264 8.10311 9.93874 8.78617 9.42747 9.28998C8.91621 9.79379 8.22304 10.0772 7.5 10.0781Z"
+              fill="#A3A3A3" />
+          </svg>
+          <p class="text-base text-[#898989] font-medium truncate lowercase first-letter:uppercase">{{
+            view.style_plugin.getField(key,
+            'field_localidade_locality') }}</p>
+        </div>
+        <div class="link-saber-mais">
+          {{ view.style_plugin.getField(key, 'view_node') }}
+
+          
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>

@@ -1,0 +1,21 @@
+uuid: 8065abbf-be2e-4f1c-b9be-850ea978381b
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_incluir_espaco_exterior
+    - node.type.armazem
+  module:
+    - options
+id: node.armazem.field_incluir_espaco_exterior
+field_name: field_incluir_espaco_exterior
+entity_type: node
+bundle: armazem
+label: 'Inclui espaço exterior?'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

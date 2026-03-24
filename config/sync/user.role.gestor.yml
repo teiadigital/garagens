@@ -1,0 +1,26 @@
+uuid: d03ca25f-2d44-4c28-b6d1-44fa8b54c3d8
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.advertising
+    - node.type.armazem
+    - node.type.pedidos
+  module:
+    - node
+    - node_view_permissions
+    - view_unpublished
+id: gestor
+label: Gestor
+weight: -5
+is_admin: null
+permissions:
+  - 'access user profiles'
+  - 'administer users'
+  - 'create advertising content'
+  - 'edit any advertising content'
+  - 'view any pedidos content'
+  - 'view any unpublished advertising content'
+  - 'view any unpublished armazem content'
+  - 'view any unpublished pedidos content'
+  - 'view user email addresses'

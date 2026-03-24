@@ -1,0 +1,64 @@
+settings:
+  default_form_open_message: 'Este formulário ainda não foi aberto a submissões.'
+  default_form_close_message: 'Lo sentimos ... Este formulario está cerrado a nuevos envíos.'
+  default_form_exception_message: 'Não foi possível exibir este webform. Por favor, contacte o administrador do sítio.'
+  default_submit_button_label: Enviar
+  default_reset_button_label: Restablecer
+  default_delete_button_label: Eliminar
+  default_form_access_denied_message: 'Por favor, inicie sessão para aceder a este formulário.'
+  default_form_required_label: 'Indica um campo obrigatório'
+  default_wizard_prev_button_label: '< Anterior'
+  default_wizard_next_button_label: 'Siguiente >'
+  default_wizard_start_label: Comienzo
+  default_wizard_confirmation_label: Completo
+  default_wizard_toggle_show_label: 'Mostrar todo'
+  default_wizard_toggle_hide_label: 'Ocultar todo'
+  default_preview_next_button_label: 'Vista previa'
+  default_preview_prev_button_label: '< Anterior'
+  default_preview_label: 'Vista previa'
+  default_preview_title: '[webform:title]: Pré-visualização'
+  default_preview_message: 'Por favor, reveja a sua submissão. A sua submissão não está completa até pressionar o botão “Enviar”!'
+  default_draft_button_label: 'Guardar borrador'
+  default_draft_saved_message: 'Envío guardado. Usted puede volver a este formuario luego y recuperará sus valores actuales.'
+  default_draft_loaded_message: 'Foi encontrado um formulário parcialmente preenchido. Por favor, preencha as restantes partes.'
+  default_draft_pending_single_message: 'Tem um rascunho pendente para este webform. <a href="#">Carregar o rascunho pendente</a>.'
+  default_draft_pending_multiple_message: 'Tem rascunhos pendentes para este webform. <a href="#">Ver rascunhos pendentes</a>.'
+  default_confirmation_message: 'Nova submissão adicionada a [webform:title].'
+  default_confirmation_back_label: 'Volver al formulario'
+  default_submission_label: '[webform_submission:submitted-to]: Submissão #[webform_submission:serial]'
+  default_submission_access_denied_message: 'Por favor, inicie sessão para aceder a esta submissão.'
+  default_submission_exception_message: 'Não foi possível processar esta submissão. Por favor, contacte o administrador do sítio.'
+  default_submission_locked_message: 'Esta submissão foi bloqueada.'
+  default_previous_submission_message: 'Ya ha enviado este formulario web. <a href="#">Ver su envío anterior</a>.'
+  default_previous_submissions_message: 'Ya ha enviado este formulario web. <a href="#">Ver sus envíos anteriores</a>.'
+  default_autofill_message: 'Esta submissão foi automaticamente preenchida com a sua submissão anterior.'
+  default_limit_total_message: 'Não são permitidas mais submissões.'
+  default_limit_user_message: 'Não são permitidas mais submissões.'
+  dialog_options:
+    narrow:
+      title: Estrecho
+    normal:
+      title: Normal
+    wide:
+      title: Ancho
+element:
+  default_more_title: Más
+  default_section_title_tag: h2
+file:
+  file_private_redirect_message: 'Por favor, inicie sessão para aceder ao ficheiro carregado.'
+mail:
+  default_from_name: '[site:name]'
+  default_subject: 'Submissão de Webform de: [webform_submission:source-title]'
+  default_body_text: |
+    Submetido em [webform_submission:created]
+    Submetido por: [webform_submission:user]
+
+    Os valores submetidos são:
+    [webform_submission:values]
+  default_body_html: |
+    <p>Submetido em [webform_submission:created]</p>
+    <p>Submetido por: [webform_submission:user]</p>
+    <p>Os valores submetidos são:</p>
+    [webform_submission:values]
+test:
+  names: "first_name:\r\n  - 'John'\r\n  - 'Paul'\r\n  - 'Ringo'\r\n  - 'George'\r\nlast_name:\r\n  - 'Lennon'\r\n  - 'McCartney'\r\n  - 'Starr'\r\n  - 'Harrison'\r\naddress:\r\n  - '10 Main Street'\r\n  - '11 Brook Alley Road. APT 1'\r\nzip:\r\n  - '11111'\r\n  - '12345'\r\n  - '12345-6789'\r\npostal_code:\r\n  - '11111'\r\n  - '12345'\r\n  - '12345-6789'\r\nphone:\r\n  - '123-456-7890'\r\n  - '098-765-4321'\r\nfax:\r\n  - '123-456-7890'\r\n  - '098-765-4321'\r\ncity:\r\n  - 'Springfield'\r\n  - 'Pleasantville'\r\n  - 'Hill Valley'\r\nurl:\r\n  - 'http://example.com'\r\n  - 'http://test.com'\r\ndefault:\r\n  - 'Loremipsum'\r\n  - 'Oratione'\r\n  - 'Dixisset'\n"

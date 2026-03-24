@@ -1,0 +1,21 @@
+uuid: 01617106-64a0-4591-a2c3-c4d20d61d102
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_termos_e_condicoes
+    - node.type.armazem
+  module:
+    - terms_field
+id: node.armazem.field_termos_e_condicoes
+field_name: field_termos_e_condicoes
+entity_type: node
+bundle: armazem
+label: 'Termos e condições'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: terms_field_terms_and_conditions

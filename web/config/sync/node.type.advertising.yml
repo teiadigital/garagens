@@ -1,0 +1,17 @@
+uuid: 84a314f8-ebe2-4a5c-9d2a-6c56699a893c
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: Publicidade
+type: advertising
+description: ''
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: false

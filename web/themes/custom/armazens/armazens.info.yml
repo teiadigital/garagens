@@ -1,0 +1,17 @@
+name: armazens
+type: theme
+"base theme": stable9
+starterkit: true
+version: VERSION
+libraries:
+  - armazens/base
+  - armazens/messages
+  - core/normalize
+
+core_version_requirement: ^10
+generator: "starterkit_theme:10.1.5"
+regions:
+  header: Header
+  sidebar_menu: Sidebar Menu
+  content: Content
+  footer: Footer

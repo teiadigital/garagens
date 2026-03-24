@@ -1,0 +1,5 @@
+services:
+  address_portugal.portugal_subscriber:
+    class: Drupal\address_portugal\EventSubscriber\PortugalEventSubscriber
+    tags:
+      - { name: event_subscriber }

@@ -1,0 +1,37 @@
+uuid: 57d1fe61-fecb-4aa7-b293-426f6b0a31ea
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.node.homepage.field_home_content
+    - field.field.node.homepage.field_p_banner
+    - node.type.homepage
+  module:
+    - entity_reference_revisions
+    - user
+id: node.homepage.default
+targetEntityType: node
+bundle: homepage
+mode: default
+content:
+  field_home_content:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_p_banner:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  langcode: true
+  links: true

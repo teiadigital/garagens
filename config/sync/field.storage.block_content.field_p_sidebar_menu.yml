@@ -1,0 +1,21 @@
+uuid: 4f8c2386-e7e7-4e93-99c6-946c4f80490d
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - block_content
+    - entity_reference_revisions
+    - paragraphs
+id: block_content.field_p_sidebar_menu
+field_name: field_p_sidebar_menu
+entity_type: block_content
+type: entity_reference_revisions
+settings:
+  target_type: paragraph
+module: entity_reference_revisions
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

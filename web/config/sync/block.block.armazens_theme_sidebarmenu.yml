@@ -1,0 +1,38 @@
+uuid: ed6d1457-9925-411d-93ee-3cbe7a70d965
+langcode: pt-pt
+status: true
+dependencies:
+  content:
+    - 'block_content:sidebar_menu:c336c441-07ea-480b-b561-f1604a4738a4'
+  module:
+    - block_content
+    - system
+    - user
+  theme:
+    - armazens_theme
+id: armazens_theme_sidebarmenu
+theme: armazens_theme
+region: sidebar_menu
+weight: -5
+provider: null
+plugin: 'block_content:c336c441-07ea-480b-b561-f1604a4738a4'
+settings:
+  id: 'block_content:c336c441-07ea-480b-b561-f1604a4738a4'
+  label: 'Sidebar Menu'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    negate: true
+    pages: '<front>'
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      utilizador: utilizador

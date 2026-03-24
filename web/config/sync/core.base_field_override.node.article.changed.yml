@@ -1,0 +1,18 @@
+uuid: 005d2dd6-3183-429e-912b-c177cad162c2
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.article
+id: node.article.changed
+field_name: changed
+entity_type: node
+bundle: article
+label: Alterado
+description: 'A hora em que o nó foi editado pela última vez.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

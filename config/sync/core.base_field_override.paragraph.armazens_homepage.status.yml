@@ -1,0 +1,22 @@
+uuid: db26b701-dc35-4eae-9691-da1a87373b90
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.armazens_homepage
+id: paragraph.armazens_homepage.status
+field_name: status
+entity_type: paragraph
+bundle: armazens_homepage
+label: Publicado
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

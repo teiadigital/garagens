@@ -1,0 +1,8 @@
+uuid: cb27cfeb-603b-4fe2-9c6e-62c65a69ca89
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: captcha
+label: Captcha
+threshold: 0.5
+challenge: default

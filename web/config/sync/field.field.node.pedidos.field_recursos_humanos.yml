@@ -1,0 +1,21 @@
+uuid: 5a1e162d-f558-4a0d-9aba-9a8223ce02f1
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_recursos_humanos
+    - node.type.pedidos
+  module:
+    - options
+id: node.pedidos.field_recursos_humanos
+field_name: field_recursos_humanos
+entity_type: node
+bundle: pedidos
+label: 'Recursos Humanos'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

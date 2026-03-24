@@ -1,0 +1,22 @@
+uuid: b6dcb7eb-b212-460e-8ef4-54aead39e65d
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_box_text
+    - paragraphs.paragraphs_type.block_registo
+  module:
+    - text
+id: paragraph.block_registo.field_box_text
+field_name: field_box_text
+entity_type: paragraph
+bundle: block_registo
+label: 'Box text'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

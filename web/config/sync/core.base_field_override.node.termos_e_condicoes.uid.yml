@@ -1,0 +1,20 @@
+uuid: fba7a88b-6376-459f-bc26-131146add3fc
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.termos_e_condicoes
+id: node.termos_e_condicoes.uid
+field_name: uid
+entity_type: node
+bundle: termos_e_condicoes
+label: 'Criado por'
+description: 'O nome de utilizador do autor do conteúdo.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: 'Drupal\node\Entity\Node::getDefaultEntityOwner'
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

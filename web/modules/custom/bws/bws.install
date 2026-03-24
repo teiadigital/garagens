@@ -1,0 +1,149 @@
+<?php
+
+use Drupal\Core\Config\FileStorage;
+use Drupal\node\Entity\NodeType;
+use Drupal\user\RoleInterface;
+
+/**
+ * Implements hook_install().
+ */
+function bws_install() {
+
+  bws_create_require_bat_states();
+
+  user_role_change_permissions(RoleInterface::ANONYMOUS_ID, [
+    'view calendar data for any availability_daily event' => TRUE,
+  ]);
+
+  user_role_change_permissions(RoleInterface::AUTHENTICATED_ID, [
+    'view calendar data for any availability_daily event' => TRUE,
+  ]);
+
+  bws_event_series_types_add_fields();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function bws_uninstall() {
+  $node_types = \Drupal::entityTypeManager()->getStorage('node_type')->loadMultiple();
+  $entityFieldManager = Drupal::service('entity_field.manager');
+
+  $field_names = [
+    'field_availability_daily',
+    'field_product',
+    'field_price',
+    'field_price_frequency',
+  ];
+
+  foreach ($node_types as $node_type) {
+    assert($node_type instanceof NodeType);
+    $fields = $entityFieldManager->getFieldDefinitions('node', $node_type->id());
+
+    foreach ($field_names as $field_name) {
+      if (isset($fields[$field_name])) {
+        $fields[$field_name]->delete();
+      }
+    }
+
+    $node_type->unsetThirdPartySetting('bws', 'bws')->save();
+  }
+
+  // Delete bat states related to BEE.
+  $storage = \Drupal::entityTypeManager()->getStorage('state');
+  $sids = $storage->getQuery()
+    ->accessCheck(FALSE)
+    ->execute();
+  $sids = (array) $sids;
+  $sids = array_filter($sids, function ($id) {
+    return is_int($id) || is_string($id);
+  });
+  $states = $storage->loadMultiple($sids);
+  foreach ($states as $state) {
+    if (substr($state->get("machine_name")->value, 0, 4) == 'bws_') {
+      $state->delete();
+    }
+  }
+
+  bat_event_delete_event_type_schema('availability_daily');
+}
+
+/**
+ * Add booking "Capacity" field.
+ */
+function bws_update_8001() {
+  if (bat_booking_type_load('bws') !== NULL) {
+    bws_create_booking_capacity_field();
+  }
+}
+
+/**
+ * Set cardinality as unlimited for the "booking_event_reference" field.
+ */
+function bws_update_8002() {
+  if (bat_booking_type_load('bws') !== NULL) {
+    bws_set_booking_event_reference_field_cardinality();
+  }
+}
+
+/**
+ * Enable module "BAT Event Series"
+ */
+function bws_update_8003() {
+  \Drupal::service('module_installer')->install(['bat_event_series']);
+}
+
+/**
+ * Import BAT Event series Types.
+ */
+function bws_update_8004() {
+  $configs = [
+    'bat_event_series.event_series_type.availability_daily',
+  ];
+
+  $path = \Drupal::service('extension.list.module')->getPath('bws') . '/config/install';
+  $source = new FileStorage($path);
+  $config_storage = \Drupal::service('config.storage');
+  foreach ($configs as $config) {
+    $config_storage->write($config, $source->read($config));
+  }
+
+  bws_event_series_types_add_fields();
+}
+
+/**
+ * Add booking fields "Repeat frequency" and "Repeat until".
+ */
+function bws_update_8005() {
+  if (bat_booking_type_load('bws') !== NULL) {
+    bws_create_booking_repeat_frequency_field();
+    bws_create_booking_repeat_until_field();
+  }
+}
+
+/**
+ * Add booking "Event series" field.
+ */
+function bws_update_8006() {
+  if (bat_booking_type_load('bws') !== NULL) {
+    bws_create_booking_event_series_reference_field();
+  }
+}
+
+/**
+ * Make sure all config settings for content types are in third party config
+ * storage.
+ */
+function bws_update_8007() {
+  $node_types = \Drupal::entityTypeManager()->getStorage('node_type')->loadMultiple();
+  foreach ($node_types as $node_type) {
+    assert($node_type instanceof NodeType);
+    $bws_settings = Drupal::configFactory()->get('node.type.' . $node_type->id())->get('bws');
+    if (empty($node_type->getThirdPartySetting('bws', 'bws')) && !empty($bws_settings)) {
+      $node_type->setThirdPartySetting('bws', 'bws', $bws_settings)->save();
+    }
+    if (!empty($bws_settings)) {
+      Drupal::configFactory()->getEditable('node.type.' . $node_type->id())->clear('bws')->save();
+    }
+  }
+}

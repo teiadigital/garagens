@@ -1,0 +1,48 @@
+<?php
+
+use Drupal\node\NodeInterface;
+
+/**
+ * Executa geocodificação ao criar um armazém.
+ */
+function storitflex_geocode_entity_insert(\Drupal\Core\Entity\EntityInterface $entity) {
+  if ($entity instanceof NodeInterface && $entity->bundle() === 'armazem') {
+    _storitflex_geocode_run($entity);
+  }
+}
+
+/**
+ * Executa geocodificação ao editar um armazém.
+ */
+function storitflex_geocode_entity_update(\Drupal\Core\Entity\EntityInterface $entity) {
+  if ($entity instanceof NodeInterface && $entity->bundle() === 'armazem') {
+    _storitflex_geocode_run($entity);
+  }
+}
+
+/**
+ * Função que executa o geocódigo para um node do tipo armazem.
+ */
+function _storitflex_geocode_run(NodeInterface $node): void {
+  if ($node->hasField('field_localidade') && $node->hasField('field_geo_coordenadas')) {
+    if (!$node->get('field_localidade')->isEmpty() && $node->get('field_geo_coordenadas')->isEmpty()) {
+      $address = $node->get('field_localidade')->first();
+      $countries = \Drupal::service('country_manager')->getList();
+      $country_name = $countries[$address->country_code] ?? $address->country_code;
+      $morada = trim("{$address->locality}, {$address->administrative_area}, {$country_name}");
+
+      $geocoder = \Drupal::service('geocoder');
+      $result = $geocoder->geocode($morada, ['nominatim']);
+
+      if ($result && $result->first() && $result->first()->getCoordinates()) {
+        $coordinates = $result->first()->getCoordinates();
+        $lat = $coordinates->getLatitude();
+        $lng = $coordinates->getLongitude();
+        $wkt = sprintf('POINT(%F %F)', $lng, $lat);
+
+        $node->set('field_geo_coordenadas', ['value' => $wkt]);
+        $node->save();
+      }
+    }
+  }
+}

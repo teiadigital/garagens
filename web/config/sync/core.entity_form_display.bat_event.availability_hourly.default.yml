@@ -1,0 +1,62 @@
+uuid: 9f0bd008-badc-427c-bf80-2d8371a7563b
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - bat_event.event_type.availability_hourly
+    - field.field.bat_event.availability_hourly.event_bat_unit_reference
+    - field.field.bat_event.availability_hourly.event_dates
+    - field.field.bat_event.availability_hourly.event_series
+    - field.field.bat_event.availability_hourly.event_state_reference
+  module:
+    - datetime_range
+id: bat_event.availability_hourly.default
+targetEntityType: bat_event
+bundle: availability_hourly
+mode: default
+content:
+  event_bat_unit_reference:
+    type: entity_reference_autocomplete
+    weight: 3
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  event_dates:
+    type: daterange_default
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  event_state_reference:
+    type: entity_reference_autocomplete
+    weight: 3
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  event_series: true

@@ -1,0 +1,27 @@
+uuid: 85dab619-c46d-49b6-b1ef-9e04e33d1b9c
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_permite_ser_partilhado
+field_name: field_permite_ser_partilhado
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: sim
+      label: Sim
+    -
+      value: nao
+      label: Não
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

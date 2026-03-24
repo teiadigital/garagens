@@ -1,0 +1,16 @@
+uuid: 83a6b008-7d42-49fe-aca8-4f35a6e896f0
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+_core:
+  default_config_hash: jVLtWQlK13jsOD5LSuw761hIHtIF5wcy8lH0yaOludw
+id: bat_api.entity_delete.state
+service_plugin_id: 'entity_delete:state'
+service_endpoint_id: bat_api
+formats:
+  json: json
+  xml: '0'
+authentication:
+  cookie: cookie

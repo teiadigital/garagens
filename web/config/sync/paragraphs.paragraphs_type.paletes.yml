@@ -1,0 +1,10 @@
+uuid: a978d83f-4488-4462-b059-84b3f914d36a
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: paletes
+label: Paletes
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

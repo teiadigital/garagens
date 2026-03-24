@@ -1,0 +1,11 @@
+uuid: 4f880a2e-d670-4976-9e2e-5b54ee14337e
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - bat_unit.unit_bundle.camara_de_frio
+id: bat_unit.camara_de_frio
+target_entity_type_id: bat_unit
+target_bundle: camara_de_frio
+default_langcode: site_default
+language_alterable: false

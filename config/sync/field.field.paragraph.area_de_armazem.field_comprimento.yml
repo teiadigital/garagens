@@ -1,0 +1,23 @@
+uuid: e79e138d-d5cc-4590-8df6-307c8198336b
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_comprimento
+    - paragraphs.paragraphs_type.area_de_armazem
+id: paragraph.area_de_armazem.field_comprimento
+field_name: field_comprimento
+entity_type: paragraph
+bundle: area_de_armazem
+label: 'Comprimento (m)'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ' m'
+field_type: decimal

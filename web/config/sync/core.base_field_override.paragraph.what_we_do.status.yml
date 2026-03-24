@@ -1,0 +1,22 @@
+uuid: 163b67a2-bcec-4697-b7f0-b81c62be53ea
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.what_we_do
+id: paragraph.what_we_do.status
+field_name: status
+entity_type: paragraph
+bundle: what_we_do
+label: Publicado
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

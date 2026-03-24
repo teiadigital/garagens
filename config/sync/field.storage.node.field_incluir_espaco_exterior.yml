@@ -1,0 +1,27 @@
+uuid: d94ffb34-b901-4c6f-95fc-991223cd3b4d
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_incluir_espaco_exterior
+field_name: field_incluir_espaco_exterior
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: sim
+      label: Sim
+    -
+      value: nao
+      label: Não
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

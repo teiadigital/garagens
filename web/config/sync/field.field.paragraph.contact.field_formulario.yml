@@ -1,0 +1,25 @@
+uuid: 6b80acf1-9b40-4b85-84c2-5653f8b0a44c
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_formulario
+    - paragraphs.paragraphs_type.contact
+  module:
+    - webform
+id: paragraph.contact.field_formulario
+field_name: field_formulario
+entity_type: paragraph
+bundle: contact
+label: Formulario
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:webform'
+  handler_settings:
+    target_bundles: null
+    auto_create: false
+field_type: webform

@@ -1,0 +1,18 @@
+uuid: c8532bcb-c5a5-4e0e-9459-e756de14544b
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.equipamentos_carga_descarga
+id: taxonomy_term.equipamentos_carga_descarga.changed
+field_name: changed
+entity_type: taxonomy_term
+bundle: equipamentos_carga_descarga
+label: Alterado
+description: 'A hora em que o termo foi editado pela última vez.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

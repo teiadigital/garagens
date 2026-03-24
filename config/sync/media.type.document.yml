@@ -1,0 +1,16 @@
+uuid: dabc564f-eb3c-4b3c-a4ec-c333df3c30aa
+langcode: pt-pt
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: _D9q3XSnP6ik9we9UuoTvZsQKPuYNp_G9PfwVtWzgnQ
+id: document
+label: Documento
+description: 'Um ficheiro ou documento carregado, como um PDF.'
+source: file
+queue_thumbnail_downloads: false
+new_revision: true
+source_configuration:
+  source_field: field_media_document
+field_map:
+  name: name

@@ -1,0 +1,10 @@
+uuid: 6c77053e-4f16-41ff-ac49-94821d687e70
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: location
+label: Location
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

@@ -1,0 +1,116 @@
+uuid: 2a7da934-8a2c-4baf-8977-13f2c9f63e83
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: armazens
+label: Armazens
+description: ''
+progress_steps_links_saved_only: false
+progress_steps_links_saved_only_next: false
+redirection_policy: entity
+redirection_target: ''
+steps:
+  step_1:
+    label: Description
+    weight: 0
+    entity_type: node
+    entity_bundle: armazem
+    form_mode: default
+    url: /armazem/add
+    submitLabel: Next
+    cancelLabel: ''
+    hideDelete: 0
+    deleteLabel: null
+    displayPrevious: 0
+  step_2:
+    label: Specifications
+    weight: 1
+    entity_type: node
+    entity_bundle: armazem
+    form_mode: node.step_2
+    url: /armazem/add/step_2
+    submitLabel: Next
+    cancelLabel: ''
+    previousLabel: Previous
+    hideDelete: 0
+    deleteLabel: null
+    displayPrevious: 1
+  step_3:
+    label: 'Storage areas'
+    weight: 2
+    entity_type: node
+    entity_bundle: armazem
+    form_mode: node.step_3
+    url: /armazem/add/step_3
+    submitLabel: Next
+    cancelLabel: ''
+    previousLabel: Previous
+    hideDelete: 0
+    deleteLabel: null
+    displayPrevious: 1
+  step_4:
+    label: Resources
+    weight: 3
+    entity_type: node
+    entity_bundle: armazem
+    form_mode: node.step_4
+    url: /armazem/add/step_4
+    submitLabel: Next
+    cancelLabel: ''
+    previousLabel: Previous
+    hideDelete: 0
+    deleteLabel: null
+    displayPrevious: 1
+  step_5:
+    label: Access
+    weight: 4
+    entity_type: node
+    entity_bundle: armazem
+    form_mode: node.step_5
+    url: /add/armazens/step_5
+    submitLabel: Next
+    cancelLabel: ''
+    previousLabel: Previous
+    hideDelete: 0
+    deleteLabel: null
+    displayPrevious: 1
+  step_6:
+    label: 'Security and certificates'
+    weight: 5
+    entity_type: node
+    entity_bundle: armazem
+    form_mode: node.step_6
+    url: /armazem/add/step_6
+    submitLabel: Next
+    cancelLabel: ''
+    previousLabel: Previous
+    hideDelete: 0
+    deleteLabel: null
+    displayPrevious: 1
+  step_7:
+    label: Rental
+    weight: 6
+    entity_type: node
+    entity_bundle: armazem
+    form_mode: node.step_7
+    url: /armazem/add/step_7
+    submitLabel: Next
+    cancelLabel: ''
+    previousLabel: Previous
+    hideDelete: 0
+    deleteLabel: null
+    displayPrevious: 1
+  step_8:
+    label: 'Terms & conditions'
+    weight: 7
+    entity_type: node
+    entity_bundle: armazem
+    form_mode: node.step_8
+    url: /armazem/add/step_8
+    submitLabel: Submit
+    cancelLabel: ''
+    previousLabel: Anterior
+    hideDelete: 0
+    deleteLabel: null
+    displayPrevious: 1
+progress_steps: {  }

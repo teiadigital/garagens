@@ -1,0 +1,20 @@
+uuid: a7a7c307-4048-42e1-b5e5-f53bdaa7f30f
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - commerce_store.commerce_store_type.online
+id: commerce_store.online.uid
+field_name: uid
+entity_type: commerce_store
+bundle: online
+label: Proprietário
+description: 'O proprietário da loja'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: 'Drupal\commerce_store\Entity\Store::getDefaultEntityOwner'
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

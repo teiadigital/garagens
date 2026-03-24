@@ -1,0 +1,16 @@
+uuid: 074daa4d-e3ae-489d-b288-0864b3372cf5
+langcode: pt-pt
+status: true
+dependencies:
+  enforced:
+    module:
+      - webform
+_core:
+  default_config_hash: WRpxpwYpfcO_i0so7BV4QXxXlbPiSVppYmAV6DAz4c0
+id: sex
+label: Sex
+category: Demográfico
+likert: false
+options: |
+  Masculino: Masculino
+  Feminino: Feminino

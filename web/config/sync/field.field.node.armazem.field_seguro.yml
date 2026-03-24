@@ -1,0 +1,21 @@
+uuid: 1aae89fa-9be5-442c-965b-90f4f03f06a4
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_seguro
+    - node.type.armazem
+  module:
+    - options
+id: node.armazem.field_seguro
+field_name: field_seguro
+entity_type: node
+bundle: armazem
+label: 'Tem seguro de responsabilidade civil?'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

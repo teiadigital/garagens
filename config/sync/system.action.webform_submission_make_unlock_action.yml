@@ -1,0 +1,13 @@
+uuid: 1d5426ac-deef-4a59-b746-95785a81f981
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - webform
+_core:
+  default_config_hash: begZ0-RmTzO_zDAwEKA2lKvtGYw1vbFOzbQOJzUbZX0
+id: webform_submission_make_unlock_action
+label: 'Desbloquear submissão'
+type: webform_submission
+plugin: webform_submission_make_unlock_action
+configuration: {  }

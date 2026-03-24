@@ -1,0 +1,14 @@
+uuid: d2c83e5a-85d3-40d9-befc-e1c2697d1951
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - bws
+_core:
+  default_config_hash: '-pmcr0bKZMqKbChu-t3kBrog93u3Q9Xrr4N12IPN1bk'
+name: Daily
+type: daily
+default_event_value_field_ids:
+  availability_daily: field_availability_daily
+  availability_hourly: ''

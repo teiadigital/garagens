@@ -1,0 +1,75 @@
+{#
+/**
+* @file
+* Theme override to display a block.
+*
+* Available variables:
+* - plugin_id: The ID of the block implementation.
+* - label: The configured label of the block if visible.
+* - configuration: A list of the block's configuration values.
+* - label: The configured label for the block.
+* - label_display: The display settings for the label.
+* - provider: The module or other provider that provided this block plugin.
+* - Block plugin specific settings will also be stored here.
+* - in_preview: Whether the plugin is being rendered in preview mode.
+* - content: The content of this block.
+* - attributes: array of HTML attributes populated by modules, intended to
+* be added to the main container tag of this template.
+* - id: A valid HTML ID and guaranteed unique.
+* - title_attributes: Same as attributes, except applied to the main title
+* tag that appears in the template.
+* - title_prefix: Additional output populated by modules, intended to be
+* displayed in front of the main title tag that appears in the template.
+* - title_suffix: Additional output populated by modules, intended to be
+* displayed after the main title tag that appears in the template.
+*
+* @see template_preprocess_block()
+*/
+#}
+{%
+set classes = [
+'block',
+'block-' ~ configuration.provider|clean_class,
+'block-' ~ plugin_id|clean_class,
+]
+%}
+
+
+{% if not is_anonymous %}
+
+    {% block user_menu %}
+    <button type="button" class="flex mr-3 text-sm rounded-full md:mr-0 focus:ring-4 focus:ring-black "
+        id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+        <img src="{{user_picture['#uri']}}" class="w-10 h-10 md:w-14 md:h-14 rounded-full" alt="">
+    </button>
+    <!-- Dropdown menu -->
+    <div class="z-50 hidden my-4 text-base list-none bg-gray-dark  divide-y divide-gray-100 rounded-lg shadow"
+        id="user-dropdown">
+        <div class="px-4 py-3">
+            <span class="block text-sm  text-white truncate ">{{ user_email }}</span>
+        </div>
+        <ul class="py-2" aria-labelledby="user-menu-button">
+            {% for key, link in dropdown_menu.links %}
+            <li>
+                <a href="{{ link.path }}" class="block px-4 py-2 text-sm text-white hover:bg-gray-100 hover:text-black">
+                    {{ link.title }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endblock %}
+
+{% else %}
+
+    {% block dropdown_menu_anonymous %}
+    <div class="btn-login">
+        <a href="{{ dropdown_menu_anonymous.links.entrar.path }}"
+            class="text-black-text font-semibold text-base transition-all block  bg-white  hover:bg-black-text hover:text-white py-4 md:py-5 px-4 md:px-12"
+            target="{{ dropdown_menu_anonymous.links.entrar.external ? '_blank' : '_self' }}">
+            {{ dropdown_menu_anonymous.links.entrar.title }}
+        </a>
+    </div>
+    {% endblock %}
+
+{% endif %}

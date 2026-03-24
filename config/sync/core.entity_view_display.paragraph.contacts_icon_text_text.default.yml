@@ -1,0 +1,47 @@
+uuid: 31f1bc9c-48ff-4c22-b869-0e76e87ad7bb
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.contacts_icon_text_text.field_icon
+    - field.field.paragraph.contacts_icon_text_text.field_text
+    - field.field.paragraph.contacts_icon_text_text.field_title
+    - paragraphs.paragraphs_type.contacts_icon_text_text
+  module:
+    - svg_image
+    - text
+id: paragraph.contacts_icon_text_text.default
+targetEntityType: paragraph
+bundle: contacts_icon_text_text
+mode: default
+content:
+  field_icon:
+    type: image
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
+      svg_attributes:
+        width: null
+        height: null
+      svg_render_as_image: true
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_text:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_title:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }

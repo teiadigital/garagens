@@ -1,0 +1,10 @@
+uuid: e3440996-d5cd-4be4-a50f-54003d26090a
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: contacts_icon_text_text
+label: 'Contacts icon + text + text '
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

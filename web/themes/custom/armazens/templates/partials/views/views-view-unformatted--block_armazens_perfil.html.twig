@@ -1,0 +1,45 @@
+{#
+/**
+ * @file
+ * Theme override to display a view of unformatted rows.
+ *
+ * Available variables:
+ * - title: The title of this group of rows. May be empty.
+ * - rows: A list of the view's row items.
+ *   - attributes: The row's HTML attributes.
+ *   - content: The row's content.
+ * - view: The view object.
+ * - default_row_class: A flag indicating whether default classes should be
+ *   used on rows.
+ *
+ * @see template_preprocess_views_view_unformatted()
+ */
+#}
+{% if title %}
+  <h3>{{ title }}</h3>
+{% endif %}
+
+<div class="grid grid-cols-12 mt-8">
+  <div class="col-span-12 xl:col-span-7">
+    <div class="flex gap-4 items-center flex-wrap no-underline">
+      {% for key,row in rows %}
+        {%
+          set row_classes = [
+            default_row_class ? 'views-row col-span-12 md:col-span-2 w-full h-40 sm:w-64 sm:h-64 bg-no-repeat bg-center text-white text-lg font-bold p-4
+            flex items-center justify-center relative no-underline',
+          ]
+        %}
+      
+        <a {{ row.attributes.addClass(row_classes) }} href="{{ view.style_plugin.getField(key, 'view_node')|render|striptags|spaceless }}" style="background-image: url('{{ row.content['#row']._entity.field_fotos.entity|file_url }}');">
+          <div class="bg-black bg-opacity-60 absolute top-0 left-0 h-full w-full mix-blend-multiply"></div>
+          <div class="relative">
+            {{ view.style_plugin.getField(key, 'title') }}
+          </div>
+        </a>
+      
+      {% endfor %}
+
+    </div>
+  </div>
+</div>
+

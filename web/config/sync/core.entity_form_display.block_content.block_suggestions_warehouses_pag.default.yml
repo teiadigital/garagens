@@ -1,0 +1,66 @@
+uuid: 1f882801-9ed5-4c23-8f55-e2bfb8feeb60
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - block_content.type.block_suggestions_warehouses_pag
+    - field.field.block_content.block_suggestions_warehouses_pag.field_link
+    - field.field.block_content.block_suggestions_warehouses_pag.field_pre_title
+    - field.field.block_content.block_suggestions_warehouses_pag.field_text
+    - field.field.block_content.block_suggestions_warehouses_pag.field_title
+  module:
+    - link
+    - text
+id: block_content.block_suggestions_warehouses_pag.default
+targetEntityType: block_content
+bundle: block_suggestions_warehouses_pag
+mode: default
+content:
+  field_link:
+    type: link_default
+    weight: 5
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_pre_title:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_text:
+    type: text_textarea
+    weight: 4
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_title:
+    type: text_textarea
+    weight: 3
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  info:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 1
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+hidden: {  }

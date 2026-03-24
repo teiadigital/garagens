@@ -1,0 +1,29 @@
+uuid: 9aa07254-5e61-4788-81bf-35dc4afd49bf
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.node.publicidade.body
+    - node.type.publicidade
+  module:
+    - text
+    - user
+id: node.publicidade.default
+targetEntityType: node
+bundle: publicidade
+mode: default
+content:
+  body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  langcode: true

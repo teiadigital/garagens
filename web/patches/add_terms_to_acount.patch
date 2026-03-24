@@ -1,0 +1,40 @@
+diff --git a/terms_of_use.module b/terms_of_use.module
+index 6d7de14..5a53b51 100644
+--- a/terms_of_use.module
++++ b/terms_of_use.module
+@@ -36,7 +36,7 @@ function terms_of_use_form_user_register_form_alter(&$form, &$form_state) {
+   $config = \Drupal::config('terms_of_use.settings');
+   $title = $config->get('terms_of_use_label_name');
+   if (!empty($title)) {
+-    $form['terms_of_use'] = [
++    $form['account']['terms_of_use'] = [
+       '#type' => 'details',
+       '#title' => $title,
+       '#weight' => 10,
+@@ -46,7 +46,7 @@ function terms_of_use_form_user_register_form_alter(&$form, &$form_state) {
+   // Set the details tag open/close based on the configuration.
+   $t_and_c_collapsed = $config->get('terms_of_use_collapsed') ? $config->get('terms_of_use_collapsed') : 0;
+   $t_and_c_collapsed = ($t_and_c_collapsed) ? 0 : 1;
+-  $form['terms_of_use']['#open'] = $t_and_c_collapsed;
++  $form['account']['terms_of_use']['#open'] = $t_and_c_collapsed;
+ 
+   $nid = $config->get('terms_of_use_node');
+   $node = '';
+@@ -72,7 +72,7 @@ function terms_of_use_form_user_register_form_alter(&$form, &$form_state) {
+     else {
+       $node_data = $node->toArray();
+       if (!empty($node_data['body'])) {
+-        $form['terms_of_use']['terms_of_use_data'] = [
++        $form['account']['terms_of_use']['terms_of_use_data'] = [
+           '#type' => 'markup',
+           '#markup' => "<div class='terms-of-use'>{$node_data['body'][0]['value']}</div>",
+         ];
+@@ -80,7 +80,7 @@ function terms_of_use_form_user_register_form_alter(&$form, &$form_state) {
+     }
+   }
+ 
+-  $form['terms_of_use']['terms_of_use_checkbox'] = [
++  $form['account']['terms_of_use']['terms_of_use_checkbox'] = [
+     '#type' => 'checkbox',
+     '#title' => !empty($checkbox_title) ? $checkbox_title : t('I agree with these terms'),
+     '#required' => TRUE,

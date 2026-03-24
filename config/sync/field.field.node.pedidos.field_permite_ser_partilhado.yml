@@ -1,0 +1,21 @@
+uuid: 676f16b6-2a14-469a-8881-7ea4a845a16c
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_permite_ser_partilhado
+    - node.type.pedidos
+  module:
+    - options
+id: node.pedidos.field_permite_ser_partilhado
+field_name: field_permite_ser_partilhado
+entity_type: node
+bundle: pedidos
+label: 'Permite ser partilhado?'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

@@ -1,0 +1,7 @@
+uuid: 35717f52-762d-467b-b528-36d306829b8f
+langcode: pt-pt
+status: false
+dependencies: {  }
+formId: node_termos_e_condicoes_form
+captchaType: default
+label: node_termos_e_condicoes_form

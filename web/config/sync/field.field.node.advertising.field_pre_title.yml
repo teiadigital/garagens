@@ -1,0 +1,19 @@
+uuid: 69033e2e-4f09-4b15-b3b7-d32eaccd8eea
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pre_title
+    - node.type.advertising
+id: node.advertising.field_pre_title
+field_name: field_pre_title
+entity_type: node
+bundle: advertising
+label: 'Texto a aparecer antes do titulo'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

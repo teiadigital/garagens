@@ -1,0 +1,22 @@
+uuid: b7121a7c-0021-442f-a675-776ae446ce26
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.sidebar_menu
+id: paragraph.sidebar_menu.status
+field_name: status
+entity_type: paragraph
+bundle: sidebar_menu
+label: Publicado
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

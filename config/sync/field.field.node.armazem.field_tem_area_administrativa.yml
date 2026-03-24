@@ -1,0 +1,21 @@
+uuid: c4039e58-ea15-4af4-8db2-c91ae051a309
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_tem_area_administrativa
+    - node.type.armazem
+  module:
+    - options
+id: node.armazem.field_tem_area_administrativa
+field_name: field_tem_area_administrativa
+entity_type: node
+bundle: armazem
+label: 'Tem um espaço de área administrativa?'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

@@ -1,0 +1,21 @@
+uuid: 453a724f-9394-42a5-a866-404b83254116
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_certificacao_alfandega
+    - node.type.armazem
+  module:
+    - options
+id: node.armazem.field_certificacao_alfandega
+field_name: field_certificacao_alfandega
+entity_type: node
+bundle: armazem
+label: 'Tem certificação de armazem de alfandega?'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

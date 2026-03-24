@@ -1,0 +1,11 @@
+uuid: 6fd80d82-342d-42be-880d-b724c7457d1b
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - bat_unit.unit_bundle.area_total
+id: bat_unit.area_total
+target_entity_type_id: bat_unit
+target_bundle: area_total
+default_langcode: site_default
+language_alterable: false

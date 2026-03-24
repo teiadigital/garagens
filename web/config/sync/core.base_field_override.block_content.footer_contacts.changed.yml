@@ -1,0 +1,18 @@
+uuid: f866281f-9654-44e0-bf79-cdf0cb95a02b
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - block_content.type.footer_contacts
+id: block_content.footer_contacts.changed
+field_name: changed
+entity_type: block_content
+bundle: footer_contacts
+label: Alterado
+description: 'A hora em que o bloco de conteúdo foi editado pela última vez.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

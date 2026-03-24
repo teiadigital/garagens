@@ -1,0 +1,23 @@
+uuid: 284ba5dc-0c3f-43cf-8771-89ffb0a0bc6f
+langcode: en
+status: true
+dependencies:
+  config:
+    - bat_unit.unit_bundle.area_partilhada
+    - field.storage.bat_unit.field_area_total
+id: bat_unit.area_partilhada.field_area_total
+field_name: field_area_total
+entity_type: bat_unit
+bundle: area_partilhada
+label: 'area total'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

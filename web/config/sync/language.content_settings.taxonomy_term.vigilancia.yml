@@ -1,0 +1,18 @@
+uuid: 12b18a32-9bb7-4334-a4d0-fa4b893ceb93
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.vigilancia
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: taxonomy_term.vigilancia
+target_entity_type_id: taxonomy_term
+target_bundle: vigilancia
+default_langcode: site_default
+language_alterable: true

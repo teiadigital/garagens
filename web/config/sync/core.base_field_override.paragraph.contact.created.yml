@@ -1,0 +1,18 @@
+uuid: e1eaf253-e599-468a-b229-89da1eaf98a7
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.contact
+id: paragraph.contact.created
+field_name: created
+entity_type: paragraph
+bundle: contact
+label: 'Criado em'
+description: 'The time that the Paragraph was created.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

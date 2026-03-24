@@ -1,0 +1,30 @@
+uuid: f560fff6-eabb-4bd9-ad72-34e735a9f19d
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_documentos
+    - media.type.document
+  module:
+    - user
+id: user.user.field_documentos
+field_name: field_documentos
+entity_type: user
+bundle: user
+label: 'Documentos Comprovativos'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      document: document
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

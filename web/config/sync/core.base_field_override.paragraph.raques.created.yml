@@ -1,0 +1,18 @@
+uuid: 5973358a-d4fc-47ac-b7e5-55798ab11a45
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.raques
+id: paragraph.raques.created
+field_name: created
+entity_type: paragraph
+bundle: raques
+label: 'Criado em'
+description: 'The time that the Paragraph was created.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

@@ -1,0 +1,52 @@
+uuid: 063ec7be-6728-4f06-9bc5-7786e15c2ab4
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_preco_temp
+    - node.type.armazem
+    - paragraphs.paragraphs_type.preco_imovel
+  module:
+    - entity_reference_revisions
+id: node.armazem.field_preco_temp
+field_name: field_preco_temp
+entity_type: node
+bundle: armazem
+label: 'Aluguer câmara de frio'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      preco_imovel: preco_imovel
+    negate: 0
+    target_bundles_drag_drop:
+      area_de_armazem:
+        weight: 9
+        enabled: false
+      banner:
+        weight: 10
+        enabled: false
+      block_registo:
+        weight: 11
+        enabled: false
+      camaras_de_frio:
+        weight: 12
+        enabled: false
+      equipamentos_carga_descarga:
+        weight: 13
+        enabled: false
+      preco_imovel:
+        weight: 14
+        enabled: true
+      raques:
+        weight: 15
+        enabled: false
+      sidebar_menu:
+        weight: 16
+        enabled: false
+field_type: entity_reference_revisions

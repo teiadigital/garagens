@@ -1,0 +1,10 @@
+uuid: 3f811d7a-3a8e-472a-a90d-3bfe6b10641a
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: preco_imovel
+label: 'Preço Imovel'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

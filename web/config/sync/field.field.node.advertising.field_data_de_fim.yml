@@ -1,0 +1,21 @@
+uuid: 95efba34-589b-469a-88f0-22a642df8f06
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_data_de_fim
+    - node.type.advertising
+  module:
+    - datetime
+id: node.advertising.field_data_de_fim
+field_name: field_data_de_fim
+entity_type: node
+bundle: advertising
+label: 'Data de fim'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

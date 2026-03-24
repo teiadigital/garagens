@@ -1,0 +1,16 @@
+uuid: 20eee221-74e3-4c95-9643-67a5423da498
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+_core:
+  default_config_hash: s-udvpDBNkVU3eDnHKdElBgm_PRchmdHtPcqXw_jgpM
+id: bat_api.entity_get.state
+service_plugin_id: 'entity_get:state'
+service_endpoint_id: bat_api
+formats:
+  json: json
+  xml: '0'
+authentication:
+  cookie: cookie

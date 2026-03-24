@@ -1,0 +1,23 @@
+uuid: 168fde32-39ed-4d0a-95db-e66ad85615d4
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_empilhador_x_toneladas
+    - node.type.armazem
+id: node.armazem.field_empilhador_x_toneladas
+field_name: field_empilhador_x_toneladas
+entity_type: node
+bundle: armazem
+label: 'Empilhador (até “x” toneladas)'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

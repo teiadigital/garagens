@@ -1,0 +1,27 @@
+uuid: cbe8c6c2-0f8e-418a-8d00-ea3dc8901689
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_controlo_acesso
+field_name: field_controlo_acesso
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: sem_controlo
+      label: 'Sem controlo'
+    -
+      value: com_controlo
+      label: 'Com controlo'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

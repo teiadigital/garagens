@@ -1,0 +1,4 @@
+price_field_warehouses_example:
+  css:
+    component:
+      css/price-field-warehouses-example-widget.css: {}

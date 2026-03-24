@@ -1,0 +1,22 @@
+uuid: 0b1f854c-905b-4559-8966-553b4a29fb4c
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.block_registo
+id: paragraph.block_registo.status
+field_name: status
+entity_type: paragraph
+bundle: block_registo
+label: Publicado
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

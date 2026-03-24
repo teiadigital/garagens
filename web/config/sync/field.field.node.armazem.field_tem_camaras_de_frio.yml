@@ -1,0 +1,21 @@
+uuid: 2582e733-f42a-4e3f-bf57-e94ff6a58c56
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_tem_camaras_de_frio
+    - node.type.armazem
+  module:
+    - options
+id: node.armazem.field_tem_camaras_de_frio
+field_name: field_tem_camaras_de_frio
+entity_type: node
+bundle: armazem
+label: 'Tem Camara(s) de frio'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

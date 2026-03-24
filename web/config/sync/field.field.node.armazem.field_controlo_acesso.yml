@@ -1,0 +1,21 @@
+uuid: 961667b8-e920-45d5-a73a-b88292f25eaf
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_controlo_acesso
+    - node.type.armazem
+  module:
+    - options
+id: node.armazem.field_controlo_acesso
+field_name: field_controlo_acesso
+entity_type: node
+bundle: armazem
+label: 'Controlo Acesso'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

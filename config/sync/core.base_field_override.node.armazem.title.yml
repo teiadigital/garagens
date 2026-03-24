@@ -1,0 +1,18 @@
+uuid: 3e9299ad-e3ac-456b-9394-f48a7f1c2bee
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.armazem
+id: node.armazem.title
+field_name: title
+entity_type: node
+bundle: armazem
+label: ID
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

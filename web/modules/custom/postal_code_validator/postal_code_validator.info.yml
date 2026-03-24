@@ -1,0 +1,5 @@
+name: 'Postal Code Validator'
+type: module
+description: 'Valida se o código postal pertence à localidade fornecida.'
+package: Custom
+core_version_requirement: ^10 || ^11

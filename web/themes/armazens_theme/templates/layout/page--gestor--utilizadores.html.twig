@@ -1,0 +1,144 @@
+{#
+/**
+* @file
+* Theme override to display a single page.
+*
+* The doctype, html, head and body tags are not in this template. Instead they
+* can be found in the html.html.twig template in this directory.
+*
+* Available variables:
+*
+* General utility variables:
+* - base_path: The base URL path of the Drupal installation. Will usually be
+* "/" unless you have installed Drupal in a sub-directory.
+* - is_front: A flag indicating if the current page is the front page.
+* - logged_in: A flag indicating if the user is registered and signed in.
+* - is_admin: A flag indicating if the user has permission to access
+* administration pages.
+*
+* Site identity:
+* - front_page: The URL of the front page. Use this instead of base_path when
+* linking to the front page. This includes the language domain or prefix.
+*
+* Page content (in order of occurrence in the default page.html.twig):
+* - node: Fully loaded node, if there is an automatically-loaded node
+* associated with the page and the node ID is the second argument in the
+* page's path (e.g. node/12345 and node/12345/revisions, but not
+* comment/reply/12345).
+*
+* Regions:
+* - page.header: Items for the header region.
+* - page.primary_menu: Items for the primary menu region.
+* - page.secondary_menu: Items for the secondary menu region.
+* - page.highlighted: Items for the highlighted content region.
+* - page.help: Dynamic help text, mostly for admin pages.
+* - page.content: The main content of the current page.
+* - page.sidebar_first: Items for the first sidebar.
+* - page.sidebar_second: Items for the second sidebar.
+* - page.footer: Items for the footer region.
+* - page.breadcrumb: Items for the breadcrumb region.
+*
+* @see template_preprocess_page()
+* @see html.html.twig
+*/
+#}
+
+<div
+  class="relative layout-container bg-no-repeat bg-right-top {% if logged_in %} bg-gray-light user-logged-in {% endif %} {% if route_name == 'user.login' or route_name == 'user.register' %} lg:bg-[url('/themes/armazens_theme/images/bg_small.png')] {% endif %}">
+
+  {% if page.sidebar_right %}
+  <div class="xl:absolute xl:top-0 xl:right-0 xl:w-1/2 xl:h-full xl:bg-blue-dark"></div>
+  {% endif %}
+
+  <div class="{% if logged_in %} container-big {% else %} container {% endif %} relative px-4 sm:px-0">
+
+    <header role="banner" class="absolute top-0 left-0 w-full z-50">
+      <div class="{% if logged_in %} container-big {% else %} container {% endif %} change-logo-color">
+        <nav class="py-8 {% if logged_in %} px-5 {% else %}  px-4 sm:px-0 {% endif %}" aria-label="Global">
+          <div class="flex justify-end items-center gap-x-5">
+        
+            {% if page.sidebar_menu %}
+            <div class="mr-auto flex gap-4 items-center">
+              <div class="block">
+                {{ page.header.armazens_theme_imagemdemarcadositio }}
+              </div>
+              <button data-drawer-target="sidebar-menu" data-drawer-toggle="sidebar-menu" aria-controls="sidebar-menu"
+                type="button" class="inline-flex items-center text-sm text-gray-500 rounded-lg sm:hidden relative z-10 ">
+                <span class="sr-only">Open sidebar</span>
+                <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path clip-rule="evenodd" fill-rule="evenodd"
+                    d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
+                  </path>
+                </svg>
+              </button>
+            </div>
+            {% else %}
+              <div class="mr-auto">
+                {{ page.header.armazens_theme_imagemdemarcadositio }}
+              </div>
+            {% endif %}
+            {{ page.header.armazens_theme_notificationwidgetblock }}
+            {{ page.header.armazens_theme_seletordeidioma }}
+            {{ page.header.armazens_theme_usermenuavatardropdown }}
+            
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main role="main" class="min-h-screen flex w-full {% if logged_in %} bg-gray-light {% endif %}">
+
+      
+
+      {% if page.sidebar_menu %}
+      <aside id="sidebar-menu"
+        class="fixed sm:sticky top-0 left-0 z-40 w-28 sm:w-24 h-screen transition-transform -translate-x-full sm:translate-x-0 bg-white py-14"
+        aria-label="Sidebar" role="complementary">
+        {{ page.sidebar_menu }}
+      </aside>
+      {% endif %}
+
+
+      <div class="grid grid-cols-12 flex-1 ">
+
+        <div class="pb-16 {% if page.sidebar_menu %} sm:px-4 md:px-14 col-span-full pt-36 {% endif %} ">
+
+          {% if node.bundle|clean_class == 'armazem'%}
+              <input class="mb-8 cursor-pointer text-sm uppercase bg-black block rounded-full py-3 px-6 font-bold text-white hover:bg-white border-2 hover:text-black border-black transition-all" action="action" onclick="window.history.go(-1); return false;" type="submit" value="{{ 'Go back'|t }}" />
+          {% endif %}
+
+          {{ page.title }}
+          {{ page.content }}
+
+          {% if logged_in %}
+
+            {% if not page.footer %}
+              <footer role="contentinfo" class="px-4 py-20 hidden xl:block">
+                <p class="text-xs font-bold text-black text-center">{{ 'online warehouses'|t }}</p>
+                {{ page.footer }}
+              </footer>
+            {% endif %}
+          {% endif %}
+
+        </div>
+
+        
+        {% if page.sidebar_right %}
+          <div class="xl:sticky top-0 lg:mt-0 xl:h-screen xl:bg-blue-dark col-span-full pt-10 pb-10 xl:pb-0 xl:pt-40 pl-4 pr-4 md:pr-14 xl:pr-0 md:pl-14 {% if route_name == 'entity.user.canonical'%} xl:col-span-4 {% else %} xl:col-span-3 {% endif %} ">
+
+            {{ page.sidebar_right }}
+          </div>
+        {% endif %}
+
+      </div>
+    </main>
+  </div>
+
+  {# {% if page.footer %}
+  <footer role="contentinfo">
+    {{ page.footer }}
+  </footer>
+  {% endif %} #}
+  
+</div>{# /.layout-container #}

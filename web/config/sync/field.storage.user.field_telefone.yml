@@ -1,0 +1,19 @@
+uuid: 24f77022-a138-42d0-aaf9-0fd8848697f6
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - phone_international
+    - user
+id: user.field_telefone
+field_name: field_telefone
+entity_type: user
+type: phone_international
+settings: {  }
+module: phone_international
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,21 @@
+uuid: ff5395c0-95b2-4f85-961d-ba05d8b880a1
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_espaco
+    - node.type.armazem
+  module:
+    - options
+id: node.armazem.field_espaco
+field_name: field_espaco
+entity_type: node
+bundle: armazem
+label: Espaço
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

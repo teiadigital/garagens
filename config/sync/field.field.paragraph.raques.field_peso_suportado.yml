@@ -1,0 +1,23 @@
+uuid: 774382a5-cd44-441f-8ec7-0170b0b433bc
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_peso_suportado
+    - paragraphs.paragraphs_type.raques
+id: paragraph.raques.field_peso_suportado
+field_name: field_peso_suportado
+entity_type: paragraph
+bundle: raques
+label: 'Peso suportado (kg/m²)'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ' kg/m²'
+field_type: float

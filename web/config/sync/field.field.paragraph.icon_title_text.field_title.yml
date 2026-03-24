@@ -1,0 +1,22 @@
+uuid: 166f7dd3-01f3-40d4-bc21-4a117aef5dca
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_title
+    - paragraphs.paragraphs_type.icon_title_text
+  module:
+    - text
+id: paragraph.icon_title_text.field_title
+field_name: field_title
+entity_type: paragraph
+bundle: icon_title_text
+label: Title
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

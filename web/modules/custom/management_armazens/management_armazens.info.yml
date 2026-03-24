@@ -1,0 +1,5 @@
+name: 'management armazens'
+type: module
+description: 'Module to manage armazens'
+package: Custom
+core_version_requirement: ^10

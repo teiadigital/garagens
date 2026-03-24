@@ -1,0 +1,55 @@
+uuid: 05e37661-eaaf-4957-98c2-c1fd490aa2e8
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_carousel
+    - paragraphs.paragraphs_type.banner
+    - paragraphs.paragraphs_type.carousel_banner
+  module:
+    - entity_reference_revisions
+id: paragraph.banner.field_carousel
+field_name: field_carousel
+entity_type: paragraph
+bundle: banner
+label: Carousel
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      carousel_banner: carousel_banner
+    negate: 0
+    target_bundles_drag_drop:
+      area_de_armazem:
+        weight: 11
+        enabled: false
+      banner:
+        weight: 12
+        enabled: false
+      block_registo:
+        weight: 13
+        enabled: false
+      camaras_de_frio:
+        weight: 14
+        enabled: false
+      carousel_banner:
+        weight: 10
+        enabled: true
+      equipamentos_carga_descarga:
+        weight: 15
+        enabled: false
+      preco_imovel:
+        weight: 16
+        enabled: false
+      raques:
+        weight: 17
+        enabled: false
+      sidebar_menu:
+        weight: 18
+        enabled: false
+field_type: entity_reference_revisions

@@ -1,0 +1,5 @@
+services:
+  Drupal\storitflex_geocode\Drush\GeocodeCommands:
+    arguments: []
+    tags:
+      - { name: drush.command }

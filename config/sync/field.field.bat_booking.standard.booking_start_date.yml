@@ -1,0 +1,21 @@
+uuid: a7bc76f5-3fed-4566-a524-64e6bacf6bc9
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - bat_booking.booking_bundle.standard
+    - field.storage.bat_booking.booking_start_date
+  module:
+    - datetime
+id: bat_booking.standard.booking_start_date
+field_name: booking_start_date
+entity_type: bat_booking
+bundle: standard
+label: 'Start Date'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

@@ -1,0 +1,52 @@
+uuid: 8783ef0e-117a-4c65-8f39-11d742dbdd11
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_renda_parcial
+    - node.type.armazem
+    - paragraphs.paragraphs_type.preco_imovel
+  module:
+    - entity_reference_revisions
+id: node.armazem.field_renda_parcial
+field_name: field_renda_parcial
+entity_type: node
+bundle: armazem
+label: 'Renda parcial /m²'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      preco_imovel: preco_imovel
+    negate: 0
+    target_bundles_drag_drop:
+      area_de_armazem:
+        weight: 10
+        enabled: false
+      banner:
+        weight: 11
+        enabled: false
+      block_registo:
+        weight: 12
+        enabled: false
+      camaras_de_frio:
+        weight: 13
+        enabled: false
+      equipamentos_carga_descarga:
+        weight: 14
+        enabled: false
+      preco_imovel:
+        weight: 9
+        enabled: true
+      raques:
+        weight: 15
+        enabled: false
+      sidebar_menu:
+        weight: 16
+        enabled: false
+field_type: entity_reference_revisions

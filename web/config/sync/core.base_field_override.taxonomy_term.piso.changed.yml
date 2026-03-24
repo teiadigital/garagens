@@ -1,0 +1,18 @@
+uuid: b2e9bf01-55f0-4de9-acca-8a6529b0c8e4
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.piso
+id: taxonomy_term.piso.changed
+field_name: changed
+entity_type: taxonomy_term
+bundle: piso
+label: Alterado
+description: 'A hora em que o termo foi editado pela última vez.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

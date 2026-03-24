@@ -1,0 +1,30 @@
+uuid: ad57ecbd-e46a-47c3-acfd-b87af8f4e8a6
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.faqs.field_body
+    - field.field.paragraph.faqs.field_title_accordion
+    - paragraphs.paragraphs_type.faqs
+  module:
+    - text
+id: paragraph.faqs.default
+targetEntityType: paragraph
+bundle: faqs
+mode: default
+content:
+  field_body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_title_accordion:
+    type: basic_string
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden: {  }

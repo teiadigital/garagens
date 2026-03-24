@@ -1,0 +1,29 @@
+uuid: 92925039-50fb-4790-8848-7cc8ee5b9374
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_image
+    - media.type.image
+    - node.type.advertising
+id: node.advertising.field_image
+field_name: field_image
+entity_type: node
+bundle: advertising
+label: Imagem
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

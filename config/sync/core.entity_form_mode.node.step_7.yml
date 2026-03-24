@@ -1,0 +1,11 @@
+uuid: 34d3b8e8-cf91-45cc-91ef-4b31f94b30fb
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+id: node.step_7
+label: 'Step 7'
+description: ''
+targetEntityType: node
+cache: true

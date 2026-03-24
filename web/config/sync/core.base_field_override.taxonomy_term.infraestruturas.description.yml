@@ -1,0 +1,21 @@
+uuid: fedeb837-c0b9-4984-bf90-4d867685e369
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.infraestruturas
+  module:
+    - text
+id: taxonomy_term.infraestruturas.description
+field_name: description
+entity_type: taxonomy_term
+bundle: infraestruturas
+label: Descrição
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

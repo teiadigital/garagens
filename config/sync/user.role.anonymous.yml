@@ -1,0 +1,55 @@
+uuid: 52180ca4-f7ec-42ed-ad08-dd1262b72535
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - entity_browser.browser.ficheiros
+    - filter.format.restricted_html
+    - media.type.document
+    - media.type.image
+    - node.type.armazem
+  module:
+    - bws
+    - comment
+    - commerce_product
+    - contact
+    - dropzonejs
+    - entity_browser
+    - filter
+    - media
+    - node_view_permissions
+    - search
+    - system
+    - view_unpublished
+_core:
+  default_config_hash: 6WavjUYXIegP9AAg2zXGx54MWIVoomC3SZhNiqe-Dyk
+id: anonymous
+label: 'Utilizador anónimo'
+weight: -10
+is_admin: false
+permissions:
+  - 'access comments'
+  - 'access content'
+  - 'access ficheiros entity browser pages'
+  - 'access site-wide contact form'
+  - 'create document media'
+  - 'create image media'
+  - 'create media'
+  - 'dropzone upload files'
+  - 'edit own document media'
+  - 'search content'
+  - 'use text format restricted_html'
+  - 'view any advertising content'
+  - 'view any armazem content'
+  - 'view any article content'
+  - 'view any faqs content'
+  - 'view any homepage content'
+  - 'view any page content'
+  - 'view any termos_e_condicoes content'
+  - 'view any unpublished armazem content'
+  - 'view calendar data for any availability_daily event'
+  - 'view commerce_product'
+  - 'view media'
+  - 'view own article content'
+  - 'view own homepage content'
+  - 'view own page content'

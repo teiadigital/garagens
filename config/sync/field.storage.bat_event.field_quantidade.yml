@@ -1,0 +1,20 @@
+uuid: 6f0d840d-0b30-4a19-83a3-50fb948912a1
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - bat_event
+id: bat_event.field_quantidade
+field_name: field_quantidade
+entity_type: bat_event
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

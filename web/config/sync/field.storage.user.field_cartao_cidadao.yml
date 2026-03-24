@@ -1,0 +1,21 @@
+uuid: cfffa484-afac-471c-9e55-60b9d060a942
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - user
+id: user.field_cartao_cidadao
+field_name: field_cartao_cidadao
+entity_type: user
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

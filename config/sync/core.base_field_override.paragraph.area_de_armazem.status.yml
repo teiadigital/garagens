@@ -1,0 +1,22 @@
+uuid: 2b8db1bf-6373-40f0-a95b-1c8735bb163c
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.area_de_armazem
+id: paragraph.area_de_armazem.status
+field_name: status
+entity_type: paragraph
+bundle: area_de_armazem
+label: Publicado
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

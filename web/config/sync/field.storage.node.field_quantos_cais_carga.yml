@@ -1,0 +1,20 @@
+uuid: 86dfda12-ba59-40fa-abe7-4a9c63114d1b
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_quantos_cais_carga
+field_name: field_quantos_cais_carga
+entity_type: node
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

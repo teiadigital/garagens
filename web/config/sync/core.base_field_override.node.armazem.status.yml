@@ -1,0 +1,22 @@
+uuid: c160370c-c4f2-4cfa-91e1-0892bafbe634
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.armazem
+id: node.armazem.status
+field_name: status
+entity_type: node
+bundle: armazem
+label: Publicado
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

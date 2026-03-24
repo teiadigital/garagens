@@ -1,0 +1,29 @@
+uuid: 606a32f8-1e62-4393-9d41-3ad5fb7cd3c3
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_fotos
+    - media.type.image
+    - node.type.armazem
+id: node.armazem.field_fotos
+field_name: field_fotos
+entity_type: node
+bundle: armazem
+label: Fotos
+description: "insira até 4 fotos do seu imóvel. A primeira que colocar será a que aparece em destaque\r\n"
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

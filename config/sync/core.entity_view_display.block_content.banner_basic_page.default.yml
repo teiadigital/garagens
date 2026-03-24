@@ -1,0 +1,66 @@
+uuid: fb496553-003e-42e2-aa0b-f8a396af8b11
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.banner_basic_page
+    - field.field.block_content.banner_basic_page.field_image
+    - field.field.block_content.banner_basic_page.field_pre_title
+    - field.field.block_content.banner_basic_page.field_title
+  module:
+    - field_group
+    - text
+third_party_settings:
+  field_group:
+    group_wrapper:
+      children:
+        - field_pre_title
+        - field_title
+        - field_image
+      label: 'Wrapper '
+      parent_name: ''
+      region: content
+      weight: 0
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+id: block_content.banner_basic_page.default
+targetEntityType: block_content
+bundle: banner_basic_page
+mode: default
+content:
+  field_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_pre_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_title:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden:
+  langcode: true

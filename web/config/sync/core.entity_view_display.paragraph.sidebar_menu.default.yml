@@ -1,0 +1,53 @@
+uuid: 6adb4860-861f-4f4f-a9a9-6964e6838ffb
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.sidebar_menu.field_icon
+    - field.field.paragraph.sidebar_menu.field_link
+    - field.field.paragraph.sidebar_menu.field_tooltip
+    - paragraphs.paragraphs_type.sidebar_menu
+  module:
+    - link
+    - svg_image
+id: paragraph.sidebar_menu.default
+targetEntityType: paragraph
+bundle: sidebar_menu
+mode: default
+content:
+  field_icon:
+    type: image
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
+      svg_attributes:
+        width: null
+        height: null
+      svg_render_as_image: true
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_link:
+    type: link
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_tooltip:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 7
+    region: content
+hidden: {  }

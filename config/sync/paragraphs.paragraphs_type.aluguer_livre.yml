@@ -1,0 +1,10 @@
+uuid: ef50fe3f-54a6-42c3-8420-10c3b40461ef
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: aluguer_livre
+label: 'Aluguer livre'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

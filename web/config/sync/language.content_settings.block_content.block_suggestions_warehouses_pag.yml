@@ -1,0 +1,18 @@
+uuid: 8a225e7c-142e-4c3c-8198-6beb7f74b4d1
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - block_content.type.block_suggestions_warehouses_pag
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: block_content.block_suggestions_warehouses_pag
+target_entity_type_id: block_content
+target_bundle: block_suggestions_warehouses_pag
+default_langcode: site_default
+language_alterable: true

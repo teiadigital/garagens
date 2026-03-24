@@ -1,0 +1,23 @@
+uuid: 4e876cf1-c089-4f58-ba48-7763bf25bcc9
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_preco_ano
+    - paragraphs.paragraphs_type.preco_imovel
+id: paragraph.preco_imovel.field_preco_ano
+field_name: field_preco_ano
+entity_type: paragraph
+bundle: preco_imovel
+label: 'Preço ano (€/m²)'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0.01
+  max: null
+  prefix: ''
+  suffix: ' €/m²'
+field_type: decimal

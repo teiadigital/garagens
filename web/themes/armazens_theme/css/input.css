@@ -1,0 +1,1416 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  body {
+    @apply font-Montserrat antialiased text-black-text;
+  }
+}
+
+.container-big {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+}
+@media (min-width: 640px) {
+  .container-big {
+    max-width: 640px;
+  }
+}
+@media (min-width: 768px) {
+  .container-big {
+    max-width: 768px;
+  }
+}
+@media (min-width: 1024px) {
+  .container-big {
+    max-width: 1024px;
+  }
+}
+@media (min-width: 1280px) {
+  .container-big {
+    max-width: 1280px;
+  }
+}
+@media (min-width: 1640px) {
+  .container-big {
+    max-width: 1640px;
+  }
+}
+
+.front-page .language-btn-nav {
+  @apply text-white;
+}
+
+.change-logo-color .block-system-branding-block img {
+  @apply invert;
+}
+
+.change-logo-color .block-user-menu-avatar-dropdown .btn-login a {
+  @apply text-white bg-black-text border-2 border-black-text hover:bg-white hover:text-black-text;
+}
+
+.change-logo-color .language-btn-nav {
+  @apply text-black-text;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.layout-container {
+  @apply m-0;
+}
+
+/* INPUTS  */
+
+.form-item {
+  @apply mb-8 mt-0 flex-auto;
+}
+
+.field--widget-options-buttons,
+.field--type-boolean {
+  @apply mb-8;
+}
+
+input:focus,
+select:focus,
+textarea {
+  box-shadow: none !important;
+}
+
+.form-item label,
+fieldset .fieldset-legend,
+.field-multiple-table h4.label {
+  @apply block text-base font-bold text-black lowercase mb-1;
+}
+
+.field-multiple-table h4.label {
+  @apply mb-0;
+}
+
+.field-multiple-table {
+  @apply border-separate border-spacing-y-4;
+}
+
+.form-item input[type="text"],
+.form-item input[type="tel"],
+.form-item input[type="number"],
+.form-item input[type="email"],
+.form-item input[type="password"],
+.form-item input[type="time"],
+.form-item input[type="date"],
+.form-item textarea {
+  @apply w-full bg-gray-light rounded-3xl p-4 border-none focus:border-black focus:shadow-none text-black text-sm;
+}
+
+.field--name-field-fotos {
+  @apply mb-8;
+}
+
+.form-item input[type="radio"] {
+  @apply w-6 h-6 border-2 border-[#C5CDDE] bg-transparent mr-1 cursor-pointer;
+}
+
+.form-item input[type="radio"]:checked {
+  @apply border-[#4A4A4A] bg-[#4A4A4A] bg-none;
+}
+
+.form-item input[type="checkbox"] {
+  @apply w-6 h-6 rounded-[5px] border-2 border-[#C5CDDE] bg-transparent mr-1 cursor-pointer;
+}
+
+.form-item input[type="checkbox"]:checked {
+  @apply border-[#4A4A4A] bg-[#4A4A4A];
+}
+
+.form-item select {
+  @apply w-full bg-gray-light rounded-3xl py-4 pl-4 pr-10 border-none focus:border-black focus:shadow-none text-black text-sm;
+}
+
+.user-logged-in .form-item input[type="text"],
+.user-logged-in .form-item input[type="tel"],
+.user-logged-in .form-item input[type="number"],
+.user-logged-in .form-item input[type="email"],
+.user-logged-in .form-item input[type="password"],
+.user-logged-in .form-item input[type="time"],
+.user-logged-in .form-item input[type="date"],
+.user-logged-in .form-item textarea {
+  @apply w-full bg-white rounded-3xl p-4 border-none focus:border-black focus:shadow-none text-black text-sm;
+}
+
+.user-logged-in .form-item select {
+  @apply w-full bg-white rounded-3xl py-4 pl-4 pr-10 border-none focus:border-black focus:shadow-none text-black text-sm;
+}
+
+.form-item input[type="tel"],
+.user-logged-in .form-item input[type="tel"] {
+  @apply pl-14;
+}
+
+.js-form-type-radio label,
+.js-form-type-checkbox label {
+  @apply inline m-0;
+}
+
+.description {
+  @apply hidden;
+}
+
+form .form-actions {
+  @apply flex flex-wrap gap-4;
+}
+
+.user-form .field--type-address fieldset legend {
+  @apply hidden;
+}
+
+.field--type-boolean label {
+  @apply font-normal;
+}
+
+.user-form .description {
+  @apply hidden;
+}
+
+.block-system-branding-block {
+  @apply mr-auto;
+}
+
+fieldset.form-item {
+  @apply mb-0;
+}
+
+.field--widget-simple-open-hours-widget .fieldset-wrapper .container-inline {
+  @apply grid sm:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-4 items-center;
+}
+
+.field--widget-simple-open-hours-widget
+  .fieldset-wrapper
+  .container-inline
+  .form-type-checkbox {
+  @apply col-span-1 flex items-center gap-4;
+}
+
+.field--widget-simple-open-hours-widget
+  .fieldset-wrapper
+  .container-inline
+  .form-type-time {
+  @apply col-span-1;
+}
+
+.form-item-terms-of-use-checkbox label {
+  @apply font-normal;
+}
+
+.form-item-terms-of-use-checkbox label a {
+  @apply underline font-bold;
+}
+
+.field--name-field-pre-title {
+  @apply text-black text-sm border-l-4 border-green-custom bg-[#E8E8E8]/50 py-1 px-2 w-fit mb-4;
+}
+
+.field--name-field-title {
+  @apply text-black-text text-3xl sm:text-4xl font-semibold;
+}
+
+/* HEADER  */
+
+header .block-menu.navigation .menu {
+  @apply flex items-center flex-col md:flex-row md:justify-end gap-3 md:gap-12;
+}
+
+header .block-menu.navigation .menu li {
+  @apply w-full text-center md:w-auto;
+}
+
+header .block-menu.navigation .menu li a {
+  @apply text-black md:text-white font-semibold text-base  transition-all py-3 md:py-0 block w-full;
+}
+
+header .block-menu.navigation .menu .btn-menu a {
+  @apply md:bg-white md:text-black-text md:hover:bg-black-text md:hover:text-white md:py-6 md:px-12;
+}
+
+/* .paragraph--type--banner */
+
+.paragraph--type--carousel-banner .field--name-field-pre-title {
+  @apply text-white bg-blue-background/50;
+}
+
+.paragraph--type--carousel-banner .field--name-field-title {
+  @apply text-white text-2xl sm:text-4xl xl:text-6xl font-bold;
+}
+
+.paragraph--type--carousel-banner .field--name-field-sub-title {
+  @apply text-white text-xl xl:text-3xl;
+}
+
+.paragraph--type--carousel-banner .field--name-field-link {
+  @apply mt-20;
+}
+
+.paragraph--type--carousel-banner .field--name-field-link a {
+  @apply text-white text-base bg-green-custom px-7 sm:px-16 py-5 block w-fit hover:text-green-custom hover:bg-white transition-all;
+}
+
+/* paragraph--type--advertising */
+
+.paragraph--type--advertising .field--name-field-title {
+  clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
+  @apply w-fit ml-auto bg-green-custom text-white font-normal text-xl lg:text-3xl py-1 pr-5 pl-16;
+}
+
+.view-display-id-block_advertising_carousel .field_link a {
+  @apply text-white font-normal text-base  bg-orange-custom px-12 py-2 md:py-5 w-fit block hover:bg-white hover:text-orange-custom;
+}
+
+/* paragraph--type--what-we-do */
+
+.paragraph--type--what-we-do .field--name-field-pre-title {
+  @apply mb-4;
+}
+
+.paragraph--type--what-we-do .field--name-field-col-icon-title-text {
+  @apply flex gap-5 flex-col lg:flex-row;
+}
+
+.paragraph--type--what-we-do
+  .field--name-field-col-icon-title-text
+  .field__item {
+  @apply flex-1;
+}
+
+.paragraph--type--icon-title-text .field--name-field-title {
+  @apply text-2xl;
+}
+
+.paragraph--type--icon-title-text .field--name-field-text {
+  @apply text-base mt-3;
+}
+
+/* paragraph--type--why-our-solution */
+
+.paragraph--type--why-our-solution .field--name-field-big-image {
+  @apply rounded-2xl overflow-hidden w-full;
+}
+.paragraph--type--why-our-solution .field--name-field-big-image img {
+  @apply w-full;
+}
+
+/* paragraph--type--why-choose-us */
+
+.paragraph--type--why-choose-us .field--name-field-title {
+  @apply mb-5;
+}
+
+.paragraph--type--why-choose-us .field--name-field-col-icon-text {
+  @apply grid grid-cols-2 items-center gap-5 mt-16;
+}
+
+.paragraph--type--why-choose-us .field--name-field-col-icon-text .field__item {
+  @apply col-span-2 md:col-span-1;
+}
+
+.paragraph--type--why-choose-us .paragraph--type--icon-text {
+  @apply flex items-center gap-3;
+}
+
+.paragraph--type--why-choose-us .field--name-field-link a {
+  @apply block w-fit mt-9 text-white rounded-none bg-green-custom border-2 border-green-custom py-4 px-9 hover:text-green-custom hover:bg-transparent transition-all;
+}
+
+/* paragraph--type--contact */
+
+.paragraph--type--contact .field--name-field-text {
+  @apply font-medium text-base mt-1 mb-7;
+}
+
+.paragraph--type--contact form .form-item input,
+.user-logged-in .paragraph--type--contact form .form-item input,
+.paragraph--type--contact form .form-item textarea {
+  @apply bg-transparent rounded-none border border-[#4E5683] px-7 py-4 text-black-text border-solid text-base lg:text-xl;
+}
+
+.paragraph--type--contact form .form-actions .webform-button--submit {
+  @apply rounded-none bg-green-custom border-green-custom py-5 px-9 hover:text-green-custom hover:bg-transparent transition-all;
+}
+
+/* paragraph--type--contacts-icon-text-text */
+
+.paragraph--type--contacts-icon-text-text .field--name-field-title,
+.paragraph--type--contacts-icon-text-text .field--name-field-text {
+  @apply text-sm font-medium m-0;
+}
+
+/* paragraph--type--image */
+
+.paragraph--type--image .field--name-field-p-image,
+.paragraph--type--image .field--name-field-p-image img {
+  @apply w-full;
+}
+
+/* MAP  */
+
+#map-location-front {
+  @apply mt-12 w-full h-[50vh] md:h-[70vh];
+}
+
+#map-armazens-list {
+  @apply w-full h-96;
+}
+
+/* paragraph--type--armazens-homepage */
+
+.paragraph--type--armazens-homepage .field--name-field-pre-title {
+  @apply mx-auto;
+}
+
+.view-armazens .views-row .link-saber-mais a {
+  @apply text-base text-[#898989] font-medium underline;
+}
+
+.view-display-id-block_armazens_homepage .views-exposed-form .form--inline {
+  @apply flex flex-wrap sm:grid grid-cols-12 gap-y-4 sm:gap-y-8 sm:gap-x-8 mt-8;
+}
+
+.view-display-id-block_armazens_homepage .views-exposed-form .form-item {
+  @apply col-span-12 lg:col-span-6 2xl:col-span-3;
+}
+
+.view-display-id-block_armazens_homepage .views-exposed-form .form-item select {
+  background-image: url("/themes/armazens_theme/images/arrow-down.svg");
+  background-size: unset;
+  background-position: right 1.25rem center;
+  @apply bg-[#F4F4F4] rounded-none pl-5 py-2 text-black-text text-sm font-semibold m-0;
+}
+
+.view-display-id-block_armazens_homepage .views-exposed-form .form-item input {
+  @apply bg-[#F4F4F4] rounded-none px-5 py-2 text-black-text text-sm font-semibold m-0;
+}
+
+.view-display-id-block_armazens_homepage
+  .views-exposed-form
+  .form-item
+  input::placeholder {
+  @apply text-black-text opacity-100;
+}
+
+/* Footer  */
+
+footer {
+  @apply bg-green-custom px-4 md:px-10 pt-12 relative;
+}
+
+footer .block-system-branding-block {
+  @apply w-fit mb-16;
+}
+
+footer .field--name-field-text {
+  @apply text-white font-medium text-base;
+}
+
+footer .field--name-field-contacts {
+  @apply mt-8;
+}
+
+footer .paragraph--type--contacts-icon-text-text .field {
+  @apply text-white;
+}
+
+footer .block-mailchimp-signup h2 {
+  @apply text-white font-bold text-2xl;
+}
+
+footer .block-mailchimp-signup form {
+  @apply mt-4 lg:mt-20;
+}
+
+footer .block-mailchimp-signup form .form-item input,
+.user-logged-in footer .block-mailchimp-signup form .form-item input {
+  @apply bg-transparent rounded-none border border-white px-7 py-4 text-white border-solid text-base lg:text-xl;
+}
+
+footer .block-mailchimp-signup form .form-item input::placeholder,
+.user-logged-in
+  footer
+  .block-mailchimp-signup
+  form
+  .form-item
+  input::placeholder {
+  @apply text-white opacity-100;
+}
+
+footer .block-mailchimp-signup form .form-item input:focus,
+.user-logged-in footer .block-mailchimp-signup form .form-item input:focus {
+  @apply border-white;
+}
+
+footer .block-mailchimp-signup form .form-actions .form-submit {
+  @apply text-white rounded-none bg-black-text border-black-text py-5 px-9 hover:text-black-text hover:bg-transparent transition-all;
+}
+
+/* .paragraph--type--block-registo */
+
+.paragraph--type--block-registo .field--name-field-title {
+  @apply font-bold text-4xl;
+}
+
+.paragraph--type--block-registo .field--name-field-box-title {
+  @apply font-bold text-base mb-4;
+}
+
+.paragraph--type--block-registo .field--name-field-box-subtitle {
+  @apply text-xl mb-4;
+}
+
+.paragraph--type--block-registo .field--name-field-box-text {
+  @apply text-sm;
+}
+
+.paragraph--type--block-registo .field--name-field-link a {
+  @apply text-base font-bold uppercase no-underline;
+}
+
+/* PAGE TITLE  */
+
+.block-page-title-block .page-title {
+  @apply text-4xl lg:text-7xl text-black font-bold mb-12;
+}
+
+/* DROPZONE  */
+
+.form-type-dropzonejs label {
+  @apply hidden;
+}
+
+.dropzone {
+  @apply m-0 bg-transparent border-none rounded-none p-0;
+}
+
+.field--name-field-documentos .entity-type--media .rendered-entity {
+  @apply flex items-center gap-4 flex-wrap;
+}
+
+.field--name-field-documentos
+  .entity-type--media
+  .rendered-entity
+  .remove-button {
+  @apply px-6 py-2 m-0 text-xs;
+}
+
+.field--widget-entity-browser-entity-reference .fieldset-wrapper > p {
+  @apply hidden;
+}
+
+/* dashboard utilizador  */
+
+.profile .field .field__label {
+  @apply text-sm font-normal lowercase;
+}
+
+.profile .field .field__item {
+  @apply text-sm md:text-base xl:text-lg font-bold mt-2;
+}
+
+/* SIDEBAR MENU  */
+
+.region-sidebar-menu .block-system-branding-block img {
+  @apply m-auto max-h-12;
+}
+
+#block-armazens-theme-sidebarmenu,
+#block-armazens-theme-sidebarmenugestor {
+  @apply h-full;
+}
+
+.paragraph--type--sidebar-menu img {
+  @apply m-auto;
+}
+
+.region-sidebar-menu {
+  @apply h-full;
+}
+.field--name-field-p-sidebar-menu {
+  @apply h-full flex flex-col justify-center relative;
+}
+
+/* .field--name-field-p-sidebar-menu > .field__item:first-child {
+  @apply bg-gray-light;
+} */
+
+.field--name-field-p-sidebar-menu .field__item.active {
+  @apply bg-gray-light;
+}
+
+.field--name-field-p-sidebar-menu > .field__item:last-child {
+  @apply w-full absolute bottom-0;
+}
+
+.field--name-field-p-sidebar-menu .field__item img {
+  @apply w-7;
+}
+
+.messages {
+  @apply border-none rounded-md p-4 pl-10;
+}
+
+[dir="rtl"] .messages {
+  @apply border-none rounded-md p-4;
+}
+
+.messages__list {
+  @apply ml-5;
+}
+
+.messages--status {
+  @apply bg-green-50 text-green-800 border-none shadow-none;
+}
+
+[dir="rtl"] .messages--status {
+  @apply bg-green-50 text-green-800 border-none shadow-none;
+}
+
+.messages a {
+  @apply underline font-bold;
+}
+
+.messages--warning {
+  @apply bg-yellow-50 text-yellow-800 border-none shadow-none;
+}
+[dir="rtl"] .messages--warning {
+  @apply bg-yellow-50 text-yellow-800 border-none shadow-none;
+}
+.messages--error {
+  @apply bg-red-50 text-red-800 border-none shadow-none;
+}
+[dir="rtl"] .messages--error {
+  @apply bg-red-50 text-red-800 border-none shadow-none;
+}
+.messages--error p.error {
+  @apply text-red-800;
+}
+
+/* Formulario armazens  */
+
+.field--name-field-fotos .entities-list {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4;
+}
+
+.field--name-field-fotos .entities-list .item-container {
+  @apply relative;
+}
+
+.field--name-field-fotos .entities-list img {
+  @apply aspect-video object-contain;
+}
+
+.field--widget-paragraphs .paragraphs-tabs,
+.tabledrag-toggle-weight-wrapper,
+.field--widget-paragraphs table .field-multiple-drag {
+  @apply hidden;
+}
+
+.field--widget-paragraphs table,
+.field-multiple-table {
+  @apply w-full;
+}
+
+.field-multiple-table thead {
+  @apply text-left;
+}
+
+.field-multiple-table thead tr th h4,
+.js .paragraph-type-label {
+  @apply text-left text-sm font-medium leading-6 text-black;
+}
+
+.field-multiple-table .field-multiple-drag,
+.field-multiple-table thead tr th .paragraphs-actions {
+  @apply hidden;
+}
+
+.js .field--widget-paragraphs .draggable td {
+  @apply p-0;
+}
+
+.field--type-simple-address fieldset .fieldset-wrapper {
+  @apply grid grid-cols-1 gap-x-6 sm:grid-cols-2;
+}
+
+form .clearfix {
+  @apply mt-10;
+}
+
+/* .has-multiple-fields-remove-button {
+  @apply !pr-16;
+}
+
+
+
+.has-multiple-fields-remove-button > fieldset .multiple-fields-remove-button {
+  @apply translate-y-4;
+} */
+
+.has-multiple-fields-remove-button .multiple-fields-remove-button,
+.has-multiple-fields-remove-button .multiple-fields-remove-button:hover,
+.has-multiple-fields-remove-button .multiple-fields-remove-button:focus {
+  @apply w-10 h-10 rounded-full text-transparent cursor-pointer bg-black bg-[url("/themes/armazens_theme/images/icons/trash.svg")] bg-no-repeat bg-center bg-auto !m-0 static;
+}
+
+.field--widget-inline-entity-form-simple .has-multiple-fields-remove-button {
+  @apply !p-0;
+}
+
+.field--widget-inline-entity-form-simple
+  .has-multiple-fields-remove-button
+  fieldset
+  .fieldset-wrapper {
+  @apply flex items-center gap-4;
+}
+
+.field--widget-inline-entity-form-simple
+  .has-multiple-fields-remove-button
+  fieldset
+  .fieldset-wrapper
+  > .form-wrapper {
+  @apply flex-1;
+}
+
+.field--widget-string-textfield .has-multiple-fields-remove-button,
+.field--widget-string-textfield
+  .has-multiple-fields-remove-button
+  .ajax-new-content {
+  @apply flex items-center gap-4 !p-0;
+}
+
+.field--widget-string-textfield .has-multiple-fields-remove-button > div {
+  @apply flex-1;
+}
+
+.form-no-label input {
+  @apply mt-0;
+}
+
+.form-actions input[name="previous_action"] {
+  @apply bg-gray text-black border-2 border-gray hover:border-black hover:bg-black hover:text-white;
+}
+
+.field-group-grid-col-2 {
+  @apply grid grid-cols-2 gap-4;
+}
+
+.field-group-grid-row {
+  @apply col-span-full lg:col-span-1;
+}
+
+.tipo-aluguer-wrapper .label-group {
+  @apply text-base font-bold text-black lowercase mb-4;
+}
+
+.tipo-aluguer-wrapper .field--type-boolean {
+  @apply mb-0;
+}
+
+.tipo-aluguer-wrapper .field--type-entity-reference-revisions {
+  @apply pl-5 sm:pl-8;
+}
+
+.tipo-aluguer-wrapper .field--type-entity-reference-revisions fieldset legend {
+  @apply hidden;
+}
+
+.node--type-armazem .field {
+  @apply mb-6;
+}
+
+.node--type-armazem .field .paragraph {
+  @apply mb-4;
+}
+
+.node--type-armazem .field .paragraph .field {
+  @apply mb-0;
+}
+
+.node--type-armazem .field .field__label {
+  @apply text-base lowercase font-bold mb-2;
+}
+
+.node--type-armazem .field--label-inline .field__label {
+  @apply mb-0 text-sm font-semibold;
+}
+
+.node--type-armazem .field .field__item {
+  @apply text-sm;
+}
+
+.node--type-armazem .paragraph--type--raques,
+.node--type-armazem .paragraph--type--camaras-de-frio {
+  @apply flex gap-4 flex-wrap;
+}
+
+.node--type-armazem
+  .field--name-field-camara-de-frio
+  .field__items
+  .field__item
+  .paragraph--type--camaras-de-frio,
+.node--type-armazem
+  .field--name-field-raques
+  .field__items
+  .field__item
+  .paragraph--type--raques {
+  @apply border-b border-gray-dark pb-3;
+}
+
+.field--type-simple-open-hours .simple-open-hours-wrapper {
+  @apply flex justify-between items-center gap-4 mb-1;
+}
+
+/* .grid-armazem-top {
+  @apply grid grid-cols-12 gap-7 py-12 border-b border-black;
+}
+
+.grid-armazem-top .grid-col-armazem-top-left {
+  @apply col-span-full xl:col-span-6 2xl:col-span-7;
+}
+
+.grid-armazem-top .grid-col-armazem-top-right {
+  @apply col-span-full xl:col-span-6 2xl:col-span-5;
+} */
+
+.field--label-inline {
+  @apply flex items-center gap-2;
+}
+
+form .field-suffix {
+  @apply hidden;
+}
+
+.node--unpublished {
+  @apply bg-transparent;
+}
+
+form .field--name-field-pre-title {
+  @apply border-none bg-transparent p-0 w-full;
+}
+/* Pagina gestao de armazens  */
+
+td.is-active {
+  @apply bg-transparent;
+}
+
+.view-display-id-page_gestao_armazens .view-filters {
+  @apply pb-12;
+}
+
+.view-display-id-page_gestao_armazens .views-field-view-node a {
+  @apply text-xs text-center uppercase bg-black block rounded-full py-2 px-3 font-bold text-white hover:bg-white border-2 hover:text-black border-black transition-all;
+}
+
+.view-display-id-page_gestao_armazens .views-field-title {
+  @apply font-bold;
+}
+
+.badge {
+  @apply text-sm font-bold uppercase py-2 px-3 rounded;
+}
+
+.view-display-id-page_gestao_armazens .badge {
+  @apply text-xs px-2;
+}
+
+.nao-acabado {
+  @apply bg-indigo-100 text-indigo-800;
+}
+
+.aguardar-aprovacao {
+  @apply bg-blue-100 text-blue-800;
+}
+
+.com-erros {
+  @apply bg-yellow-100 text-yellow-800;
+}
+
+.nao-aprovado {
+  @apply bg-red-100 text-red-800;
+}
+
+.aprovado {
+  @apply bg-green-100 text-green-800;
+}
+
+.button-actions-armazem {
+  @apply py-4 px-5 border-none;
+}
+
+.tab-btn[aria-selected="true"] {
+  @apply text-black border-black;
+}
+
+.node-form .description {
+  @apply block;
+}
+
+.management-armazens-actions-armazens {
+  @apply mt-5;
+}
+
+.front-page .messages-container {
+  @apply absolute top-0 left-0 z-50 w-full max-w-none text-center;
+}
+
+.front-page .messages-container .messages {
+  background-image: none;
+  font-weight: bold;
+}
+
+table tbody td fieldset legend {
+  @apply hidden;
+}
+
+form table tbody td {
+  @apply align-bottom;
+}
+
+.grid-columns-3 {
+  @apply grid grid-cols-1 gap-x-4 md:grid-cols-3;
+}
+
+.user-logged-in .field--name-field-preco-minimo input[type="number"] {
+  @apply w-auto;
+}
+
+.node-advertising-form .field--type-text-long .js-filter-wrapper {
+  @apply hidden;
+}
+
+.node-advertising-form .field--type-datetime input {
+  @apply w-full bg-white rounded-3xl p-4 border-none focus:border-black focus:shadow-none text-black text-sm;
+}
+
+.node--type-armazem .view-display-id-block_proprietario_armazem .view-header {
+  @apply text-black-text text-lg sm:text-2xl font-bold;
+}
+
+.node--type-armazem
+  .view-display-id-block_proprietario_armazem
+  .views-row
+  article {
+  @apply grid gap-y-5 gap-x-7 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-8 p-4;
+}
+
+.node--type-armazem
+  .view-display-id-block_proprietario_armazem
+  .views-row
+  article
+  .field {
+  @apply col-span-full md:col-span-1 m-0;
+}
+
+.node--type-advertising .field--name-field-pre-title {
+  @apply text-white font-bold text-lg md:text-xl border-none bg-transparent p-0 w-fit mb-1;
+}
+.node--type-advertising .field--name-title {
+  @apply text-white bg-transparent ml-0 p-0 font-bold text-xl md:text-4xl mb-1 block;
+}
+
+.node--type-advertising .field--name-field-text {
+  @apply text-white font-normal text-base;
+}
+
+.node--type-advertising .field--name-field-link a {
+  @apply text-white font-normal text-base  bg-orange-custom px-12 py-2 md:py-5 w-fit block hover:bg-white hover:text-orange-custom;
+}
+
+.owl-carousel .owl-dots {
+  @apply absolute z-30 flex space-x-3 rtl:space-x-reverse bottom-5 right-[10%];
+}
+
+.owl-carousel-banner .owl-dots {
+  @apply bottom-12;
+}
+
+.owl-carousel .owl-dots .owl-dot {
+  @apply w-2 h-2 bg-[#D9D9D9] opacity-60;
+}
+
+.owl-carousel .owl-dots .owl-dot.active {
+  @apply w-24 opacity-100;
+}
+
+.owl-carousel .owl-stage-outer,
+.owl-carousel .owl-stage,
+.owl-carousel .owl-stage .owl-item {
+  @apply h-full;
+}
+
+.node-advertising-edit-form
+  .field--name-field-image
+  .entities-list
+  .item-container,
+.node-advertising-form .field--name-field-image .entities-list .item-container {
+  @apply relative;
+}
+
+/* page armazens  */
+
+/* .view-display-id-page_armazens .view-header .field--name-field-pre-title {
+  @apply;
+} */
+
+.view-display-id-page_armazens .view-header .field--name-field-title {
+  @apply text-white;
+}
+
+.view-display-id-page_armazens .views-exposed-form .form-item {
+  @apply w-full;
+}
+
+.view-display-id-page_armazens .views-exposed-form .form-item select {
+  background-image: url("/themes/armazens_theme/images/arrow-down.svg");
+  background-size: unset;
+  background-position: right 1.25rem center;
+  @apply bg-[#F4F4F4] rounded-none pl-5 py-2 text-black-text text-sm font-semibold m-0 w-full;
+}
+
+.view-display-id-page_armazens .views-exposed-form .form-item input {
+  @apply bg-[#F4F4F4] rounded-none px-5 py-2 text-black-text text-sm font-semibold m-0;
+}
+
+.view-display-id-page_armazens
+  .views-exposed-form
+  .form-item
+  input::placeholder {
+  @apply text-black-text opacity-100;
+}
+
+.view-display-id-page_armazens .view-footer .field--name-field-pre-title {
+  @apply border-orange-custom;
+}
+.view-display-id-page_armazens .field_link a {
+  @apply text-white font-normal text-base  bg-orange-custom px-6 py-2 md:py-5 w-fit block hover:bg-white hover:text-orange-custom;
+}
+
+.mailchimp-signup-subscribe-form .messages-container {
+  @apply static;
+}
+
+.field--type-office-hours table thead tr th:last-child,
+.field--type-office-hours table tbody tr td:last-child {
+  @apply hidden;
+}
+
+.field--type-office-hours table thead tr th {
+  @apply px-4 text-center py-2;
+}
+
+.field--type-office-hours table tbody tr td {
+  @apply px-4 text-center align-middle py-2;
+}
+
+/* booking  */
+
+.bws-add-reservation-form .form-type-checkbox input {
+  @apply border-none bg-white;
+}
+
+.bws-add-reservation-form .form-type-checkbox .description {
+  @apply block;
+}
+
+.bws-add-reservation-form .form-composite {
+  @apply mb-8;
+}
+
+.field--name-field-availability-daily
+  .calendar-set
+  .fc-header-toolbar
+  .fc-left
+  .fc-today-button {
+  @apply hidden;
+}
+
+.field--name-field-availability-daily
+  .calendar-set
+  .fc-header-toolbar
+  .fc-right
+  .fc-button {
+  @apply p-0 shadow-none bg-transparent rounded-none border-none;
+}
+
+.field--name-field-availability-daily
+  .calendar-set
+  .fc-header-toolbar
+  .fc-center
+  h2 {
+  @apply text-[#495FCB] font-bold text-xl;
+}
+
+.field--name-field-availability-daily .calendar-set {
+  @apply bg-[#E8E9E9] rounded-3xl p-6;
+}
+
+.field--name-field-availability-daily
+  .calendar-set
+  table
+  .fc-head
+  .fc-head-container {
+  @apply pb-7;
+}
+
+.field--name-field-availability-daily
+  .calendar-set
+  .fc-view-container
+  .fc-view
+  table
+  .fc-head
+  tr
+  td,
+.field--name-field-availability-daily
+  .calendar-set
+  .fc-view-container
+  .fc-view
+  table
+  .fc-head
+  tr
+  td
+  .fc-row,
+.field--name-field-availability-daily
+  .calendar-set
+  .fc-view-container
+  .fc-view
+  table
+  .fc-head
+  tr
+  td
+  .fc-row
+  .fc-day-header {
+  @apply !border-none;
+}
+
+.field--name-field-availability-daily
+  .calendar-set
+  .fc-view-container
+  .fc-view
+  table
+  .fc-body
+  .fc-day-top {
+  @apply text-center;
+}
+
+.field--name-field-availability-daily
+  .calendar-set
+  .fc-view-container
+  .fc-view
+  table
+  .fc-body
+  .fc-day-top
+  .fc-day-number {
+  @apply float-none;
+}
+
+.field--name-field-availability-daily
+  .calendar-set
+  .fc-view-container
+  .fc-view
+  table
+  .fc-body
+  .fc-widget-content {
+  @apply border-none;
+}
+
+.field--name-field-availability-daily
+  .calendar-set
+  .fc-view-container
+  .fc-view
+  table
+  .fc-body
+  .fc-widget-content
+  .fc-week {
+  @apply border-none;
+}
+
+.field--name-field-availability-daily
+  .calendar-set
+  .fc-view-container
+  .fc-view
+  table
+  .fc-body
+  .fc-widget-content
+  .fc-week
+  .fc-day {
+  @apply border-none;
+}
+
+.field--name-field-availability-daily
+  .calendar-set
+  .fc-view-container
+  .fc-view
+  table
+  .fc-body
+  .fc-widget-content
+  .fc-week
+  .fc-event-container
+  .fc-event {
+  @apply w-2 h-2 rounded-full p-0 block m-auto mt-[2px];
+}
+
+.field--name-field-availability-daily
+  .calendar-set
+  .fc-view-container
+  .fc-view
+  table
+  .fc-body
+  .fc-widget-content
+  .fc-week
+  .fc-event-container
+  .fc-event
+  .fc-content {
+  @apply hidden;
+}
+
+.field--name-field-availability-daily
+  .calendar-set
+  .fc-view-container
+  .fc-view
+  table
+  .fc-body
+  .fc-widget-content
+  .fc-week
+  .fc-event-container[colspan]
+  .fc-event {
+  @apply w-full;
+}
+
+.field--name-field-availability-daily
+  .calendar-set
+  .fc-view-container
+  .fc-view
+  table
+  .fc-body
+  .fc-widget-content
+  .fc-week
+  .fc-today {
+  @apply bg-transparent;
+}
+
+.field--name-field-availability-daily
+  .calendar-set
+  .fc-view-container
+  .fc-view
+  table
+  .fc-body
+  .fc-widget-content
+  .fc-week
+  .fc-today
+  .fc-day-number {
+  @apply text-[#495FCB] font-bold text-xl;
+}
+
+.region-sidebar-right
+  .block-local-actions-block
+  .action-links
+  li
+  .button-action::before {
+  content: none;
+}
+
+.region-sidebar-right .block-local-actions-block .action-links li {
+  width: 100%;
+}
+
+.region-sidebar-right
+  .block-local-actions-block
+  .action-links
+  li
+  .button-action {
+  border-radius: 20px;
+  background-color: #c2cbfa;
+  color: #393b6d;
+  font-size: 16px;
+  font-weight: bold;
+  display: block;
+  padding: 16px 0;
+  text-align: center;
+}
+
+.region-sidebar-right
+  .block-local-actions-block
+  .action-links
+  li
+  .button-action:hover {
+  background-color: #393b6d;
+  color: #c2cbfa;
+}
+
+.field--name-field-documento-licenca .item-container.rendered-entity {
+  @apply flex items-center gap-5;
+}
+
+.field--name-field-documento-licenca
+  .item-container.rendered-entity
+  .remove-button {
+  @apply static m-0;
+}
+
+.field--name-field-comprovativo-do-seguro .item-container.rendered-entity {
+  @apply flex items-center gap-5;
+}
+
+.field--name-field-comprovativo-do-seguro
+  .item-container.rendered-entity
+  .remove-button {
+  @apply static m-0;
+}
+
+.field--name-field-documento-seguro-imovel .item-container.rendered-entity {
+  @apply flex items-center gap-5;
+}
+
+.field--name-field-documento-seguro-imovel
+  .item-container.rendered-entity
+  .remove-button {
+  @apply static m-0;
+}
+
+.password-strength__meter {
+  height: 5px;
+}
+
+.form-item-pass-pass2 {
+  @apply mb-0;
+}
+
+.form-item-pass .password-suggestions {
+  @apply text-sm;
+}
+
+.view-display-id-page_armazens .pager {
+  @apply mt-12;
+}
+
+.view-display-id-page_armazens .pager .pager__item .button {
+  @apply text-white font-normal text-base  bg-orange-custom m-auto px-6 py-2 md:py-5 w-fit block hover:bg-white hover:text-orange-custom;
+}
+
+.view-display-id-page_armazens .field--name-field-image img {
+  @apply w-full;
+}
+
+.paragraph--type--carousel-banner .field--name-field-p-image,
+.paragraph--type--carousel-banner .field--name-field-p-image .media--type-image,
+.paragraph--type--carousel-banner .field--name-field-p-image .field,
+.paragraph--type--carousel-banner
+  .field--name-field-p-image
+  .field
+  .field__item {
+  @apply h-full;
+}
+
+.paragraph--type--carousel-banner .field--name-field-p-image img {
+  @apply object-cover object-center h-full;
+}
+
+.owl-carousel-advertising .field--name-field-p-image,
+.owl-carousel-advertising .field--name-field-p-image .media--type-image,
+.owl-carousel-advertising .field--name-field-p-image .field,
+.owl-carousel-advertising .field--name-field-p-image .field .field__item {
+  @apply h-full;
+}
+
+.owl-carousel-advertising .field--name-field-p-image img {
+  @apply object-cover object-center h-full;
+}
+
+.image-full-custom img {
+  @apply object-cover object-center h-full w-full;
+}
+
+.menu--footer-menu .menu {
+  @apply flex gap-5 justify-center items-center m-0 flex-wrap;
+}
+
+.menu--footer-menu .menu li a {
+  @apply text-white font-medium text-base;
+}
+
+.node--type-pedidos .field {
+  @apply mb-5;
+}
+
+
+.marker-estado--1,
+.marker-estado-3 {
+  background-image: url('/themes/armazens_theme/images/icons/location.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 30px;
+  height: 48px;
+  border: none;
+  box-shadow: none;
+}
+
+.marker-estado--1 {
+  filter: hue-rotate(209deg) saturate(3) brightness(1.2);
+}
+
+.marker-estado-3 {
+  filter: hue-rotate(241deg) saturate(1) brightness(1.2);
+}
+
+
+.valencias img{
+  max-width: 20px;
+}
+
+.armazem-teaser .fotos img{
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+}
+
+.leaflet-popup-content{
+  width: 300px!important;
+}
+
+.leaflet-tile-pane{
+  filter: saturate(0)
+}
+
+.armazem-teaser .descricao{
+   text-transform: lowercase;
+}
+
+.armazem-teaser .descricao::first-letter {
+  text-transform: uppercase;
+}
+
+.marker-cluster {
+    background: rgb(61 177 58 / 60%) !important;
+}
+
+.marker-cluster div{
+    background: rgb(61 177 58 / 60%) !important;
+}
+
+.link-map{
+    line-height: 1.5rem;
+    font-weight: 500;
+    --tw-text-opacity: 1;
+    color: rgb(137 137 137)!important;
+    text-decoration-line: underline;
+    margin-top: 10px;
+    display: inline-block
+}

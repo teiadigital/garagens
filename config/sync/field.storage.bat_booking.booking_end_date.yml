@@ -1,0 +1,20 @@
+uuid: 25b79786-977b-4671-b08a-3610c01072aa
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - bat_booking
+    - datetime
+id: bat_booking.booking_end_date
+field_name: booking_end_date
+entity_type: bat_booking
+type: datetime
+settings:
+  datetime_type: datetime
+module: datetime
+locked: true
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

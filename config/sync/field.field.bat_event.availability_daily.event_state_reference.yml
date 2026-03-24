@@ -1,0 +1,21 @@
+uuid: ff1c3c8c-7913-4343-b1a5-725ef023d34b
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - bat_event.event_type.availability_daily
+    - field.storage.bat_event.event_state_reference
+id: bat_event.availability_daily.event_state_reference
+field_name: event_state_reference
+entity_type: bat_event
+bundle: availability_daily
+label: State
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:state'
+  handler_settings: {  }
+field_type: entity_reference

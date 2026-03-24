@@ -1,0 +1,22 @@
+uuid: 3beccb30-fcc6-4e3a-abcf-2c791d97c890
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.pedidos
+id: node.pedidos.promote
+field_name: promote
+entity_type: node
+bundle: pedidos
+label: 'Promovido à página principal'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

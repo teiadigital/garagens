@@ -1,0 +1,11 @@
+services:
+  manager_armazens_service:
+    class: Drupal\management_armazens\ManagerArmazensService
+  management_armazens.armazem_redirect_subscriber:
+    class: Drupal\management_armazens\EventSubscriber\ArmazemRedirectSubscriber
+    tags:
+      - { name: event_subscriber }
+  management_armazens.sanitize_login_redirect:
+    class: Drupal\management_armazens\EventSubscriber\SanitizeLoginRedirectSubscriber
+    tags:
+      - { name: event_subscriber }

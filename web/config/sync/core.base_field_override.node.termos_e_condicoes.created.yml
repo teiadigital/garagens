@@ -1,0 +1,18 @@
+uuid: 2a6a342b-d83e-442b-a264-acf21c1e358b
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.termos_e_condicoes
+id: node.termos_e_condicoes.created
+field_name: created
+entity_type: node
+bundle: termos_e_condicoes
+label: 'Criado em'
+description: 'The date and time that the content was created.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

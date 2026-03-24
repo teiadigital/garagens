@@ -1,0 +1,19 @@
+uuid: f78d8a0d-d799-4e35-b8ef-0ae82e39d95d
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_pre_title
+    - paragraphs.paragraphs_type.advertising_carousel
+id: paragraph.advertising_carousel.field_pre_title
+field_name: field_pre_title
+entity_type: paragraph
+bundle: advertising_carousel
+label: 'Pre title'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

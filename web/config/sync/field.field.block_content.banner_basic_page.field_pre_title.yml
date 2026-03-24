@@ -1,0 +1,19 @@
+uuid: 8c0a11b2-3f7d-4de8-8753-96983d9c8898
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.banner_basic_page
+    - field.storage.block_content.field_pre_title
+id: block_content.banner_basic_page.field_pre_title
+field_name: field_pre_title
+entity_type: block_content
+bundle: banner_basic_page
+label: 'Pre title'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

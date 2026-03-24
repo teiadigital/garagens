@@ -1,0 +1,16 @@
+uuid: 82a376c0-1b4e-4ae8-89a5-b49445b133f4
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+_core:
+  default_config_hash: glv-LRDafcHchPEWWQ6UqZjqU4AKpzID2TbaqUxaFlk
+id: bat_api.entity_get.bat_type_group
+service_plugin_id: 'entity_get:bat_type_group'
+service_endpoint_id: bat_api
+formats:
+  json: json
+  xml: '0'
+authentication:
+  cookie: cookie

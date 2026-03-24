@@ -1,0 +1,5 @@
+bws.node.add_reservation:
+  route_name: "bws.node.add_reservation"
+  title: "Add Reservation"
+  appears_on:
+    - entity.node.canonical

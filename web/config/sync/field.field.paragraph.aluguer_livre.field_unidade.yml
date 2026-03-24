@@ -1,0 +1,19 @@
+uuid: b232d4af-c1dd-49ea-8566-bc8cd97d54d6
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_unidade
+    - paragraphs.paragraphs_type.aluguer_livre
+id: paragraph.aluguer_livre.field_unidade
+field_name: field_unidade
+entity_type: paragraph
+bundle: aluguer_livre
+label: Unidade
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

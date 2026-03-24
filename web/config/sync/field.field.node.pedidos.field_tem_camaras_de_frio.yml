@@ -1,0 +1,21 @@
+uuid: 5afd95c6-2b26-4d79-85b1-fe70fb6a5c6b
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_tem_camaras_de_frio
+    - node.type.pedidos
+  module:
+    - options
+id: node.pedidos.field_tem_camaras_de_frio
+field_name: field_tem_camaras_de_frio
+entity_type: node
+bundle: pedidos
+label: 'Tem Camara(s) de frio'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

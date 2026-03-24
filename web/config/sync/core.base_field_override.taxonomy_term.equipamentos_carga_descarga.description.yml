@@ -1,0 +1,21 @@
+uuid: ff029f26-3435-4a06-89e9-f1e479185ba3
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.equipamentos_carga_descarga
+  module:
+    - text
+id: taxonomy_term.equipamentos_carga_descarga.description
+field_name: description
+entity_type: taxonomy_term
+bundle: equipamentos_carga_descarga
+label: Descrição
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

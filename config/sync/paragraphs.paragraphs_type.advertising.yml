@@ -1,0 +1,10 @@
+uuid: 08f07c11-7ccf-461f-80a5-6245f2daa5a6
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: advertising
+label: Advertising
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

@@ -1,0 +1,18 @@
+uuid: c117dd9d-caed-464b-b571-528ae1f91353
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.contacts_icon_text_text
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: paragraph.contacts_icon_text_text
+target_entity_type_id: paragraph
+target_bundle: contacts_icon_text_text
+default_langcode: site_default
+language_alterable: true

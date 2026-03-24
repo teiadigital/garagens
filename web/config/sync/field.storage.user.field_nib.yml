@@ -1,0 +1,21 @@
+uuid: 89fa0d76-a049-4abe-8746-29cb3a57c3d6
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - user
+id: user.field_nib
+field_name: field_nib
+entity_type: user
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

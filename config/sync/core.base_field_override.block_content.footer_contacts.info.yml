@@ -1,0 +1,18 @@
+uuid: 6dcab015-8397-4703-b2e9-3385d4c38b1f
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - block_content.type.footer_contacts
+id: block_content.footer_contacts.info
+field_name: info
+entity_type: block_content
+bundle: footer_contacts
+label: 'Descrição do bloco'
+description: 'Uma descrição breve do seu bloco.'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

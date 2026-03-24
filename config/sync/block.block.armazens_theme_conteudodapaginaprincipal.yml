@@ -1,0 +1,20 @@
+uuid: 49ea04c0-7620-463b-91be-4a33856697dd
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - armazens_theme
+id: armazens_theme_conteudodapaginaprincipal
+theme: armazens_theme
+region: content
+weight: -6
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Conteúdo da página principal'
+  label_display: '0'
+  provider: system
+visibility: {  }

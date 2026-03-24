@@ -1,0 +1,79 @@
+uuid: 5dfbb368-e1ee-4e68-8288-7b7eada554aa
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - block_content.type.block_suggestions_warehouses_pag
+    - field.field.block_content.block_suggestions_warehouses_pag.field_link
+    - field.field.block_content.block_suggestions_warehouses_pag.field_pre_title
+    - field.field.block_content.block_suggestions_warehouses_pag.field_text
+    - field.field.block_content.block_suggestions_warehouses_pag.field_title
+  module:
+    - field_group
+    - link
+    - text
+third_party_settings:
+  field_group:
+    group_wrapper:
+      children:
+        - field_pre_title
+        - field_title
+        - field_text
+        - field_link
+      label: wrapper
+      parent_name: ''
+      region: content
+      weight: 0
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+id: block_content.block_suggestions_warehouses_pag.default
+targetEntityType: block_content
+bundle: block_suggestions_warehouses_pag
+mode: default
+content:
+  field_link:
+    type: link
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_pre_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_text:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_title:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden:
+  langcode: true

@@ -1,0 +1,20 @@
+services:
+  access_check.bws.availability:
+    class: Drupal\bws\Access\BwsAvailabilityAccessCheck
+    arguments: ["@entity_type.manager", "@config.factory"]
+    tags:
+      - { name: access_check, applies_to: _bws_availability_access }
+  access_check.bws.add-reservation:
+    class: Drupal\bws\Access\BwsAddReservationAccessCheck
+    arguments: ["@entity_type.manager", "@config.factory"]
+    tags:
+      - { name: access_check, applies_to: _bws_add_reservation_access }
+  bws.saleprice_resolver:
+    class: Drupal\bws\Resolvers\SalepriceResolver
+    tags:
+      - { name: commerce_price.price_resolver, priority: 600 }
+  bws.order_subscriber:
+    class: Drupal\bws\EventSubscriber\OrderEventSubscriber
+    arguments: ["@entity_type.manager", "@config.factory"]
+    tags:
+      - { name: event_subscriber }

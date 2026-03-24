@@ -1,0 +1,40 @@
+management_armazens.add_error_armazens:
+  path: "/ajax/armazens/error"
+  defaults:
+    _form: \Drupal\management_armazens\Form\ModalErrorDescriptionForm
+  requirements:
+    _permission: "access content"
+
+management_armazens.json_api_coordinates:
+  path: "/api/armazens/coordenadas/{country}"
+  defaults:
+    _controller: 'Drupal\management_armazens\Controller\JsonApiCoordinatesArmazensController::index'
+    _title: "Armazens coordenadas"
+    country: NULL
+  methods: [GET]
+  requirements:
+    _access: "TRUE"
+
+management_armazens.remove_advertising:
+  path: "/gestor/advertising/remove/{nid}"
+  defaults:
+    _title: "Remove Advertising "
+    _controller: '\Drupal\management_armazens\Controller\RemoveAdvertisingController::build'
+  requirements:
+    _permission: "access content"
+  options:
+    parameters:
+      nid:
+        type: entity:node
+
+management_armazens.publish_advertising:
+  path: "/gestor/advertising/publish/{nid}"
+  defaults:
+    _title: "Publish Advertising"
+    _controller: '\Drupal\management_armazens\Controller\PublishAdvertisingController::build'
+  requirements:
+    _permission: "access content"
+  options:
+    parameters:
+      nid:
+        type: entity:node

@@ -1,0 +1,10 @@
+uuid: 36b46697-1772-4da8-a02e-accadc926b27
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: block_registo
+label: 'Block Registo'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

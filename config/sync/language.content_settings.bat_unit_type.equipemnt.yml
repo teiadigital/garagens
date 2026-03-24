@@ -1,0 +1,11 @@
+uuid: b8979744-f16b-4bfb-b4de-7db12b593e06
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - bat_unit.type_bundle.equipemnt
+id: bat_unit_type.equipemnt
+target_entity_type_id: bat_unit_type
+target_bundle: equipemnt
+default_langcode: site_default
+language_alterable: false

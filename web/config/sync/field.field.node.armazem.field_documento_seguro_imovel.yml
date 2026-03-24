@@ -1,0 +1,29 @@
+uuid: f7d162cf-1e32-4fe7-8cb9-1e4e4c2e2e3f
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_documento_seguro_imovel
+    - media.type.document
+    - node.type.armazem
+id: node.armazem.field_documento_seguro_imovel
+field_name: field_documento_seguro_imovel
+entity_type: node
+bundle: armazem
+label: 'Documento comprovativo do seguro do imóvel'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      document: document
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

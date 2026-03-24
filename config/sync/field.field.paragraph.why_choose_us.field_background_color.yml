@@ -1,0 +1,22 @@
+uuid: 048e01fc-270c-4dd3-b4e2-3247aa2ac29c
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_background_color
+    - paragraphs.paragraphs_type.why_choose_us
+  module:
+    - color_field
+id: paragraph.why_choose_us.field_background_color
+field_name: field_background_color
+entity_type: paragraph
+bundle: why_choose_us
+label: 'Background color'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  opacity: 0
+field_type: color_field_type

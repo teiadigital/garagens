@@ -1,0 +1,20 @@
+uuid: 9569f024-540c-4bd3-aa1c-e57a41eec415
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.page
+  module:
+    - path
+id: node.page.path
+field_name: path
+entity_type: node
+bundle: page
+label: 'URL alternativo'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

@@ -1,0 +1,22 @@
+uuid: 69e25241-45c7-4c71-aacf-379f37c167d9
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.icon_title_text
+id: paragraph.icon_title_text.status
+field_name: status
+entity_type: paragraph
+bundle: icon_title_text
+label: Publicado
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

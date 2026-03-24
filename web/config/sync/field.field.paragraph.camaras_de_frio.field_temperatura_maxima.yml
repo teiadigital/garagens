@@ -1,0 +1,23 @@
+uuid: 13a702b9-bb6e-4c0d-9f7c-5362d01e849f
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_temperatura_maxima
+    - paragraphs.paragraphs_type.camaras_de_frio
+id: paragraph.camaras_de_frio.field_temperatura_maxima
+field_name: field_temperatura_maxima
+entity_type: paragraph
+bundle: camaras_de_frio
+label: 'Temperatura máxima (°C)'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: °C
+field_type: decimal

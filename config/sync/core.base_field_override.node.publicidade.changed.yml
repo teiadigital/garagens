@@ -1,0 +1,18 @@
+uuid: eb846142-f4da-4134-8a06-2a7ebc7774ec
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.publicidade
+id: node.publicidade.changed
+field_name: changed
+entity_type: node
+bundle: publicidade
+label: Alterado
+description: 'A hora em que o nó foi editado pela última vez.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

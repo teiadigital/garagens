@@ -1,0 +1,18 @@
+uuid: 0f9ebe93-3a78-4e0f-85e1-4760d7ace98f
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.termos_e_condicoes
+id: node.termos_e_condicoes.title
+field_name: title
+entity_type: node
+bundle: termos_e_condicoes
+label: Título
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

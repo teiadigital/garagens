@@ -1,0 +1,21 @@
+uuid: 1d8d7e25-021a-43ec-81b8-c0516fa8cfe3
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_tipo_de_aluguer
+    - node.type.armazem
+  module:
+    - options
+id: node.armazem.field_tipo_de_aluguer
+field_name: field_tipo_de_aluguer
+entity_type: node
+bundle: armazem
+label: 'Tipo de aluguer'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

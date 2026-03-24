@@ -1,0 +1,87 @@
+<?php
+
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * @file
+ * Primary module hooks for Postal Code Validator module.
+ */
+
+
+function postal_code_validator_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+
+    if ($form_id == 'node_armazem_form') {
+        $form['#validate'][] = 'postal_code_validator_validate_postal_code';
+    }
+}
+
+/**
+ * Valida o código-postal de field_localidade (Address).
+ */
+function postal_code_validator_validate_postal_code(array &$form, FormStateInterface $form_state) {
+  // Garante que temos o array do address.
+  $address = $form_state->getValue(['field_localidade', 0, 'address']);
+  if (!is_array($address)) {
+    return;
+  }
+
+  $postal_code  = trim($address['postal_code'] ?? '');
+  $country_code = strtoupper(trim($address['country_code'] ?? ''));
+
+  if ($postal_code === '' || $country_code === '') {
+    return;
+  }
+
+  // 1) Validar FORMATO usando os padrões do Address module (por país).
+  /** @var \CommerceGuys\Addressing\AddressFormat\AddressFormatRepositoryInterface $repo */
+  $repo = \Drupal::service('address.address_format_repository');
+  $format = $repo->get($country_code);
+  $pattern = $format ? $format->getPostalCodePattern() : null;
+
+  if ($pattern) {
+    // O padrão vem sem delimitadores; ancoramos e usamos /u.
+    $regex = '/^' . $pattern . '$/u';
+    if (!preg_match($regex, $postal_code)) {
+      // Usa setError associado ao elemento, se possível.
+      if (isset($form['field_localidade']['widget'][0]['address']['postal_code'])) {
+        $form_state->setError(
+          $form['field_localidade']['widget'][0]['address']['postal_code'],
+          t('Formato de código-postal inválido para @country.', ['@country' => $country_code])
+        );
+      } else {
+        // Fallback pelo "name".
+        $form_state->setErrorByName('field_localidade][0][address][postal_code', t('Formato de código-postal inválido.'));
+      }
+      return;
+    }
+  }
+  // Se não houver pattern para o país, não bloqueamos pelo formato.
+
+  // 2) (Opcional) Validar EXISTÊNCIA via GeoNames. Não bloquear em falha.
+  try {
+    $client = \Drupal::httpClient();
+    $res = $client->get('http://api.geonames.org/postalCodeLookupJSON', [
+      'query' => [
+        'postalcode' => $postal_code,
+        'country'    => $country_code,
+        'username'   => 'teiadigital',
+      ],
+      'timeout' => 5,
+    ]);
+    $json = json_decode((string) $res->getBody(), true);
+    if (empty($json['postalcodes'])) {
+      if (isset($form['field_localidade']['widget'][0]['address']['postal_code'])) {
+        $form_state->setError(
+          $form['field_localidade']['widget'][0]['address']['postal_code'],
+          t('O código-postal não foi encontrado.')
+        );
+      } else {
+        $form_state->setErrorByName('field_localidade][0][address][postal_code', t('O código-postal não foi encontrado.'));
+      }
+    }
+  } catch (\Exception $e) {
+    // Não bloquear o wizard se a API falhar.
+    return;
+  }
+}

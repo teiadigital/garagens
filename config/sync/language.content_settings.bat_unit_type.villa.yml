@@ -1,0 +1,11 @@
+uuid: e24a59a6-9970-4308-9231-ea01fbeb7907
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - bat_unit.type_bundle.villa
+id: bat_unit_type.villa
+target_entity_type_id: bat_unit_type
+target_bundle: villa
+default_langcode: site_default
+language_alterable: false

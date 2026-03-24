@@ -1,0 +1,14 @@
+display:
+  block_armazens_perfil:
+    display_options:
+      header:
+        area:
+          content:
+            value: '<p>armazéns</p>'
+            format: basic_html
+  page_armazens:
+    display_options:
+      pager:
+        options:
+          views_infinite_scroll:
+            button_text: 'cargar más'

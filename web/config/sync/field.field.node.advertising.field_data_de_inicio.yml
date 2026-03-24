@@ -1,0 +1,21 @@
+uuid: 7d76ac46-7043-40f4-be1d-bd8c1a42fb52
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_data_de_inicio
+    - node.type.advertising
+  module:
+    - datetime
+id: node.advertising.field_data_de_inicio
+field_name: field_data_de_inicio
+entity_type: node
+bundle: advertising
+label: 'Data de início'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

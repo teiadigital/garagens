@@ -1,0 +1,11 @@
+uuid: 3a8a987c-6517-47d2-8781-4dbdfbe887c7
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - bat_unit.type_bundle.apt
+id: bat_unit_type.apt
+target_entity_type_id: bat_unit_type
+target_bundle: apt
+default_langcode: site_default
+language_alterable: false

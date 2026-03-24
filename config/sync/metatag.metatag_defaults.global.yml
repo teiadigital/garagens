@@ -1,0 +1,12 @@
+uuid: e0ff3532-dd12-4a24-bb7d-c69a8f88c999
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: sL588ui1E_8-2c_UupwyYxcqX2OVyMFp3HTLbbFqvPc
+id: global
+label: Global
+tags:
+  canonical_url: '[current-page:url]'
+  keywords: 'Warehouse,Warehouse rental,Rent warehouse,Rent warehouse,Freestanding warehouse,Store pallets,Euro pallets,American pallets,Temporary storage,Temporary storage,Warehouse Spain,Warehouse Portugal,Warehouse space,Place for storage,Warehouse with racks,Cold storage,Cold room,Free warehouse,Warehouse register,List of warehouses,Certified warehouses,Certified warehouse,ADR warehouse,ADR warehouses'
+  title: '[current-page:title] | [site:name]'

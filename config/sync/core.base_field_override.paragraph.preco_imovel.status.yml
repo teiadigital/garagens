@@ -1,0 +1,22 @@
+uuid: 5ee94e7c-a856-4a77-a956-99ffe388277d
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.preco_imovel
+id: paragraph.preco_imovel.status
+field_name: status
+entity_type: paragraph
+bundle: preco_imovel
+label: Publicado
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

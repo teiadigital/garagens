@@ -1,0 +1,20 @@
+uuid: d0966149-d478-4def-a0a1-f9bad60e6dee
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - user_menu_avatar_dropdown
+  theme:
+    - armazens_theme
+id: armazens_theme_usermenuavatardropdown
+theme: armazens_theme
+region: header
+weight: -5
+provider: null
+plugin: user_menu_avatar_dropdown
+settings:
+  id: user_menu_avatar_dropdown
+  label: 'User Menu Avatar Dropdown'
+  label_display: '0'
+  provider: user_menu_avatar_dropdown
+visibility: {  }

@@ -1,0 +1,18 @@
+uuid: d8b60251-080d-4ac3-84c6-8ae0635809d2
+langcode: en
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.armazens_homepage
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: paragraph.armazens_homepage
+target_entity_type_id: paragraph
+target_bundle: armazens_homepage
+default_langcode: site_default
+language_alterable: true

@@ -1,0 +1,22 @@
+uuid: 30a083bf-2ec2-41e7-a780-03c492f13ee0
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - block_content.type.footer_contacts
+    - field.storage.block_content.field_text
+  module:
+    - text
+id: block_content.footer_contacts.field_text
+field_name: field_text
+entity_type: block_content
+bundle: footer_contacts
+label: Text
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

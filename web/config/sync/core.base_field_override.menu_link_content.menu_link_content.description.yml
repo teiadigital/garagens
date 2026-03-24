@@ -1,0 +1,18 @@
+uuid: e064cbcd-a093-4a40-9b59-392174e27cf6
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - menu_link_content
+id: menu_link_content.menu_link_content.description
+field_name: description
+entity_type: menu_link_content
+bundle: menu_link_content
+label: Descrição
+description: 'Exibido ao passar sobre a ligação do menu.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

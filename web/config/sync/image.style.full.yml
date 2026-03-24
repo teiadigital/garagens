@@ -1,0 +1,13 @@
+uuid: 94953041-9549-4010-8ece-db5349e7e2a3
+langcode: en
+status: true
+dependencies: {  }
+name: full
+label: Full
+effects:
+  de309d14-b13a-4f42-b712-c05fadf76beb:
+    uuid: de309d14-b13a-4f42-b712-c05fadf76beb
+    id: image_convert
+    weight: 1
+    data:
+      extension: webp

@@ -1,0 +1,22 @@
+uuid: 7691b7d8-4976-4c2f-90a0-1b846669fd67
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.armazem
+id: node.armazem.promote
+field_name: promote
+entity_type: node
+bundle: armazem
+label: 'Promovido à página principal'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

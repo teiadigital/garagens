@@ -1,0 +1,18 @@
+uuid: 952e2754-b525-4558-8da3-42c2ec2734e5
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.infraestruturas
+id: taxonomy_term.infraestruturas.name
+field_name: name
+entity_type: taxonomy_term
+bundle: infraestruturas
+label: Nome
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

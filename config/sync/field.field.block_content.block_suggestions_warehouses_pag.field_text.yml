@@ -1,0 +1,22 @@
+uuid: 78be677d-a3ef-4cf7-919a-d9d6de7a7095
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - block_content.type.block_suggestions_warehouses_pag
+    - field.storage.block_content.field_text
+  module:
+    - text
+id: block_content.block_suggestions_warehouses_pag.field_text
+field_name: field_text
+entity_type: block_content
+bundle: block_suggestions_warehouses_pag
+label: Text
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

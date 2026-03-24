@@ -1,0 +1,97 @@
+uuid: 6d7c71b8-5655-4930-b6c8-a04addff9f5c
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_p_banner
+    - node.type.homepage
+    - paragraphs.paragraphs_type.banner
+  module:
+    - entity_reference_revisions
+id: node.homepage.field_p_banner
+field_name: field_p_banner
+entity_type: node
+bundle: homepage
+label: Banner
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      banner: banner
+    negate: 0
+    target_bundles_drag_drop:
+      advertising:
+        weight: 24
+        enabled: false
+      advertising_carousel:
+        weight: 25
+        enabled: false
+      aluguer_livre:
+        weight: 26
+        enabled: false
+      area_de_armazem:
+        weight: 6
+        enabled: false
+      armazens_homepage:
+        weight: 28
+        enabled: false
+      banner:
+        weight: 7
+        enabled: true
+      block_registo:
+        weight: 11
+        enabled: false
+      camaras_de_frio:
+        weight: 8
+        enabled: false
+      carousel_banner:
+        weight: 32
+        enabled: false
+      contact:
+        weight: 33
+        enabled: false
+      contacts_icon_text_text:
+        weight: 34
+        enabled: false
+      equipamentos_carga_descarga:
+        weight: 9
+        enabled: false
+      icon_text:
+        weight: 36
+        enabled: false
+      icon_title_text:
+        weight: 37
+        enabled: false
+      image:
+        weight: 38
+        enabled: false
+      location:
+        weight: 39
+        enabled: false
+      paletes:
+        weight: 40
+        enabled: false
+      preco_imovel:
+        weight: 14
+        enabled: false
+      raques:
+        weight: 10
+        enabled: false
+      sidebar_menu:
+        weight: 16
+        enabled: false
+      what_we_do:
+        weight: 44
+        enabled: false
+      why_choose_us:
+        weight: 45
+        enabled: false
+      why_our_solution:
+        weight: 46
+        enabled: false
+field_type: entity_reference_revisions

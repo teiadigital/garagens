@@ -1,0 +1,23 @@
+uuid: af99556c-cc94-4e04-89db-793f16b82e2e
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_peso_maximo_piso
+    - node.type.armazem
+id: node.armazem.field_peso_maximo_piso
+field_name: field_peso_maximo_piso
+entity_type: node
+bundle: armazem
+label: 'Peso máximo do piso por m² (kg)'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ' kg'
+field_type: decimal

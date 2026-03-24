@@ -1,0 +1,20 @@
+uuid: d4e32cd6-18a1-404f-9311-3bd1b0e6feee
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.piso
+  module:
+    - path
+id: taxonomy_term.piso.path
+field_name: path
+entity_type: taxonomy_term
+bundle: piso
+label: 'URL alternativo'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

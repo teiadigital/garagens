@@ -1,0 +1,19 @@
+uuid: 61341756-ff31-4740-9c76-2ac0c4bac054
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_descreva_servicos_incluido
+    - node.type.armazem
+id: node.armazem.field_descreva_servicos_incluido
+field_name: field_descreva_servicos_incluido
+entity_type: node
+bundle: armazem
+label: 'Descreva os recursos incluídos'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

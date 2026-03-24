@@ -1,0 +1,18 @@
+<div class="grid grid-cols-12 gap-4 gap-x-9">
+    <div class="col-span-12 lg:col-span-6">
+
+        <form{{ attributes }}>
+            {{ children }}
+        </form>
+
+    </div>
+    <div class="col-span-12 lg:col-span-6">
+
+        {%
+            set nodeID = element.node['#value']
+        %}
+            
+        {{ drupal_field('field_availability_daily', 'node', nodeID, 'calendar') }}
+    
+    </div>
+</div>

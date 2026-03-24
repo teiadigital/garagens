@@ -1,0 +1,27 @@
+uuid: e454fda0-5315-4c2c-a3f7-497d3bfa6df0
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - options
+    - user
+id: user.field_tipo
+field_name: field_tipo
+entity_type: user
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: empresa
+      label: Empresa
+    -
+      value: particular
+      label: Particular
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

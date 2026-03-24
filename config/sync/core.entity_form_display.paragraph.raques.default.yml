@@ -1,0 +1,82 @@
+uuid: 9babf6a4-3c86-4ee7-b0bf-aea5ae098b93
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.raques.field_altura
+    - field.field.paragraph.raques.field_comprimento
+    - field.field.paragraph.raques.field_largura
+    - field.field.paragraph.raques.field_peso_suportado
+    - field.field.paragraph.raques.field_quantidade
+    - paragraphs.paragraphs_type.raques
+  module:
+    - field_group
+third_party_settings:
+  field_group:
+    group_grid:
+      children:
+        - field_quantidade
+        - field_comprimento
+        - field_largura
+        - field_altura
+        - field_peso_suportado
+      label: Grid
+      region: content
+      parent_name: ''
+      weight: 0
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: true
+id: paragraph.raques.default
+targetEntityType: paragraph
+bundle: raques
+mode: default
+content:
+  field_altura:
+    type: number
+    weight: 9
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_comprimento:
+    type: number
+    weight: 7
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_largura:
+    type: number
+    weight: 8
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_peso_suportado:
+    type: number
+    weight: 10
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_quantidade:
+    type: number
+    weight: 6
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

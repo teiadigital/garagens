@@ -1,0 +1,22 @@
+uuid: f3496d25-4ef4-44da-a21e-61d9a8a658ed
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.image.field_p_image
+    - paragraphs.paragraphs_type.image
+id: paragraph.image.default
+targetEntityType: paragraph
+bundle: image
+mode: default
+content:
+  field_p_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden: {  }

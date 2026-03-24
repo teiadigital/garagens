@@ -1,0 +1,23 @@
+uuid: e13bf601-9b6c-489b-b8ad-09f7fddab1ca
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_preco_out
+    - paragraphs.paragraphs_type.paletes
+id: paragraph.paletes.field_preco_out
+field_name: field_preco_out
+entity_type: paragraph
+bundle: paletes
+label: 'Preço out (€/un)'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ' €'
+field_type: decimal

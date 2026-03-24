@@ -1,0 +1,20 @@
+uuid: a394a273-275e-424b-8f93-9e423e46c0c1
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+    - taxonomy
+id: node.field_infraestruturas
+field_name: field_infraestruturas
+entity_type: node
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

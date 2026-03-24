@@ -1,0 +1,23 @@
+uuid: 34cc8919-f6bf-45db-ae72-ed1b1c0e1418
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_comprimento
+    - paragraphs.paragraphs_type.raques
+id: paragraph.raques.field_comprimento
+field_name: field_comprimento
+entity_type: paragraph
+bundle: raques
+label: 'Comprimento (m)'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ' m'
+field_type: decimal

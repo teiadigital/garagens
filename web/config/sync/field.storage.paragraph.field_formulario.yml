@@ -1,0 +1,20 @@
+uuid: 32e3ad1c-55bc-4b55-900a-35f23581c45b
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - paragraphs
+    - webform
+id: paragraph.field_formulario
+field_name: field_formulario
+entity_type: paragraph
+type: webform
+settings:
+  target_type: webform
+module: webform
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

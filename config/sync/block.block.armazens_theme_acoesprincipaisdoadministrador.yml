@@ -1,0 +1,27 @@
+uuid: 38983983-f68e-4cac-8cd0-6dd8be04ebd8
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+  theme:
+    - armazens_theme
+id: armazens_theme_acoesprincipaisdoadministrador
+theme: armazens_theme
+region: sidebar_right
+weight: -9
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Ações principais do administrador'
+  label_display: '0'
+  provider: core
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      armazem: armazem

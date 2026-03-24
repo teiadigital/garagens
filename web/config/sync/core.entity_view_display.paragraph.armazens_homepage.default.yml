@@ -1,0 +1,31 @@
+uuid: 7459e977-5ed2-4bf5-8473-08b1dd120905
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.armazens_homepage.field_pre_title
+    - field.field.paragraph.armazens_homepage.field_title
+    - paragraphs.paragraphs_type.armazens_homepage
+  module:
+    - text
+id: paragraph.armazens_homepage.default
+targetEntityType: paragraph
+bundle: armazens_homepage
+mode: default
+content:
+  field_pre_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_title:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }

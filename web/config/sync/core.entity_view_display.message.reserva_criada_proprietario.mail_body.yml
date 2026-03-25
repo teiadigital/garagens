@@ -1,0 +1,17 @@
+uuid: fb90796b-76ae-41d5-955d-e2106008e42e
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.message.mail_body
+    - message.template.reserva_criada_proprietario
+id: message.reserva_criada_proprietario.mail_body
+targetEntityType: message
+bundle: reserva_criada_proprietario
+mode: mail_body
+content:
+  partial_1:
+    weight: 0
+    region: content
+hidden:
+  partial_0: true

@@ -1,0 +1,111 @@
+garagem_reservas.admin_settings:
+  path: '/admin/config/garagem-reservas/settings'
+  defaults:
+    _form: '\Drupal\garagem_reservas\Form\GaragemReservasSettingsForm'
+    _title: 'Definições de Reservas de Garagens'
+  requirements:
+    _permission: 'administer garagem reservas'
+
+garagem_reservas.admin_lista:
+  path: '/admin/garagem-reservas/reservas'
+  defaults:
+    _controller: '\Drupal\garagem_reservas\Controller\ReservaAdminController::lista'
+    _title: 'Gerir Reservas'
+  requirements:
+    _permission: 'administer garagem reservas'
+
+garagem_reservas.admin_reserva_editar:
+  path: '/admin/garagem-reservas/reservas/{reserva}/editar'
+  defaults:
+    _form: '\Drupal\garagem_reservas\Form\ReservaAdminEditForm'
+    _title: 'Editar Reserva'
+  requirements:
+    _permission: 'administer garagem reservas'
+    reserva: \d+
+
+garagem_reservas.admin_reserva_apagar:
+  path: '/admin/garagem-reservas/reservas/{reserva}/apagar'
+  defaults:
+    _form: '\Drupal\garagem_reservas\Form\ReservaAdminDeleteForm'
+    _title: 'Apagar Reserva'
+  requirements:
+    _permission: 'administer garagem reservas'
+    reserva: \d+
+
+garagem_reservas.reserva_add:
+  path: '/garagem/{node}/reservar'
+  defaults:
+    _form: '\Drupal\garagem_reservas\Form\ReservaForm'
+    _title: 'Reservar Garagem'
+  requirements:
+    _permission: 'create garagem reserva'
+    node: \d+
+
+garagem_reservas.reserva_view:
+  path: '/reserva/{reserva}'
+  defaults:
+    _controller: '\Drupal\garagem_reservas\Controller\ReservaController::view'
+    _title: 'Detalhes da Reserva'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+    reserva: \d+
+
+garagem_reservas.reserva_aprovar:
+  path: '/reserva/{reserva}/aprovar'
+  defaults:
+    _controller: '\Drupal\garagem_reservas\Controller\ReservaController::aprovar'
+    _title: 'Aprovar Reserva'
+  requirements:
+    _permission: 'manage garagem reserva'
+    reserva: \d+
+
+garagem_reservas.reserva_rejeitar:
+  path: '/reserva/{reserva}/rejeitar'
+  defaults:
+    _controller: '\Drupal\garagem_reservas\Controller\ReservaController::rejeitar'
+    _title: 'Rejeitar Reserva'
+  requirements:
+    _permission: 'manage garagem reserva'
+    reserva: \d+
+
+garagem_reservas.reserva_pdf:
+  path: '/reserva/{reserva}/pdf'
+  defaults:
+    _controller: '\Drupal\garagem_reservas\Controller\ReservaController::pdf'
+    _title: 'PDF da Reserva'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+    reserva: \d+
+
+garagem_reservas.disponibilidade:
+  path: '/garagem/{node}/disponibilidade'
+  defaults:
+    _controller: '\Drupal\garagem_reservas\Controller\ReservaController::disponibilidade'
+    _title: 'Disponibilidade'
+  requirements:
+    _permission: 'access content'
+    node: \d+
+
+garagem_reservas.lista_proprietario:
+  path: '/dashboard/reservas/garagens'
+  defaults:
+    _controller: '\Drupal\garagem_reservas\Controller\ReservaController::listaProprietario'
+    _title: 'Reservas das minhas garagens'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+
+garagem_reservas.lista_user:
+  path: '/dashboard/reservas'
+  defaults:
+    _controller: '\Drupal\garagem_reservas\Controller\ReservaController::listaUser'
+    _title: 'As minhas reservas'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+
+garagem_reservas.notificacoes:
+  path: '/dashboard/notificacoes'
+  defaults:
+    _controller: '\Drupal\garagem_reservas\Controller\ReservaController::notificacoes'
+    _title: 'Notificações'
+  requirements:
+    _user_is_logged_in: 'TRUE'

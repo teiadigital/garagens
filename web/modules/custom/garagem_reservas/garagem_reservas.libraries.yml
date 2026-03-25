@@ -1,0 +1,21 @@
+flatpickr:
+  version: 4.6.13
+  css:
+    theme:
+      https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css: { type: external, minified: true }
+      css/reserva_form.css: {}
+  js:
+    https://cdn.jsdelivr.net/npm/flatpickr: { type: external, minified: true }
+    https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js: { type: external, minified: true }
+    js/reserva_form.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+
+reserva_form:
+  version: 1.x
+  css:
+    theme:
+      css/reserva_form.css: {}
+  dependencies:
+    - core/drupal

@@ -1,0 +1,13 @@
+garagem_reservas.admin_settings:
+  title: 'Definições de Reservas'
+  description: 'Configurar definições globais do módulo de reservas de garagens.'
+  parent: system.admin_config
+  route_name: garagem_reservas.admin_settings
+  weight: 10
+
+garagem_reservas.admin_lista:
+  title: 'Gerir Reservas'
+  description: 'Ver, editar e apagar reservas.'
+  parent: system.admin
+  route_name: garagem_reservas.admin_lista
+  weight: 10

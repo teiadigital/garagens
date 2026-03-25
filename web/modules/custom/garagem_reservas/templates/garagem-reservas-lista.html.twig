@@ -1,0 +1,87 @@
+{#
+/**
+ * @file
+ * Template de lista de reservas.
+ *
+ * Variáveis:
+ * - reservas: lista de reservas
+ * - tipo: 'proprietario' ou 'user'
+ */
+#}
+<div class="garagem-reservas-lista">
+
+  {% if tipo == 'proprietario' %}
+    <h2>{{ 'Reservas das minhas garagens'|t }}</h2>
+  {% else %}
+    <h2>{{ 'As minhas reservas'|t }}</h2>
+  {% endif %}
+
+  {% if reservas is empty %}
+    <p class="alert alert-info">{{ 'Não existem reservas.'|t }}</p>
+  {% else %}
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>{{ 'Garagem'|t }}</th>
+            {% if tipo == 'proprietario' %}
+              <th>{{ 'Requerente'|t }}</th>
+            {% endif %}
+            <th>{{ 'Início'|t }}</th>
+            <th>{{ 'Fim'|t }}</th>
+            <th>{{ 'Estado'|t }}</th>
+            <th>{{ 'Ações'|t }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for reserva in reservas %}
+            {% set garagem = drupal_entity('node', reserva.garagem_id) %}
+            {% set user = drupal_entity('user', reserva.user_id) %}
+            <tr>
+              <td>{{ reserva.id }}</td>
+              <td>
+                <a href="{{ path('entity.node.canonical', {'node': reserva.garagem_id}) }}">
+                  {{ garagem.title.value }}
+                </a>
+              </td>
+              {% if tipo == 'proprietario' %}
+                <td>{{ user.name.value }}</td>
+              {% endif %}
+              <td>{{ reserva.data_inicio|date('d/m/Y H:i') }}</td>
+              <td>
+                {% if reserva.indefinido %}
+                  {{ 'Indefinido'|t }}
+                {% else %}
+                  {{ reserva.data_fim|date('d/m/Y H:i') }}
+                {% endif %}
+              </td>
+              <td>
+                <span class="badge badge-{{ reserva.estado }}">
+                  {{ reserva.estado|capitalize }}
+                </span>
+              </td>
+              <td>
+                <a href="{{ path('garagem_reservas.reserva_view', {'reserva': reserva.id}) }}"
+                   class="btn btn-sm btn-outline-primary">
+                  {{ 'Ver'|t }}
+                </a>
+                {% if tipo == 'proprietario' and reserva.estado == 'pendente' %}
+                  <a href="{{ path('garagem_reservas.reserva_aprovar', {'reserva': reserva.id}) }}"
+                     class="btn btn-sm btn-success ms-1">
+                    {{ 'Aprovar'|t }}
+                  </a>
+                  <a href="{{ path('garagem_reservas.reserva_rejeitar', {'reserva': reserva.id}) }}"
+                     class="btn btn-sm btn-danger ms-1">
+                    {{ 'Rejeitar'|t }}
+                  </a>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endif %}
+
+</div>

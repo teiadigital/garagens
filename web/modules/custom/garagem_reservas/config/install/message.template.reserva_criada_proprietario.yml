@@ -1,0 +1,18 @@
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+template: reserva_criada_proprietario
+label: 'Nova reserva para aprovação'
+description: 'Notificação enviada ao proprietário quando uma nova reserva é criada.'
+text:
+  -
+    value: '<p>Foi feito um novo pedido de reserva para a sua garagem. Aceda à plataforma para aprovar ou rejeitar.</p>'
+    format: basic_html
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

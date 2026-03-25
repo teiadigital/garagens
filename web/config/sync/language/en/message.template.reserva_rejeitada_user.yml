@@ -1,0 +1,4 @@
+text:
+  -
+    value: '<p>O seu pedido de reserva foi rejeitado pelo proprietário.</p>'
+    format: basic_html

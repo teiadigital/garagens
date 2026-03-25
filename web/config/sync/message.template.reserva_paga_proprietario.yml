@@ -1,0 +1,21 @@
+uuid: ee7c6c4a-6a4a-4988-9be8-bd8daf527852
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+_core:
+  default_config_hash: L1iJXEIL5a3jvMIX8FDiJZdoJLbrOeE9-OlCHNooHhU
+template: reserva_paga_proprietario
+label: 'Pagamento confirmado'
+description: 'Notificação enviada ao proprietário quando o pagamento é confirmado.'
+text:
+  -
+    value: '<p>O pagamento da reserva foi confirmado. Aceda à plataforma para descarregar o comprovativo em PDF.</p>'
+    format: basic_html
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

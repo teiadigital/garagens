@@ -1,0 +1,4 @@
+text:
+  -
+    value: '<p>Foi feito um novo pedido de reserva para a sua garagem. Aceda à plataforma para aprovar ou rejeitar.</p>'
+    format: basic_html

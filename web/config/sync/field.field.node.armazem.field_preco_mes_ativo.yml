@@ -1,0 +1,21 @@
+uuid: ae7800e8-639c-4020-bc1b-61fe1eac758d
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_preco_mes_ativo
+    - node.type.armazem
+id: node.armazem.field_preco_mes_ativo
+field_name: field_preco_mes_ativo
+entity_type: node
+bundle: armazem
+label: 'Preço/mês (€)'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

@@ -1,0 +1,20 @@
+uuid: 0f2672d4-c3f4-40dd-a1a3-779e73fcf13d
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_preco_mes
+field_name: field_preco_mes
+entity_type: node
+type: decimal
+settings:
+  precision: 10
+  scale: 2
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,129 @@
+{#
+/**
+ * @file
+ * Template de detalhes de reserva.
+ *
+ * Variáveis:
+ * - reserva: dados da reserva
+ * - garagem: node da garagem
+ * - user: utilizador que fez a reserva
+ * - preco_total: preço total
+ * - taxa_plataforma: taxa da plataforma
+ * - is_proprietario: TRUE se o utilizador atual é o proprietário
+ * - is_user: TRUE se o utilizador atual fez a reserva
+ */
+#}
+<div class="garagem-reserva estado-{{ reserva.estado }}">
+
+  <div class="reserva-header">
+    <h2>{{ 'Reserva #'|t }}{{ reserva.id }}</h2>
+    <span class="badge badge-{{ reserva.estado }}">
+      {{ reserva.estado|capitalize }}
+    </span>
+  </div>
+
+  <div class="reserva-body row">
+
+    <div class="col-md-6">
+      <div class="reserva-garagem mb-3">
+        <h3>{{ 'Garagem'|t }}</h3>
+        <p>{{ garagem.title.value }}</p>
+      </div>
+
+      <div class="reserva-datas mb-3">
+        <h3>{{ 'Período'|t }}</h3>
+        <p>
+          <strong>{{ 'Início'|t }}:</strong>
+          {{ reserva.data_inicio|date('d/m/Y H:i') }}
+        </p>
+        {% if reserva.indefinido %}
+          <p><strong>{{ 'Fim'|t }}:</strong> {{ 'Indefinido'|t }}</p>
+        {% else %}
+          <p>
+            <strong>{{ 'Fim'|t }}:</strong>
+            {{ reserva.data_fim|date('d/m/Y H:i') }}
+          </p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="reserva-preco mb-3">
+        <h3>{{ 'Valores'|t }}</h3>
+        <div class="table-responsive">
+          <table class="table table-sm">
+            <tbody>
+              <tr>
+                <td>{{ 'Preço total da reserva'|t }}</td>
+                <td class="text-end">{{ preco_total|number_format(2) }}€</td>
+              </tr>
+              <tr>
+                <td>{{ 'Taxa fixa da plataforma'|t }}</td>
+                <td class="text-end">{{ taxa_fixa|number_format(2) }}€</td>
+              </tr>
+              <tr>
+                <td>{{ 'Taxa percentual da plataforma'|t }}</td>
+                <td class="text-end">{{ taxa_percentual|number_format(2) }}€</td>
+              </tr>
+              <tr class="table-dark fw-bold">
+                <td>{{ 'A pagar agora à plataforma'|t }}</td>
+                <td class="text-end">{{ taxa_plataforma|number_format(2) }}€</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <small class="text-muted">
+          {% if reserva.indefinido %}
+            {{ 'O valor apresentado corresponde ao primeiro mês. Os pagamentos seguintes são acordados diretamente com o proprietário.'|t }}
+          {% else %}
+            {{ 'O restante valor é acordado diretamente com o proprietário.'|t }}
+          {% endif %}
+        </small>
+      </div>
+
+      {% if reserva.notas %}
+        <div class="reserva-notas mb-3">
+          <h3>{{ 'Notas'|t }}</h3>
+          <p>{{ reserva.notas }}</p>
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+
+  <div class="reserva-actions mt-3">
+
+    {# Botões só para o proprietário #}
+    {% if is_proprietario %}
+      {% if reserva.estado == 'pendente' %}
+        <a href="{{ path('garagem_reservas.reserva_aprovar', {'reserva': reserva.id}) }}"
+           class="btn btn-success me-2">
+          {{ 'Aprovar'|t }}
+        </a>
+        <a href="{{ path('garagem_reservas.reserva_rejeitar', {'reserva': reserva.id}) }}"
+           class="btn btn-danger me-2">
+          {{ 'Rejeitar'|t }}
+        </a>
+      {% endif %}
+      {% if reserva.estado == 'pago' %}
+        <a href="{{ path('garagem_reservas.reserva_pdf', {'reserva': reserva.id}) }}"
+           class="btn btn-secondary">
+          {{ 'Descarregar PDF'|t }}
+        </a>
+      {% endif %}
+    {% endif %}
+
+    {# Botão de voltar #}
+    {% if is_proprietario %}
+      <a href="{{ path('garagem_reservas.lista_proprietario') }}" class="btn btn-outline-secondary ms-2">
+        {{ 'Voltar à lista'|t }}
+      </a>
+    {% elseif is_user %}
+      <a href="{{ path('garagem_reservas.lista_user') }}" class="btn btn-outline-secondary ms-2">
+        {{ 'Voltar à lista'|t }}
+      </a>
+    {% endif %}
+
+  </div>
+
+</div>

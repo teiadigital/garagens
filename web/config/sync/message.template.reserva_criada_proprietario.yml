@@ -1,0 +1,21 @@
+uuid: d2801a4c-8dc6-45a3-b004-87be5fdb5a4c
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+_core:
+  default_config_hash: uH9ef6tiWWaUwOh221thbE7wF72RwhRivf80LCjjGOc
+template: reserva_criada_proprietario
+label: 'Nova reserva para aprovação'
+description: 'Notificação enviada ao proprietário quando uma nova reserva é criada.'
+text:
+  -
+    value: '<p>Foi feito um novo pedido de reserva para a sua garagem. Aceda à plataforma para aprovar ou rejeitar.</p>'
+    format: basic_html
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

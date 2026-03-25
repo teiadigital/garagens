@@ -1,0 +1,17 @@
+uuid: 9ae2b631-430d-4d36-a120-301f333d1950
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.message.mail_subject
+    - message.template.reserva_paga_proprietario
+id: message.reserva_paga_proprietario.mail_subject
+targetEntityType: message
+bundle: reserva_paga_proprietario
+mode: mail_subject
+content:
+  partial_0:
+    weight: 0
+    region: content
+hidden:
+  partial_1: true

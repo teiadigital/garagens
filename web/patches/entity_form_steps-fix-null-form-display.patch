@@ -1,0 +1,10 @@
+--- /tmp/entity_form_steps_original/src/Form/EntityFormSteps.php	2026-03-25 17:24:48.462683125 +0000
++++ /home/fabio/Teia/Projects/garagens/web/modules/contrib/entity_form_steps/src/Form/EntityFormSteps.php	2026-03-25 17:14:28.545964314 +0000
+@@ -29,6 +29,7 @@
+     /** @var \Drupal\Core\Entity\Display\EntityFormDisplayInterface $formDisplay */
+     $formDisplay = $form_state->getStorage()['form_display'];
+ 
++    if (!$formDisplay) { return []; }
+     $steps = array_filter($formDisplay->getThirdPartySettings('field_group'), function ($step) {
+       return $step['format_type'] === 'steps' && $step['region'] === 'content';
+     });

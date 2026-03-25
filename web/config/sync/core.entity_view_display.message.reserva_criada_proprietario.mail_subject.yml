@@ -1,0 +1,17 @@
+uuid: 9deab3e8-ecc4-4734-9d42-ef9a8847ad2e
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.message.mail_subject
+    - message.template.reserva_criada_proprietario
+id: message.reserva_criada_proprietario.mail_subject
+targetEntityType: message
+bundle: reserva_criada_proprietario
+mode: mail_subject
+content:
+  partial_0:
+    weight: 0
+    region: content
+hidden:
+  partial_1: true

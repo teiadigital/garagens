@@ -6,14 +6,6 @@ module:
   admin_toolbar: 0
   advanced_language_selector: 0
   automated_cron: 0
-  bat: 0
-  bat_api: 0
-  bat_booking: 0
-  bat_event: 0
-  bat_event_series: 0
-  bat_event_ui: 0
-  bat_fullcalendar: 0
-  bat_unit: 0
   bef_select: 0
   better_exposed_filters: 0
   big_pipe: 0
@@ -21,13 +13,13 @@ module:
   block_content: 0
   block_exclude_pages: 0
   breakpoint: 0
-  bws: 0
   ckeditor5: 0
   color_field: 0
   comment: 0
   commerce: 0
   commerce_number_pattern: 0
   commerce_order: 0
+  commerce_payment: 0
   commerce_price: 0
   commerce_product: 0
   commerce_store: 0
@@ -38,6 +30,7 @@ module:
   contextual: 0
   ctools: 0
   datetime: 0
+  datetime_flatpickr: 0
   datetime_range: 0
   dblog: 0
   dropzonejs: 0
@@ -56,6 +49,7 @@ module:
   file: 0
   filter: 0
   fullcalendar_library: 0
+  garagem_reservas: 0
   geocoder: 0
   geocoder_field: 0
   geofield: 0
@@ -92,6 +86,8 @@ module:
   menu_per_role: 0
   menu_ui: 0
   menus_attribute: 0
+  message: 0
+  message_notify: 0
   metatag: 0
   mysql: 0
   node: 0

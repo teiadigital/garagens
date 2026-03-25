@@ -1,7 +1,0 @@
-uuid: 029d13ce-0f05-457d-925f-1a3d0834f6ba
-langcode: pt-pt
-status: true
-dependencies: {  }
-name: 'Ticket (access to an event)'
-type: ticket
-default_event_value_field_ids: null

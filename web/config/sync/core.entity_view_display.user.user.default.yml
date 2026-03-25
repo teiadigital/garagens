@@ -3,6 +3,7 @@ langcode: pt-pt
 status: true
 dependencies:
   config:
+    - field.field.user.user.commerce_remote_id
     - field.field.user.user.field_cartao_cidadao
     - field.field.user.user.field_documentos
     - field.field.user.user.field_morada
@@ -91,7 +92,13 @@ content:
     third_party_settings: {  }
     weight: 1
     region: content
+  masquerade:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 50
+    region: content
 hidden:
+  commerce_remote_id: true
   customer_profiles: true
   field_cartao_cidadao: true
   field_morada_de_faturacao_bool: true

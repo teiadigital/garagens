@@ -9,7 +9,6 @@ dependencies:
     - media.type.image
     - node.type.armazem
   module:
-    - bws
     - comment
     - commerce_product
     - contact
@@ -24,7 +23,7 @@ dependencies:
 _core:
   default_config_hash: 6WavjUYXIegP9AAg2zXGx54MWIVoomC3SZhNiqe-Dyk
 id: anonymous
-label: 'Utilizador anónimo'
+label: 'Anonymous user'
 weight: -10
 is_admin: false
 permissions:
@@ -47,7 +46,6 @@ permissions:
   - 'view any page content'
   - 'view any termos_e_condicoes content'
   - 'view any unpublished armazem content'
-  - 'view calendar data for any availability_daily event'
   - 'view commerce_product'
   - 'view media'
   - 'view own article content'

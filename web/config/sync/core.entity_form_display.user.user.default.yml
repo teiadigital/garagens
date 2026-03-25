@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - entity_browser.browser.ficheiros
+    - field.field.user.user.commerce_remote_id
     - field.field.user.user.field_cartao_cidadao
     - field.field.user.user.field_documentos
     - field.field.user.user.field_morada
@@ -293,6 +294,7 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
+  commerce_remote_id: true
   contact: true
   customer_profiles: true
   field_nib: true

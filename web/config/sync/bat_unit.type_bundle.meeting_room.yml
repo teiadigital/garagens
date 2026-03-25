@@ -1,7 +1,0 @@
-uuid: aea23450-903e-434a-9042-d1ce04d56fb1
-langcode: pt-pt
-status: true
-dependencies: {  }
-name: 'Meeting Room'
-type: meeting_room
-default_event_value_field_ids: null

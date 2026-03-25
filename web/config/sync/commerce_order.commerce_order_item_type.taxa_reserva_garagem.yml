@@ -1,0 +1,10 @@
+uuid: 2f8997c6-cc7e-410a-94cd-c4d18fd5ba34
+langcode: en
+status: true
+dependencies: {  }
+id: taxa_reserva_garagem
+label: 'Taxa de reserva de garagem'
+traits: {  }
+locked: false
+purchasableEntityType: commerce_product_variation
+orderType: default

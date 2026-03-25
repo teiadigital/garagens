@@ -1,0 +1,15 @@
+name: 'Garagem Reservas'
+type: module
+description: 'Módulo de gestão de reservas de garagens com integração Commerce.'
+core_version_requirement: ^10
+package: Custom
+dependencies:
+  - drupal:node
+  - drupal:views
+  - drupal:datetime
+  - commerce:commerce
+  - commerce:commerce_order
+  - commerce:commerce_payment
+  - commerce:commerce_product
+  - message:message
+  - message_notify:message_notify

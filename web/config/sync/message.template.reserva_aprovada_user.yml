@@ -1,0 +1,21 @@
+uuid: fbcc0b0c-cd93-4b2d-8f7b-ef0720716063
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+_core:
+  default_config_hash: oWgiZ10IynEr7fDAsZWok9BBSmX05EGaiq-et1rmYZA
+template: reserva_aprovada_user
+label: 'Reserva aprovada'
+description: 'Notificação enviada ao utilizador quando a reserva é aprovada.'
+text:
+  -
+    value: '<p>A sua reserva foi aprovada! Aceda à plataforma para efetuar o pagamento dentro do prazo definido.</p>'
+    format: basic_html
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

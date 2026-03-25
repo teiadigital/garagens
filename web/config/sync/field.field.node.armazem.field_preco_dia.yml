@@ -1,0 +1,23 @@
+uuid: 2612e8f9-f64f-49b7-9b0b-e30451f50879
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_preco_dia
+    - node.type.armazem
+id: node.armazem.field_preco_dia
+field_name: field_preco_dia
+entity_type: node
+bundle: armazem
+label: 'Valor preço/dia'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

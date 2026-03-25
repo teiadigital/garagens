@@ -1,7 +1,0 @@
-uuid: 1458f4b7-4319-4f33-bf46-fad6cab305fa
-langcode: pt-pt
-status: true
-dependencies: {  }
-name: Car
-type: car
-default_event_value_field_ids: null

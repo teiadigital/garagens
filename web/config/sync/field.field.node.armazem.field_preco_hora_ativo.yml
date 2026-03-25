@@ -1,0 +1,21 @@
+uuid: efa7470b-8b57-477a-adf1-59ef8cffb9cf
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_preco_hora_ativo
+    - node.type.armazem
+id: node.armazem.field_preco_hora_ativo
+field_name: field_preco_hora_ativo
+entity_type: node
+bundle: armazem
+label: 'Preço/hora (€)'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

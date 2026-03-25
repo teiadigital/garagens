@@ -1,0 +1,77 @@
+uuid: 30628481-ba98-4078-9eac-f3e865f4bb6b
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_order.commerce_order_item_type.taxa_reserva_garagem
+    - field.field.commerce_order_item.taxa_reserva_garagem.field_data_fim
+    - field.field.commerce_order_item.taxa_reserva_garagem.field_data_inicio
+    - field.field.commerce_order_item.taxa_reserva_garagem.field_garagem_nome
+    - field.field.commerce_order_item.taxa_reserva_garagem.field_reserva_id
+  module:
+    - commerce_order
+id: commerce_order_item.taxa_reserva_garagem.default
+targetEntityType: commerce_order_item
+bundle: taxa_reserva_garagem
+mode: default
+content:
+  field_data_fim:
+    type: string_textfield
+    weight: 6
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_data_inicio:
+    type: string_textfield
+    weight: 5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_garagem_nome:
+    type: string_textfield
+    weight: 4
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_reserva_id:
+    type: number
+    weight: 3
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  purchased_entity:
+    type: entity_reference_autocomplete
+    weight: -1
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  quantity:
+    type: commerce_quantity
+    weight: 1
+    region: content
+    settings:
+      placeholder: ''
+      step: '1'
+    third_party_settings: {  }
+  unit_price:
+    type: commerce_unit_price
+    weight: 2
+    region: content
+    settings:
+      require_confirmation: true
+    third_party_settings: {  }
+hidden:
+  adjustments: true
+  created: true
+  total_price: true

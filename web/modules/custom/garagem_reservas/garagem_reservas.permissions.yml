@@ -1,0 +1,12 @@
+administer garagem reservas:
+  title: 'Administrar definições de reservas de garagens'
+  restrict access: true
+
+create garagem reserva:
+  title: 'Criar reservas de garagens'
+
+view garagem reserva:
+  title: 'Ver reservas de garagens'
+
+manage garagem reserva:
+  title: 'Gerir reservas de garagens (aprovar/rejeitar)'

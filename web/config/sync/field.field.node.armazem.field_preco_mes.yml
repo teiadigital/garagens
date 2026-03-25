@@ -1,0 +1,23 @@
+uuid: 7a25c6a3-7776-41df-98ab-256668a4f580
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_preco_mes
+    - node.type.armazem
+id: node.armazem.field_preco_mes
+field_name: field_preco_mes
+entity_type: node
+bundle: armazem
+label: 'Valor preço/mês'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

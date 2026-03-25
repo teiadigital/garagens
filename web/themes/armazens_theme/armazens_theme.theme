@@ -98,18 +98,6 @@ function armazens_theme_form_alter(&$form, \Drupal\Core\Form\FormStateInterface 
 
   }
 
-if ($form_id == 'node_armazem_step_5_form' && isset($form['field_horarios']['widget'][0])) {
-  $form['field_horarios']['widget'][0]['#title'] = $form['field_horarios']['widget']['#title'] ?? '';
-  $form['field_horarios']['widget'][0]['#type'] = 'fieldset';
-}
-
-  if($form_id == 'node_armazem_step_6_form') {
-
-    $form['field_comprovativo_do_seguro']['widget']['#type'] = 'fieldset';
-    $form['field_documento_seguro_carga']['widget']['#type'] = 'fieldset';
-    $form['field_documento_seguro_imovel']['widget']['#type'] = 'fieldset';
-    $form['field_documento_licenca']['widget']['#type'] = 'fieldset';
-  }
 }
 
 

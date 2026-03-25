@@ -1,0 +1,28 @@
+uuid: 4d00d701-2b89-4255-b4d5-1e92f5a95356
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - garagem_reservas
+    - node
+  theme:
+    - armazens_theme
+id: armazens_theme_botaoreservargaragem
+theme: armazens_theme
+region: sidebar_right
+weight: 0
+provider: null
+plugin: garagem_reservar_block
+settings:
+  id: garagem_reservar_block
+  label: 'Botão Reservar Garagem'
+  label_display: '0'
+  provider: garagem_reservas
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      armazem: armazem

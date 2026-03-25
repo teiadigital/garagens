@@ -4,9 +4,7 @@ status: true
 dependencies:
   config:
     - entity_browser.browser.images
-    - field.field.node.armazem.field_area
     - field.field.node.armazem.field_area_individual
-    - field.field.node.armazem.field_availability_daily
     - field.field.node.armazem.field_certificados
     - field.field.node.armazem.field_controlo_acesso
     - field.field.node.armazem.field_coordenadas
@@ -26,12 +24,17 @@ dependencies:
     - field.field.node.armazem.field_identifique_os_certificado
     - field.field.node.armazem.field_incluir_espaco_exterior
     - field.field.node.armazem.field_licenca_de_utilizacao
-    - field.field.node.armazem.field_licenca_utilizacao
     - field.field.node.armazem.field_limitacoes_de_acesso
     - field.field.node.armazem.field_limitacoes_horario_acesso
     - field.field.node.armazem.field_localidade
     - field.field.node.armazem.field_peso_maximo_piso
     - field.field.node.armazem.field_piso
+    - field.field.node.armazem.field_preco_dia
+    - field.field.node.armazem.field_preco_dia_ativo
+    - field.field.node.armazem.field_preco_hora
+    - field.field.node.armazem.field_preco_hora_ativo
+    - field.field.node.armazem.field_preco_mes
+    - field.field.node.armazem.field_preco_mes_ativo
     - field.field.node.armazem.field_recursos
     - field.field.node.armazem.field_seguranca
     - field.field.node.armazem.field_seguro
@@ -42,6 +45,7 @@ dependencies:
     - node.type.armazem
   module:
     - address
+    - conditional_fields
     - entity_browser
     - entity_form_field_label
     - field_group
@@ -115,6 +119,24 @@ third_party_settings:
         effect: none
         speed: fast
         required_fields: true
+    group_precos:
+      children:
+        - field_preco_dia_ativo
+        - field_preco_dia
+        - field_preco_mes_ativo
+        - field_preco_mes
+      label: Preços
+      region: content
+      parent_name: ''
+      weight: 25
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        description: ''
+        required_fields: false
 id: node.armazem.default
 targetEntityType: node
 bundle: armazem
@@ -154,13 +176,13 @@ content:
           dialog_off_canvas: false
           dialog_style: tiles
   field_certificados:
-    type: options_select
+    type: options_buttons
     weight: 21
     region: content
     settings: {  }
     third_party_settings: {  }
   field_controlo_acesso:
-    type: options_select
+    type: options_buttons
     weight: 12
     region: content
     settings: {  }
@@ -336,14 +358,14 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_espaco:
-    type: options_select
+    type: options_buttons
     weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
   field_estado:
     type: field_hidden_number
-    weight: 25
+    weight: 26
     region: content
     settings:
       placeholder: ''
@@ -391,25 +413,25 @@ content:
             effect_options: {  }
             selector: ''
   field_incluir_espaco_exterior:
-    type: options_select
+    type: options_buttons
     weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
   field_licenca_de_utilizacao:
-    type: options_select
+    type: options_buttons
     weight: 20
     region: content
     settings: {  }
     third_party_settings: {  }
   field_limitacoes_de_acesso:
-    type: options_select
+    type: options_buttons
     weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
   field_limitacoes_horario_acesso:
-    type: options_select
+    type: options_buttons
     weight: 14
     region: content
     settings: {  }
@@ -438,6 +460,70 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_preco_dia:
+    type: number
+    weight: 30
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings:
+      conditional_fields:
+        d9b969a1-3cd1-430f-9d0e-9ce968640f23:
+          entity_type: node
+          bundle: armazem
+          dependee: field_preco_dia_ativo
+          settings:
+            state: visible
+            reset: false
+            condition: checked
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              value: false
+            effect: show
+            effect_options: {  }
+            selector: ''
+  field_preco_dia_ativo:
+    type: boolean_checkbox
+    weight: 29
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  field_preco_mes:
+    type: number
+    weight: 32
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings:
+      conditional_fields:
+        ad5b8c13-7ce3-414f-8515-73a6000205e6:
+          entity_type: node
+          bundle: armazem
+          dependee: field_preco_mes_ativo
+          settings:
+            state: visible
+            reset: false
+            condition: checked
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              value: false
+            effect: show
+            effect_options: {  }
+            selector: ''
+  field_preco_mes_ativo:
+    type: boolean_checkbox
+    weight: 31
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
   field_recursos:
     type: options_buttons
     weight: 11
@@ -445,19 +531,19 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_seguranca:
-    type: options_select
+    type: options_buttons
     weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }
   field_seguro:
-    type: options_select
+    type: options_buttons
     weight: 23
     region: content
     settings: {  }
     third_party_settings: {  }
   field_sistema_detecao_incendios:
-    type: options_select
+    type: options_buttons
     weight: 18
     region: content
     settings: {  }
@@ -480,13 +566,12 @@ content:
     third_party_settings: {  }
 hidden:
   created: true
-  field_area: true
-  field_availability_daily: true
   field_coordenadas: true
   field_descreva_servicos_incluido: true
   field_descricao_espaco_exterior: true
   field_geo_coordenadas: true
-  field_licenca_utilizacao: true
+  field_preco_hora: true
+  field_preco_hora_ativo: true
   field_termos_e_condicoes: true
   field_tipo_de_controlo: true
   langcode: true

@@ -1,0 +1,18 @@
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+template: reserva_aprovada_user
+label: 'Reserva aprovada'
+description: 'Notificação enviada ao utilizador quando a reserva é aprovada.'
+text:
+  -
+    value: '<p>A sua reserva foi aprovada! Aceda à plataforma para efetuar o pagamento dentro do prazo definido.</p>'
+    format: basic_html
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

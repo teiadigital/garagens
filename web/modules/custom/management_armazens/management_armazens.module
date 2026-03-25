@@ -1,10 +1,6 @@
 <?php
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Url;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Drupal\Core\Ajax\AjaxResponse;
-use Drupal\Core\Ajax\RedirectCommand;
 
 /**
  * @file
@@ -37,7 +33,7 @@ function management_armazens_options_list_alter(array &$options, array $context)
 }
 
 /**
- * form_alter para outros forms (views/pedidos/etc).
+ * Implements hook_form_alter().
  */
 function management_armazens_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   // View exposed filter (mapa).
@@ -66,36 +62,21 @@ function management_armazens_form_alter(&$form, FormStateInterface $form_state, 
     if (isset($form['title']['widget'][0]['value']['#default_value']) && $form['title']['widget'][0]['value']['#default_value'] === NULL) {
       $form['title']['widget'][0]['value']['#default_value'] = 'initial';
     }
-    $form['field_vedacao']['#states']       = ['visible' => [':input[name="field_espaco"]' => ['value' => 'aberto']]];
-    $form['field_camara_de_frio']['#states'] = ['visible' => [':input[name="field_tem_camaras_de_frio"]' => ['value' => 'sim']]];
-    $form['field_raques']['#states']         = ['visible' => [':input[name="field_tem_raques"]' => ['value' => 'sim']]];
   }
 
-  // Node armazem (genérico).
-  if ($form_id == 'node_armazem_form') {
+  // Node armazem.
+  if ($form_id == 'node_armazem_form' || $form_id == 'node_armazem_edit_form') {
     if (isset($form['title']['widget'][0]['value']['#default_value']) && $form['title']['widget'][0]['value']['#default_value'] === NULL) {
       $form['title']['widget'][0]['value']['#default_value'] = 'initial';
     }
-
-    // Apenas cosmética/UX agrupamentos.
-    $form['field_documento_licenca']['widget']['#type'] = 'fieldset';
-    $form['field_documento_seguro_imovel']['widget']['#type'] = 'fieldset';
-    $form['field_documentos']['widget']['#type'] = 'fieldset';
-    $form['field_comprovativo_do_seguro']['widget']['#type'] = 'fieldset';
-    $form['field_fotos']['widget']['#type'] = 'fieldset';
-    $form['field_grelha_horarios']['widget']['#type'] = 'fieldset';
-    $form['field_grelha_horarios_office_hours_0']['widget']['#type'] = 'fieldset';
-
-    \Drupal::request()->getSession()->set('temp_var_precos_validation', NULL);
-  }
-
-  if($form_id == "node_armazem_edit_form") {
-    $form['field_fotos']['widget']['#type'] = 'fieldset';
+    if (isset($form['field_fotos'])) {
+      $form['field_fotos']['widget']['#type'] = 'fieldset';
+    }
   }
 }
 
 /**
- * Alter do form de node (apanha os steps do EFS).
+ * Implements hook_form_node_form_alter().
  */
 function management_armazens_form_node_form_alter(array &$form, FormStateInterface $form_state) {
   $entity = $form_state->getFormObject() ? $form_state->getFormObject()->getEntity() : NULL;
@@ -114,238 +95,17 @@ function management_armazens_form_node_form_alter(array &$form, FormStateInterfa
     }
   }
 
-  // Validações por step (só quando os campos existem).
+  // Validação do código postal.
   if (isset($form['field_localidade'])) {
     $form['#validate'][] = 'management_armazens_validate_postal_code';
   }
-  _ma_attach_ief_validators($form);
 
-  // *** CHAVE: validador GLOBAL do formulário que salva rascunho no NEXT. ***
-  // Corre SEMPRE (mesmo que o botão NEXT não execute callbacks #submit).
-  if (!in_array('management_armazens_guardian_validate', (array) ($form['#validate'] ?? []), TRUE)) {
-    $form['#validate'][] = 'management_armazens_guardian_validate';
-  }
-
-  // AFTER_BUILD para detectar labels e re-anexar handlers (quando houver).
-  $form['#after_build'][] = 'management_armazens_after_build_attach_handlers';
+  // Ao submeter o form, estado 0 (aguardar aprovação).
+  $form['actions']['submit']['#submit'][] = 'management_armazens_finish_submit';
 }
 
 /**
- * AFTER_BUILD: anexa handlers conforme o label do botão.
- */
-function management_armazens_after_build_attach_handlers(array $form, FormStateInterface $form_state) {
-  if (empty($form['actions']) || !is_array($form['actions'])) {
-    return $form;
-  }
-
-  \Drupal::logger('management_armazens')->notice(
-    'AFTER BUILD ACTIONS: @keys',
-    ['@keys' => implode(', ', array_keys($form['actions']))]
-  );
-
-  // SAVE & EXIT intermédio -> rascunho (-1).
-  if (isset($form['actions']['save_resume_exit']) && ($form['actions']['save_resume_exit']['#type'] ?? '') === 'submit') {
-    $ex = (array) ($form['actions']['save_resume_exit']['#submit'] ?? []);
-    if (!in_array('management_armazens_next_submit', $ex, TRUE)) {
-      array_unshift($ex, 'management_armazens_next_submit');
-      $form['actions']['save_resume_exit']['#submit'] = $ex;
-    }
-    $vx = (array) ($form['actions']['save_resume_exit']['#validate'] ?? []);
-    if (!in_array('management_armazens_next_validate_save', $vx, TRUE)) {
-      array_unshift($vx, 'management_armazens_next_validate_save');
-      $form['actions']['save_resume_exit']['#validate'] = $vx;
-    }
-  }
-
-  // actions[submit] -> NEXT ou FINISH consoante o label.
-  if (isset($form['actions']['submit']) && ($form['actions']['submit']['#type'] ?? '') === 'submit') {
-    $label = (string) ($form['actions']['submit']['#value'] ?? '');
-    $norm  = mb_strtolower(trim(html_entity_decode($label)));
-
-    $next_aliases   = ['next','seguinte','siguiente','suivant','weiter','avançar', mb_strtolower((string) t('Next'))];
-    $finish_aliases = ['finish','guardar','save','submit','finalizar', mb_strtolower((string) t('Finish')), mb_strtolower((string) t('Save'))];
-
-    if (in_array($norm, $next_aliases, TRUE)) {
-      $existing_submit = (array) ($form['actions']['submit']['#submit'] ?? []);
-      $existing_valid  = (array) ($form['actions']['submit']['#validate'] ?? []);
-      if (!in_array('management_armazens_next_submit', $existing_submit, TRUE)) {
-        array_unshift($existing_submit, 'management_armazens_next_submit');
-        $form['actions']['submit']['#submit'] = $existing_submit;
-      }
-      if (!in_array('management_armazens_next_validate_save', $existing_valid, TRUE)) {
-        array_unshift($existing_valid, 'management_armazens_next_validate_save');
-        $form['actions']['submit']['#validate'] = $existing_valid;
-      }
-      \Drupal::logger('management_armazens')->notice('AFTER BUILD: attached NEXT to actions[submit] (label=@l).', ['@l' => $label]);
-    }
-    else {
-      $existing_submit = (array) ($form['actions']['submit']['#submit'] ?? []);
-      if (!in_array('management_armazens_finish_submit', $existing_submit, TRUE)) {
-        $existing_submit[] = 'management_armazens_finish_submit';
-        $form['actions']['submit']['#submit'] = $existing_submit;
-      }
-      \Drupal::logger('management_armazens')->notice('AFTER BUILD: attached FINISH to actions[submit] (label=@l).', ['@l' => $label]);
-    }
-  }
-
-  // Outros botões finais típicos do EFS/Field Group.
-  foreach (['entity_form_steps_step_submit', 'save_and_exit'] as $key) {
-    if (isset($form['actions'][$key]) && ($form['actions'][$key]['#type'] ?? '') === 'submit') {
-      $exist = (array) ($form['actions'][$key]['#submit'] ?? []);
-      if (!in_array('management_armazens_finish_submit', $exist, TRUE)) {
-        $exist[] = 'management_armazens_finish_submit';
-        $form['actions'][$key]['#submit'] = $exist;
-      }
-      \Drupal::logger('management_armazens')->notice('AFTER BUILD: attached FINISH to actions[@k].', ['@k' => $key]);
-    }
-  }
-
-  return $form;
-}
-
-/**
- * Guarda rascunho (-1) via VALIDATE (corre sempre no NEXT).
- */
-function management_armazens_next_validate_save(array &$form, FormStateInterface $form_state) {
-  management_armazens__save_draft_if_needed($form_state, 'VALIDATE');
-}
-
-/**
- * Guarda rascunho (-1) via SUBMIT (se o wizard chamar #submit).
- */
-function management_armazens_next_submit(array &$form, FormStateInterface $form_state) {
-  management_armazens__save_draft_if_needed($form_state, 'SUBMIT');
-
-  // Se for "Save & Exit", redireciona.
-  $trigger = $form_state->getTriggeringElement();
-  $name    = (string) ($trigger['#name'] ?? '');
-  if (str_contains($name, 'save_resume_exit')) {
-    $url = Url::fromUserInput('/pt/user/');
-    $form_state->setRedirectUrl($url);
-    $req = \Drupal::request();
-    if ($req->isXmlHttpRequest()) {
-      $resp = new AjaxResponse();
-      $resp->addCommand(new RedirectCommand($url->toString()));
-      $form_state->setResponse($resp);
-    } else {
-      $form_state->setResponse(new RedirectResponse($url->toString()));
-    }
-    $form_state->setRebuild(FALSE);
-  }
-}
-
-/**
- * Validador GLOBAL do form: deteta NEXT/SAVE&EXIT e garante rascunho.
- */
-/**
- * Validador GLOBAL do form: trata NEXT e também o FINISH (fallback).
- */
-function management_armazens_guardian_validate(array &$form, FormStateInterface $form_state) {
-  // 1) NEXT / SAVE & EXIT intermédio -> rascunho (-1).
-  management_armazens__save_draft_if_needed($form_state, 'FORM_VALIDATE');
-
-  // 2) FINISH -> estado 0 (aguardar aprovação).
-  static $done_final = FALSE;
-  if ($done_final) {
-    return;
-  }
-
-  $trigger = $form_state->getTriggeringElement();
-  if (!$trigger) {
-    return;
-  }
-
-  $name  = (string) ($trigger['#name']  ?? '');
-  $label = (string) ($trigger['#value'] ?? '');
-  $norm  = mb_strtolower(trim(html_entity_decode($label)));
-
-  $finish_aliases = ['finish','guardar','save','submit','finalizar', mb_strtolower((string) t('Finish')), mb_strtolower((string) t('Save'))];
-
-  $is_finish_btn =
-       in_array($norm, $finish_aliases, TRUE)
-    || str_contains($name, 'entity_form_steps_step_submit')
-    || str_contains($name, 'save_and_exit');
-
-  if (!$is_finish_btn) {
-    return;
-  }
-
-  /** @var \Drupal\node\NodeInterface $entity */
-  $entity = $form_state->getFormObject()->getEntity();
-
-  try {
-    $entity->set('field_estado', 0); // Aguardar aprovação
-    $entity->setUnpublished();       // continua por aprovar
-    // Não é obrigatório gravar aqui, mas gravamos como fallback caso o wizard
-    // não chame #submit do botão final.
-    if (method_exists($entity, 'validate')) {
-      $entity->validate();
-    }
-    $entity->save();
-    $done_final = TRUE;
-    \Drupal::logger('management_armazens')->notice('Final (0) set via FORM_VALIDATE for node @nid.', ['@nid' => $entity->id()]);
-  }
-  catch (\Throwable $t) {
-    \Drupal::logger('management_armazens')->error('Final save (validate) failed: @m', ['@m' => $t->getMessage()]);
-  }
-}
-
-
-/**
- * Helper: decide se é NEXT/SAVE&EXIT e, sendo, grava rascunho (-1).
- */
-function management_armazens__save_draft_if_needed(FormStateInterface $form_state, string $origin) {
-  static $once = FALSE;
-  if ($once) {
-    return;
-  }
-
-  $trigger = $form_state->getTriggeringElement();
-  if (!$trigger) {
-    return;
-  }
-
-  $name  = (string) ($trigger['#name']  ?? '');
-  $label = (string) ($trigger['#value'] ?? '');
-  $norm  = mb_strtolower(trim(html_entity_decode($label)));
-
-  $next_aliases = ['next','seguinte','siguiente','suivant','weiter','avançar', mb_strtolower((string) t('Next'))];
-
-  $is_next          = in_array($norm, $next_aliases, TRUE) || str_contains($name, 'entity_form_steps_next');
-  $is_save_and_exit = str_contains($name, 'save_resume_exit') || str_contains($name, 'save_and_exit');
-
-  if (!($is_next || $is_save_and_exit)) {
-    return;
-  }
-
-  /** @var \Drupal\node\NodeInterface $entity */
-  $entity = $form_state->getFormObject()->getEntity();
-
-  // Mínimo para salvar já no 1.º passo.
-  if ($entity->isNew() && !$entity->getTitle()) {
-    $entity->setTitle('initial');
-  }
-  if (method_exists($entity, 'setValidationRequired')) {
-    $entity->setValidationRequired(FALSE);
-  }
-
-  try {
-    $entity->set('field_estado', -1);
-    $entity->setUnpublished();
-    $entity->save();
-    $once = TRUE; // evita múltiplos saves no mesmo ciclo
-    \Drupal::logger('management_armazens')->notice('Draft (-1) saved on NEXT via @o for node @nid.', [
-      '@o' => $origin,
-      '@nid' => $entity->id(),
-    ]);
-  }
-  catch (\Throwable $t) {
-    \Drupal::logger('management_armazens')->error('Draft save failed (@o): @m', ['@o' => $origin, '@m' => $t->getMessage()]);
-  }
-}
-
-/**
- * FINISH -> estado 0 (aguardar aprovação), unpublished.
+ * Submit handler: estado 0 (aguardar aprovação), unpublished.
  */
 function management_armazens_finish_submit(array &$form, FormStateInterface $form_state) {
   /** @var \Drupal\node\NodeInterface $entity */
@@ -354,11 +114,7 @@ function management_armazens_finish_submit(array &$form, FormStateInterface $for
   try {
     $entity->set('field_estado', 0);
     $entity->setUnpublished();
-    if (method_exists($entity, 'validate')) {
-      $entity->validate();
-    }
     $entity->save();
-    \Drupal::logger('management_armazens')->notice('Final (0) saved on FINISH for node @nid.', ['@nid' => $entity->id()]);
   }
   catch (\Throwable $t) {
     \Drupal::logger('management_armazens')->error('Finish save failed: @m', ['@m' => $t->getMessage()]);
@@ -368,10 +124,9 @@ function management_armazens_finish_submit(array &$form, FormStateInterface $for
   management_armazens_send_email_gestor($form, $form_state);
 }
 
-/* =========================
- *  RESTANTE LÓGICA / HELPERS
- * ========================= */
-
+/**
+ * Implements hook_entity_presave().
+ */
 function management_armazens_entity_presave(Drupal\Core\Entity\EntityInterface $entity) {
   if ($entity->getEntityTypeId() !== 'node') {
     return;
@@ -460,21 +215,10 @@ function management_armazens_entity_presave(Drupal\Core\Entity\EntityInterface $
       $entity->set('field_estado', -1);
       $entity->setUnpublished();
     }
-    if ($estado == 0) {
-      $entity->setUnpublished();
-    }
-    if ($estado == -1) {
+    if ($estado == 0 || $estado == -1) {
       $entity->setUnpublished();
     }
   }
-}
-
-/** Compatibilidade. */
-function management_armazens_change_state_on_edit(array $form, FormStateInterface $form_state) {
-  $node = $form_state->getFormObject()->getEntity();
-  $node->set('field_estado', -1);
-  $node->setUnpublished();
-  $node->save();
 }
 
 function management_armazens_save_coordinates_address(array $form, FormStateInterface $form_state) {
@@ -496,14 +240,6 @@ function management_armazens_save_coordinates_address(array $form, FormStateInte
   }
 }
 
-function management_armazens_check_fotos(array $form, FormStateInterface $form_state) {
-  $node  = $form_state->getFormObject()->getEntity();
-  $fotos = $node->get('field_fotos')->getValue();
-
-  $node->set('field_tem_fotos', !empty($fotos));
-  $node->save();
-}
-
 function management_armazens_send_email(array $form, FormStateInterface $form_state) {
   $node = $form_state->getFormObject()->getEntity();
   $node->set('field_estado', 0);
@@ -516,10 +252,9 @@ function management_armazens_send_email(array $form, FormStateInterface $form_st
   $module = 'management_armazens';
   $key = 'general_mail';
   $to = $user_email;
-  $params['subject'] = t("Your warehouse has been successfully created.");
+  $params['subject'] = t("Your garage has been successfully created.");
   $params['body'] = t("Thank you for using the platform. <br>"
     . "In the next few hours you will receive a notification confirming the publication or requesting any rectifications. <br>"
-    . "I'm sure we'll meet soon in this or another warehouse.<br><br><br>"
     . "See you soon!");
 
   $langcode = \Drupal::currentUser()->getPreferredLangcode();
@@ -532,10 +267,6 @@ function management_armazens_send_email(array $form, FormStateInterface $form_st
 }
 
 function management_armazens_send_email_gestor(array $form, FormStateInterface $form_state) {
-
-\Drupal::logger('management_armazens')->notice('ENTREI em send_email_gestor()');
-
-
   $node = $form_state->getFormObject()->getEntity();
   $title = $node->getTitle();
 
@@ -551,15 +282,14 @@ function management_armazens_send_email_gestor(array $form, FormStateInterface $
   $mailManager = \Drupal::service('plugin.manager.mail');
   $module = 'management_armazens';
   $key = 'general_mail';
-  $params['subject'] = t("Foi criado um novo armazem na plataforma.");
-  $params['body'] = t("Foi criado um novo armazem @title na plataforma Storitflex.", ['@title' => $title]);
+  $params['subject'] = t("Foi criada uma nova garagem na plataforma.");
+  $params['body'] = t("Foi criada uma nova garagem @title na plataforma.", ['@title' => $title]);
 
   $send = TRUE;
 
   foreach ($users as $user) {
     $to = $user->getEmail();
     $langcode = $user->getPreferredLangcode();
-
     $result = $mailManager->mail($module, $key, $to, $langcode, $params, NULL, $send);
     if (empty($result['result'])) {
       \Drupal::messenger()->addError(t('There was a problem sending your message and it was not sent.'), 'error');
@@ -587,220 +317,11 @@ function management_armazens_theme_suggestions_input_alter(&$suggestions, array 
   }
 }
 
-/**
- * Inline Entity Form alters/validators (iguais aos teus, só aplicados quando existirem).
- */
-function management_armazens_inline_entity_form_entity_form_alter(&$entity_form, &$form_state) {
-  if (in_array('field_preco_full', $entity_form['#parents'] ?? [], TRUE)) {
-    $entity_form['field_preco_ano']['widget'][0]['value']['#title'] = t("Preço ano (€)");
-    $entity_form['field_preco_dia']['widget'][0]['value']['#title'] = t("Preço dia (€)");
-    $entity_form['field_preco_mes']['widget'][0]['value']['#title'] = t("Preço mês (€)");
-    $entity_form['#element_validate'][] = 'management_armazens_validate_prices_aluguer_do_imovel';
-  }
-
-  if (in_array('field_preco_partilhado', $entity_form['#parents'] ?? [], TRUE)) {
-    $entity_form['#element_validate'][] = 'management_armazens_validate_prices_aluguer_por_area';
-  }
-
-  if (in_array('field_preco_temp', $entity_form['#parents'] ?? [], TRUE)) {
-    $entity_form['field_preco_ano']['widget'][0]['value']['#title'] = t("Preço ano (€/Un)");
-    $entity_form['field_preco_dia']['widget'][0]['value']['#title'] = t("Preço dia (€/Un)");
-    $entity_form['field_preco_mes']['widget'][0]['value']['#title'] = t("Preço mês (€/Un)");
-    $entity_form['#element_validate'][] = 'management_armazens_validate_prices_aluguer_camara_de_frio';
-  }
-
-  if (in_array('field_euro_paletes', $entity_form['#parents'] ?? [], TRUE)) {
-    $entity_form['#element_validate'][] = 'management_armazens_validate_prices_aluguer_euro_paletes';
-  }
-
-  if (in_array('field_paletes_americanas', $entity_form['#parents'] ?? [], TRUE)) {
-    $entity_form['#element_validate'][] = 'management_armazens_validate_prices_aluguer_paletes_ameri';
-  }
-
-  if (in_array('field_area_partilhada', $entity_form['#parents'] ?? [], TRUE)) {
-    $entity_form['#element_validate'][] = 'management_armazens_validate_area_partilhada';
-  }
-
-  if (in_array('field_raques', $entity_form['#parents'] ?? [], TRUE)) {
-    $entity_form['#element_validate'][] = 'management_armazens_validate_raques';
-  }
-}
-
-function management_armazens_validate_prices_aluguer_do_imovel(&$entity_form, &$form_state) {
-  if (($form_state->getValues()['field_bool_aluguer_do_imovel']['value'] ?? 0) == 1) {
-    $ano = (float) ($entity_form['field_preco_ano']['widget'][0]['value']['#value'] ?? 0);
-    $dia = (float) ($entity_form['field_preco_dia']['widget'][0]['value']['#value'] ?? 0);
-    $mes = (float) ($entity_form['field_preco_mes']['widget'][0]['value']['#value'] ?? 0);
-
-    $session = \Drupal::request()->getSession();
-    if ($session->get('temp_var_precos_validation') == NULL) {
-      if ($dia >= $mes) {
-        $form_state->setError($entity_form, t("The day's price is greater than or equal to the month's, if the information is correct click next."));
-        $session->set('temp_var_precos_validation', 1);
-      }
-      if ($mes >= $ano) {
-        $form_state->setError($entity_form, t('The price for the month is greater than or equal to the price for the year, if the information is correct click next.'));
-        $session->set('temp_var_precos_validation', 1);
-      }
-    }
-  }
-}
-
-function management_armazens_validate_prices_aluguer_por_area(&$entity_form, &$form_state) {
-  if (($form_state->getValues()['field_bool_aluguer_por_area']['value'] ?? 0) == 1) {
-    $ano = (float) ($entity_form['field_preco_ano']['widget'][0]['value']['#value'] ?? 0);
-    $dia = (float) ($entity_form['field_preco_dia']['widget'][0]['value']['#value'] ?? 0);
-    $mes = (float) ($entity_form['field_preco_mes']['widget'][0]['value']['#value'] ?? 0);
-
-    $session = \Drupal::request()->getSession();
-    if ($session->get('temp_var_precos_validation') == NULL) {
-      if ($dia >= $mes) {
-        $form_state->setError($entity_form, t("The day's price is greater than or equal to the month's, if the information is correct click next."));
-        $session->set('temp_var_precos_validation', 1);
-      }
-      if ($mes >= $ano) {
-        $form_state->setError($entity_form, t('The price for the month is greater than or equal to the price for the year, if the information is correct click next.'));
-        $session->set('temp_var_precos_validation', 1);
-      }
-    }
-  }
-}
-
-function management_armazens_validate_prices_aluguer_camara_de_frio(&$entity_form, &$form_state) {
-  if (($form_state->getValues()['field_bool_aluguer_camara_de_fri']['value'] ?? 0) == 1) {
-    $ano = (float) ($entity_form['field_preco_ano']['widget'][0]['value']['#value'] ?? 0);
-    $dia = (float) ($entity_form['field_preco_dia']['widget'][0]['value']['#value'] ?? 0);
-    $mes = (float) ($entity_form['field_preco_mes']['widget'][0]['value']['#value'] ?? 0);
-
-    $session = \Drupal::request()->getSession();
-    if ($session->get('temp_var_precos_validation') == NULL) {
-      if ($dia >= $mes) {
-        $form_state->setError($entity_form, t("The day's price is greater than or equal to the month's, if the information is correct click next."));
-        $session->set('temp_var_precos_validation', 1);
-      }
-      if ($mes >= $ano) {
-        $form_state->setError($entity_form, t('The price for the month is greater than or equal to the price for the year, if the information is correct click next.'));
-        $session->set('temp_var_precos_validation', 1);
-      }
-    }
-  }
-}
-
-function management_armazens_validate_prices_aluguer_euro_paletes(&$entity_form, &$form_state) {
-  if (($form_state->getValues()['field_bool_aluguer_euro_paletes']['value'] ?? 0) == 1) {
-    $ano = (float) ($entity_form['field_preco_ano']['widget'][0]['value']['#value'] ?? 0);
-    $dia = (float) ($entity_form['field_preco_dia']['widget'][0]['value']['#value'] ?? 0);
-    $mes = (float) ($entity_form['field_preco_mes']['widget'][0]['value']['#value'] ?? 0);
-
-    $session = \Drupal::request()->getSession();
-    if ($session->get('temp_var_precos_validation') == NULL) {
-      if ($dia >= $mes) {
-        $form_state->setError($entity_form, t("The day's price is greater than or equal to the month's, if the information is correct click next."));
-        $session->set('temp_var_precos_validation', 1);
-      }
-      if ($mes >= $ano) {
-        $form_state->setError($entity_form, t('The price for the month is greater than or equal to the price for the year, if the information is correct click next.'));
-        $session->set('temp_var_precos_validation', 1);
-      }
-    }
-  }
-}
-
-function management_armazens_validate_prices_aluguer_paletes_ameri(&$entity_form, &$form_state) {
-  if (($form_state->getValues()['field_bool_aluguer_paletes_ameri']['value'] ?? 0) == 1) {
-    $ano = (float) ($entity_form['field_preco_ano']['widget'][0]['value']['#value'] ?? 0);
-    $dia = (float) ($entity_form['field_preco_dia']['widget'][0]['value']['#value'] ?? 0);
-    $mes = (float) ($entity_form['field_preco_mes']['widget'][0]['value']['#value'] ?? 0);
-
-    $session = \Drupal::request()->getSession();
-    if ($session->get('temp_var_precos_validation') == NULL) {
-      if ($dia >= $mes) {
-        $form_state->setError($entity_form, t("The day's price is greater than or equal to the month's, if the information is correct click next."));
-        $session->set('temp_var_precos_validation', 1);
-      }
-      if ($mes >= $ano) {
-        $form_state->setError($entity_form, t('The price for the month is greater than or equal to the price for the year, if the information is correct click next.'));
-        $session->set('temp_var_precos_validation', 1);
-      }
-    }
-  }
-}
-
-// function management_armazens_validate_area_partilhada(&$entity_form, &$form_state) {
-//   $altura_i = (float) ($form_state->getValues()['field_area_individual'][0]['inline_entity_form']['field_altura'][0]['value'] ?? 0);
-//   $comp_i   = (float) ($form_state->getValues()['field_area_individual'][0]['inline_entity_form']['field_comprimento'][0]['value'] ?? 0);
-//   $larg_i   = (float) ($form_state->getValues()['field_area_individual'][0]['inline_entity_form']['field_largura'][0]['value'] ?? 0);
-
-//   if (($form_state->getValues()['field_permite_ser_partilhado'][0]['value'] ?? '') === 'sim') {
-//     $comp = (float) ($entity_form['field_comprimento']['widget'][0]['value']['#value'] ?? 0);
-//     $larg = (float) ($entity_form['field_largura']['widget'][0]['value']['#value'] ?? 0);
-//     $alt  = (float) ($entity_form['field_altura']['widget'][0]['value']['#value'] ?? 0);
-
-//     if ($comp > $comp_i) {
-//       $form_state->setError($entity_form, t('The length of the shared area cannot be greater than the length of the total area.'));
-//     }
-//     if ($larg > $larg_i) {
-//       $form_state->setError($entity_form, t('The width of the shared area cannot be greater than the width of the total area.'));
-//     }
-//     if ($alt  > $altura_i) {
-//       $form_state->setError($entity_form, t('The height of the shared area cannot be greater than the height of the total area.'));
-//     }
-//   }
-// }
-
-// function management_armazens_validate_raques(&$entity_form, &$form_state) {
-//   $comp = (float) ($entity_form['field_comprimento']['widget'][0]['value']['#value'] ?? 0);
-//   $larg = (float) ($entity_form['field_largura']['widget'][0]['value']['#value'] ?? 0);
-//   $alt  = (float) ($entity_form['field_altura']['widget'][0]['value']['#value'] ?? 0);
-
-//   $alt_i  = (float) ($form_state->getValues()['field_area_individual'][0]['inline_entity_form']['field_altura'][0]['value'] ?? 0);
-//   $comp_i = (float) ($form_state->getValues()['field_area_individual'][0]['inline_entity_form']['field_comprimento'][0]['value'] ?? 0);
-//   $larg_i = (float) ($form_state->getValues()['field_area_individual'][0]['inline_entity_form']['field_largura'][0]['value'] ?? 0);
-
-//   if ($comp > $comp_i) {
-//     $form_state->setError($entity_form, t('The length of the racks must not be greater than the length of the total area.'));
-//   }
-//   if ($larg > $larg_i) {
-//     $form_state->setError($entity_form, t('The width of the racks must not be greater than the width of the total area.'));
-//   }
-//   if ($alt  > $alt_i) {
-//     $form_state->setError($entity_form, t('The height of the racks must not be greater than the height of the total area.'));
-//   }
-// }
-
 function management_armazens_preprocess_links(&$variables) {
   $variables['current_language'] = \Drupal::languageManager()->getCurrentLanguage()->getId();
 }
 
-/**
- * Liga os validadores dos IEF somente quando o wrapper existir no passo.
- */
-function _ma_attach_ief_validators(array &$form): void {
-  if (isset($form['field_preco_full'])) {
-    $form['field_preco_full']['#element_validate'][] = 'management_armazens_validate_prices_aluguer_do_imovel';
-  }
-  if (isset($form['field_preco_partilhado'])) {
-    $form['field_preco_partilhado']['#element_validate'][] = 'management_armazens_validate_prices_aluguer_por_area';
-  }
-  if (isset($form['field_preco_temp'])) {
-    $form['field_preco_temp']['#element_validate'][] = 'management_armazens_validate_prices_aluguer_camara_de_frio';
-  }
-  if (isset($form['field_euro_paletes'])) {
-    $form['field_euro_paletes']['#element_validate'][] = 'management_armazens_validate_prices_aluguer_euro_paletes';
-  }
-  if (isset($form['field_paletes_americanas'])) {
-    $form['field_paletes_americanas']['#element_validate'][] = 'management_armazens_validate_prices_aluguer_paletes_ameri';
-  }
-  if (isset($form['field_area_partilhada'])) {
-    $form['field_area_partilhada']['#element_validate'][] = 'management_armazens_validate_area_partilhada';
-  }
-  if (isset($form['field_raques'])) {
-    $form['field_raques']['#element_validate'][] = 'management_armazens_validate_raques';
-  }
-}
-
 function management_armazens_validate_postal_code(array &$form, FormStateInterface $form_state): void {
-  // Garante que temos o array do address.
   $address = $form_state->getValue(['field_localidade', 0, 'address']);
   if (!is_array($address)) {
     return;
@@ -813,32 +334,26 @@ function management_armazens_validate_postal_code(array &$form, FormStateInterfa
     return;
   }
 
-  // 1) Validar FORMATO usando os padrões do Address module (por país).
   /** @var \CommerceGuys\Addressing\AddressFormat\AddressFormatRepositoryInterface $repo */
   $repo = \Drupal::service('address.address_format_repository');
   $format = $repo->get($country_code);
   $pattern = $format ? $format->getPostalCodePattern() : null;
 
   if ($pattern) {
-    // O padrão vem sem delimitadores; ancoramos e usamos /u.
     $regex = '/^' . $pattern . '$/u';
     if (!preg_match($regex, $postal_code)) {
-      // Usa setError associado ao elemento, se possível.
       if (isset($form['field_localidade']['widget'][0]['address']['postal_code'])) {
         $form_state->setError(
           $form['field_localidade']['widget'][0]['address']['postal_code'],
           t('Formato de código-postal inválido para @country.', ['@country' => $country_code])
         );
       } else {
-        // Fallback pelo "name".
         $form_state->setErrorByName('field_localidade][0][address][postal_code', t('Formato de código-postal inválido.'));
       }
       return;
     }
   }
-  // Se não houver pattern para o país, não bloqueamos pelo formato.
 
-  // 2) (Opcional) Validar EXISTÊNCIA via GeoNames. Não bloquear em falha.
   try {
     $client = \Drupal::httpClient();
     $res = $client->get('http://api.geonames.org/postalCodeLookupJSON', [
@@ -861,7 +376,6 @@ function management_armazens_validate_postal_code(array &$form, FormStateInterfa
       }
     }
   } catch (\Exception $e) {
-    // Não bloquear o wizard se a API falhar.
     return;
   }
 }
@@ -873,21 +387,5 @@ function management_armazens_module_implements_alter(array &$implementations, $h
       unset($implementations['management_armazens']);
       $implementations['management_armazens'] = $ours;
     }
-  }
-}
-
-
-/**
- * Validação custom: obriga o utilizador a escolher opção diferente de "-- Selecionar --".
- */
-function management_armazens_form_validate($form, FormStateInterface $form_state) {
-  if ($form_state->getValue('field_espaco') === '_none') {
-    $form_state->setErrorByName('field_espaco', t('Por favor, selecione uma opção válida.'));
-  }
-  if ($form_state->getValue('field_limitacoes_carga_descarga') === '_none') {
-    $form_state->setErrorByName('field_limitacoes_carga_descarga', t('Por favor, selecione uma opção válida.'));
-  }
-  if ($form_state->getValue('field_carga_adr') === '_none') {
-    $form_state->setErrorByName('field_carga_adr', t('Por favor, selecione uma opção válida.'));
   }
 }

@@ -1,0 +1,47 @@
+<?php
+
+/**
+ * @file
+ * Install, update, and uninstall functions for garagem_reservas module.
+ */
+
+/**
+ * Implements hook_schema().
+ *
+ * Tabela adicional de notificações da plataforma.
+ */
+function garagem_reservas_schema() {
+  $schema['garagem_reserva'] = [
+    'description' => 'Tabela de reservas de garagens.',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'garagem_id' => ['type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE],
+      'user_id' => ['type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE],
+      'proprietario_id' => ['type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE],
+      'data_inicio' => ['type' => 'int', 'not null' => TRUE],
+      'data_fim' => ['type' => 'int', 'not null' => FALSE],
+      'indefinido' => ['type' => 'int', 'size' => 'tiny', 'not null' => TRUE, 'default' => 0],
+      'tipo_preco' => ['type' => 'varchar', 'length' => 10, 'not null' => TRUE],
+      'preco_total' => ['type' => 'numeric', 'precision' => 10, 'scale' => 2, 'not null' => TRUE],
+      'taxa_plataforma' => ['type' => 'numeric', 'precision' => 10, 'scale' => 2, 'not null' => TRUE],
+      'estado' => ['type' => 'varchar', 'length' => 20, 'not null' => TRUE, 'default' => 'pendente'],
+      'data_criacao' => ['type' => 'int', 'not null' => TRUE],
+      'data_aprovacao' => ['type' => 'int', 'not null' => FALSE],
+      'data_pagamento' => ['type' => 'int', 'not null' => FALSE],
+      'commerce_order_id' => ['type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE],
+      'notas' => ['type' => 'text', 'not null' => FALSE],
+    ],
+    'primary key' => ['id'],
+    'indexes' => [
+      'garagem_id' => ['garagem_id'],
+      'user_id' => ['user_id'],
+      'estado' => ['estado'],
+    ],
+  ];
+
+  return $schema;
+}

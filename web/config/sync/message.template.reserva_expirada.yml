@@ -1,0 +1,21 @@
+uuid: 2c82f0f3-0358-4fb4-8688-7205b14286e6
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+_core:
+  default_config_hash: 7DI2Ovp3apcCHv3a1L0pKxvxtdzqxbvyNVDH8zCQY90
+template: reserva_expirada
+label: 'Reserva expirada'
+description: 'Notificação enviada quando uma reserva expira por falta de pagamento.'
+text:
+  -
+    value: '<p>A sua reserva expirou por falta de pagamento dentro do prazo definido.</p>'
+    format: basic_html
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

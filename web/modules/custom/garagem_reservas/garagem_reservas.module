@@ -1,0 +1,184 @@
+<?php
+
+/**
+ * @file
+ * Módulo de gestão de reservas de garagens.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Access\AccessResult;
+
+/**
+ * Implements hook_cron().
+ *
+ * Verifica reservas expiradas e atualiza o estado.
+ */
+function garagem_reservas_cron() {
+  $config = \Drupal::config('garagem_reservas.settings');
+  $prazo_horas = $config->get('prazo_pagamento_horas') ?? 48;
+
+  $database = \Drupal::database();
+  $tempo_limite = \Drupal::time()->getRequestTime() - ($prazo_horas * 3600);
+
+  // Buscar reservas aprovadas que já ultrapassaram o prazo de pagamento.
+  $ids = $database->select('garagem_reserva', 'gr')
+    ->fields('gr', ['id'])
+    ->condition('estado', 'aprovado')
+    ->condition('data_aprovacao', $tempo_limite, '<')
+    ->execute()
+    ->fetchCol();
+
+  if (!empty($ids)) {
+    foreach ($ids as $id) {
+      $database->update('garagem_reserva')
+        ->fields(['estado' => 'expirado'])
+        ->condition('id', $id)
+        ->execute();
+
+      // Notificar user e proprietário.
+      \Drupal::service('garagem_reservas.notificacao')->reservaExpirada($id);
+    }
+
+    \Drupal::logger('garagem_reservas')->info(
+      '@count reservas marcadas como expiradas.',
+      ['@count' => count($ids)]
+    );
+  }
+}
+
+/**
+ * Implements hook_mail().
+ */
+function garagem_reservas_mail($key, &$message, $params) {
+  $options = ['langcode' => $message['langcode']];
+
+  switch ($key) {
+    case 'reserva_criada_proprietario':
+      $message['subject'] = t('Nova reserva para a sua garagem', [], $options);
+      $message['body'][] = $params['body'];
+      break;
+
+    case 'reserva_aprovada_user':
+      $message['subject'] = t('A sua reserva foi aprovada', [], $options);
+      $message['body'][] = $params['body'];
+      break;
+
+    case 'reserva_rejeitada_user':
+      $message['subject'] = t('A sua reserva foi rejeitada', [], $options);
+      $message['body'][] = $params['body'];
+      break;
+
+    case 'reserva_expirada':
+      $message['subject'] = t('A sua reserva expirou', [], $options);
+      $message['body'][] = $params['body'];
+      break;
+
+    case 'reserva_paga_proprietario':
+      $message['subject'] = t('Reserva confirmada - Pagamento recebido', [], $options);
+      $message['body'][] = $params['body'];
+      break;
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function garagem_reservas_form_alter(&$form, $form_state, $form_id) {
+
+  // Workaround para conflito entre entity_form_steps e formulários Commerce.
+  // O entity_form_steps tenta ler configurações que não existem nestes forms.
+  $commerce_forms = [
+    'commerce_product_default_add_form',
+    'commerce_product_default_edit_form',
+    'commerce_product_variation_default_add_form',
+    'commerce_product_variation_default_edit_form',
+  ];
+  if (in_array($form_id, $commerce_forms) || strpos($form_id, 'commerce_product') === 0) {
+    if (isset($form['#process'])) {
+      foreach ($form['#process'] as $key => $callback) {
+        if (is_array($callback) && isset($callback[0]) && is_object($callback[0]) && strpos(get_class($callback[0]), 'EntityFormSteps') !== FALSE) {
+          unset($form['#process'][$key]);
+        }
+      }
+    }
+  }
+  if ($form_id === 'node_armazem_form' || $form_id === 'node_armazem_edit_form') {
+
+    // Esconder campos de preço por hora — desativado para já.
+    if (isset($form['field_preco_hora_ativo'])) {
+      $form['field_preco_hora_ativo']['#access'] = FALSE;
+    }
+    if (isset($form['field_preco_hora'])) {
+      $form['field_preco_hora']['#access'] = FALSE;
+    }
+
+    $form['#validate'][] = 'garagem_reservas_armazem_validate';
+  }
+}
+
+/**
+ * Validação custom — pelo menos um preço (dia ou mês) tem de estar ativo.
+ */
+function garagem_reservas_armazem_validate(&$form, $form_state) {
+  $input = $form_state->getUserInput();
+
+  $dia_ativo = !empty($input['field_preco_dia_ativo']['value']) && $input['field_preco_dia_ativo']['value'] !== '0';
+  $mes_ativo = !empty($input['field_preco_mes_ativo']['value']) && $input['field_preco_mes_ativo']['value'] !== '0';
+
+  if (!$dia_ativo && !$mes_ativo) {
+    $form_state->setError(
+      $form['field_preco_dia_ativo'],
+      t('Tem de definir pelo menos um tipo de preço (dia ou mês).')
+    );
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function garagem_reservas_theme() {
+  return [
+    'garagem_reserva' => [
+      'variables' => [
+        'reserva' => NULL,
+        'garagem' => NULL,
+        'user' => NULL,
+        'preco_total' => NULL,
+        'taxa_plataforma' => NULL,
+        'taxa_fixa' => NULL,
+        'taxa_percentual' => NULL,
+        'is_proprietario' => FALSE,
+        'is_user' => FALSE,
+      ],
+      'template' => 'garagem-reserva',
+    ],
+    'garagem_reservas_lista' => [
+      'variables' => [
+        'reservas' => [],
+        'tipo' => 'user',
+      ],
+      'template' => 'garagem-reservas-lista',
+    ],
+    'garagem_reservas_notificacoes' => [
+      'variables' => [
+        'items' => [],
+      ],
+      'template' => 'garagem-reservas-notificacoes',
+    ],
+    'garagem_reserva_pdf' => [
+      'variables' => [
+        'reserva' => NULL,
+        'garagem' => NULL,
+        'user' => NULL,
+        'proprietario' => NULL,
+        'preco_total' => NULL,
+        'taxa_plataforma' => NULL,
+        'data_geracao' => NULL,
+      ],
+      'template' => 'garagem-reserva-pdf',
+    ],
+  ];
+}
+
+

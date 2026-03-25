@@ -1,7 +1,0 @@
-uuid: 6b2377d1-ae26-4637-861b-0a0a12938b89
-langcode: pt-pt
-status: true
-dependencies: {  }
-name: 'Padel Court'
-type: padel
-default_event_value_field_ids: null

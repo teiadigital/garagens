@@ -1,0 +1,35 @@
+{#
+/**
+ * @file
+ * Template de notificações.
+ */
+#}
+<div class="garagem-notificacoes">
+
+  <h2>{{ 'Notificações'|t }}</h2>
+
+  {% if items is empty %}
+    <p class="alert alert-info">{{ 'Não tem notificações.'|t }}</p>
+  {% else %}
+    <div class="notificacoes-lista">
+      {% for item in items %}
+        <div class="notificacao-item card mb-2">
+          <div class="card-body">
+            <div class="notificacao-header d-flex justify-content-between align-items-center mb-2">
+              <span class="notificacao-tipo badge bg-secondary">
+                {{ item.bundle }}
+              </span>
+              <small class="text-muted">
+                {{ item.created|date('d/m/Y H:i') }}
+              </small>
+            </div>
+            <div class="notificacao-texto">
+              {{ item.text|raw }}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+</div>

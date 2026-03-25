@@ -1,0 +1,17 @@
+uuid: 134b1189-6b06-4333-8e9b-b12e8496a943
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.message.mail_body
+    - message.template.reserva_expirada
+id: message.reserva_expirada.mail_body
+targetEntityType: message
+bundle: reserva_expirada
+mode: mail_body
+content:
+  partial_1:
+    weight: 0
+    region: content
+hidden:
+  partial_0: true

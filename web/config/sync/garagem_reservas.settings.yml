@@ -1,0 +1,5 @@
+_core:
+  default_config_hash: 8KkhhohgPMy8leDmWOJ4srgo8SNbxqjln-atfmeL5Bk
+prazo_pagamento_horas: '48'
+taxa_fixa: '5'
+percentagem_plataforma: '10'

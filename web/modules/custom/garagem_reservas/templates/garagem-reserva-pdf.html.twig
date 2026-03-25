@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>{{ 'Reserva #'|t }}{{ reserva.id }}</title>
+  <style>
+    body { font-family: Arial, sans-serif; font-size: 12px; color: #333; }
+    .header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 20px; margin-bottom: 20px; }
+    .section { margin-bottom: 20px; }
+    .section h3 { border-bottom: 1px solid #ccc; padding-bottom: 5px; }
+    .row { display: flex; justify-content: space-between; margin-bottom: 5px; }
+    .footer { position: fixed; bottom: 0; text-align: center; font-size: 10px; color: #999; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>{{ 'Comprovativo de Reserva'|t }}</h1>
+    <p>{{ 'Reserva #'|t }}{{ reserva.id }} — {{ data_geracao }}</p>
+  </div>
+
+  <div class="section">
+    <h3>{{ 'Garagem'|t }}</h3>
+    <div class="row">
+      <span>{{ 'Nome'|t }}:</span>
+      <span>{{ garagem.title.value }}</span>
+    </div>
+    <div class="row">
+      <span>{{ 'Proprietário'|t }}:</span>
+      <span>{{ proprietario.name.value }}</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>{{ 'Arrendatário'|t }}</h3>
+    <div class="row">
+      <span>{{ 'Nome'|t }}:</span>
+      <span>{{ user.name.value }}</span>
+    </div>
+    <div class="row">
+      <span>{{ 'Email'|t }}:</span>
+      <span>{{ user.mail.value }}</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>{{ 'Período da Reserva'|t }}</h3>
+    <div class="row">
+      <span>{{ 'Data de início'|t }}:</span>
+      <span>{{ reserva.data_inicio|date('d/m/Y H:i') }}</span>
+    </div>
+    {% if reserva.indefinido %}
+      <div class="row">
+        <span>{{ 'Data de fim'|t }}:</span>
+        <span>{{ 'Indefinido'|t }}</span>
+      </div>
+    {% else %}
+      <div class="row">
+        <span>{{ 'Data de fim'|t }}:</span>
+        <span>{{ reserva.data_fim|date('d/m/Y H:i') }}</span>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="section">
+    <h3>{{ 'Valores'|t }}</h3>
+    <div class="row">
+      <span>{{ 'Preço total da reserva'|t }}:</span>
+      <span>{{ preco_total|number_format(2) }}€</span>
+    </div>
+    <div class="row">
+      <span>{{ 'Taxa da plataforma'|t }}:</span>
+      <span>{{ taxa_plataforma|number_format(2) }}€</span>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>{{ 'Documento gerado automaticamente pela plataforma.'|t }}</p>
+  </div>
+
+</body>
+</html>

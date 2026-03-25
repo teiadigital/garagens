@@ -3,9 +3,7 @@ langcode: pt-pt
 status: true
 dependencies:
   config:
-    - field.field.node.armazem.field_area
     - field.field.node.armazem.field_area_individual
-    - field.field.node.armazem.field_availability_daily
     - field.field.node.armazem.field_certificados
     - field.field.node.armazem.field_controlo_acesso
     - field.field.node.armazem.field_coordenadas
@@ -25,12 +23,17 @@ dependencies:
     - field.field.node.armazem.field_identifique_os_certificado
     - field.field.node.armazem.field_incluir_espaco_exterior
     - field.field.node.armazem.field_licenca_de_utilizacao
-    - field.field.node.armazem.field_licenca_utilizacao
     - field.field.node.armazem.field_limitacoes_de_acesso
     - field.field.node.armazem.field_limitacoes_horario_acesso
     - field.field.node.armazem.field_localidade
     - field.field.node.armazem.field_peso_maximo_piso
     - field.field.node.armazem.field_piso
+    - field.field.node.armazem.field_preco_dia
+    - field.field.node.armazem.field_preco_dia_ativo
+    - field.field.node.armazem.field_preco_hora
+    - field.field.node.armazem.field_preco_hora_ativo
+    - field.field.node.armazem.field_preco_mes
+    - field.field.node.armazem.field_preco_mes_ativo
     - field.field.node.armazem.field_recursos
     - field.field.node.armazem.field_seguranca
     - field.field.node.armazem.field_seguro
@@ -52,15 +55,6 @@ targetEntityType: node
 bundle: armazem
 mode: default
 content:
-  field_area:
-    type: entity_reference_revisions_entity_view
-    label: above
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 94
-    region: content
   field_area_individual:
     type: entity_reference_revisions_entity_view
     label: above
@@ -69,15 +63,6 @@ content:
       link: ''
     third_party_settings: {  }
     weight: 18
-    region: content
-  field_availability_daily:
-    type: entity_reference_entity_view
-    label: above
-    settings:
-      view_mode: daily_calendar
-      link: false
-    third_party_settings: {  }
-    weight: 93
     region: content
   field_certificados:
     type: list_default
@@ -223,13 +208,6 @@ content:
     third_party_settings: {  }
     weight: 89
     region: content
-  field_licenca_utilizacao:
-    type: list_default
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    weight: 39
-    region: content
   field_limitacoes_de_acesso:
     type: list_default
     label: above
@@ -269,6 +247,69 @@ content:
       link: false
     third_party_settings: {  }
     weight: 8
+    region: content
+  field_preco_dia:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 98
+    region: content
+  field_preco_dia_ativo:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 97
+    region: content
+  field_preco_hora:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 96
+    region: content
+  field_preco_hora_ativo:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 95
+    region: content
+  field_preco_mes:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 100
+    region: content
+  field_preco_mes_ativo:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 99
     region: content
   field_recursos:
     type: list_default

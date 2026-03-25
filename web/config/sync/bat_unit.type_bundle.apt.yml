@@ -1,7 +1,0 @@
-uuid: b1380843-50bf-403b-8606-33c82e304ea7
-langcode: pt-pt
-status: true
-dependencies: {  }
-name: Apartment
-type: apt
-default_event_value_field_ids: null

@@ -1,0 +1,21 @@
+uuid: 2ae6ae5e-82cd-42f0-8ff6-0e4c518ac3e9
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+_core:
+  default_config_hash: hDK74Ri2orpW05GcvIaHjerDKRS1bGzpxW0GRhBFEMo
+template: reserva_rejeitada_user
+label: 'Reserva rejeitada'
+description: 'Notificação enviada ao utilizador quando a reserva é rejeitada.'
+text:
+  -
+    value: '<p>O seu pedido de reserva foi rejeitado pelo proprietário.</p>'
+    format: basic_html
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

@@ -35,6 +35,7 @@
         "drupal/core-composer-scaffold": "^10.5.1",
         "drupal/core-project-message": "^10.5.1",
         "drupal/core-recommended": "^10.5.1",
+        "drupal/datetime_flatpickr": "^3.0",
         "drupal/dropzonejs": "^2.8",
         "drupal/email_registration": "^1.4",
         "drupal/entity_browser": "^2.9",
@@ -57,6 +58,8 @@
         "drupal/mailchimp": "^2.2",
         "drupal/menu_per_role": "^1.5",
         "drupal/menus_attribute": "^1.3",
+        "drupal/message": "^1.8",
+        "drupal/message_notify": "^1.5",
         "drupal/metatag": "^2.0",
         "drupal/mimemail": "^1.0@alpha",
         "drupal/multiple_fields_remove_button": "^2.2",
@@ -217,6 +220,9 @@
             },
             "drupal/menus_attribute": {
                 "fix_menus_attribute_render_bug": "https://www.drupal.org/files/issues/2023-06-06/fix_menus_attribute_render_bug.patch"
+            },
+            "drupal/entity_form_steps": {
+                "Fix null formDisplay with Commerce": "patches/entity_form_steps-fix-null-form-display.patch"
             }
         },
         "drupal-lenient": {

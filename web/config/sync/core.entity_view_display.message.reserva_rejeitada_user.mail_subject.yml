@@ -1,0 +1,17 @@
+uuid: ae3bbed4-fe69-44d2-8857-5cdaefee20fc
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.message.mail_subject
+    - message.template.reserva_rejeitada_user
+id: message.reserva_rejeitada_user.mail_subject
+targetEntityType: message
+bundle: reserva_rejeitada_user
+mode: mail_subject
+content:
+  partial_0:
+    weight: 0
+    region: content
+hidden:
+  partial_1: true

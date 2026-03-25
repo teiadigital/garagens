@@ -1,0 +1,15 @@
+services:
+  garagem_reservas.preco:
+    class: Drupal\garagem_reservas\Service\PrecoService
+
+  garagem_reservas.disponibilidade:
+    class: Drupal\garagem_reservas\Service\DisponibilidadeService
+    arguments: ['@database']
+
+  garagem_reservas.notificacao:
+    class: Drupal\garagem_reservas\Service\NotificacaoService
+    arguments:
+      - '@database'
+      - '@language_manager'
+      - '@entity_type.manager'
+      - '@message_notify.sender'

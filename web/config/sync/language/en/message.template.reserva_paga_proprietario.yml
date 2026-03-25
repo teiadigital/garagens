@@ -1,0 +1,4 @@
+text:
+  -
+    value: '<p>O pagamento da reserva foi confirmado. Aceda à plataforma para descarregar o comprovativo em PDF.</p>'
+    format: basic_html

@@ -4,9 +4,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.mapa_popup
-    - field.field.node.armazem.field_area
     - field.field.node.armazem.field_area_individual
-    - field.field.node.armazem.field_availability_daily
     - field.field.node.armazem.field_certificados
     - field.field.node.armazem.field_controlo_acesso
     - field.field.node.armazem.field_coordenadas
@@ -26,12 +24,17 @@ dependencies:
     - field.field.node.armazem.field_identifique_os_certificado
     - field.field.node.armazem.field_incluir_espaco_exterior
     - field.field.node.armazem.field_licenca_de_utilizacao
-    - field.field.node.armazem.field_licenca_utilizacao
     - field.field.node.armazem.field_limitacoes_de_acesso
     - field.field.node.armazem.field_limitacoes_horario_acesso
     - field.field.node.armazem.field_localidade
     - field.field.node.armazem.field_peso_maximo_piso
     - field.field.node.armazem.field_piso
+    - field.field.node.armazem.field_preco_dia
+    - field.field.node.armazem.field_preco_dia_ativo
+    - field.field.node.armazem.field_preco_hora
+    - field.field.node.armazem.field_preco_hora_ativo
+    - field.field.node.armazem.field_preco_mes
+    - field.field.node.armazem.field_preco_mes_ativo
     - field.field.node.armazem.field_recursos
     - field.field.node.armazem.field_seguranca
     - field.field.node.armazem.field_seguro
@@ -79,9 +82,7 @@ content:
     weight: 8
     region: content
 hidden:
-  field_area: true
   field_area_individual: true
-  field_availability_daily: true
   field_certificados: true
   field_controlo_acesso: true
   field_coordenadas: true
@@ -99,11 +100,16 @@ hidden:
   field_identifique_os_certificado: true
   field_incluir_espaco_exterior: true
   field_licenca_de_utilizacao: true
-  field_licenca_utilizacao: true
   field_limitacoes_de_acesso: true
   field_limitacoes_horario_acesso: true
   field_peso_maximo_piso: true
   field_piso: true
+  field_preco_dia: true
+  field_preco_dia_ativo: true
+  field_preco_hora: true
+  field_preco_hora_ativo: true
+  field_preco_mes: true
+  field_preco_mes_ativo: true
   field_recursos: true
   field_seguranca: true
   field_seguro: true

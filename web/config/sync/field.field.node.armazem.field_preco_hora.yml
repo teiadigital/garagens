@@ -1,0 +1,23 @@
+uuid: 68142b97-fc4e-4921-8cd1-d096db6d461a
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_preco_hora
+    - node.type.armazem
+id: node.armazem.field_preco_hora
+field_name: field_preco_hora
+entity_type: node
+bundle: armazem
+label: 'Valor preço/hora'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

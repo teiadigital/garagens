@@ -1,7 +1,0 @@
-uuid: 60705b1b-7a67-4458-b32e-17c596a5f09d
-langcode: pt-pt
-status: true
-dependencies: {  }
-name: Tent
-type: tent
-default_event_value_field_ids: null

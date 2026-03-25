@@ -1,0 +1,18 @@
+uuid: bce38dd4-2127-4086-bd4d-fe010b1aa157
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_preco_dia_ativo
+field_name: field_preco_dia_ativo
+entity_type: node
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

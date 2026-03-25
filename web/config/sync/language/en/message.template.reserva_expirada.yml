@@ -1,0 +1,4 @@
+text:
+  -
+    value: '<p>A sua reserva expirou por falta de pagamento dentro do prazo definido.</p>'
+    format: basic_html

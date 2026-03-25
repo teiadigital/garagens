@@ -1,0 +1,54 @@
+label: Pagamentos
+display:
+  default:
+    display_title: Default
+    display_options:
+      title: Pagamentos
+      fields:
+        amount__number:
+          label: Pagamento
+          separator: ', '
+        refunded_amount__number:
+          label: 'Devolveu:'
+          separator: ', '
+        avs_response_code_label:
+          separator: ', '
+        avs_response_code:
+          label: 'Código de resposta AVS'
+          separator: ', '
+        state:
+          label: Estado
+          separator: ', '
+        payment_gateway:
+          label: 'Gateway de pagamento'
+          separator: ', '
+        authorized:
+          label: Autorizado
+          separator: ', '
+        completed:
+          label: Completed
+          separator: ', '
+        remote_id:
+          label: 'ID remoto'
+          separator: ', '
+        operations:
+          label: Operations
+      exposed_form:
+        options:
+          submit_button: Apply
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      empty:
+        area_text_custom:
+          content: 'Ainda não foram efetuados pagamentos.'
+      arguments:
+        order_id:
+          exception:
+            title: All
+  page_1:
+    display_title: Page
+    display_options:
+      menu:
+        title: Pagamentos

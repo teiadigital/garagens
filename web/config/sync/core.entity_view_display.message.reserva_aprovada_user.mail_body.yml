@@ -1,0 +1,17 @@
+uuid: 62212566-a2f7-4f67-b8bd-6e475f791cc7
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.message.mail_body
+    - message.template.reserva_aprovada_user
+id: message.reserva_aprovada_user.mail_body
+targetEntityType: message
+bundle: reserva_aprovada_user
+mode: mail_body
+content:
+  partial_1:
+    weight: 0
+    region: content
+hidden:
+  partial_0: true

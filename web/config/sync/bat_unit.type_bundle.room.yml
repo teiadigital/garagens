@@ -1,7 +1,0 @@
-uuid: 50424a93-0a8c-49d0-b007-33992d53df1d
-langcode: pt-pt
-status: true
-dependencies: {  }
-name: Room
-type: room
-default_event_value_field_ids: null

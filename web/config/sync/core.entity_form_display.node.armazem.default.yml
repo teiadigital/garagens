@@ -62,7 +62,7 @@ third_party_settings:
       label: 'grid col 2'
       region: content
       parent_name: ''
-      weight: 7
+      weight: 6
       format_type: html_element
       format_settings:
         classes: field-group-grid-col-2
@@ -128,7 +128,7 @@ third_party_settings:
       label: Preços
       region: content
       parent_name: ''
-      weight: 25
+      weight: 24
       format_type: fieldset
       format_settings:
         classes: ''
@@ -144,7 +144,7 @@ mode: default
 content:
   field_area_individual:
     type: paragraphs
-    weight: 10
+    weight: 9
     region: content
     settings:
       title: Parágrafo
@@ -177,19 +177,19 @@ content:
           dialog_style: tiles
   field_certificados:
     type: options_buttons
-    weight: 21
+    weight: 20
     region: content
     settings: {  }
     third_party_settings: {  }
   field_controlo_acesso:
     type: options_buttons
-    weight: 12
+    weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }
   field_desc_controlo_acesso:
     type: string_textarea
-    weight: 13
+    weight: 12
     region: content
     settings:
       rows: 5
@@ -216,7 +216,7 @@ content:
             selector: ''
   field_desc_lim_horario_acesso:
     type: string_textarea
-    weight: 15
+    weight: 14
     region: content
     settings:
       rows: 5
@@ -243,7 +243,7 @@ content:
             selector: ''
   field_desc_limitacoes_acesso:
     type: string_textarea
-    weight: 9
+    weight: 8
     region: content
     settings:
       rows: 5
@@ -270,7 +270,7 @@ content:
             selector: ''
   field_desc_seguranca:
     type: string_textarea
-    weight: 17
+    weight: 16
     region: content
     settings:
       rows: 5
@@ -297,7 +297,7 @@ content:
             selector: ''
   field_desc_seguros:
     type: string_textarea
-    weight: 24
+    weight: 23
     region: content
     settings:
       rows: 5
@@ -324,7 +324,7 @@ content:
             selector: ''
   field_desc_sistema_det_incendios:
     type: string_textarea
-    weight: 19
+    weight: 18
     region: content
     settings:
       rows: 5
@@ -351,7 +351,7 @@ content:
             selector: ''
   field_descricao:
     type: string_textarea
-    weight: 2
+    weight: 1
     region: content
     settings:
       rows: 5
@@ -359,20 +359,20 @@ content:
     third_party_settings: {  }
   field_espaco:
     type: options_buttons
-    weight: 5
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
   field_estado:
     type: field_hidden_number
-    weight: 26
+    weight: 25
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_fotos:
     type: entity_browser_entity_reference
-    weight: 3
+    weight: 2
     region: content
     settings:
       entity_browser: images
@@ -387,7 +387,7 @@ content:
     third_party_settings: {  }
   field_identifique_os_certificado:
     type: string_textarea
-    weight: 22
+    weight: 21
     region: content
     settings:
       rows: 5
@@ -414,31 +414,31 @@ content:
             selector: ''
   field_incluir_espaco_exterior:
     type: options_buttons
-    weight: 6
+    weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
   field_licenca_de_utilizacao:
     type: options_buttons
-    weight: 20
+    weight: 19
     region: content
     settings: {  }
     third_party_settings: {  }
   field_limitacoes_de_acesso:
     type: options_buttons
-    weight: 8
+    weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }
   field_limitacoes_horario_acesso:
     type: options_buttons
-    weight: 14
+    weight: 13
     region: content
     settings: {  }
     third_party_settings: {  }
   field_localidade:
     type: address_default
-    weight: 4
+    weight: 3
     region: content
     settings:
       wrapper_type: fieldset
@@ -451,14 +451,10 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_piso:
-    type: entity_reference_autocomplete
+    type: options_select
     weight: 0
     region: content
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
+    settings: {  }
     third_party_settings: {  }
   field_preco_dia:
     type: number
@@ -526,35 +522,27 @@ content:
     third_party_settings: {  }
   field_recursos:
     type: options_buttons
-    weight: 11
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
   field_seguranca:
     type: options_buttons
-    weight: 16
+    weight: 15
     region: content
     settings: {  }
     third_party_settings: {  }
   field_seguro:
     type: options_buttons
-    weight: 23
+    weight: 22
     region: content
     settings: {  }
     third_party_settings: {  }
   field_sistema_detecao_incendios:
     type: options_buttons
-    weight: 18
+    weight: 17
     region: content
     settings: {  }
-    third_party_settings: {  }
-  field_titulo:
-    type: string_textfield
-    weight: 1
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
     third_party_settings: {  }
   title:
     type: field_hidden_string_textfield
@@ -574,6 +562,7 @@ hidden:
   field_preco_hora_ativo: true
   field_termos_e_condicoes: true
   field_tipo_de_controlo: true
+  field_titulo: true
   langcode: true
   path: true
   promote: true

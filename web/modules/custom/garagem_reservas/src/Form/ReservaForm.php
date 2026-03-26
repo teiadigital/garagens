@@ -34,58 +34,30 @@ class ReservaForm extends FormBase {
       'disponibilidadeUrl' => '/garagem/' . $node->id() . '/disponibilidade',
     ];
 
-    // Data de início.
-    $form['data_inicio'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Data de início'),
-      '#required' => TRUE,
-      '#attributes' => [
-        'class' => ['garagem-flatpickr-inicio'],
-        'placeholder' => $this->t('Selecione a data de início'),
-        'readonly' => 'readonly',
-      ],
-    ];
+    // Verificar se há reservas futuras — se sim, esconder toggle indefinido.
+    $servico_disponibilidade = \Drupal::service('garagem_reservas.disponibilidade');
+    $tem_reservas_futuras = $servico_disponibilidade->temReservasFuturas($node->id());
 
-    // Hidden fields para guardar os valores timestamp.
-    $form['data_inicio_value'] = [
-      '#type' => 'hidden',
-      '#attributes' => ['id' => 'data-inicio-value'],
-    ];
-
-    // Checkbox indefinido.
+    // Toggle switch para reserva indefinida — antes do calendário.
     $form['indefinido'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Reserva por tempo indefinido'),
       '#default_value' => FALSE,
       '#attributes' => ['id' => 'edit-indefinido'],
+      '#description' => $this->t('Ative se não sabe ainda a data de fim.'),
+      '#access' => !$tem_reservas_futuras,
     ];
 
-    // Container para data fim.
-    $form['data_fim_wrapper'] = [
-      '#type' => 'container',
-      '#attributes' => ['id' => 'data-fim-wrapper'],
-      '#states' => [
-        'invisible' => [
-          'input[name="indefinido"]' => ['checked' => TRUE],
-        ],
-      ],
-    ];
-
-    // Data de fim.
-    $form['data_fim_wrapper']['data_fim'] = [
+    // Campo único range estilo Airbnb.
+    $form['datas'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Data de fim'),
+      '#title' => $this->t('Período de reserva'),
       '#required' => FALSE,
       '#attributes' => [
-        'class' => ['garagem-flatpickr-fim'],
-        'placeholder' => $this->t('Selecione a data de fim'),
+        'class' => ['garagem-flatpickr-range'],
+        'placeholder' => $this->t('Selecione as datas de início e fim'),
         'readonly' => 'readonly',
       ],
-    ];
-
-    $form['data_fim_wrapper']['data_fim_value'] = [
-      '#type' => 'hidden',
-      '#attributes' => ['id' => 'data-fim-value'],
     ];
 
     // Info do preço calculado.
@@ -123,45 +95,57 @@ class ReservaForm extends FormBase {
   public function validateForm(array &$form, FormStateInterface $form_state) {
     $indefinido = $form_state->getValue('indefinido');
     $input = $form_state->getUserInput();
+    $datas_str = trim($input['datas'] ?? '');
 
-    $data_inicio_str = $input['data_inicio'] ?? NULL;
-    $data_fim_str = $input['data_fim'] ?? NULL;
-
-    if (empty($data_inicio_str)) {
-      $form_state->setErrorByName('data_inicio', $this->t('A data de início é obrigatória.'));
+    if (empty($datas_str)) {
+      $form_state->setErrorByName('datas', $this->t('Por favor selecione as datas.'));
       return;
     }
 
-    if (!$indefinido && empty($data_fim_str)) {
-      $form_state->setErrorByName('data_fim_wrapper][data_fim', $this->t('A data de fim é obrigatória quando a reserva não é por tempo indefinido.'));
-      return;
-    }
+    $data_inicio_str = NULL;
+    $data_fim_str = NULL;
 
-    // Converter formato d/m/Y H:00 para timestamp.
-    $inicio_ts = $this->parseFlatpickrDate($data_inicio_str);
-    $fim_ts = (!$indefinido && $data_fim_str) ? $this->parseFlatpickrDate($data_fim_str) : NULL;
-
-    if (!$inicio_ts) {
-      $form_state->setErrorByName('data_inicio', $this->t('Data de início inválida.'));
-      return;
-    }
-
-    if ($fim_ts && $fim_ts <= $inicio_ts) {
-      $form_state->setErrorByName('data_fim_wrapper][data_fim', $this->t('A data de fim deve ser posterior à data de início.'));
-      return;
-    }
-
-    // Verificar disponibilidade.
-    $node = $form_state->get('garagem_node');
-    if ($node) {
-      $servico = \Drupal::service('garagem_reservas.disponibilidade');
-      if (!$servico->verificarDisponibilidade($node->id(), $inicio_ts, $fim_ts)) {
-        $form_state->setErrorByName('data_inicio', $this->t('A garagem não está disponível para o período selecionado.'));
+    if ($indefinido) {
+      $data_inicio_str = $datas_str;
+    } else {
+      // Flatpickr PT usa " até " como separador no modo range.
+      $separadores = [' até ', ' to ', ' — ', ' - '];
+      foreach ($separadores as $sep) {
+        if (strpos($datas_str, $sep) !== FALSE) {
+          $partes = explode($sep, $datas_str, 2);
+          $data_inicio_str = trim($partes[0]);
+          $data_fim_str = trim($partes[1]);
+          break;
+        }
+      }
+      if (empty($data_fim_str)) {
+        $form_state->setErrorByName('datas', $this->t('Por favor selecione a data de início e de fim.'));
         return;
       }
     }
 
-    // Guardar timestamps para o submit.
+    $inicio_ts = $this->parseFlatpickrDate($data_inicio_str);
+    $fim_ts = $data_fim_str ? $this->parseFlatpickrDate($data_fim_str) : NULL;
+
+    if (!$inicio_ts) {
+      $form_state->setErrorByName('datas', $this->t('Data de início inválida.'));
+      return;
+    }
+
+    if ($fim_ts && $fim_ts <= $inicio_ts) {
+      $form_state->setErrorByName('datas', $this->t('A data de fim deve ser posterior à data de início.'));
+      return;
+    }
+
+    $node = $form_state->get('garagem_node');
+    if ($node) {
+      $servico = \Drupal::service('garagem_reservas.disponibilidade');
+      if (!$servico->verificarDisponibilidade($node->id(), $inicio_ts, $fim_ts)) {
+        $form_state->setErrorByName('datas', $this->t('A garagem não está disponível para o período selecionado.'));
+        return;
+      }
+    }
+
     $form_state->set('inicio_ts', $inicio_ts);
     $form_state->set('fim_ts', $fim_ts);
   }

@@ -32,6 +32,15 @@ garagem_reservas.admin_reserva_apagar:
     _permission: 'administer garagem reservas'
     reserva: \d+
 
+garagem_reservas.reserva_cancelar:
+  path: '/reserva/{reserva}/cancelar'
+  defaults:
+    _form: '\Drupal\garagem_reservas\Form\ReservaCancelarForm'
+    _title: 'Cancelar Reserva'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+    reserva: \d+
+
 garagem_reservas.reserva_add:
   path: '/garagem/{node}/reservar'
   defaults:
@@ -85,6 +94,34 @@ garagem_reservas.disponibilidade:
   requirements:
     _permission: 'access content'
     node: \d+
+
+garagem_reservas.lista_garagem:
+  path: '/dashboard/garagens/{node}/reservas'
+  defaults:
+    _controller: '\Drupal\garagem_reservas\Controller\ReservaController::listaGaragem'
+    _title: 'Reservas da Garagem'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+    node: \d+
+
+garagem_reservas.garagem_disponibilidade:
+  path: '/dashboard/garagens/{node}/disponibilidade'
+  defaults:
+    _form: '\Drupal\garagem_reservas\Form\GaragemDisponibilidadeForm'
+    _title: 'Gerir Disponibilidade'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+    node: \d+
+
+garagem_reservas.disponibilidade_remover:
+  path: '/dashboard/garagens/{node}/disponibilidade/{bloqueio}/remover'
+  defaults:
+    _controller: '\Drupal\garagem_reservas\Controller\ReservaController::removerBloqueio'
+    _title: 'Remover Bloqueio'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+    node: \d+
+    bloqueio: \d+
 
 garagem_reservas.lista_proprietario:
   path: '/dashboard/reservas/garagens'

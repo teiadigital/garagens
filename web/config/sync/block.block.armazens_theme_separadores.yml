@@ -9,7 +9,7 @@ dependencies:
 id: armazens_theme_separadores
 theme: armazens_theme
 region: sidebar_right
-weight: -8
+weight: -7
 provider: null
 plugin: local_tasks_block
 settings:

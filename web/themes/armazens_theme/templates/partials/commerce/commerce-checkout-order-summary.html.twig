@@ -1,0 +1,33 @@
+{#
+ * Checkout order summary customizado — mostra detalhes da reserva.
+#}
+<div{{ attributes.addClass('checkout-order-summary') }}>
+  {% block order_items %}
+    <table class="table table-sm">
+      <tbody>
+      {% for order_item in order_entity.getItems %}
+        <tr>
+          <td>
+            {{- order_item.label -}}
+            {% if order_item.field_garagem_nome.value %}
+              <div class="small text-muted">
+                <div>{{ 'Garagem'|t }}: <strong>{{ order_item.field_garagem_nome.value }}</strong></div>
+                {% if order_item.field_data_inicio.value %}
+                  <div>{{ 'Início'|t }}: {{ order_item.field_data_inicio.value }}</div>
+                {% endif %}
+                {% if order_item.field_data_fim.value %}
+                  <div>{{ 'Fim'|t }}: {{ order_item.field_data_fim.value }}</div>
+                {% endif %}
+              </div>
+            {% endif %}
+          </td>
+          <td class="text-end">{{- order_item.getTotalPrice|commerce_price_format -}}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  {% endblock %}
+  {% block totals %}
+    {{ rendered_totals }}
+  {% endblock %}
+</div>

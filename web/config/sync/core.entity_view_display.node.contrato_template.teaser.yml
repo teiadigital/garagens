@@ -1,0 +1,27 @@
+uuid: 00f15bfd-cc25-49ec-99fb-886f3e134505
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.contrato_template.field_clausulas
+    - field.field.node.contrato_template.field_contrato_feito_em
+    - field.field.node.contrato_template.field_contrato_intro
+    - node.type.contrato_template
+  module:
+    - user
+id: node.contrato_template.teaser
+targetEntityType: node
+bundle: contrato_template
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_clausulas: true
+  field_contrato_feito_em: true
+  field_contrato_intro: true
+  langcode: true

@@ -3,8 +3,6 @@
 namespace Drupal\management_armazens\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
-use Drupal\user\Entity\User;
-use Drupal\node\Entity\Node;
 
 /**
  * Provides an info details user block.
@@ -31,67 +29,6 @@ final class InfoDetailsUserBlock extends BlockBase {
     }
 
     return 0; 
-  }
-
-  private function get_number_reservas_angariadas() {
-
-    $uid = \Drupal::currentUser()->id();
-
-    $nids = \Drupal::entityQuery('node')
-    ->accessCheck(FALSE)
-    ->condition('type', 'armazem')
-    ->condition('uid', $uid)
-    ->execute();
-
-    $nodes =  Node::loadMultiple($nids);
-
-    foreach($nodes as $node) {
-      
-      $units = $node->get('field_availability_daily')->getValue();
-      if(!empty($units)) {
-        foreach($units as $unit) {
-          $units_array[] =  $unit['target_id'];
-        }
-      }
-    }
-
-
-    $bat_event = \Drupal::entityTypeManager()->getStorage('bat_event');
-
-    $events_ids = $bat_event->getQuery()
-      ->condition('event_bat_unit_reference',$units_array, 'IN' )
-      ->accessCheck(FALSE)
-      ->execute();
-
-    $events = $bat_event->loadMultiple($events_ids);
-
-    if(!empty($events)) {
-      return count($events);
-    }
-
-    return 0; 
-
-  }
-
-  private function get_number_reservas_efetuadas() {
-
-    $uid = \Drupal::currentUser()->id();
-
-    $bat_event = \Drupal::entityTypeManager()->getStorage('bat_event');
-
-    $events_ids = $bat_event->getQuery()
-      ->condition('uid',$uid)
-      ->accessCheck(FALSE)
-      ->execute();
-
-    $events = $bat_event->loadMultiple($events_ids);
-
-    if(!empty($events)) {
-      return count($events);
-    }
-
-    return 0; 
-
   }
 
   /**

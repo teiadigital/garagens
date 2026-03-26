@@ -1,0 +1,19 @@
+uuid: 8c4384cf-6715-4674-8945-aafb34a06548
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_contrato_feito_em
+    - node.type.contrato_template
+id: node.contrato_template.field_contrato_feito_em
+field_name: field_contrato_feito_em
+entity_type: node
+bundle: contrato_template
+label: 'Texto "Feito em duplicado..."'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

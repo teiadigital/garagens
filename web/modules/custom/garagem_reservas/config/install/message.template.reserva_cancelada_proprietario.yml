@@ -1,0 +1,8 @@
+uuid: null
+langcode: pt
+status: true
+dependencies: {}
+id: reserva_cancelada_proprietario
+label: 'Reserva cancelada pelo utilizador'
+description: 'Notificação ao proprietário quando o utilizador cancela a reserva'
+template: 'A reserva #{id} para a sua garagem foi cancelada pelo utilizador.'

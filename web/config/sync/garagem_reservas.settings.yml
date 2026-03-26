@@ -3,3 +3,4 @@ _core:
 prazo_pagamento_horas: '48'
 taxa_fixa: '5'
 percentagem_plataforma: '10'
+contrato_template_nid: '236'

@@ -7,18 +7,12 @@
 
 /**
  * Implements hook_schema().
- *
- * Tabela adicional de notificações da plataforma.
  */
 function garagem_reservas_schema() {
   $schema['garagem_reserva'] = [
     'description' => 'Tabela de reservas de garagens.',
     'fields' => [
-      'id' => [
-        'type' => 'serial',
-        'unsigned' => TRUE,
-        'not null' => TRUE,
-      ],
+      'id' => ['type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE],
       'garagem_id' => ['type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE],
       'user_id' => ['type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE],
       'proprietario_id' => ['type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE],
@@ -43,5 +37,42 @@ function garagem_reservas_schema() {
     ],
   ];
 
+  $schema['garagem_indisponibilidade'] = [
+    'description' => 'Datas bloqueadas manualmente pelo proprietário.',
+    'fields' => [
+      'id' => ['type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE],
+      'garagem_id' => ['type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE],
+      'data_inicio' => ['type' => 'int', 'not null' => TRUE],
+      'data_fim' => ['type' => 'int', 'not null' => TRUE],
+      'data_criacao' => ['type' => 'int', 'not null' => TRUE],
+    ],
+    'primary key' => ['id'],
+    'indexes' => [
+      'garagem_id' => ['garagem_id'],
+    ],
+  ];
+
   return $schema;
+}
+
+/**
+ * Adicionar tabela garagem_indisponibilidade.
+ */
+function garagem_reservas_update_8001() {
+  $schema = \Drupal::database()->schema();
+  if (!$schema->tableExists('garagem_indisponibilidade')) {
+    $spec = [
+      'description' => 'Datas bloqueadas manualmente pelo proprietário.',
+      'fields' => [
+        'id' => ['type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE],
+        'garagem_id' => ['type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE],
+        'data_inicio' => ['type' => 'int', 'not null' => TRUE],
+        'data_fim' => ['type' => 'int', 'not null' => TRUE],
+        'data_criacao' => ['type' => 'int', 'not null' => TRUE],
+      ],
+      'primary key' => ['id'],
+      'indexes' => ['garagem_id' => ['garagem_id']],
+    ];
+    $schema->createTable('garagem_indisponibilidade', $spec);
+  }
 }

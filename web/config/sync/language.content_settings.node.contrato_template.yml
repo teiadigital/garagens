@@ -1,0 +1,11 @@
+uuid: 3d882964-5c0d-445b-954d-012925db7189
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.contrato_template
+id: node.contrato_template
+target_entity_type_id: node
+target_bundle: contrato_template
+default_langcode: site_default
+language_alterable: true

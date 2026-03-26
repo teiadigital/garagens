@@ -2,80 +2,93 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>{{ 'Reserva #'|t }}{{ reserva.id }}</title>
+  <title>Contrato de Arrendamento #{{ reserva.id }}</title>
   <style>
-    body { font-family: Arial, sans-serif; font-size: 12px; color: #333; }
-    .header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 20px; margin-bottom: 20px; }
-    .section { margin-bottom: 20px; }
-    .section h3 { border-bottom: 1px solid #ccc; padding-bottom: 5px; }
-    .row { display: flex; justify-content: space-between; margin-bottom: 5px; }
-    .footer { position: fixed; bottom: 0; text-align: center; font-size: 10px; color: #999; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; font-size: 11px; color: #222; padding: 30px 60px; line-height: 1.7; }
+
+    .header { text-align: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #000; }
+    .header h1 { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
+    .header .ref { font-size: 10px; color: #555; margin-top: 3px; }
+
+    .outorgante-bloco { margin-bottom: 12px; }
+    .outorgante-bloco .titulo { font-weight: bold; }
+
+    .intro { margin: 14px 0 10px 0; }
+
+    .clausula { margin-bottom: 14px; }
+    .clausula-titulo { font-weight: bold; margin-bottom: 4px; }
+    .clausula-corpo p { margin-bottom: 4px; }
+    .clausula-corpo ol { margin-left: 20px; padding-left: 0; }
+    .clausula-corpo ul { margin-left: 20px; padding-left: 0; }
+    .clausula-corpo li { margin-bottom: 3px; }
+
+    .assinatura-linha { border-top: 1px solid #000; margin-top: 45px; padding-top: 4px; font-size: 10px; color: #555; width: 70%; }
+
+    .footer { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; font-size: 8.5px; color: #999; border-top: 1px solid #eee; padding: 4px 30px; background: #fff; }
   </style>
 </head>
 <body>
 
   <div class="header">
-    <h1>{{ 'Comprovativo de Reserva'|t }}</h1>
-    <p>{{ 'Reserva #'|t }}{{ reserva.id }} — {{ data_geracao }}</p>
+    <h1>{{ contrato_titulo }}</h1>
   </div>
 
-  <div class="section">
-    <h3>{{ 'Garagem'|t }}</h3>
-    <div class="row">
-      <span>{{ 'Nome'|t }}:</span>
-      <span>{{ garagem.title.value }}</span>
-    </div>
-    <div class="row">
-      <span>{{ 'Proprietário'|t }}:</span>
-      <span>{{ proprietario.name.value }}</span>
-    </div>
+  <p>Entre:</p>
+
+  <div class="outorgante-bloco">
+    <span class="titulo">PRIMEIRO OUTORGANTE (PROPRIETÁRIO):</span><br>
+    Nome: {{ proprietario.field_nome.value|default(proprietario.name.value) }}<br>
+    NIF: {{ proprietario_nif|default('___________') }}<br>
+    Morada: {% if proprietario_morada %}{{ proprietario_morada.address_line1 }}, {{ proprietario_morada.postal_code }} {{ proprietario_morada.locality }}{% else %}___________________________{% endif %}
   </div>
 
-  <div class="section">
-    <h3>{{ 'Arrendatário'|t }}</h3>
-    <div class="row">
-      <span>{{ 'Nome'|t }}:</span>
-      <span>{{ user.name.value }}</span>
-    </div>
-    <div class="row">
-      <span>{{ 'Email'|t }}:</span>
-      <span>{{ user.mail.value }}</span>
-    </div>
+  <p>E</p>
+
+  <div class="outorgante-bloco">
+    <span class="titulo">SEGUNDO OUTORGANTE (CLIENTE/ARRENDATÁRIO):</span><br>
+    Nome: {{ arrendatario_nome }}<br>
+    NIF: {{ user_nif|default('___________') }}<br>
+    Morada: {% if user_morada %}{{ user_morada.address_line1 }}, {{ user_morada.postal_code }} {{ user_morada.locality }}{% elseif billing_address %}{{ billing_address.address_line1 }}, {{ billing_address.postal_code }} {{ billing_address.locality }}{% else %}___________________________{% endif %}
   </div>
 
-  <div class="section">
-    <h3>{{ 'Período da Reserva'|t }}</h3>
-    <div class="row">
-      <span>{{ 'Data de início'|t }}:</span>
-      <span>{{ reserva.data_inicio|date('d/m/Y H:i') }}</span>
+  {% if contrato_intro %}
+    <p class="intro">{{ contrato_intro }}</p>
+  {% endif %}
+
+  {% for clausula in clausulas %}
+    <div class="clausula">
+      {% if clausula.titulo %}
+        <div class="clausula-titulo">{{ clausula.titulo }}</div>
+      {% endif %}
+      <div class="clausula-corpo">{{ clausula.corpo|raw }}</div>
     </div>
-    {% if reserva.indefinido %}
-      <div class="row">
-        <span>{{ 'Data de fim'|t }}:</span>
-        <span>{{ 'Indefinido'|t }}</span>
-      </div>
-    {% else %}
-      <div class="row">
-        <span>{{ 'Data de fim'|t }}:</span>
-        <span>{{ reserva.data_fim|date('d/m/Y H:i') }}</span>
-      </div>
-    {% endif %}
+  {% endfor %}
+
+  {% if reserva.notas %}
+    <div class="clausula">
+      <div class="clausula-titulo">Condições adicionais acordadas</div>
+      <p>{{ reserva.notas }}</p>
+    </div>
+  {% endif %}
+
+  <div style="margin-top:40px; border-top:1px solid #ccc; padding-top:20px;">
+    <p>{{ contrato_feito_em }}</p>
+    <p style="margin-top:6px;">Data: ___ / ___ / ______</p>
   </div>
 
-  <div class="section">
-    <h3>{{ 'Valores'|t }}</h3>
-    <div class="row">
-      <span>{{ 'Preço total da reserva'|t }}:</span>
-      <span>{{ preco_total|number_format(2) }}€</span>
-    </div>
-    <div class="row">
-      <span>{{ 'Taxa da plataforma'|t }}:</span>
-      <span>{{ taxa_plataforma|number_format(2) }}€</span>
-    </div>
+  <div style="margin-top:30px;">
+    <p>O Primeiro Outorgante,</p>
+    <div class="assinatura-linha"></div>
+  </div>
+
+  <div style="margin-top:40px;">
+    <p>O Segundo Outorgante,</p>
+    <div class="assinatura-linha"></div>
   </div>
 
   <div class="footer">
-    <p>{{ 'Documento gerado automaticamente pela plataforma.'|t }}</p>
+    Documento gerado automaticamente pela plataforma em {{ data_geracao }}. Este documento não substitui um contrato de arrendamento legalmente reconhecido sem assinatura de ambas as partes.
   </div>
 
 </body>

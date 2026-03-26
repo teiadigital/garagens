@@ -17,6 +17,9 @@ module:
   color_field: 0
   comment: 0
   commerce: 0
+  commerce_cart: 0
+  commerce_checkout: 0
+  commerce_ifthenpay: 0
   commerce_number_pattern: 0
   commerce_order: 0
   commerce_payment: 0

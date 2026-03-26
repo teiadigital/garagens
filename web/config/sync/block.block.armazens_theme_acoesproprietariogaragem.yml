@@ -1,0 +1,28 @@
+uuid: ba4d105b-ff27-449c-8ae8-bc4fc1b7994f
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - garagem_reservas
+    - node
+  theme:
+    - armazens_theme
+id: armazens_theme_acoesproprietariogaragem
+theme: armazens_theme
+region: sidebar_right
+weight: -8
+provider: null
+plugin: garagem_proprietario_block
+settings:
+  id: garagem_proprietario_block
+  label: 'Ações Proprietário Garagem'
+  label_display: '0'
+  provider: garagem_reservas
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      armazem: armazem

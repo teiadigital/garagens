@@ -15,6 +15,7 @@ dependencies:
     - taxonomy.vocabulary.piso
   module:
     - comment
+    - commerce_checkout
     - commerce_order
     - commerce_payment
     - commerce_product
@@ -40,6 +41,7 @@ label: 'Authenticated user'
 weight: -9
 is_admin: false
 permissions:
+  - 'access checkout'
   - 'access comments'
   - 'access content'
   - 'access ficheiros entity browser pages'

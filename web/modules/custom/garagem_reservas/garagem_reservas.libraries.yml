@@ -8,6 +8,7 @@ flatpickr:
     https://cdn.jsdelivr.net/npm/flatpickr: { type: external, minified: true }
     https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js: { type: external, minified: true }
     js/reserva_form.js: {}
+    js/disponibilidade_form.js: {}
   dependencies:
     - core/drupal
     - core/drupalSettings

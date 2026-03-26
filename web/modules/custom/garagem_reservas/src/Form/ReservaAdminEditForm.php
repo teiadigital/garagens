@@ -62,6 +62,7 @@ class ReservaAdminEditForm extends FormBase {
       '#options' => [
         'pendente' => $this->t('Pendente'),
         'aprovado' => $this->t('Aprovado'),
+        'aguarda_pagamento' => $this->t('Aguarda pagamento'),
         'pago' => $this->t('Pago'),
         'rejeitado' => $this->t('Rejeitado'),
         'cancelado' => $this->t('Cancelado'),

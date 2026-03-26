@@ -1,0 +1,19 @@
+uuid: 441f21a8-2df9-4501-8b3a-f61eaecc7a77
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_contrato_intro
+    - node.type.contrato_template
+id: node.contrato_template.field_contrato_intro
+field_name: field_contrato_intro
+entity_type: node
+bundle: contrato_template
+label: 'Texto introdutório'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

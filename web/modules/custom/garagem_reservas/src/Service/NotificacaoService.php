@@ -88,6 +88,14 @@ class NotificacaoService {
     $this->enviarMensagem('reserva_paga_proprietario', $proprietario, $reserva_id);
   }
 
+  public function reservaCancelada(int $reserva_id): void {
+    $reserva = $this->getReserva($reserva_id);
+    if (!$reserva) return;
+
+    $proprietario = $this->entityTypeManager->getStorage('user')->load($reserva->proprietario_id);
+    $this->enviarMensagem('reserva_cancelada_proprietario', $proprietario, $reserva_id);
+  }
+
   /**
    * Cria e envia uma mensagem via Message + Message Notify.
    */

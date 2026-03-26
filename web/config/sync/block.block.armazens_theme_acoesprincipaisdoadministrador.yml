@@ -9,7 +9,7 @@ dependencies:
 id: armazens_theme_acoesprincipaisdoadministrador
 theme: armazens_theme
 region: sidebar_right
-weight: -9
+weight: -10
 provider: null
 plugin: local_actions_block
 settings:

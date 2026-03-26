@@ -80,6 +80,7 @@ function management_armazens_form_alter(&$form, FormStateInterface $form_state, 
  */
 function management_armazens_form_node_form_alter(array &$form, FormStateInterface $form_state) {
   $entity = $form_state->getFormObject() ? $form_state->getFormObject()->getEntity() : NULL;
+  
   if (!$entity || $entity->getEntityTypeId() !== 'node' || $entity->bundle() !== 'armazem') {
     return;
   }
@@ -102,6 +103,7 @@ function management_armazens_form_node_form_alter(array &$form, FormStateInterfa
 
   // Ao submeter o form, estado 0 (aguardar aprovação).
   $form['actions']['submit']['#submit'][] = 'management_armazens_finish_submit';
+
 }
 
 /**
@@ -112,6 +114,9 @@ function management_armazens_finish_submit(array &$form, FormStateInterface $for
   $entity = $form_state->getFormObject()->getEntity();
 
   try {
+    if (!$entity->hasField('field_estado')) {
+      return;
+    }
     $entity->set('field_estado', 0);
     $entity->setUnpublished();
     $entity->save();
@@ -209,7 +214,7 @@ function management_armazens_entity_presave(Drupal\Core\Entity\EntityInterface $
     }
   }
 
-  if ($entity->isNew()) {
+  if ($entity->isNew() && $entity->hasField('field_estado')) {
     $estado = $entity->get('field_estado')->value ?? NULL;
     if ($estado === NULL || $estado === '') {
       $entity->set('field_estado', -1);

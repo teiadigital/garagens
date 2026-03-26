@@ -13,3 +13,15 @@ services:
       - '@language_manager'
       - '@entity_type.manager'
       - '@message_notify.sender'
+
+  garagem_reservas.commerce:
+    class: Drupal\garagem_reservas\Service\CommerceService
+    arguments:
+      - '@database'
+      - '@entity_type.manager'
+
+  garagem_reservas.commerce_order_subscriber:
+    class: Drupal\garagem_reservas\EventSubscriber\CommerceOrderEventSubscriber
+    arguments: ['@database']
+    tags:
+      - { name: event_subscriber }

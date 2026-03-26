@@ -3,7 +3,6 @@ langcode: pt-pt
 status: true
 dependencies:
   config:
-    - entity_browser.browser.ficheiros
     - field.field.user.user.commerce_remote_id
     - field.field.user.user.field_cartao_cidadao
     - field.field.user.user.field_documentos
@@ -12,7 +11,6 @@ dependencies:
     - field.field.user.user.field_morada_faturacao
     - field.field.user.user.field_nib
     - field.field.user.user.field_nif
-    - field.field.user.user.field_nipc
     - field.field.user.user.field_nome
     - field.field.user.user.field_telefone
     - field.field.user.user.field_telemovel
@@ -21,7 +19,6 @@ dependencies:
   module:
     - address
     - conditional_fields
-    - entity_browser
     - field_group
     - phone_international
     - user
@@ -30,11 +27,7 @@ third_party_settings:
     group_step_1:
       children:
         - field_nome
-        - field_tipo
-        - field_cartao_cidadao
-        - field_nipc
         - field_nif
-        - field_documentos
       label: 'Step 1'
       region: content
       parent_name: ''
@@ -56,8 +49,6 @@ third_party_settings:
     group_step_2:
       children:
         - field_morada
-        - field_morada_de_faturacao_bool
-        - field_morada_faturacao
       label: 'Step 2'
       region: content
       parent_name: ''
@@ -112,48 +103,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_cartao_cidadao:
-    type: string_textfield
-    weight: 3
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings:
-      conditional_fields:
-        24fd1c70-622a-415e-91d4-0837d78069de:
-          entity_type: user
-          bundle: user
-          dependee: field_tipo
-          settings:
-            state: visible
-            reset: false
-            condition: value
-            grouping: AND
-            values_set: 1
-            value: ''
-            values: {  }
-            value_form:
-              -
-                value: particular
-            effect: show
-            effect_options: {  }
-            selector: ''
-  field_documentos:
-    type: entity_browser_entity_reference
-    weight: 16
-    region: content
-    settings:
-      entity_browser: ficheiros
-      field_widget_display: rendered_entity
-      field_widget_edit: true
-      field_widget_remove: true
-      field_widget_replace: false
-      open: true
-      field_widget_display_settings:
-        view_mode: default
-      selection_mode: selection_append
-    third_party_settings: {  }
   field_morada:
     type: address_default
     weight: 17
@@ -161,38 +110,6 @@ content:
     settings:
       wrapper_type: fieldset
     third_party_settings: {  }
-  field_morada_de_faturacao_bool:
-    type: boolean_checkbox
-    weight: 18
-    region: content
-    settings:
-      display_label: true
-    third_party_settings: {  }
-  field_morada_faturacao:
-    type: address_default
-    weight: 19
-    region: content
-    settings:
-      wrapper_type: fieldset
-    third_party_settings:
-      conditional_fields:
-        a2feec79-6c8e-476d-a3cf-ddd4fbe40640:
-          entity_type: user
-          bundle: user
-          dependee: field_morada_de_faturacao_bool
-          settings:
-            state: '!visible'
-            reset: false
-            condition: '!checked'
-            grouping: AND
-            values_set: 1
-            value: ''
-            values: {  }
-            value_form:
-              value: false
-            effect: show
-            effect_options: {  }
-            selector: ''
   field_nif:
     type: number
     weight: 5
@@ -200,51 +117,7 @@ content:
     settings:
       placeholder: ''
     third_party_settings:
-      conditional_fields:
-        01a90f69-907e-4ece-b524-4b155baa8a66:
-          entity_type: user
-          bundle: user
-          dependee: field_tipo
-          settings:
-            state: visible
-            reset: false
-            condition: value
-            grouping: AND
-            values_set: 1
-            value: ''
-            values: {  }
-            value_form:
-              -
-                value: particular
-            effect: show
-            effect_options: {  }
-            selector: ''
-  field_nipc:
-    type: number
-    weight: 4
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings:
-      conditional_fields:
-        d0ac5942-41ec-458c-b9a6-37d005b83d91:
-          entity_type: user
-          bundle: user
-          dependee: field_tipo
-          settings:
-            state: visible
-            reset: false
-            condition: value
-            grouping: AND
-            values_set: 1
-            value: ''
-            values: {  }
-            value_form:
-              -
-                value: empresa
-            effect: show
-            effect_options: {  }
-            selector: ''
+      conditional_fields: {  }
   field_nome:
     type: string_textfield
     weight: 1
@@ -277,12 +150,6 @@ content:
         - PT
       countries: exclude
     third_party_settings: {  }
-  field_tipo:
-    type: options_select
-    weight: 2
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   language:
     weight: 10
     region: content
@@ -297,7 +164,12 @@ hidden:
   commerce_remote_id: true
   contact: true
   customer_profiles: true
+  field_cartao_cidadao: true
+  field_documentos: true
+  field_morada_de_faturacao_bool: true
+  field_morada_faturacao: true
   field_nib: true
+  field_tipo: true
   google_analytics: true
   langcode: true
   path: true

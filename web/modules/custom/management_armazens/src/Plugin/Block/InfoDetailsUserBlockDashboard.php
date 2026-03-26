@@ -3,8 +3,6 @@
 namespace Drupal\management_armazens\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
-use Drupal\user\Entity\User;
-use Drupal\node\Entity\Node;
 
 /**
  * Provides an info details user block.
@@ -33,64 +31,6 @@ final class InfoDetailsUserBlockDashboard extends BlockBase {
     return 0; 
   }
 
-private function get_number_reservas_angariadas() {
-  $uid = \Drupal::currentUser()->id();
-
-  $nids = \Drupal::entityQuery('node')
-    ->accessCheck(FALSE)
-    ->condition('type', 'armazem')
-    ->condition('uid', $uid)
-    ->execute();
-
-  $nodes = Node::loadMultiple($nids);
-  $units_array = []; // 🔧 Inicializa sempre
-
-  foreach ($nodes as $node) {
-    $units = $node->get('field_availability_daily')->getValue();
-    if (!empty($units)) {
-      foreach ($units as $unit) {
-        $units_array[] = $unit['target_id'];
-      }
-    }
-  }
-
-  if (empty($units_array)) {
-    return 0;
-  }
-
-  $bat_event = \Drupal::entityTypeManager()->getStorage('bat_event');
-  $events_ids = $bat_event->getQuery()
-    ->condition('event_bat_unit_reference', $units_array, 'IN')
-    ->accessCheck(FALSE)
-    ->execute();
-
-  $events = $bat_event->loadMultiple($events_ids);
-
-  return !empty($events) ? count($events) : 0;
-}
-
-
-  private function get_number_reservas_efetuadas() {
-
-    $uid = \Drupal::currentUser()->id();
-
-    $bat_event = \Drupal::entityTypeManager()->getStorage('bat_event');
-
-    $events_ids = $bat_event->getQuery()
-      ->condition('uid',$uid)
-      ->accessCheck(FALSE)
-      ->execute();
-
-    $events = $bat_event->loadMultiple($events_ids);
-
-    if(!empty($events)) {
-      return count($events);
-    }
-
-    return 0; 
-
-  }
-
   /**
    * {@inheritdoc}
    */
@@ -109,7 +49,7 @@ private function get_number_reservas_angariadas() {
         ],
         [
         'label' => $this->t('bookings raised'),
-        'value' => $this->get_number_reservas_angariadas(),
+        'value' => 0,
         'icon' => ' <svg xmlns="http://www.w3.org/2000/svg" width="64.313" height="45" viewBox="0 0 64.313 45">
           <path id="people-group"
             d="M12.863,35.214a2.411,2.411,0,1,1-2.412,2.411A2.411,2.411,0,0,1,12.863,35.214Zm0,8.036a5.625,5.625,0,1,0-5.627-5.625A5.626,5.626,0,0,0,12.863,43.25ZM0,56.911a10.431,10.431,0,0,0,6.431,9.643v4.821a2.4,2.4,0,0,0,2.412,2.411h8.039a2.4,2.4,0,0,0,2.412-2.411V67.357a1.608,1.608,0,0,0-3.216,0v3.214H9.647V49.719a7.063,7.063,0,0,1,.8-.04h4.823a7.134,7.134,0,0,1,2.633.492,1.606,1.606,0,1,0,1.166-2.993,10.38,10.38,0,0,0-3.8-.713H10.451A10.453,10.453,0,0,0,0,56.911Zm6.431,6.017a7.237,7.237,0,0,1,0-12.033ZM51.45,35.214a2.411,2.411,0,1,1-2.412,2.411A2.411,2.411,0,0,1,51.45,35.214Zm0,8.036a5.625,5.625,0,1,0-5.627-5.625A5.626,5.626,0,0,0,51.45,43.25ZM64.313,56.911A10.453,10.453,0,0,0,53.862,46.464H49.039a10.38,10.38,0,0,0-3.8.713,1.606,1.606,0,1,0,1.166,2.993,7.134,7.134,0,0,1,2.633-.492h4.823a7.063,7.063,0,0,1,.8.04V70.571H48.235V67.357a1.608,1.608,0,0,0-3.216,0v4.018a2.4,2.4,0,0,0,2.412,2.411H55.47a2.4,2.4,0,0,0,2.412-2.411V66.554A10.442,10.442,0,0,0,64.313,56.911Zm-6.431,6.017V50.894a7.237,7.237,0,0,1,0,12.033Zm-28.941-24.5a3.216,3.216,0,1,1,3.216,3.214A3.215,3.215,0,0,1,28.941,38.429Zm9.647,0a6.431,6.431,0,1,0-6.431,6.429A6.43,6.43,0,0,0,38.588,38.429Zm-8.039,9.643a10.448,10.448,0,0,0-4.823,19.718v6.8A2.4,2.4,0,0,0,28.137,77h8.039a2.4,2.4,0,0,0,2.412-2.411v-6.8a10.448,10.448,0,0,0-4.823-19.718Zm-4.823,5.052V63.912a7.238,7.238,0,0,1,0-10.788Zm3.216,20.662V51.467a7.044,7.044,0,0,1,1.608-.181h3.216a7.044,7.044,0,0,1,1.608.181V73.786Zm9.647-9.874V53.124a7.238,7.238,0,0,1,0,10.788Z"
@@ -118,7 +58,7 @@ private function get_number_reservas_angariadas() {
       ],
       [
         'label' => $this->t('bookings made'),
-        'value' => $this->get_number_reservas_efetuadas(),
+        'value' => 0,
         'icon' => ' <svg xmlns="http://www.w3.org/2000/svg" width="64.286" height="45" viewBox="0 0 64.286 45">
           <path id="money-bills"
             d="M57.857,35.214a3.211,3.211,0,0,1,3.214,3.214v3.214a6.435,6.435,0,0,1-6.429-6.429Zm-35.357,0H51.429a9.645,9.645,0,0,0,9.643,9.643V54.5a9.645,9.645,0,0,0-9.643,9.643H22.5A9.645,9.645,0,0,0,12.857,54.5V44.857A9.645,9.645,0,0,0,22.5,35.214Zm-9.643,22.5a6.435,6.435,0,0,1,6.429,6.429H16.071a3.211,3.211,0,0,1-3.214-3.214Zm41.786,6.429a6.435,6.435,0,0,1,6.429-6.429v3.214a3.211,3.211,0,0,1-3.214,3.214ZM19.286,35.214a6.435,6.435,0,0,1-6.429,6.429V38.429a3.211,3.211,0,0,1,3.214-3.214ZM16.071,32a6.435,6.435,0,0,0-6.429,6.429v22.5a6.435,6.435,0,0,0,6.429,6.429H57.857a6.435,6.435,0,0,0,6.429-6.429v-22.5A6.435,6.435,0,0,0,57.857,32ZM36.964,56.107a6.429,6.429,0,1,1,6.429-6.429A6.429,6.429,0,0,1,36.964,56.107Zm-9.643-6.429a9.643,9.643,0,1,0,9.643-9.643A9.643,9.643,0,0,0,27.321,49.679ZM3.214,40.036a1.607,1.607,0,1,0-3.214,0V65.75A11.244,11.244,0,0,0,11.25,77H53.036a1.607,1.607,0,1,0,0-3.214H11.25A8.033,8.033,0,0,1,3.214,65.75Z"

@@ -1,0 +1,34 @@
+uuid: acf334ee-cdd9-4c62-8bee-888988701ddf
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.clausula_contrato.field_corpo
+    - field.field.paragraph.clausula_contrato.field_titulo
+    - paragraphs.paragraphs_type.clausula_contrato
+  module:
+    - text
+id: paragraph.clausula_contrato.default
+targetEntityType: paragraph
+bundle: clausula_contrato
+mode: default
+content:
+  field_corpo:
+    type: text_textarea
+    weight: 1
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_titulo:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

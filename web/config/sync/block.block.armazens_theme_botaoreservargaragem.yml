@@ -10,7 +10,7 @@ dependencies:
 id: armazens_theme_botaoreservargaragem
 theme: armazens_theme
 region: sidebar_right
-weight: 0
+weight: -9
 provider: null
 plugin: garagem_reservar_block
 settings:

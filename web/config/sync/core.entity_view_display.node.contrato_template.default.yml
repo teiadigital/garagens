@@ -1,0 +1,47 @@
+uuid: cadf600a-7610-49da-8cd1-8cda2b223216
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.contrato_template.field_clausulas
+    - field.field.node.contrato_template.field_contrato_feito_em
+    - field.field.node.contrato_template.field_contrato_intro
+    - node.type.contrato_template
+  module:
+    - entity_reference_revisions
+    - user
+id: node.contrato_template.default
+targetEntityType: node
+bundle: contrato_template
+mode: default
+content:
+  field_clausulas:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_contrato_feito_em:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_contrato_intro:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  langcode: true

@@ -1,0 +1,19 @@
+uuid: fd21a0c9-d6c3-4abc-87e5-30bcb3b719e6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_titulo
+    - paragraphs.paragraphs_type.clausula_contrato
+id: paragraph.clausula_contrato.field_titulo
+field_name: field_titulo
+entity_type: paragraph
+bundle: clausula_contrato
+label: Título
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

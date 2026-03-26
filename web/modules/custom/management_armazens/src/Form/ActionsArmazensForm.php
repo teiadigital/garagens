@@ -238,10 +238,6 @@ final class ActionsArmazensForm extends FormBase
       $this->messenger()->addWarning($this->t('No email found for the warehouse owner.'));
     }
 
-    // Call opcional (evita fatal se a função não existir).
-    if (empty($node->get('field_availability_daily')->getValue()) && function_exists('bws_node_insert_add_booking')) {
-      bws_node_insert_add_booking($node);
-    }
   }
 
   protected function sendMail(

@@ -93,6 +93,22 @@
 
   <div class="reserva-actions mt-3">
 
+    {# Botão cancelar para o user quando pendente ou aprovado #}
+    {% if is_user and reserva.estado in ['pendente', 'aprovado'] %}
+      <a href="{{ path('garagem_reservas.reserva_cancelar', {'reserva': reserva.id}) }}"
+         class="btn btn-outline-danger me-2">
+        {{ 'Cancelar reserva'|t }}
+      </a>
+    {% endif %}
+
+    {# Botão de pagamento para o user quando aprovado e ainda não fez checkout #}
+    {% if is_user and reserva.estado == 'aprovado' and reserva.commerce_order_id %}
+      <a href="{{ path('commerce_checkout.form', {'commerce_order': reserva.commerce_order_id}) }}"
+         class="btn btn-success me-2">
+        {{ 'Pagar agora'|t }} — {{ taxa_plataforma|number_format(2) }}€
+      </a>
+    {% endif %}
+
     {# Botões só para o proprietário #}
     {% if is_proprietario %}
       {% if reserva.estado == 'pendente' %}
@@ -107,10 +123,18 @@
       {% endif %}
       {% if reserva.estado == 'pago' %}
         <a href="{{ path('garagem_reservas.reserva_pdf', {'reserva': reserva.id}) }}"
-           class="btn btn-secondary">
+           class="btn btn-secondary me-2">
           {{ 'Descarregar PDF'|t }}
         </a>
       {% endif %}
+    {% endif %}
+
+    {# Botão PDF para o user quando pago #}
+    {% if is_user and reserva.estado == 'pago' %}
+      <a href="{{ path('garagem_reservas.reserva_pdf', {'reserva': reserva.id}) }}"
+         class="btn btn-secondary me-2">
+        {{ 'Descarregar PDF'|t }}
+      </a>
     {% endif %}
 
     {# Botão de voltar #}

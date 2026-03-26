@@ -10,6 +10,7 @@ dependencies:
     - node.type.armazem
   module:
     - comment
+    - commerce_checkout
     - commerce_product
     - contact
     - dropzonejs
@@ -27,6 +28,7 @@ label: 'Anonymous user'
 weight: -10
 is_admin: false
 permissions:
+  - 'access checkout'
   - 'access comments'
   - 'access content'
   - 'access ficheiros entity browser pages'

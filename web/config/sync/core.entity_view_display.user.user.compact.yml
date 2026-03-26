@@ -12,7 +12,6 @@ dependencies:
     - field.field.user.user.field_morada_faturacao
     - field.field.user.user.field_nib
     - field.field.user.user.field_nif
-    - field.field.user.user.field_nipc
     - field.field.user.user.field_nome
     - field.field.user.user.field_telefone
     - field.field.user.user.field_telemovel
@@ -55,7 +54,6 @@ hidden:
   field_morada_faturacao: true
   field_nib: true
   field_nif: true
-  field_nipc: true
   field_nome: true
   field_telefone: true
   field_telemovel: true

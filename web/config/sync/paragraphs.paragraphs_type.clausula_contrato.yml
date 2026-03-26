@@ -1,0 +1,10 @@
+uuid: cd3e9f16-20b2-4427-a220-6cd319c4cefb
+langcode: en
+status: true
+dependencies: {  }
+id: clausula_contrato
+label: 'Cláusula de Contrato'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

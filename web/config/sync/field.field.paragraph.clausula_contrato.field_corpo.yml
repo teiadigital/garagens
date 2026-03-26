@@ -1,0 +1,30 @@
+uuid: e9d6f6ef-ddc7-4a37-b713-9d25f3755f76
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_corpo
+    - filter.format.basic_html
+    - filter.format.full_html
+    - filter.format.plain_text
+    - filter.format.restricted_html
+    - paragraphs.paragraphs_type.clausula_contrato
+  module:
+    - text
+id: paragraph.clausula_contrato.field_corpo
+field_name: field_corpo
+entity_type: paragraph
+bundle: clausula_contrato
+label: Corpo
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+    - restricted_html
+    - full_html
+    - plain_text
+field_type: text_long

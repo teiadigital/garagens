@@ -57,7 +57,7 @@ class ReservaAdminController extends ControllerBase {
         'user' => $user ? $user->getDisplayName() : '-',
         'proprietario' => $proprietario ? $proprietario->getDisplayName() : '-',
         'inicio' => date('d/m/Y H:i', $reserva->data_inicio),
-        'fim' => $reserva->indefinido ? $this->t('Indefinido') : ($reserva->data_fim ? date('d/m/Y H:i', $reserva->data_fim) : '-'),
+        'fim' => $reserva->renovacao_automatica ? $this->t('Renovação automática') : ($reserva->data_fim ? date('d/m/Y H:i', $reserva->data_fim) : '-'),
         'preco' => number_format($reserva->preco_total, 2) . '€',
         'taxa' => number_format($reserva->taxa_plataforma, 2) . '€',
         'estado' => [

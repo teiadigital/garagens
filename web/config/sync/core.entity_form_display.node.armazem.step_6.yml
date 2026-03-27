@@ -22,20 +22,20 @@ dependencies:
     - field.field.node.armazem.field_fotos
     - field.field.node.armazem.field_geo_coordenadas
     - field.field.node.armazem.field_identifique_os_certificado
-    - field.field.node.armazem.field_incluir_espaco_exterior
     - field.field.node.armazem.field_licenca_de_utilizacao
     - field.field.node.armazem.field_limitacoes_de_acesso
     - field.field.node.armazem.field_limitacoes_horario_acesso
     - field.field.node.armazem.field_localidade
     - field.field.node.armazem.field_peso_maximo_piso
     - field.field.node.armazem.field_piso
+    - field.field.node.armazem.field_preco_ano
+    - field.field.node.armazem.field_preco_ano_ativo
     - field.field.node.armazem.field_preco_dia
     - field.field.node.armazem.field_preco_dia_ativo
-    - field.field.node.armazem.field_preco_hora
-    - field.field.node.armazem.field_preco_hora_ativo
     - field.field.node.armazem.field_preco_mes
     - field.field.node.armazem.field_preco_mes_ativo
     - field.field.node.armazem.field_recursos
+    - field.field.node.armazem.field_renovacao_automatica
     - field.field.node.armazem.field_seguranca
     - field.field.node.armazem.field_seguro
     - field.field.node.armazem.field_sistema_detecao_incendios
@@ -87,20 +87,20 @@ hidden:
   field_fotos: true
   field_geo_coordenadas: true
   field_identifique_os_certificado: true
-  field_incluir_espaco_exterior: true
   field_licenca_de_utilizacao: true
   field_limitacoes_de_acesso: true
   field_limitacoes_horario_acesso: true
   field_localidade: true
   field_peso_maximo_piso: true
   field_piso: true
+  field_preco_ano: true
+  field_preco_ano_ativo: true
   field_preco_dia: true
   field_preco_dia_ativo: true
-  field_preco_hora: true
-  field_preco_hora_ativo: true
   field_preco_mes: true
   field_preco_mes_ativo: true
   field_recursos: true
+  field_renovacao_automatica: true
   field_seguranca: true
   field_sistema_detecao_incendios: true
   field_termos_e_condicoes: true

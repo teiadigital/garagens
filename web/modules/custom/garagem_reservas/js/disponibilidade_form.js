@@ -15,7 +15,7 @@
 
       const iniciar = () => {
         const datasDesativadas = datasOcupadas.map(reserva => {
-          if (reserva.indefinido) {
+          if (reserva.renovacao_automatica) {
             return { from: new Date(parseInt(reserva.inicio) * 1000), to: new Date(9999, 0, 1) };
           }
           return {

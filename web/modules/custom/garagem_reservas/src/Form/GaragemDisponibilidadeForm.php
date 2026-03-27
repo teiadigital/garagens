@@ -32,6 +32,12 @@ class GaragemDisponibilidadeForm extends FormBase {
       return [];
     }
 
+    // Verificar que é o proprietário da garagem.
+    $current_user = \Drupal::currentUser();
+    if ($node->getOwnerId() != $current_user->id() && !$current_user->hasPermission('administer garagem reservas')) {
+      throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
+    }
+
     $form_state->set('garagem_node', $node);
 
     $form['#attached']['library'][] = 'garagem_reservas/flatpickr';

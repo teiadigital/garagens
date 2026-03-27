@@ -2,152 +2,188 @@
 /**
  * @file
  * Template de detalhes de reserva.
- *
- * Variáveis:
- * - reserva: dados da reserva
- * - garagem: node da garagem
- * - user: utilizador que fez a reserva
- * - preco_total: preço total
- * - taxa_plataforma: taxa da plataforma
- * - is_proprietario: TRUE se o utilizador atual é o proprietário
- * - is_user: TRUE se o utilizador atual fez a reserva
  */
 #}
-<div class="garagem-reserva estado-{{ reserva.estado }}">
 
-  <div class="reserva-header">
-    <h2>{{ 'Reserva #'|t }}{{ reserva.id }}</h2>
-    <span class="badge badge-{{ reserva.estado }}">
-      {{ reserva.estado|capitalize }}
+{% set estado_cores = {
+  'pendente': 'bg-yellow-100 text-yellow-800',
+  'aprovado': 'bg-green-100 text-green-700',
+  'aguarda_pagamento': 'bg-orange-100 text-orange-700',
+  'pago': 'bg-green-100 text-green-700',
+  'rejeitado': 'bg-red-100 text-red-600',
+  'cancelado': 'bg-gray-200 text-gray-500',
+  'expirado': 'bg-gray-200 text-gray-400',
+} %}
+
+<div class="max-w-3xl">
+
+  {# Cabeçalho #}
+  <div class="flex items-center justify-between mb-8">
+    <h2 class="text-2xl font-bold text-gray-900">{{ 'Reserva #'|t }}{{ reserva.id }}</h2>
+    <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide {{ estado_cores[reserva.estado] ?? 'bg-gray-100 text-gray-500' }}">
+      {{ reserva.estado }}
     </span>
   </div>
 
-  <div class="reserva-body row">
-
-    <div class="col-md-6">
-      <div class="reserva-garagem mb-3">
-        <h3>{{ 'Garagem'|t }}</h3>
-        <p>{{ garagem.title.value }}</p>
-      </div>
-
-      <div class="reserva-datas mb-3">
-        <h3>{{ 'Período'|t }}</h3>
-        <p>
-          <strong>{{ 'Início'|t }}:</strong>
-          {{ reserva.data_inicio|date('d/m/Y H:i') }}
-        </p>
-        {% if reserva.indefinido %}
-          <p><strong>{{ 'Fim'|t }}:</strong> {{ 'Indefinido'|t }}</p>
-        {% else %}
-          <p>
-            <strong>{{ 'Fim'|t }}:</strong>
-            {{ reserva.data_fim|date('d/m/Y H:i') }}
-          </p>
-        {% endif %}
-      </div>
-    </div>
-
-    <div class="col-md-6">
-      <div class="reserva-preco mb-3">
-        <h3>{{ 'Valores'|t }}</h3>
-        <div class="table-responsive">
-          <table class="table table-sm">
-            <tbody>
-              <tr>
-                <td>{{ 'Preço total da reserva'|t }}</td>
-                <td class="text-end">{{ preco_total|number_format(2) }}€</td>
-              </tr>
-              <tr>
-                <td>{{ 'Taxa fixa da plataforma'|t }}</td>
-                <td class="text-end">{{ taxa_fixa|number_format(2) }}€</td>
-              </tr>
-              <tr>
-                <td>{{ 'Taxa percentual da plataforma'|t }}</td>
-                <td class="text-end">{{ taxa_percentual|number_format(2) }}€</td>
-              </tr>
-              <tr class="table-dark fw-bold">
-                <td>{{ 'A pagar agora à plataforma'|t }}</td>
-                <td class="text-end">{{ taxa_plataforma|number_format(2) }}€</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <small class="text-muted">
-          {% if reserva.indefinido %}
-            {{ 'O valor apresentado corresponde ao primeiro mês. Os pagamentos seguintes são acordados diretamente com o proprietário.'|t }}
-          {% else %}
-            {{ 'O restante valor é acordado diretamente com o proprietário.'|t }}
-          {% endif %}
-        </small>
-      </div>
-
-      {% if reserva.notas %}
-        <div class="reserva-notas mb-3">
-          <h3>{{ 'Notas'|t }}</h3>
-          <p>{{ reserva.notas }}</p>
-        </div>
-      {% endif %}
-    </div>
-
+  {# Garagem #}
+  <div class="mb-6">
+    <p class="text-xs font-bold text-gray-900 uppercase tracking-wide mb-1">{{ 'garagem'|t }}</p>
+    <p class="text-gray-700">{{ garagem.title.value }}</p>
   </div>
 
-  <div class="reserva-actions mt-3">
+  <div class="border-t border-gray-300 my-6"></div>
 
-    {# Botão cancelar para o user quando pendente ou aprovado #}
-    {% if is_user and reserva.estado in ['pendente', 'aprovado'] %}
-      <a href="{{ path('garagem_reservas.reserva_cancelar', {'reserva': reserva.id}) }}"
-         class="btn btn-outline-danger me-2">
+  {# Período #}
+  <div class="grid grid-cols-2 gap-6 mb-6">
+    <div>
+      <p class="text-xs font-bold text-gray-900 uppercase tracking-wide mb-1">{{ 'início'|t }}</p>
+      <p class="text-gray-700">{{ reserva.data_inicio|date('d/m/Y') }}</p>
+    </div>
+    <div>
+      <p class="text-xs font-bold text-gray-900 uppercase tracking-wide mb-1">{{ 'fim'|t }}</p>
+      <p class="text-gray-700">
+        {% if reserva.renovacao_automatica %}{{ 'Renovação automática'|t }}{% else %}{{ reserva.data_fim|date('d/m/Y') }}{% endif %}
+      </p>
+    </div>
+  </div>
+
+  <div class="border-t border-gray-300 my-6"></div>
+
+  {# Valores #}
+  <div class="grid grid-cols-2 gap-6 mb-6">
+    <div>
+      <p class="text-xs font-bold text-gray-900 uppercase tracking-wide mb-1">{{ 'preço total da reserva'|t }}</p>
+      <p class="text-gray-700">{{ preco_total|number_format(2) }}€</p>
+    </div>
+    <div>
+      <p class="text-xs font-bold text-gray-900 uppercase tracking-wide mb-1">{{ 'taxa fixa'|t }}</p>
+      <p class="text-gray-700">{{ taxa_fixa|number_format(2) }}€</p>
+    </div>
+    <div>
+      <p class="text-xs font-bold text-gray-900 uppercase tracking-wide mb-1">{{ 'taxa percentual'|t }}</p>
+      <p class="text-gray-700">{{ taxa_percentual|number_format(2) }}€</p>
+    </div>
+    <div>
+      <p class="text-xs font-bold text-gray-900 uppercase tracking-wide mb-1">{{ 'a pagar à plataforma'|t }}</p>
+      <p class="font-bold text-gray-900">{{ taxa_plataforma|number_format(2) }}€</p>
+    </div>
+  </div>
+
+  <p class="text-xs text-gray-400 mb-6">
+    {% if reserva.renovacao_automatica %}
+      {{ 'Valor corresponde ao primeiro mês. Pagamentos seguintes acordados com o proprietário.'|t }}
+    {% else %}
+      {{ 'O restante valor é acordado diretamente com o proprietário.'|t }}
+    {% endif %}
+  </p>
+
+  {# Notas #}
+  {% if reserva.notas %}
+    <div class="border-t border-gray-300 my-6"></div>
+    <div class="mb-6">
+      <p class="text-xs font-bold text-gray-900 uppercase tracking-wide mb-1">{{ 'notas'|t }}</p>
+      <p class="text-gray-700">{{ reserva.notas }}</p>
+    </div>
+  {% endif %}
+
+  <div class="border-t border-gray-300 my-6"></div>
+
+  {# Modal de confirmação de cancelamento #}
+  <div id="modal-cancelar-reserva"
+       class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 p-6">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
+          <svg class="w-5 h-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+          </svg>
+        </div>
+        <h3 class="text-lg font-semibold text-gray-900">{{ 'Cancelar reserva'|t }}</h3>
+      </div>
+      <p class="text-sm text-gray-600 mb-3">{{ 'Tem a certeza que quer cancelar esta reserva?'|t }}</p>
+      <div class="bg-gray-50 rounded-lg p-3 mb-4 text-sm text-gray-700 space-y-1">
+        <div><span class="font-medium">{{ 'Garagem:'|t }}</span> {{ garagem.title.value }}</div>
+        <div><span class="font-medium">{{ 'Início:'|t }}</span> {{ reserva.data_inicio|date('d/m/Y') }}</div>
+      </div>
+      {% if reserva.estado == 'pago' %}
+        <div class="bg-red-50 border border-red-200 rounded-lg p-3 mb-4">
+          <p class="text-xs font-semibold text-red-700 uppercase tracking-wide mb-1">{{ 'Atenção'|t }}</p>
+          <p class="text-sm text-red-600">{{ 'Esta reserva já foi paga. Não existe qualquer devolução do valor pago.'|t }}</p>
+        </div>
+      {% endif %}
+      <p class="text-xs text-gray-400 mb-5">{{ 'Esta ação não pode ser desfeita.'|t }}</p>
+      <div class="flex justify-end gap-3">
+        <button type="button"
+                onclick="fecharModalCancelarReserva()"
+                class="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-200 rounded-full hover:bg-gray-50 transition">
+          {{ 'Voltar'|t }}
+        </button>
+        <a href="{{ path('garagem_reservas.reserva_cancelar_direto', {'reserva': reserva.id}) }}"
+           class="px-4 py-2 text-sm font-bold text-white bg-red-600 rounded-full hover:bg-red-700 transition">
+          {{ 'Sim, cancelar'|t }}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  {# Ações #}
+  <div class="flex flex-wrap gap-3">
+
+    {% if is_user and reserva.estado in ['pendente', 'aprovado', 'aguarda_pagamento', 'pago'] %}
+      <button type="button"
+              onclick="abrirModalCancelarReserva()"
+              class="px-5 py-2 text-sm font-bold text-red-600 border border-red-300 rounded-full hover:bg-red-50 transition">
         {{ 'Cancelar reserva'|t }}
-      </a>
+      </button>
     {% endif %}
 
-    {# Botão de pagamento para o user quando aprovado e ainda não fez checkout #}
     {% if is_user and reserva.estado == 'aprovado' and reserva.commerce_order_id %}
       <a href="{{ path('commerce_checkout.form', {'commerce_order': reserva.commerce_order_id}) }}"
-         class="btn btn-success me-2">
+         class="px-5 py-2 text-sm font-bold text-white bg-gray-900 rounded-full hover:bg-gray-700 transition">
         {{ 'Pagar agora'|t }} — {{ taxa_plataforma|number_format(2) }}€
       </a>
     {% endif %}
 
-    {# Botões só para o proprietário #}
-    {% if is_proprietario %}
-      {% if reserva.estado == 'pendente' %}
-        <a href="{{ path('garagem_reservas.reserva_aprovar', {'reserva': reserva.id}) }}"
-           class="btn btn-success me-2">
-          {{ 'Aprovar'|t }}
-        </a>
-        <a href="{{ path('garagem_reservas.reserva_rejeitar', {'reserva': reserva.id}) }}"
-           class="btn btn-danger me-2">
-          {{ 'Rejeitar'|t }}
-        </a>
-      {% endif %}
-      {% if reserva.estado == 'pago' %}
-        <a href="{{ path('garagem_reservas.reserva_pdf', {'reserva': reserva.id}) }}"
-           class="btn btn-secondary me-2">
-          {{ 'Descarregar PDF'|t }}
-        </a>
-      {% endif %}
+    {% if is_proprietario and reserva.estado == 'pendente' %}
+      <a href="{{ path('garagem_reservas.reserva_aprovar', {'reserva': reserva.id}) }}"
+         class="px-5 py-2 text-sm font-bold text-white bg-gray-900 rounded-full hover:bg-gray-700 transition">
+        {{ 'Aprovar'|t }}
+      </a>
+      <a href="{{ path('garagem_reservas.reserva_rejeitar', {'reserva': reserva.id}) }}"
+         class="px-5 py-2 text-sm font-bold text-red-600 border border-red-300 rounded-full hover:bg-red-50 transition">
+        {{ 'Rejeitar'|t }}
+      </a>
     {% endif %}
 
-    {# Botão PDF para o user quando pago #}
-    {% if is_user and reserva.estado == 'pago' %}
+    {% if reserva.estado == 'pago' and (is_proprietario or is_user) %}
       <a href="{{ path('garagem_reservas.reserva_pdf', {'reserva': reserva.id}) }}"
-         class="btn btn-secondary me-2">
+         class="px-5 py-2 text-sm font-bold text-gray-700 border border-gray-300 rounded-full hover:bg-gray-100 transition">
         {{ 'Descarregar PDF'|t }}
       </a>
     {% endif %}
 
-    {# Botão de voltar #}
-    {% if is_proprietario %}
-      <a href="{{ path('garagem_reservas.lista_proprietario') }}" class="btn btn-outline-secondary ms-2">
-        {{ 'Voltar à lista'|t }}
-      </a>
-    {% elseif is_user %}
-      <a href="{{ path('garagem_reservas.lista_user') }}" class="btn btn-outline-secondary ms-2">
-        {{ 'Voltar à lista'|t }}
-      </a>
-    {% endif %}
+    <a href="{{ path('garagem_reservas.lista_user') }}"
+       class="px-5 py-2 text-sm font-medium text-gray-500 border border-gray-200 rounded-full hover:bg-gray-100 transition">
+      {{ 'Voltar à lista'|t }}
+    </a>
 
   </div>
 
 </div>
+
+<script>
+function abrirModalCancelarReserva() {
+  const modal = document.getElementById('modal-cancelar-reserva');
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
+function fecharModalCancelarReserva() {
+  const modal = document.getElementById('modal-cancelar-reserva');
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+}
+document.getElementById('modal-cancelar-reserva').addEventListener('click', function(e) {
+  if (e.target === this) fecharModalCancelarReserva();
+});
+</script>

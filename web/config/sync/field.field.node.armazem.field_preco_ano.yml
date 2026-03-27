@@ -1,15 +1,15 @@
-uuid: 68142b97-fc4e-4921-8cd1-d096db6d461a
+uuid: c722f2e5-8775-4db1-a3fd-026af83b69f4
 langcode: pt-pt
 status: true
 dependencies:
   config:
-    - field.storage.node.field_preco_hora
+    - field.storage.node.field_preco_ano
     - node.type.armazem
-id: node.armazem.field_preco_hora
-field_name: field_preco_hora
+id: node.armazem.field_preco_ano
+field_name: field_preco_ano
 entity_type: node
 bundle: armazem
-label: 'Valor preço/hora'
+label: 'Valor preço/ano'
 description: ''
 required: false
 translatable: false

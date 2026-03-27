@@ -32,6 +32,24 @@ garagem_reservas.admin_reserva_apagar:
     _permission: 'administer garagem reservas'
     reserva: \d+
 
+garagem_reservas.reserva_cancelar_proprietario:
+  path: '/reserva/{reserva}/cancelar-proprietario'
+  defaults:
+    _controller: '\Drupal\garagem_reservas\Controller\ReservaController::cancelarProprietario'
+    _title: 'Cancelar Reserva'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+    reserva: \d+
+
+garagem_reservas.reserva_cancelar_direto:
+  path: '/reserva/{reserva}/cancelar-direto'
+  defaults:
+    _controller: '\Drupal\garagem_reservas\Controller\ReservaController::cancelarUser'
+    _title: 'Cancelar Reserva'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+    reserva: \d+
+
 garagem_reservas.reserva_cancelar:
   path: '/reserva/{reserva}/cancelar'
   defaults:
@@ -123,18 +141,10 @@ garagem_reservas.disponibilidade_remover:
     node: \d+
     bloqueio: \d+
 
-garagem_reservas.lista_proprietario:
-  path: '/dashboard/reservas/garagens'
-  defaults:
-    _controller: '\Drupal\garagem_reservas\Controller\ReservaController::listaProprietario'
-    _title: 'Reservas das minhas garagens'
-  requirements:
-    _user_is_logged_in: 'TRUE'
-
 garagem_reservas.lista_user:
   path: '/dashboard/reservas'
   defaults:
-    _controller: '\Drupal\garagem_reservas\Controller\ReservaController::listaUser'
+    _controller: '\Drupal\garagem_reservas\Controller\ReservaController::listaDashboard'
     _title: 'As minhas reservas'
   requirements:
     _user_is_logged_in: 'TRUE'

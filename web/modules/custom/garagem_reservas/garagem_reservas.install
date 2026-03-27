@@ -18,7 +18,7 @@ function garagem_reservas_schema() {
       'proprietario_id' => ['type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE],
       'data_inicio' => ['type' => 'int', 'not null' => TRUE],
       'data_fim' => ['type' => 'int', 'not null' => FALSE],
-      'indefinido' => ['type' => 'int', 'size' => 'tiny', 'not null' => TRUE, 'default' => 0],
+      'renovacao_automatica' => ['type' => 'int', 'size' => 'tiny', 'not null' => TRUE, 'default' => 0],
       'tipo_preco' => ['type' => 'varchar', 'length' => 10, 'not null' => TRUE],
       'preco_total' => ['type' => 'numeric', 'precision' => 10, 'scale' => 2, 'not null' => TRUE],
       'taxa_plataforma' => ['type' => 'numeric', 'precision' => 10, 'scale' => 2, 'not null' => TRUE],
@@ -74,5 +74,30 @@ function garagem_reservas_update_8001() {
       'indexes' => ['garagem_id' => ['garagem_id']],
     ];
     $schema->createTable('garagem_indisponibilidade', $spec);
+  }
+}
+
+/**
+ * Substituir coluna indefinido por renovacao_automatica.
+ */
+function garagem_reservas_update_8002() {
+  $schema = \Drupal::database()->schema();
+  $database = \Drupal::database();
+
+  // Adicionar nova coluna.
+  if (!$schema->fieldExists('garagem_reserva', 'renovacao_automatica')) {
+    $schema->addField('garagem_reserva', 'renovacao_automatica', [
+      'type' => 'int',
+      'size' => 'tiny',
+      'not null' => TRUE,
+      'default' => 0,
+    ]);
+    // Migrar dados — reservas indefinidas tornam-se renovação automática.
+    $database->query("UPDATE {garagem_reserva} SET renovacao_automatica = indefinido");
+  }
+
+  // Remover coluna antiga.
+  if ($schema->fieldExists('garagem_reserva', 'indefinido')) {
+    $schema->dropField('garagem_reserva', 'indefinido');
   }
 }

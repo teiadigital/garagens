@@ -2,9 +2,7 @@ base:
   version: VERSION
   css:
     theme:
-      js/owlcarousel/owl.carousel.min.css: {}
-      js/owlcarousel/owl.theme.default.min.css: {}
-      https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.css: { type: external }
+      css/flowbite.min.css: {}
       css/output.css: {}
       css/style.css: {}
     component:
@@ -60,10 +58,9 @@ base:
     js/geodata/portugalHigh.js: {}
     js/geodata/spainProvincesHigh.js: {}
     js/amcharts5/themes/Animated.js: { minified: true }
-    js/owlcarousel/owl.carousel.min.js: { minified: true }
-    https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.js: { type: external }
+    js/flowbite.min.js: { minified: true, attributes: { defer: true } }
     js/leafmap/leaf-hover.js: {}
-    js/script.js: {}
+    js/script.js: { attributes: { defer: true } }
   dependencies:
     - core/jquery
 dialog:
@@ -123,3 +120,13 @@ user:
     component:
       css/components/user.css:
         weight: -10
+carousel:
+  version: VERSION
+  css:
+    theme:
+      js/owlcarousel/owl.carousel.min.css: {}
+      js/owlcarousel/owl.theme.default.min.css: {}
+  js:
+    js/owlcarousel/owl.carousel.min.js: { minified: true, attributes: { defer: true } }
+  dependencies:
+    - core/jquery

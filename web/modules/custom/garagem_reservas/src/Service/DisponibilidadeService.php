@@ -34,15 +34,17 @@ class DisponibilidadeService {
   public function verificarDisponibilidade(int $garagem_id, int $inicio_ts, ?int $fim_ts): bool {
     $query = $this->database->select('garagem_reserva', 'gr')
       ->condition('garagem_id', $garagem_id)
-      ->condition('estado', ['pago', 'aprovado', 'pendente'], 'IN');
+      ->condition('estado', ['pago', 'aprovado', 'aguarda_pagamento', 'pendente'], 'IN');
 
-    // Verificar sobreposição de datas.
     if ($fim_ts) {
-      // Reserva com data fim definida.
       $or = $query->orConditionGroup()
-        // Reservas indefinidas que começam antes do fim pedido.
-        ->condition('indefinido', 1)
-        // Reservas que se sobrepõem ao período pedido.
+        // Renovação automática que começa antes do fim pedido.
+        ->condition(
+          $query->andConditionGroup()
+            ->condition('renovacao_automatica', 1)
+            ->condition('data_inicio', $fim_ts, '<')
+        )
+        // Reservas normais que se sobrepõem ao período pedido.
         ->condition(
           $query->andConditionGroup()
             ->condition('data_inicio', $fim_ts, '<')
@@ -55,12 +57,30 @@ class DisponibilidadeService {
       $query->condition($or);
     }
     else {
-      // Reserva indefinida — verificar se há qualquer reserva ativa.
-      $query->condition('data_inicio', $inicio_ts, '>=');
+      // Modo renovação automática — bloqueia se existir qualquer reserva ativa na garagem.
+      // Não pode haver nenhuma outra reserva ativa, seja ela qual for.
+      $query->condition(
+        $query->orConditionGroup()
+          ->condition('renovacao_automatica', 1)
+          ->condition('data_inicio', $inicio_ts, '>=')
+      );
     }
 
     $count = $query->countQuery()->execute()->fetchField();
-    return $count == 0;
+    if ($count > 0) {
+      return FALSE;
+    }
+
+    // Verificar também bloqueios manuais sobrepostos.
+    $bloqueio_query = $this->database->select('garagem_indisponibilidade', 'gi')
+      ->condition('garagem_id', $garagem_id);
+
+    $fim_check = $fim_ts ?? PHP_INT_MAX;
+    $bloqueio_query->condition('data_inicio', $fim_check, '<');
+    $bloqueio_query->condition('data_fim', $inicio_ts, '>');
+
+    $count_bloqueios = $bloqueio_query->countQuery()->execute()->fetchField();
+    return $count_bloqueios == 0;
   }
 
   /**
@@ -74,7 +94,7 @@ class DisponibilidadeService {
    */
   public function getDatasOcupadas(int $garagem_id): array {
     $result = $this->database->select('garagem_reserva', 'gr')
-      ->fields('gr', ['data_inicio', 'data_fim', 'indefinido'])
+      ->fields('gr', ['data_inicio', 'data_fim', 'renovacao_automatica'])
       ->condition('garagem_id', $garagem_id)
       ->condition('estado', ['pago', 'aprovado', 'pendente', 'aguarda_pagamento'], 'IN')
       ->execute()
@@ -90,7 +110,7 @@ class DisponibilidadeService {
       $datas[] = [
         'inicio' => (string) $inicio_dia,
         'fim' => (string) $fim_dia,
-        'indefinido' => (bool) $row->indefinido,
+        'renovacao_automatica' => (bool) $row->renovacao_automatica,
       ];
     }
 
@@ -105,7 +125,7 @@ class DisponibilidadeService {
       $datas[] = [
         'inicio' => (string) $bloqueio->data_inicio,
         'fim' => (string) $bloqueio->data_fim,
-        'indefinido' => FALSE,
+        'renovacao_automatica' => FALSE,
         'bloqueio_manual' => TRUE,
       ];
     }
@@ -124,7 +144,7 @@ class DisponibilidadeService {
       ->condition('estado', ['pago', 'aprovado', 'pendente', 'aguarda_pagamento'], 'IN')
       ->condition(
         $this->database->condition('OR')
-          ->condition('indefinido', 1)
+          ->condition('renovacao_automatica', 1)
           ->condition('data_fim', $hoje, '>=')
       )
       ->countQuery()

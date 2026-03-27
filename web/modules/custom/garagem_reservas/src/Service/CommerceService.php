@@ -56,7 +56,7 @@ class CommerceService {
 
     // Formatar datas.
     $data_inicio = date('d/m/Y', $reserva->data_inicio);
-    $data_fim = $reserva->indefinido ? 'Indefinido' : ($reserva->data_fim ? date('d/m/Y', $reserva->data_fim) : '-');
+    $data_fim = $reserva->renovacao_automatica ? $this->t('Renovação automática') : ($reserva->data_fim ? date('d/m/Y', $reserva->data_fim) : '-');
 
     // Criar Order Item com preço dinâmico e campos da reserva.
     $taxa = (string) number_format($reserva->taxa_plataforma, 2, '.', '');

@@ -1,0 +1,21 @@
+uuid: 0af8e01a-8bea-4e7d-af6c-cca4f965f105
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_renovacao_automatica
+    - node.type.armazem
+id: node.armazem.field_renovacao_automatica
+field_name: field_renovacao_automatica
+entity_type: node
+bundle: armazem
+label: 'Aceita renovação automática'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

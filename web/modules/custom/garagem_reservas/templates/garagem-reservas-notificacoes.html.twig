@@ -4,28 +4,28 @@
  * Template de notificações.
  */
 #}
-<div class="garagem-notificacoes">
+<div class="max-w-2xl mx-auto">
 
-  <h2>{{ 'Notificações'|t }}</h2>
+  <h2 class="text-2xl font-bold text-gray-900 mb-6">{{ 'Notificações'|t }}</h2>
 
   {% if items is empty %}
-    <p class="alert alert-info">{{ 'Não tem notificações.'|t }}</p>
+    <div class="bg-blue-50 border border-blue-200 rounded-xl p-5 text-sm text-blue-700">
+      {{ 'Não tem notificações.'|t }}
+    </div>
   {% else %}
-    <div class="notificacoes-lista">
+    <div class="space-y-3">
       {% for item in items %}
-        <div class="notificacao-item card mb-2">
-          <div class="card-body">
-            <div class="notificacao-header d-flex justify-content-between align-items-center mb-2">
-              <span class="notificacao-tipo badge bg-secondary">
-                {{ item.bundle }}
-              </span>
-              <small class="text-muted">
-                {{ item.created|date('d/m/Y H:i') }}
-              </small>
-            </div>
-            <div class="notificacao-texto">
-              {{ item.text|raw }}
-            </div>
+        <div class="bg-white border border-gray-200 rounded-xl p-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+              {{ item.bundle }}
+            </span>
+            <span class="text-xs text-gray-400">
+              {{ item.created|date('d/m/Y H:i') }}
+            </span>
+          </div>
+          <div class="text-sm text-gray-700">
+            {{ item.text|raw }}
           </div>
         </div>
       {% endfor %}

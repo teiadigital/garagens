@@ -22,20 +22,20 @@ dependencies:
     - field.field.node.armazem.field_fotos
     - field.field.node.armazem.field_geo_coordenadas
     - field.field.node.armazem.field_identifique_os_certificado
-    - field.field.node.armazem.field_incluir_espaco_exterior
     - field.field.node.armazem.field_licenca_de_utilizacao
     - field.field.node.armazem.field_limitacoes_de_acesso
     - field.field.node.armazem.field_limitacoes_horario_acesso
     - field.field.node.armazem.field_localidade
     - field.field.node.armazem.field_peso_maximo_piso
     - field.field.node.armazem.field_piso
+    - field.field.node.armazem.field_preco_ano
+    - field.field.node.armazem.field_preco_ano_ativo
     - field.field.node.armazem.field_preco_dia
     - field.field.node.armazem.field_preco_dia_ativo
-    - field.field.node.armazem.field_preco_hora
-    - field.field.node.armazem.field_preco_hora_ativo
     - field.field.node.armazem.field_preco_mes
     - field.field.node.armazem.field_preco_mes_ativo
     - field.field.node.armazem.field_recursos
+    - field.field.node.armazem.field_renovacao_automatica
     - field.field.node.armazem.field_seguranca
     - field.field.node.armazem.field_seguro
     - field.field.node.armazem.field_sistema_detecao_incendios
@@ -53,6 +53,7 @@ dependencies:
     - paragraphs
     - paragraphs_ee
     - paragraphs_features
+    - select_or_other
 third_party_settings:
   field_group:
     group_grid_col_2:
@@ -62,7 +63,7 @@ third_party_settings:
       label: 'grid col 2'
       region: content
       parent_name: ''
-      weight: 6
+      weight: 5
       format_type: html_element
       format_settings:
         classes: field-group-grid-col-2
@@ -125,10 +126,12 @@ third_party_settings:
         - field_preco_dia
         - field_preco_mes_ativo
         - field_preco_mes
+        - field_preco_ano_ativo
+        - field_preco_ano
       label: Preços
       region: content
       parent_name: ''
-      weight: 24
+      weight: 23
       format_type: fieldset
       format_settings:
         classes: ''
@@ -144,7 +147,7 @@ mode: default
 content:
   field_area_individual:
     type: paragraphs
-    weight: 9
+    weight: 8
     region: content
     settings:
       title: Parágrafo
@@ -177,19 +180,19 @@ content:
           dialog_style: tiles
   field_certificados:
     type: options_buttons
-    weight: 20
+    weight: 19
     region: content
     settings: {  }
     third_party_settings: {  }
   field_controlo_acesso:
     type: options_buttons
-    weight: 11
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
   field_desc_controlo_acesso:
     type: string_textarea
-    weight: 12
+    weight: 11
     region: content
     settings:
       rows: 5
@@ -216,7 +219,7 @@ content:
             selector: ''
   field_desc_lim_horario_acesso:
     type: string_textarea
-    weight: 14
+    weight: 13
     region: content
     settings:
       rows: 5
@@ -243,7 +246,7 @@ content:
             selector: ''
   field_desc_limitacoes_acesso:
     type: string_textarea
-    weight: 8
+    weight: 7
     region: content
     settings:
       rows: 5
@@ -270,7 +273,7 @@ content:
             selector: ''
   field_desc_seguranca:
     type: string_textarea
-    weight: 16
+    weight: 15
     region: content
     settings:
       rows: 5
@@ -297,7 +300,7 @@ content:
             selector: ''
   field_desc_seguros:
     type: string_textarea
-    weight: 23
+    weight: 22
     region: content
     settings:
       rows: 5
@@ -324,7 +327,7 @@ content:
             selector: ''
   field_desc_sistema_det_incendios:
     type: string_textarea
-    weight: 18
+    weight: 17
     region: content
     settings:
       rows: 5
@@ -387,7 +390,7 @@ content:
     third_party_settings: {  }
   field_identifique_os_certificado:
     type: string_textarea
-    weight: 21
+    weight: 20
     region: content
     settings:
       rows: 5
@@ -412,27 +415,21 @@ content:
             effect: show
             effect_options: {  }
             selector: ''
-  field_incluir_espaco_exterior:
-    type: options_buttons
-    weight: 5
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   field_licenca_de_utilizacao:
     type: options_buttons
-    weight: 19
+    weight: 18
     region: content
     settings: {  }
     third_party_settings: {  }
   field_limitacoes_de_acesso:
     type: options_buttons
-    weight: 7
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
   field_limitacoes_horario_acesso:
     type: options_buttons
-    weight: 13
+    weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -455,6 +452,38 @@ content:
     weight: 0
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_preco_ano:
+    type: number
+    weight: 34
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings:
+      conditional_fields:
+        dc72588a-1b8e-46ef-9d94-5634c9e24edb:
+          entity_type: node
+          bundle: armazem
+          dependee: field_preco_ano_ativo
+          settings:
+            state: visible
+            reset: false
+            condition: checked
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              value: false
+            effect: show
+            effect_options: {  }
+            selector: ''
+  field_preco_ano_ativo:
+    type: boolean_checkbox
+    weight: 33
+    region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   field_preco_dia:
     type: number
@@ -521,26 +550,42 @@ content:
       display_label: true
     third_party_settings: {  }
   field_recursos:
-    type: options_buttons
-    weight: 10
+    type: select_or_other_list
+    weight: 9
     region: content
-    settings: {  }
+    settings:
+      select_element_type: select_or_other_buttons
+      sort_options: ''
+      other_placeholder: ''
+      other_option: Outro
+      other_field_label: ''
+      add_other_value_to_allowed_values: true
+    third_party_settings:
+      entity_form_field_label:
+        new_label: ''
+        rewrite_label: 0
+  field_renovacao_automatica:
+    type: boolean_checkbox
+    weight: 24
+    region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   field_seguranca:
     type: options_buttons
-    weight: 15
+    weight: 14
     region: content
     settings: {  }
     third_party_settings: {  }
   field_seguro:
     type: options_buttons
-    weight: 22
+    weight: 21
     region: content
     settings: {  }
     third_party_settings: {  }
   field_sistema_detecao_incendios:
     type: options_buttons
-    weight: 17
+    weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -558,8 +603,6 @@ hidden:
   field_descreva_servicos_incluido: true
   field_descricao_espaco_exterior: true
   field_geo_coordenadas: true
-  field_preco_hora: true
-  field_preco_hora_ativo: true
   field_termos_e_condicoes: true
   field_tipo_de_controlo: true
   field_titulo: true

@@ -1,4 +1,50 @@
-/* Layout dois campos lado a lado estilo Airbnb */
+/* Botões de tipo de reserva */
+.garagem-tipo-preco-botoes {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.tipo-preco-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 24px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tipo-preco-btn:hover {
+  border-color: #111827;
+  background: #f9fafb;
+}
+
+.tipo-preco-btn.active {
+  border-color: #111827;
+  background: #111827;
+}
+
+.tipo-preco-btn .tipo-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tipo-preco-btn.active .tipo-label {
+  color: #fff;
+}
+
+.tipo-preco-btn .tipo-preco {
+  display: none;
+}
+
+
 .garagem-datas-wrapper {
   display: flex;
   border: 1px solid #ddd;

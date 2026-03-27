@@ -1,11 +1,11 @@
-uuid: a5a9842c-1191-413c-8f58-162d0230017c
+uuid: 1245dcbb-39e3-49e7-835d-989a23390cd7
 langcode: pt-pt
 status: true
 dependencies:
   module:
     - node
-id: node.field_preco_hora_ativo
-field_name: field_preco_hora_ativo
+id: node.field_preco_ano_ativo
+field_name: field_preco_ano_ativo
 entity_type: node
 type: boolean
 settings: {  }

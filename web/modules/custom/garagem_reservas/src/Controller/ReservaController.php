@@ -66,6 +66,88 @@ class ReservaController extends ControllerBase {
   }
 
   /**
+   * Cancelar reserva diretamente pelo utilizador (sem página de confirmação).
+   */
+  public function cancelarUser(int $reserva) {
+    $reserva_data = $this->getReserva($reserva);
+
+    if (!$reserva_data) {
+      throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
+    }
+
+    $current_user = \Drupal::currentUser();
+    if ($current_user->id() != $reserva_data->user_id) {
+      throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
+    }
+
+    $estados_cancelaveis = ['pendente', 'aprovado', 'aguarda_pagamento', 'pago'];
+    if (!in_array($reserva_data->estado, $estados_cancelaveis)) {
+      $this->messenger()->addError($this->t('Não é possível cancelar esta reserva no estado atual.'));
+      return $this->redirect('garagem_reservas.reserva_view', ['reserva' => $reserva]);
+    }
+
+    $this->database->update('garagem_reserva')
+      ->fields(['estado' => 'cancelado'])
+      ->condition('id', $reserva)
+      ->execute();
+
+    try {
+      \Drupal::service('garagem_reservas.notificacao')->reservaCancelada($reserva);
+    }
+    catch (\Exception $e) {
+      \Drupal::logger('garagem_reservas')->warning(
+        'Erro ao notificar cancelamento da reserva #@id: @msg',
+        ['@id' => $reserva, '@msg' => $e->getMessage()]
+      );
+    }
+
+    $this->messenger()->addStatus($this->t('Reserva cancelada com sucesso.'));
+    return $this->redirect('garagem_reservas.lista_user');
+  }
+
+  /**
+   * Cancelar reserva pelo proprietário.
+   */
+  public function cancelarProprietario(int $reserva) {
+    $reserva_data = $this->getReserva($reserva);
+
+    if (!$reserva_data) {
+      throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
+    }
+
+    $current_user = \Drupal::currentUser();
+    if ($current_user->id() != $reserva_data->proprietario_id && !$current_user->hasPermission('administer garagem reservas')) {
+      throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
+    }
+
+    // Proprietário pode cancelar em qualquer estado exceto já cancelado/rejeitado/expirado.
+    $estados_cancelaveis = ['pendente', 'aprovado', 'aguarda_pagamento', 'pago'];
+    if (!in_array($reserva_data->estado, $estados_cancelaveis)) {
+      $this->messenger()->addError($this->t('Não é possível cancelar esta reserva no estado atual.'));
+      return $this->redirect('garagem_reservas.lista_garagem', ['node' => $reserva_data->garagem_id]);
+    }
+
+    $this->database->update('garagem_reserva')
+      ->fields(['estado' => 'cancelado'])
+      ->condition('id', $reserva)
+      ->execute();
+
+    // Notificar o arrendatário.
+    try {
+      \Drupal::service('garagem_reservas.notificacao')->reservaCancelada($reserva);
+    }
+    catch (\Exception $e) {
+      \Drupal::logger('garagem_reservas')->warning(
+        'Erro ao notificar cancelamento da reserva #@id: @msg',
+        ['@id' => $reserva, '@msg' => $e->getMessage()]
+      );
+    }
+
+    $this->messenger()->addStatus($this->t('Reserva #@id cancelada com sucesso.', ['@id' => $reserva]));
+    return $this->redirect('garagem_reservas.lista_garagem', ['node' => $reserva_data->garagem_id]);
+  }
+
+  /**
    * Aprovar reserva.
    */
   public function aprovar(int $reserva) {
@@ -231,15 +313,15 @@ class ReservaController extends ControllerBase {
       ? (($billing_address['given_name'] ?? '') . ' ' . ($billing_address['family_name'] ?? ''))
       : ($user->hasField('field_nome') ? $user->get('field_nome')->value : $user->name->value);
 
-    $indefinido = (int) $reserva_data->indefinido === 1;
+    $renovacao_automatica = (int) $reserva_data->renovacao_automatica === 1;
 
     // Checkboxes de prazo.
     $check_on = '[X]';
     $check_off = '[  ]';
-    $checkbox_prazo = (!$indefinido ? $check_on : $check_off) . ' Prazo determinado até ' .
-      (!$indefinido && $reserva_data->data_fim ? date('d/m/Y', $reserva_data->data_fim) : '___/___/______') .
+    $checkbox_prazo = (!$renovacao_automatica ? $check_on : $check_off) . ' Prazo determinado até ' .
+      (!$renovacao_automatica && $reserva_data->data_fim ? date('d/m/Y', $reserva_data->data_fim) : '___/___/______') .
       '<br>' .
-      ($indefinido ? $check_on : $check_off) . ' Prazo indeterminado';
+      ($renovacao_automatica ? $check_on : $check_off) . ' Renovação automática';
 
     // Preços da garagem.
     $preco_dia_garagem = '';
@@ -366,43 +448,50 @@ class ReservaController extends ControllerBase {
   /**
    * Lista de reservas do proprietário.
    */
-  public function listaProprietario() {
+  public function listaDashboard() {
     $current_user = \Drupal::currentUser();
+    $uid = $current_user->id();
 
-    $reservas = $this->database->select('garagem_reserva', 'gr')
+    $reservas_user = $this->database->select('garagem_reserva', 'gr')
       ->fields('gr')
-      ->condition('proprietario_id', $current_user->id())
+      ->condition('user_id', $uid)
       ->orderBy('data_criacao', 'DESC')
       ->execute()
       ->fetchAll();
 
+    $reservas_proprietario = $this->database->select('garagem_reserva', 'gr')
+      ->fields('gr')
+      ->condition('proprietario_id', $uid)
+      ->orderBy('data_criacao', 'DESC')
+      ->execute()
+      ->fetchAll();
+
+    $node_storage = $this->entityTypeManager()->getStorage('node');
+    $user_storage = $this->entityTypeManager()->getStorage('user');
+
+    $this->enriquecerReservas($reservas_user, $node_storage, $user_storage);
+    $this->enriquecerReservas($reservas_proprietario, $node_storage, $user_storage);
+
     return [
       '#theme' => 'garagem_reservas_lista',
-      '#reservas' => $reservas,
-      '#tipo' => 'proprietario',
-      '#cache' => ['contexts' => ['user']],
+      '#reservas_user' => $reservas_user,
+      '#reservas_proprietario' => $reservas_proprietario,
+      '#tipo' => 'dashboard',
+      '#cache' => ['contexts' => ['user'], 'max-age' => 0],
     ];
   }
 
   /**
-   * Lista de reservas do utilizador.
+   * Enriquece reservas com dados de garagem e utilizador.
    */
-  public function listaUser() {
-    $current_user = \Drupal::currentUser();
-
-    $reservas = $this->database->select('garagem_reserva', 'gr')
-      ->fields('gr')
-      ->condition('user_id', $current_user->id())
-      ->orderBy('data_criacao', 'DESC')
-      ->execute()
-      ->fetchAll();
-
-    return [
-      '#theme' => 'garagem_reservas_lista',
-      '#reservas' => $reservas,
-      '#tipo' => 'user',
-      '#cache' => ['contexts' => ['user']],
-    ];
+  protected function enriquecerReservas(array &$reservas, $node_storage, $user_storage): void {
+    foreach ($reservas as $reserva) {
+      $garagem = $node_storage->load($reserva->garagem_id);
+      $user = $user_storage->load($reserva->user_id);
+      $reserva->garagem_titulo = $garagem ? $garagem->getTitle() : '—';
+      $reserva->user_nome = $user ? $user->getDisplayName() : '—';
+      $reserva->user_email = $user ? $user->getEmail() : '—';
+    }
   }
 
   /**
@@ -463,6 +552,10 @@ class ReservaController extends ControllerBase {
       ->orderBy('data_criacao', 'DESC')
       ->execute()
       ->fetchAll();
+
+    $node_storage = $this->entityTypeManager()->getStorage('node');
+    $user_storage = $this->entityTypeManager()->getStorage('user');
+    $this->enriquecerReservas($reservas, $node_storage, $user_storage);
 
     return [
       '#theme' => 'garagem_reservas_lista',

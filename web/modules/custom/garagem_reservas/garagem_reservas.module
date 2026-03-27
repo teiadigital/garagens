@@ -21,10 +21,10 @@ function garagem_reservas_cron() {
   $database = \Drupal::database();
   $tempo_limite = \Drupal::time()->getRequestTime() - ($prazo_horas * 3600);
 
-  // Buscar reservas aprovadas que já ultrapassaram o prazo de pagamento.
+  // Expirar reservas aprovadas ou em aguarda_pagamento que ultrapassaram o prazo.
   $ids = $database->select('garagem_reserva', 'gr')
     ->fields('gr', ['id'])
-    ->condition('estado', 'aprovado')
+    ->condition('estado', ['aprovado', 'aguarda_pagamento'], 'IN')
     ->condition('data_aprovacao', $tempo_limite, '<')
     ->execute()
     ->fetchCol();
@@ -36,7 +36,6 @@ function garagem_reservas_cron() {
         ->condition('id', $id)
         ->execute();
 
-      // Notificar user e proprietário.
       \Drupal::service('garagem_reservas.notificacao')->reservaExpirada($id);
     }
 
@@ -150,13 +149,17 @@ function garagem_reservas_theme() {
         'taxa_percentual' => NULL,
         'is_proprietario' => FALSE,
         'is_user' => FALSE,
+        'commerce_checkout_url' => NULL,
       ],
       'template' => 'garagem-reserva',
     ],
     'garagem_reservas_lista' => [
       'variables' => [
         'reservas' => [],
-        'tipo' => 'user',
+        'reservas_user' => [],
+        'reservas_proprietario' => [],
+        'tipo' => 'dashboard',
+        'titulo' => NULL,
       ],
       'template' => 'garagem-reservas-lista',
     ],

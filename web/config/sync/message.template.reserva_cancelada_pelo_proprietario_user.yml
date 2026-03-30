@@ -1,0 +1,19 @@
+uuid: a2982b91-bf7c-407d-9b9a-273ef16b6d62
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+template: reserva_cancelada_pelo_proprietario_user
+label: 'Reserva cancelada pelo proprietário'
+description: 'Notificação ao user quando o proprietário cancela.'
+text:
+  -
+    value: '<p>A sua reserva para <strong>@garagem</strong> foi cancelada pelo proprietário.</p>'
+    format: basic_html
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

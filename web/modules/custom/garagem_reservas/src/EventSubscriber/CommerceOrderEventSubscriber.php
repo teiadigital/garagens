@@ -52,6 +52,16 @@ class CommerceOrderEventSubscriber implements EventSubscriberInterface {
       ->condition('id', $reserva->id)
       ->execute();
 
+    try {
+      \Drupal::service('garagem_reservas.notificacao')->reservaAguardaPagamento($reserva->id);
+    }
+    catch (\Exception $e) {
+      \Drupal::logger('garagem_reservas')->warning(
+        'Erro ao notificar aguarda_pagamento reserva #@id: @msg',
+        ['@id' => $reserva->id, '@msg' => $e->getMessage()]
+      );
+    }
+
     \Drupal::logger('garagem_reservas')->info(
       'Reserva #@id mudou para aguarda_pagamento.',
       ['@id' => $reserva->id]

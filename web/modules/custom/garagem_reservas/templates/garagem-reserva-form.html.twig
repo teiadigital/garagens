@@ -1,0 +1,30 @@
+{#
+/**
+ * Template do formulário de reserva — card resumo + formulário.
+ */
+#}
+
+{# Card resumo tipo checkout #}
+<div class="flex items-center gap-5 p-4 mb-10 border border-gray-200 rounded-2xl bg-white max-w-xl">
+
+  {# Primeira foto #}
+  {% if garagem_primeira_foto %}
+    <div style="width:90px;height:70px;flex-shrink:0;border-radius:10px;overflow:hidden;">
+      {{ garagem_primeira_foto }}
+    </div>
+  {% endif %}
+
+  {# Info #}
+  <div>
+    <p class="font-bold text-gray-900 text-base leading-tight mb-1">{{ garagem_titulo }}</p>
+    {% if garagem_localidade %}
+      <p class="text-sm text-gray-500">
+        {{ garagem_localidade.locality }}{% if garagem_localidade.administrative_area %}, {{ garagem_localidade.administrative_area }}{% endif %}{% if garagem_localidade.country %}, {{ garagem_localidade.country }}{% endif %}
+      </p>
+    {% endif %}
+  </div>
+
+</div>
+
+{# Formulário #}
+{{ form }}

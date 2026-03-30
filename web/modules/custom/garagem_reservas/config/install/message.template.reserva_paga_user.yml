@@ -3,12 +3,12 @@ status: true
 dependencies:
   config:
     - filter.format.basic_html
-template: reserva_rejeitada_user
-label: 'Reserva rejeitada'
-description: 'Notificação ao user quando a reserva é rejeitada.'
+template: reserva_paga_user
+label: 'Pagamento confirmado'
+description: 'Confirmação de pagamento ao user.'
 text:
   -
-    value: '<p>A sua reserva para <strong>@garagem</strong> não foi aceite pelo proprietário.</p>'
+    value: '<p>O seu pagamento para <strong>@garagem</strong> foi confirmado. A sua reserva está ativa!</p>'
     format: basic_html
 settings:
   'token options':

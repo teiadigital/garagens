@@ -101,3 +101,33 @@ function garagem_reservas_update_8002() {
     $schema->dropField('garagem_reserva', 'indefinido');
   }
 }
+
+/**
+ * Atualizar templates de notificação com placeholder @garagem.
+ */
+function garagem_reservas_update_8003() {
+  $templates = [
+    'reserva_criada_proprietario' => '<p>Foi feito um novo pedido de reserva para a sua garagem <strong>@garagem</strong>. Aceda à plataforma para aprovar ou rejeitar.</p>',
+    'reserva_criada_user' => '<p>O seu pedido de reserva para <strong>@garagem</strong> foi submetido com sucesso. Aguarde a aprovação do proprietário.</p>',
+    'reserva_aprovada_user' => '<p>A sua reserva para <strong>@garagem</strong> foi aprovada! Aceda à plataforma para efetuar o pagamento dentro do prazo.</p>',
+    'reserva_aguarda_pagamento_user' => '<p>O seu processo de pagamento para <strong>@garagem</strong> foi iniciado. Por favor conclua o pagamento para confirmar a reserva.</p>',
+    'reserva_rejeitada_user' => '<p>A sua reserva para <strong>@garagem</strong> não foi aceite pelo proprietário.</p>',
+    'reserva_paga_proprietario' => '<p>O pagamento da reserva da garagem <strong>@garagem</strong> foi confirmado. Aceda à plataforma para ver os detalhes.</p>',
+    'reserva_paga_user' => '<p>O seu pagamento para <strong>@garagem</strong> foi confirmado. A sua reserva está ativa!</p>',
+    'reserva_cancelada_proprietario' => '<p>O arrendatário cancelou a reserva da garagem <strong>@garagem</strong>.</p>',
+    'reserva_cancelada_user_confirmacao' => '<p>A sua reserva para <strong>@garagem</strong> foi cancelada com sucesso.</p>',
+    'reserva_cancelada_pelo_proprietario_user' => '<p>A sua reserva para <strong>@garagem</strong> foi cancelada pelo proprietário. Lamentamos o inconveniente.</p>',
+    'reserva_cancelada_proprietario_confirmacao' => '<p>A reserva da garagem <strong>@garagem</strong> foi cancelada com sucesso.</p>',
+    'reserva_expirada' => '<p>A sua reserva para <strong>@garagem</strong> expirou por não ter sido concluído o pagamento dentro do prazo.</p>',
+    'reserva_expirada_proprietario' => '<p>Uma reserva para <strong>@garagem</strong> expirou por falta de pagamento. A garagem voltou a ficar disponível.</p>',
+  ];
+
+  $config_factory = \Drupal::configFactory();
+  foreach ($templates as $template_id => $novo_texto) {
+    $config = $config_factory->getEditable("message.template.{$template_id}");
+    if (!$config->isNew()) {
+      $config->set('text', [['value' => $novo_texto, 'format' => 'basic_html']]);
+      $config->save();
+    }
+  }
+}

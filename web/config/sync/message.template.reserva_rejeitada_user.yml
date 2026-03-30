@@ -4,14 +4,12 @@ status: true
 dependencies:
   config:
     - filter.format.basic_html
-_core:
-  default_config_hash: hDK74Ri2orpW05GcvIaHjerDKRS1bGzpxW0GRhBFEMo
 template: reserva_rejeitada_user
 label: 'Reserva rejeitada'
-description: 'Notificação enviada ao utilizador quando a reserva é rejeitada.'
+description: 'Notificação ao user quando a reserva é rejeitada.'
 text:
   -
-    value: '<p>O seu pedido de reserva foi rejeitado pelo proprietário.</p>'
+    value: '<p>A sua reserva para <strong>@garagem</strong> não foi aceite pelo proprietário.</p>'
     format: basic_html
 settings:
   'token options':

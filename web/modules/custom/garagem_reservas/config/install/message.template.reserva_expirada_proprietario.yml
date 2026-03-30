@@ -1,0 +1,18 @@
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+template: reserva_expirada_proprietario
+label: 'Reserva expirada — garagem disponível'
+description: 'Notificação ao proprietário quando reserva expira.'
+text:
+  -
+    value: '<p>Uma reserva para <strong>@garagem</strong> expirou por falta de pagamento. A garagem voltou a ficar disponível.</p>'
+    format: basic_html
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

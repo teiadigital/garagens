@@ -24,6 +24,82 @@ class ReservaController extends ControllerBase {
   }
 
   /**
+   * Formulário de reserva com informações da garagem.
+   */
+  public function add(\Drupal\node\NodeInterface $node) {
+    $form = \Drupal::formBuilder()->getForm('\Drupal\garagem_reservas\Form\ReservaForm', $node);
+
+    $view_builder = $this->entityTypeManager()->getViewBuilder('node');
+
+    // Localidade.
+    $localidade = [];
+    if ($node->hasField('field_localidade') && !$node->get('field_localidade')->isEmpty()) {
+      $localidade = $view_builder->viewField($node->get('field_localidade'), ['label' => 'above']);
+    }
+
+    // Descrição.
+    $descricao = [];
+    if ($node->hasField('field_descricao') && !$node->get('field_descricao')->isEmpty()) {
+      $descricao = $view_builder->viewField($node->get('field_descricao'), ['label' => 'above']);
+    }
+
+    // Área individual.
+    $area = [];
+    if ($node->hasField('field_area_individual') && !$node->get('field_area_individual')->isEmpty()) {
+      $area = $view_builder->viewField($node->get('field_area_individual'), ['label' => 'above']);
+    }
+
+    // Fotos.
+    $fotos = [];
+    if ($node->hasField('field_fotos') && !$node->get('field_fotos')->isEmpty()) {
+      $fotos = $view_builder->viewField($node->get('field_fotos'), 'full');
+    }
+
+    // Primeira foto apenas.
+    $primeira_foto = [];
+    if ($node->hasField('field_fotos') && !$node->get('field_fotos')->isEmpty()) {
+      $foto_item = $node->get('field_fotos')->first();
+      if ($foto_item) {
+        $media = $foto_item->entity;
+        if ($media && $media->hasField('field_media_image') && !$media->get('field_media_image')->isEmpty()) {
+          $file = $media->get('field_media_image')->entity;
+          if ($file) {
+            $primeira_foto = [
+              '#theme' => 'image_style',
+              '#style_name' => 'large',
+              '#uri' => $file->getFileUri(),
+              '#attributes' => ['style' => 'width:100%;height:100%;object-fit:cover;'],
+            ];
+          }
+        }
+      }
+    }
+
+    // Localidade simplificada.
+    $localidade = [];
+    if ($node->hasField('field_localidade') && !$node->get('field_localidade')->isEmpty()) {
+      $loc = $node->get('field_localidade')->first();
+      $localidade = [
+        'locality' => $loc->locality,
+        'administrative_area' => $loc->administrative_area,
+        'country' => $loc->country_code,
+      ];
+    }
+
+    return [
+      '#theme' => 'garagem_reserva_form',
+      '#form' => $form,
+      '#garagem' => $node,
+      '#garagem_titulo' => $node->getTitle(),
+      '#garagem_primeira_foto' => $primeira_foto,
+      '#garagem_localidade' => $localidade,
+      '#garagem_descricao' => $descricao,
+      '#garagem_fotos' => $fotos,
+      '#garagem_area' => $area,
+    ];
+  }
+
+  /**
    * Ver detalhes da reserva.
    */
   public function view(int $reserva) {
@@ -92,7 +168,7 @@ class ReservaController extends ControllerBase {
       ->execute();
 
     try {
-      \Drupal::service('garagem_reservas.notificacao')->reservaCancelada($reserva);
+      \Drupal::service('garagem_reservas.notificacao')->reservaCanceladaPeloUser($reserva);
     }
     catch (\Exception $e) {
       \Drupal::logger('garagem_reservas')->warning(
@@ -132,9 +208,9 @@ class ReservaController extends ControllerBase {
       ->condition('id', $reserva)
       ->execute();
 
-    // Notificar o arrendatário.
+    // Notificar o arrendatário e confirmar ao proprietário.
     try {
-      \Drupal::service('garagem_reservas.notificacao')->reservaCancelada($reserva);
+      \Drupal::service('garagem_reservas.notificacao')->reservaCanceladaPeloProprietario($reserva);
     }
     catch (\Exception $e) {
       \Drupal::logger('garagem_reservas')->warning(
@@ -499,18 +575,31 @@ class ReservaController extends ControllerBase {
    */
   public function notificacoes() {
     $current_user = \Drupal::currentUser();
+    $uid = $current_user->id();
 
     $message_storage = \Drupal::entityTypeManager()->getStorage('message');
     $ids = $message_storage->getQuery()
-      ->condition('uid', $current_user->id())
+      ->condition('uid', $uid)
       ->sort('created', 'DESC')
       ->accessCheck(FALSE)
       ->execute();
 
     $messages = $message_storage->loadMultiple($ids);
 
+    // Marcar como lidas — guardar timestamp da última leitura.
+    \Drupal::service('user.data')->set(
+      'garagem_reservas',
+      $uid,
+      'notificacoes_lidas_ate',
+      \Drupal::time()->getRequestTime()
+    );
+
+    $template_storage = \Drupal::entityTypeManager()->getStorage('message_template');
     $items = [];
     foreach ($messages as $message) {
+      $template = $template_storage->load($message->bundle());
+      $label = $template ? $template->label() : $message->bundle();
+
       $texts = $message->getText();
       $text_rendered = '';
       foreach ($texts as $text) {
@@ -522,7 +611,7 @@ class ReservaController extends ControllerBase {
       }
 
       $items[] = [
-        'bundle' => $message->bundle(),
+        'label' => $label,
         'created' => $message->getCreatedTime(),
         'text' => $text_rendered,
       ];
@@ -531,7 +620,7 @@ class ReservaController extends ControllerBase {
     return [
       '#theme' => 'garagem_reservas_notificacoes',
       '#items' => $items,
-      '#cache' => ['contexts' => ['user']],
+      '#cache' => ['max-age' => 0],
     ];
   }
 

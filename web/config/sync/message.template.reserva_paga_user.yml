@@ -1,0 +1,19 @@
+uuid: 073c9de2-14dd-4054-8ee4-0d888cefcb71
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+template: reserva_paga_user
+label: 'Pagamento confirmado'
+description: 'Confirmação de pagamento ao user.'
+text:
+  -
+    value: '<p>O seu pagamento para <strong>@garagem</strong> foi confirmado. A sua reserva está ativa!</p>'
+    format: basic_html
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

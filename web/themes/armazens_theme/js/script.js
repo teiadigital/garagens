@@ -106,6 +106,7 @@
   });
 
   $(document).ready(function () {
+    if (!$.fn.owlCarousel) return;
     $(".owl-carousel-homepage").owlCarousel({
       center: true,
       items: 1,

@@ -7,11 +7,14 @@ use Drupal\commerce_order\Entity\OrderItem;
 use Drupal\commerce_price\Price;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * Serviço de integração com Drupal Commerce.
  */
 class CommerceService {
+
+  use StringTranslationTrait;
 
   protected $database;
   protected $entityTypeManager;

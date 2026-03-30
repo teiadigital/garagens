@@ -1350,10 +1350,9 @@ form table tbody td {
   @apply mb-5;
 }
 
-
 .marker-estado--1,
 .marker-estado-3 {
-  background-image: url('/themes/armazens_theme/images/icons/location.png');
+  background-image: url("/themes/armazens_theme/images/icons/location.png");
   background-size: contain;
   background-repeat: no-repeat;
   width: 30px;
@@ -1370,27 +1369,26 @@ form table tbody td {
   filter: hue-rotate(241deg) saturate(1) brightness(1.2);
 }
 
-
-.valencias img{
+.valencias img {
   max-width: 20px;
 }
 
-.armazem-teaser .fotos img{
+.armazem-teaser .fotos img {
   width: 100%;
   aspect-ratio: 16/9;
   object-fit: cover;
 }
 
-.leaflet-popup-content{
-  width: 300px!important;
+.leaflet-popup-content {
+  width: 300px !important;
 }
 
-.leaflet-tile-pane{
-  filter: saturate(0)
+.leaflet-tile-pane {
+  filter: saturate(0);
 }
 
-.armazem-teaser .descricao{
-   text-transform: lowercase;
+.armazem-teaser .descricao {
+  text-transform: lowercase;
 }
 
 .armazem-teaser .descricao::first-letter {
@@ -1398,19 +1396,23 @@ form table tbody td {
 }
 
 .marker-cluster {
-    background: rgb(61 177 58 / 60%) !important;
+  background: rgb(61 177 58 / 60%) !important;
 }
 
-.marker-cluster div{
-    background: rgb(61 177 58 / 60%) !important;
+.marker-cluster div {
+  background: rgb(61 177 58 / 60%) !important;
 }
 
-.link-map{
-    line-height: 1.5rem;
-    font-weight: 500;
-    --tw-text-opacity: 1;
-    color: rgb(137 137 137)!important;
-    text-decoration-line: underline;
-    margin-top: 10px;
-    display: inline-block
+.link-map {
+  line-height: 1.5rem;
+  font-weight: 500;
+  --tw-text-opacity: 1;
+  color: rgb(137 137 137) !important;
+  text-decoration-line: underline;
+  margin-top: 10px;
+  display: inline-block;
+}
+
+.carousel-armazens .field--name-field-media-image .field__item img {
+  @apply w-full;
 }

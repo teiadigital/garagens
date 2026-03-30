@@ -11,7 +11,7 @@ dependencies:
 id: armazens_theme_menudeutilizador
 theme: armazens_theme
 region: header
-weight: -3
+weight: -5
 provider: null
 plugin: 'system_menu_block:account'
 settings:

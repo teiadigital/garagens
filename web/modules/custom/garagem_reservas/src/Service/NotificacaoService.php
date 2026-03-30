@@ -10,7 +10,7 @@ use Drupal\message\Entity\Message;
 use Drupal\message_notify\MessageNotifier;
 
 /**
- * Serviço de notificações de reservas usando o módulo Message.
+ * Serviço de notificações de reservas.
  */
 class NotificacaoService {
 
@@ -34,86 +34,145 @@ class NotificacaoService {
   }
 
   /**
-   * Notifica quando uma reserva é criada.
+   * Reserva criada pelo user.
+   * → Proprietário: nova reserva para aprovar.
+   * → User: confirmação de submissão.
    */
   public function reservaCriada(int $reserva_id): void {
     $reserva = $this->getReserva($reserva_id);
     if (!$reserva) return;
-
-    $proprietario = $this->entityTypeManager->getStorage('user')->load($reserva->proprietario_id);
-    $this->enviarMensagem('reserva_criada_proprietario', $proprietario, $reserva_id);
+    $garagem_titulo = $this->getGaragemTitulo($reserva->garagem_id);
+    $this->enviar('reserva_criada_proprietario', $this->loadUser($reserva->proprietario_id), $reserva_id, $garagem_titulo);
+    $this->enviar('reserva_criada_user', $this->loadUser($reserva->user_id), $reserva_id, $garagem_titulo);
   }
 
   /**
-   * Notifica quando uma reserva é aprovada.
+   * Reserva aprovada pelo proprietário.
+   * → User: reserva aprovada, ir pagar.
    */
   public function reservaAprovada(int $reserva_id): void {
     $reserva = $this->getReserva($reserva_id);
     if (!$reserva) return;
-
-    $user = $this->entityTypeManager->getStorage('user')->load($reserva->user_id);
-    $this->enviarMensagem('reserva_aprovada_user', $user, $reserva_id);
+    $garagem_titulo = $this->getGaragemTitulo($reserva->garagem_id);
+    $this->enviar('reserva_aprovada_user', $this->loadUser($reserva->user_id), $reserva_id, $garagem_titulo);
   }
 
   /**
-   * Notifica quando uma reserva é rejeitada.
+   * Reserva rejeitada pelo proprietário.
+   * → User: reserva rejeitada.
    */
   public function reservaRejeitada(int $reserva_id): void {
     $reserva = $this->getReserva($reserva_id);
     if (!$reserva) return;
-
-    $user = $this->entityTypeManager->getStorage('user')->load($reserva->user_id);
-    $this->enviarMensagem('reserva_rejeitada_user', $user, $reserva_id);
+    $garagem_titulo = $this->getGaragemTitulo($reserva->garagem_id);
+    $this->enviar('reserva_rejeitada_user', $this->loadUser($reserva->user_id), $reserva_id, $garagem_titulo);
   }
 
   /**
-   * Notifica quando uma reserva expira.
+   * User iniciou o checkout.
+   * → User: lembrete para concluir o pagamento.
    */
-  public function reservaExpirada(int $reserva_id): void {
+  public function reservaAguardaPagamento(int $reserva_id): void {
     $reserva = $this->getReserva($reserva_id);
     if (!$reserva) return;
-
-    $user = $this->entityTypeManager->getStorage('user')->load($reserva->user_id);
-    $this->enviarMensagem('reserva_expirada', $user, $reserva_id);
+    $garagem_titulo = $this->getGaragemTitulo($reserva->garagem_id);
+    $this->enviar('reserva_aguarda_pagamento_user', $this->loadUser($reserva->user_id), $reserva_id, $garagem_titulo);
   }
 
   /**
-   * Notifica proprietário quando pagamento é recebido.
+   * Pagamento confirmado.
+   * → Proprietário: pagamento recebido.
+   * → User: confirmação de pagamento.
    */
   public function reservaPaga(int $reserva_id): void {
     $reserva = $this->getReserva($reserva_id);
     if (!$reserva) return;
-
-    $proprietario = $this->entityTypeManager->getStorage('user')->load($reserva->proprietario_id);
-    $this->enviarMensagem('reserva_paga_proprietario', $proprietario, $reserva_id);
+    $garagem_titulo = $this->getGaragemTitulo($reserva->garagem_id);
+    $this->enviar('reserva_paga_proprietario', $this->loadUser($reserva->proprietario_id), $reserva_id, $garagem_titulo);
+    $this->enviar('reserva_paga_user', $this->loadUser($reserva->user_id), $reserva_id, $garagem_titulo);
   }
 
-  public function reservaCancelada(int $reserva_id): void {
+  /**
+   * Reserva cancelada pelo user.
+   * → Proprietário: reserva cancelada pelo arrendatário.
+   * → User: confirmação de cancelamento.
+   */
+  public function reservaCanceladaPeloUser(int $reserva_id): void {
     $reserva = $this->getReserva($reserva_id);
     if (!$reserva) return;
-
-    $proprietario = $this->entityTypeManager->getStorage('user')->load($reserva->proprietario_id);
-    $this->enviarMensagem('reserva_cancelada_proprietario', $proprietario, $reserva_id);
+    $garagem_titulo = $this->getGaragemTitulo($reserva->garagem_id);
+    $this->enviar('reserva_cancelada_proprietario', $this->loadUser($reserva->proprietario_id), $reserva_id, $garagem_titulo);
+    $this->enviar('reserva_cancelada_user_confirmacao', $this->loadUser($reserva->user_id), $reserva_id, $garagem_titulo);
   }
 
   /**
-   * Cria e envia uma mensagem via Message + Message Notify.
+   * Reserva cancelada pelo proprietário.
+   * → User: reserva cancelada pelo proprietário.
+   * → Proprietário: confirmação de cancelamento.
    */
-  protected function enviarMensagem(string $template, $destinatario, int $reserva_id): void {
-    $message = Message::create([
-      'template' => $template,
-      'uid' => $destinatario->id(),
-      'field_reserva_id' => $reserva_id,
-    ]);
-    $message->save();
-
-    // Enviar por email via Message Notify.
-    $this->messageNotifier->send($message, [], 'email');
+  public function reservaCanceladaPeloProprietario(int $reserva_id): void {
+    $reserva = $this->getReserva($reserva_id);
+    if (!$reserva) return;
+    $garagem_titulo = $this->getGaragemTitulo($reserva->garagem_id);
+    $this->enviar('reserva_cancelada_pelo_proprietario_user', $this->loadUser($reserva->user_id), $reserva_id, $garagem_titulo);
+    $this->enviar('reserva_cancelada_proprietario_confirmacao', $this->loadUser($reserva->proprietario_id), $reserva_id, $garagem_titulo);
   }
 
   /**
-   * Obtém dados da reserva.
+   * Reserva expirada (cron).
+   * → User: reserva expirou.
+   * → Proprietário: garagem disponível novamente.
    */
+  public function reservaExpirada(int $reserva_id): void {
+    $reserva = $this->getReserva($reserva_id);
+    if (!$reserva) return;
+    $garagem_titulo = $this->getGaragemTitulo($reserva->garagem_id);
+    $this->enviar('reserva_expirada', $this->loadUser($reserva->user_id), $reserva_id, $garagem_titulo);
+    $this->enviar('reserva_expirada_proprietario', $this->loadUser($reserva->proprietario_id), $reserva_id, $garagem_titulo);
+  }
+
+  /**
+   * Alias legado.
+   */
+  public function reservaCancelada(int $reserva_id): void {
+    $this->reservaCanceladaPeloUser($reserva_id);
+  }
+
+  // ─── Helpers ────────────────────────────────────────────────────────────────
+
+  protected function enviar(string $template, $destinatario, int $reserva_id, string $garagem_titulo = ''): void {
+    if (!$destinatario) return;
+    try {
+      $message = Message::create([
+        'template' => $template,
+        'uid' => $destinatario->id(),
+        'field_reserva_id' => $reserva_id,
+      ]);
+
+      if ($garagem_titulo) {
+        $message->set('arguments', ['@garagem' => $garagem_titulo]);
+      }
+
+      $message->save();
+      $this->messageNotifier->send($message, [], 'email');
+    }
+    catch (\Exception $e) {
+      \Drupal::logger('garagem_reservas')->warning(
+        'Erro ao enviar notificação @template para user @uid: @msg',
+        ['@template' => $template, '@uid' => $destinatario->id(), '@msg' => $e->getMessage()]
+      );
+    }
+  }
+
+  protected function getGaragemTitulo(int $garagem_id): string {
+    $node = $this->entityTypeManager->getStorage('node')->load($garagem_id);
+    return $node ? $node->getTitle() : '';
+  }
+
+  protected function loadUser(int $uid) {
+    return $this->entityTypeManager->getStorage('user')->load($uid);
+  }
+
   protected function getReserva(int $reserva_id): ?object {
     return $this->database->select('garagem_reserva', 'gr')
       ->fields('gr')

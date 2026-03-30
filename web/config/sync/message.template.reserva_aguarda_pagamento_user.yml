@@ -1,0 +1,19 @@
+uuid: cbcd5069-4097-4699-9215-87543a41fef7
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+template: reserva_aguarda_pagamento_user
+label: 'Pagamento pendente'
+description: 'Lembrete ao user para concluir o pagamento após iniciar checkout.'
+text:
+  -
+    value: '<p>O seu processo de pagamento para <strong>@garagem</strong> foi iniciado. Por favor conclua o pagamento para confirmar a reserva.</p>'
+    format: basic_html
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

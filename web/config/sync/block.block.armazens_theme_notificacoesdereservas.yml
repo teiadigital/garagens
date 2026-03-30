@@ -1,0 +1,20 @@
+uuid: 52da31c3-9610-4a76-a9a3-a657eea45a46
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - garagem_reservas
+  theme:
+    - armazens_theme
+id: armazens_theme_notificacoesdereservas
+theme: armazens_theme
+region: header
+weight: -9
+provider: null
+plugin: garagem_notificacoes_block
+settings:
+  id: garagem_notificacoes_block
+  label: 'Notificações de Reservas'
+  label_display: '0'
+  provider: garagem_reservas
+visibility: {  }

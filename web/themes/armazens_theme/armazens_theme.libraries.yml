@@ -55,7 +55,6 @@ base:
     js/amcharts5/map.js: { minified: true }
     js/amcharts5/geodata/worldLow.js: { minified: true }
     js/geodata/region/world/europeHigh.js: {}
-    js/geodata/portugalHigh.js: {}
     js/geodata/spainProvincesHigh.js: {}
     js/amcharts5/themes/Animated.js: { minified: true }
     js/flowbite.min.js: { minified: true, attributes: { defer: true } }
@@ -127,6 +126,6 @@ carousel:
       js/owlcarousel/owl.carousel.min.css: {}
       js/owlcarousel/owl.theme.default.min.css: {}
   js:
-    js/owlcarousel/owl.carousel.min.js: { minified: true, attributes: { defer: true } }
+    js/owlcarousel/owl.carousel.min.js: { minified: true }
   dependencies:
     - core/jquery

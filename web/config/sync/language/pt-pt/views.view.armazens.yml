@@ -15,13 +15,4 @@ display:
   default:
     display_options:
       title: ' garagens'
-  page_gestao_armazens:
-    display_options:
-      filters:
-        field_estado_value:
-          expose:
-            description: ''
-            min_placeholder: ''
-            max_placeholder: ''
-            placeholder: ''
 label: Garagens

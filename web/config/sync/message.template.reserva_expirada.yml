@@ -4,14 +4,12 @@ status: true
 dependencies:
   config:
     - filter.format.basic_html
-_core:
-  default_config_hash: 7DI2Ovp3apcCHv3a1L0pKxvxtdzqxbvyNVDH8zCQY90
 template: reserva_expirada
 label: 'Reserva expirada'
-description: 'Notificação enviada quando uma reserva expira por falta de pagamento.'
+description: 'Notificação ao user quando a reserva expira.'
 text:
   -
-    value: '<p>A sua reserva expirou por falta de pagamento dentro do prazo definido.</p>'
+    value: '<p>A sua reserva para <strong>@garagem</strong> expirou por falta de pagamento.</p>'
     format: basic_html
 settings:
   'token options':

@@ -77,33 +77,39 @@ class GaragemDisponibilidadeForm extends FormBase {
       ->fetchAll();
 
     if (!empty($bloqueios)) {
-      $rows = [];
+      $bloqueios_data = [];
       foreach ($bloqueios as $bloqueio) {
         $inicio = date('d/m/Y', $bloqueio->data_inicio);
         $fim = date('d/m/Y', $bloqueio->data_fim);
-        $periodo = ($inicio === $fim) ? $inicio : $inicio . ' - ' . $fim;
-        $rows[] = [
-          $periodo,
-          [
-            'data' => [
-              '#type' => 'link',
-              '#title' => $this->t('Remover'),
-              '#url' => \Drupal\Core\Url::fromRoute('garagem_reservas.disponibilidade_remover', [
-                'node' => $node->id(),
-                'bloqueio' => $bloqueio->id,
-              ]),
-              '#attributes' => ['class' => ['btn', 'btn-sm', 'btn-outline-danger']],
-            ],
-          ],
+        $bloqueios_data[] = [
+          'periodo' => ($inicio === $fim) ? $inicio : $inicio . ' - ' . $fim,
+          'url_remover' => \Drupal\Core\Url::fromRoute('garagem_reservas.disponibilidade_remover', [
+            'node' => $node->id(),
+            'bloqueio' => $bloqueio->id,
+          ])->toString(),
         ];
       }
 
       $form['bloqueios'] = [
-        '#type' => 'table',
-        '#caption' => $this->t('Datas bloqueadas'),
-        '#header' => [$this->t('Período'), $this->t('Ação')],
-        '#rows' => $rows,
-        '#empty' => $this->t('Sem datas bloqueadas.'),
+        '#type' => 'inline_template',
+        '#template' => '
+          <div style="margin-top:32px;">
+            <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#6b7280;margin-bottom:12px;">{{ "Datas bloqueadas"|t }}</p>
+            <table style="width:100%;border-collapse:collapse;">
+              {% for b in bloqueios %}
+                <tr style="border-bottom:1px solid #e5e7eb;">
+                  <td style="padding:10px 0;font-size:13px;color:#374151;">{{ b.periodo }}</td>
+                  <td style="padding:10px 0;text-align:right;">
+                    <a href="{{ b.url_remover }}"
+                       style="font-size:12px;font-weight:600;color:#dc2626;text-decoration:none;text-transform:uppercase;letter-spacing:0.05em;">
+                      {{ "Remover"|t }}
+                    </a>
+                  </td>
+                </tr>
+              {% endfor %}
+            </table>
+          </div>',
+        '#context' => ['bloqueios' => $bloqueios_data],
       ];
     }
 

@@ -4,14 +4,12 @@ status: true
 dependencies:
   config:
     - filter.format.basic_html
-_core:
-  default_config_hash: oWgiZ10IynEr7fDAsZWok9BBSmX05EGaiq-et1rmYZA
 template: reserva_aprovada_user
 label: 'Reserva aprovada'
-description: 'Notificação enviada ao utilizador quando a reserva é aprovada.'
+description: 'Notificação ao user quando a reserva é aprovada.'
 text:
   -
-    value: '<p>A sua reserva foi aprovada! Aceda à plataforma para efetuar o pagamento dentro do prazo definido.</p>'
+    value: '<p>A sua reserva para <strong>@garagem</strong> foi aprovada! Aceda à plataforma para efetuar o pagamento dentro do prazo.</p>'
     format: basic_html
 settings:
   'token options':

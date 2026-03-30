@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\management_armazens\Plugin\Block;
 
+use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Link;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use \Drupal\user\Entity\User;
 use Drupal\Core\Plugin\Context\ContextDefinition;
@@ -58,6 +60,21 @@ final class ActionsArmazensBlock extends BlockBase
         ];
     }
     return false;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function blockAccess(AccountInterface $account) {
+    $route_name = \Drupal::routeMatch()->getRouteName();
+    if ($route_name !== 'entity.node.canonical') {
+      return AccessResult::forbidden()->addCacheContexts(['route']);
+    }
+    $node = \Drupal::routeMatch()->getParameter('node');
+    if ($node instanceof NodeInterface && $node->bundle() === 'armazem') {
+      return AccessResult::allowed()->addCacheContexts(['route']);
+    }
+    return AccessResult::forbidden()->addCacheContexts(['route']);
   }
 
   /**

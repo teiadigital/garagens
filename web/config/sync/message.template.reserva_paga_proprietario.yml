@@ -4,14 +4,12 @@ status: true
 dependencies:
   config:
     - filter.format.basic_html
-_core:
-  default_config_hash: L1iJXEIL5a3jvMIX8FDiJZdoJLbrOeE9-OlCHNooHhU
 template: reserva_paga_proprietario
-label: 'Pagamento confirmado'
-description: 'Notificação enviada ao proprietário quando o pagamento é confirmado.'
+label: 'Pagamento recebido'
+description: 'Notificação ao proprietário quando pagamento é confirmado.'
 text:
   -
-    value: '<p>O pagamento da reserva foi confirmado. Aceda à plataforma para descarregar o comprovativo em PDF.</p>'
+    value: '<p>O pagamento da reserva da garagem <strong>@garagem</strong> foi confirmado.</p>'
     format: basic_html
 settings:
   'token options':

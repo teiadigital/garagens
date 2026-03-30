@@ -62,20 +62,21 @@ class ProprietarioBlock extends BlockBase implements ContainerFactoryPluginInter
       return [];
     }
 
+    $estilo = 'display:block;width:100%;text-align:center;padding:12px 24px;background:#c7d2fe;color:#312e81;border-radius:9999px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;text-decoration:none;margin-bottom:8px;';
+
     $build = [
-      '#type' => 'container',
-      '#attributes' => ['class' => ['garagem-proprietario-block']],
-      'todas' => [
-        '#type' => 'link',
-        '#title' => t('Ver reservas desta garagem'),
-        '#url' => \Drupal\Core\Url::fromRoute('garagem_reservas.lista_garagem', ['node' => $node->id()]),
-        '#attributes' => ['class' => ['btn', 'btn-outline-primary', 'btn-sm', 'd-block', 'mb-2']],
-      ],
-      'disponibilidade' => [
-        '#type' => 'link',
-        '#title' => t('Gerir disponibilidade'),
-        '#url' => \Drupal\Core\Url::fromRoute('garagem_reservas.garagem_disponibilidade', ['node' => $node->id()]),
-        '#attributes' => ['class' => ['btn', 'btn-outline-secondary', 'btn-sm', 'd-block']],
+      '#type' => 'inline_template',
+      '#template' => '
+        <div>
+          <a href="{{ url_reservas }}" style="{{ estilo }}">{{ label_reservas }}</a>
+          <a href="{{ url_disponibilidade }}" style="{{ estilo }}">{{ label_disponibilidade }}</a>
+        </div>',
+      '#context' => [
+        'estilo' => $estilo,
+        'url_reservas' => \Drupal\Core\Url::fromRoute('garagem_reservas.lista_garagem', ['node' => $node->id()])->toString(),
+        'label_reservas' => t('Ver reservas'),
+        'url_disponibilidade' => \Drupal\Core\Url::fromRoute('garagem_reservas.garagem_disponibilidade', ['node' => $node->id()])->toString(),
+        'label_disponibilidade' => t('Gerir disponibilidade'),
       ],
       '#cache' => ['contexts' => ['user', 'route'], 'max-age' => 0],
     ];

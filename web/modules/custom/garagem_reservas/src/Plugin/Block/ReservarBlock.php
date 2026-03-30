@@ -80,15 +80,13 @@ class ReservarBlock extends BlockBase implements ContainerFactoryPluginInterface
     }
 
     return [
-      '#type' => 'link',
-      '#title' => $this->t('Reservar'),
-      '#url' => \Drupal\Core\Url::fromRoute('garagem_reservas.reserva_add', ['node' => $node->id()]),
-      '#attributes' => [
-        'class' => ['btn', 'btn-primary', 'btn-reservar'],
+      '#type' => 'inline_template',
+      '#template' => '<a href="{{ url }}" style="display:block;width:100%;text-align:center;padding:12px 24px;background:#c7d2fe;color:#312e81;border-radius:9999px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;border:none;text-decoration:none;">{{ label }}</a>',
+      '#context' => [
+        'url' => \Drupal\Core\Url::fromRoute('garagem_reservas.reserva_add', ['node' => $node->id()])->toString(),
+        'label' => $this->t('Reservar'),
       ],
-      '#cache' => [
-        'contexts' => ['user', 'route'],
-      ],
+      '#cache' => ['contexts' => ['user', 'route']],
     ];
   }
 

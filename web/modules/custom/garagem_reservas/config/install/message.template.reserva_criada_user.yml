@@ -1,0 +1,18 @@
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+template: reserva_criada_user
+label: 'Reserva submetida'
+description: 'Confirmação ao user de submissão da reserva.'
+text:
+  -
+    value: '<p>O seu pedido de reserva para <strong>@garagem</strong> foi submetido com sucesso. Aguarde a aprovação do proprietário.</p>'
+    format: basic_html
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

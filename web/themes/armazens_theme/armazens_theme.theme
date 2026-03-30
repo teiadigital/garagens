@@ -16,7 +16,24 @@ use Drupal\Core\Url;
 function armazens_theme_preprocess(array &$variables) {
   $variables['is_front'] = \Drupal::service('path.matcher')->isFrontPage();
   $variables['route_name'] = \Drupal::routeMatch()->getRouteName();
+}
 
+function armazens_theme_preprocess_page(array &$variables) {
+  $route_name = \Drupal::routeMatch()->getRouteName();
+
+  $variables['is_auth_page'] = in_array($route_name, ['user.login', 'user.register', 'user.pass']);
+
+  if ($route_name === 'entity.user.canonical') {
+    $variables['content_col_class'] = 'xl:col-span-8';
+    $variables['sidebar_right_col_class'] = 'xl:col-span-4';
+  }
+  else {
+    $variables['content_col_class'] = 'xl:col-span-9';
+    $variables['sidebar_right_col_class'] = 'xl:col-span-3';
+  }
+
+  $node = \Drupal::routeMatch()->getParameter('node');
+  $variables['show_go_back'] = $node instanceof \Drupal\node\NodeInterface && $node->bundle() === 'armazem';
 }
 
 function armazens_theme_preprocess_image_widget(array &$variables) {

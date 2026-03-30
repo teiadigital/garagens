@@ -62,7 +62,7 @@ garagem_reservas.reserva_cancelar:
 garagem_reservas.reserva_add:
   path: '/garagem/{node}/reservar'
   defaults:
-    _form: '\Drupal\garagem_reservas\Form\ReservaForm'
+    _controller: '\Drupal\garagem_reservas\Controller\ReservaController::add'
     _title: 'Reservar Garagem'
   requirements:
     _permission: 'create garagem reserva'

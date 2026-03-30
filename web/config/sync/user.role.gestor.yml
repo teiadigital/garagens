@@ -7,6 +7,7 @@ dependencies:
     - node.type.armazem
     - node.type.pedidos
   module:
+    - garagem_reservas
     - node
     - node_view_permissions
     - view_unpublished
@@ -16,6 +17,7 @@ weight: -5
 is_admin: null
 permissions:
   - 'access user profiles'
+  - 'administer garagem reservas'
   - 'administer users'
   - 'create advertising content'
   - 'edit any advertising content'

@@ -9,7 +9,7 @@ dependencies:
 id: armazens_theme_usermenuavatardropdown
 theme: armazens_theme
 region: header
-weight: -5
+weight: -7
 provider: null
 plugin: user_menu_avatar_dropdown
 settings:

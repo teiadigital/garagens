@@ -9,7 +9,7 @@ label: 'Reserva expirada — garagem disponível'
 description: 'Notificação ao proprietário quando reserva expira.'
 text:
   -
-    value: '<p>Uma reserva para <strong>@garagem</strong> expirou. A garagem voltou a ficar disponível.</p>'
+    value: '<p>Uma reserva para <strong>@garagem</strong> expirou por falta de pagamento. A garagem voltou a ficar disponível.</p>'
     format: basic_html
 settings:
   'token options':

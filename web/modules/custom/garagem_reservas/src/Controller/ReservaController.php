@@ -120,11 +120,46 @@ class ReservaController extends ControllerBase {
 
     $garagem = $this->entityTypeManager()->getStorage('node')->load($reserva_data->garagem_id);
     $user = $this->entityTypeManager()->getStorage('user')->load($reserva_data->user_id);
+    $proprietario = $this->entityTypeManager()->getStorage('user')->load($reserva_data->proprietario_id);
 
     $config = \Drupal::config('garagem_reservas.settings');
     $taxa_fixa = $config->get('taxa_fixa');
     $percentagem = $config->get('percentagem_plataforma');
     $taxa_percentual = $reserva_data->preco_total * $percentagem / 100;
+
+    // Contactos do proprietário — só visíveis para o arrendatário após pagamento.
+    $proprietario_contacto = NULL;
+    if ($is_user && $reserva_data->estado === 'pago' && $proprietario) {
+      $proprietario_contacto = [
+        'nome' => $proprietario->hasField('field_nome') && !$proprietario->get('field_nome')->isEmpty()
+          ? $proprietario->get('field_nome')->value
+          : $proprietario->getDisplayName(),
+        'email' => $proprietario->getEmail(),
+        'telefone' => $proprietario->hasField('field_telefone') && !$proprietario->get('field_telefone')->isEmpty()
+          ? $proprietario->get('field_telefone')->value
+          : NULL,
+        'telemovel' => $proprietario->hasField('field_telemovel') && !$proprietario->get('field_telemovel')->isEmpty()
+          ? $proprietario->get('field_telemovel')->value
+          : NULL,
+      ];
+    }
+
+    // Contactos do arrendatário — só visíveis para o proprietário após pagamento.
+    $arrendatario_contacto = NULL;
+    if ($is_proprietario && $reserva_data->estado === 'pago' && $user) {
+      $arrendatario_contacto = [
+        'nome' => $user->hasField('field_nome') && !$user->get('field_nome')->isEmpty()
+          ? $user->get('field_nome')->value
+          : $user->getDisplayName(),
+        'email' => $user->getEmail(),
+        'telefone' => $user->hasField('field_telefone') && !$user->get('field_telefone')->isEmpty()
+          ? $user->get('field_telefone')->value
+          : NULL,
+        'telemovel' => $user->hasField('field_telemovel') && !$user->get('field_telemovel')->isEmpty()
+          ? $user->get('field_telemovel')->value
+          : NULL,
+      ];
+    }
 
     return [
       '#theme' => 'garagem_reserva',
@@ -137,7 +172,9 @@ class ReservaController extends ControllerBase {
       '#taxa_percentual' => $taxa_percentual,
       '#is_proprietario' => $is_proprietario,
       '#is_user' => $is_user,
-      '#cache' => ['contexts' => ['user']],
+      '#proprietario_contacto' => $proprietario_contacto,
+      '#arrendatario_contacto' => $arrendatario_contacto,
+      '#cache' => ['max-age' => 0],
     ];
   }
 
@@ -301,6 +338,11 @@ class ReservaController extends ControllerBase {
     $is_proprietario = $current_user->id() == $reserva_data->proprietario_id;
     $is_user = $current_user->id() == $reserva_data->user_id;
     if (!$is_proprietario && !$is_user && !$current_user->hasPermission('administer garagem reservas')) {
+      throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
+    }
+
+    // PDF só disponível para reservas pagas.
+    if ($reserva_data->estado !== 'pago' && !$current_user->hasPermission('administer garagem reservas')) {
       throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
     }
 
@@ -553,7 +595,7 @@ class ReservaController extends ControllerBase {
       '#reservas_user' => $reservas_user,
       '#reservas_proprietario' => $reservas_proprietario,
       '#tipo' => 'dashboard',
-      '#cache' => ['contexts' => ['user'], 'max-age' => 0],
+      '#cache' => ['max-age' => 0],
     ];
   }
 
@@ -566,7 +608,6 @@ class ReservaController extends ControllerBase {
       $user = $user_storage->load($reserva->user_id);
       $reserva->garagem_titulo = $garagem ? $garagem->getTitle() : '—';
       $reserva->user_nome = $user ? $user->getDisplayName() : '—';
-      $reserva->user_email = $user ? $user->getEmail() : '—';
     }
   }
 
@@ -680,6 +721,12 @@ class ReservaController extends ControllerBase {
    * Endpoint de disponibilidade (JSON para calendário).
    */
   public function disponibilidade(int $node) {
+    // Verificar que a garagem existe e está publicada.
+    $garagem = $this->entityTypeManager()->getStorage('node')->load($node);
+    if (!$garagem || !$garagem->isPublished() || $garagem->bundle() !== 'armazem') {
+      return new JsonResponse(['error' => 'Not found'], 404);
+    }
+
     $servico = \Drupal::service('garagem_reservas.disponibilidade');
     $datas = $servico->getDatasOcupadas($node);
     $tem_futuras = $servico->temReservasFuturas($node);

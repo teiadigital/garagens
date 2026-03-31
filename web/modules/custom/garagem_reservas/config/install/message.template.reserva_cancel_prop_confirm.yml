@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - filter.format.basic_html
-template: reserva_cancelada_proprietario_confirmacao
+template: reserva_cancel_prop_confirm
 label: 'Cancelamento confirmado'
 description: 'Confirmação ao proprietário de que cancelou a reserva.'
 text:

@@ -84,7 +84,6 @@ function garagem_reservas_update_8002() {
   $schema = \Drupal::database()->schema();
   $database = \Drupal::database();
 
-  // Adicionar nova coluna.
   if (!$schema->fieldExists('garagem_reserva', 'renovacao_automatica')) {
     $schema->addField('garagem_reserva', 'renovacao_automatica', [
       'type' => 'int',
@@ -92,11 +91,9 @@ function garagem_reservas_update_8002() {
       'not null' => TRUE,
       'default' => 0,
     ]);
-    // Migrar dados — reservas indefinidas tornam-se renovação automática.
     $database->query("UPDATE {garagem_reserva} SET renovacao_automatica = indefinido");
   }
 
-  // Remover coluna antiga.
   if ($schema->fieldExists('garagem_reserva', 'indefinido')) {
     $schema->dropField('garagem_reserva', 'indefinido');
   }

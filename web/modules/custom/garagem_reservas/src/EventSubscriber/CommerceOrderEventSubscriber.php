@@ -19,14 +19,9 @@ class CommerceOrderEventSubscriber implements EventSubscriberInterface {
     $this->database = $database;
   }
 
-  /**
-   * {@inheritdoc}
-   */
   public static function getSubscribedEvents(): array {
     return [
-      // User submeteu o checkout — mudar para aguarda_pagamento.
       'commerce_order.place.post_transition' => ['onOrderPlace', 0],
-      // Pagamento confirmado pelo admin ou Ifthenpay callback.
       OrderEvents::ORDER_PAID => ['onOrderPaid', 0],
     ];
   }
@@ -43,7 +38,7 @@ class CommerceOrderEventSubscriber implements EventSubscriberInterface {
       ->execute()
       ->fetchObject();
 
-    if (!$reserva || !in_array($reserva->estado, ['aprovado'])) {
+    if (!$reserva || $reserva->estado !== 'aprovado') {
       return;
     }
 
@@ -73,14 +68,7 @@ class CommerceOrderEventSubscriber implements EventSubscriberInterface {
    */
   public function onOrderPaid(OrderEvent $event): void {
     $order = $event->getOrder();
-    $this->processOrderCompletion($order);
-  }
 
-  /**
-   * Processa a conclusão de uma order — atualiza a reserva para 'pago'.
-   */
-  protected function processOrderCompletion($order): void {
-    // Verificar se esta order está associada a uma reserva.
     $reserva = $this->database->select('garagem_reserva', 'gr')
       ->fields('gr', ['id', 'estado'])
       ->condition('commerce_order_id', $order->id())
@@ -91,7 +79,6 @@ class CommerceOrderEventSubscriber implements EventSubscriberInterface {
       return;
     }
 
-    // Atualizar estado da reserva para pago.
     $this->database->update('garagem_reserva')
       ->fields([
         'estado' => 'pago',
@@ -105,7 +92,6 @@ class CommerceOrderEventSubscriber implements EventSubscriberInterface {
       ['@id' => $reserva->id, '@order' => $order->id()]
     );
 
-    // Enviar notificações — num try/catch para não bloquear o pagamento.
     try {
       \Drupal::service('garagem_reservas.notificacao')->reservaPaga($reserva->id);
     }

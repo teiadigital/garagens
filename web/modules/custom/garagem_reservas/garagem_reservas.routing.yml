@@ -5,6 +5,8 @@ garagem_reservas.admin_settings:
     _title: 'Definições de Reservas de Garagens'
   requirements:
     _permission: 'administer garagem reservas'
+  options:
+    no_cache: true
 
 garagem_reservas.admin_lista:
   path: '/admin/garagem-reservas/reservas'
@@ -13,6 +15,8 @@ garagem_reservas.admin_lista:
     _title: 'Gerir Reservas'
   requirements:
     _permission: 'administer garagem reservas'
+  options:
+    no_cache: true
 
 garagem_reservas.admin_reserva_editar:
   path: '/admin/garagem-reservas/reservas/{reserva}/editar'
@@ -22,6 +26,8 @@ garagem_reservas.admin_reserva_editar:
   requirements:
     _permission: 'administer garagem reservas'
     reserva: \d+
+  options:
+    no_cache: true
 
 garagem_reservas.admin_reserva_apagar:
   path: '/admin/garagem-reservas/reservas/{reserva}/apagar'
@@ -31,6 +37,8 @@ garagem_reservas.admin_reserva_apagar:
   requirements:
     _permission: 'administer garagem reservas'
     reserva: \d+
+  options:
+    no_cache: true
 
 garagem_reservas.reserva_cancelar_proprietario:
   path: '/reserva/{reserva}/cancelar-proprietario'
@@ -40,6 +48,8 @@ garagem_reservas.reserva_cancelar_proprietario:
   requirements:
     _user_is_logged_in: 'TRUE'
     reserva: \d+
+  options:
+    no_cache: true
 
 garagem_reservas.reserva_cancelar_direto:
   path: '/reserva/{reserva}/cancelar-direto'
@@ -49,6 +59,8 @@ garagem_reservas.reserva_cancelar_direto:
   requirements:
     _user_is_logged_in: 'TRUE'
     reserva: \d+
+  options:
+    no_cache: true
 
 garagem_reservas.reserva_cancelar:
   path: '/reserva/{reserva}/cancelar'
@@ -58,6 +70,8 @@ garagem_reservas.reserva_cancelar:
   requirements:
     _user_is_logged_in: 'TRUE'
     reserva: \d+
+  options:
+    no_cache: true
 
 garagem_reservas.reserva_add:
   path: '/garagem/{node}/reservar'
@@ -67,6 +81,8 @@ garagem_reservas.reserva_add:
   requirements:
     _permission: 'create garagem reserva'
     node: \d+
+  options:
+    no_cache: true
 
 garagem_reservas.reserva_view:
   path: '/reserva/{reserva}'
@@ -76,6 +92,8 @@ garagem_reservas.reserva_view:
   requirements:
     _user_is_logged_in: 'TRUE'
     reserva: \d+
+  options:
+    no_cache: true
 
 garagem_reservas.reserva_aprovar:
   path: '/reserva/{reserva}/aprovar'
@@ -85,6 +103,8 @@ garagem_reservas.reserva_aprovar:
   requirements:
     _permission: 'manage garagem reserva'
     reserva: \d+
+  options:
+    no_cache: true
 
 garagem_reservas.reserva_rejeitar:
   path: '/reserva/{reserva}/rejeitar'
@@ -94,6 +114,8 @@ garagem_reservas.reserva_rejeitar:
   requirements:
     _permission: 'manage garagem reserva'
     reserva: \d+
+  options:
+    no_cache: true
 
 garagem_reservas.reserva_pdf:
   path: '/reserva/{reserva}/pdf'
@@ -103,6 +125,8 @@ garagem_reservas.reserva_pdf:
   requirements:
     _user_is_logged_in: 'TRUE'
     reserva: \d+
+  options:
+    no_cache: true
 
 garagem_reservas.disponibilidade:
   path: '/garagem/{node}/disponibilidade'
@@ -112,6 +136,8 @@ garagem_reservas.disponibilidade:
   requirements:
     _permission: 'access content'
     node: \d+
+  options:
+    no_cache: true
 
 garagem_reservas.lista_garagem:
   path: '/dashboard/garagens/{node}/reservas'
@@ -121,6 +147,8 @@ garagem_reservas.lista_garagem:
   requirements:
     _user_is_logged_in: 'TRUE'
     node: \d+
+  options:
+    no_cache: true
 
 garagem_reservas.garagem_disponibilidade:
   path: '/dashboard/garagens/{node}/disponibilidade'
@@ -130,6 +158,8 @@ garagem_reservas.garagem_disponibilidade:
   requirements:
     _user_is_logged_in: 'TRUE'
     node: \d+
+  options:
+    no_cache: true
 
 garagem_reservas.disponibilidade_remover:
   path: '/dashboard/garagens/{node}/disponibilidade/{bloqueio}/remover'
@@ -140,6 +170,8 @@ garagem_reservas.disponibilidade_remover:
     _user_is_logged_in: 'TRUE'
     node: \d+
     bloqueio: \d+
+  options:
+    no_cache: true
 
 garagem_reservas.lista_user:
   path: '/dashboard/reservas'
@@ -148,6 +180,8 @@ garagem_reservas.lista_user:
     _title: 'As minhas reservas'
   requirements:
     _user_is_logged_in: 'TRUE'
+  options:
+    no_cache: true
 
 garagem_reservas.notificacoes:
   path: '/dashboard/notificacoes'
@@ -156,3 +190,6 @@ garagem_reservas.notificacoes:
     _title: 'Notificações'
   requirements:
     _user_is_logged_in: 'TRUE'
+  options:
+    no_cache: true
+

@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - filter.format.basic_html
-template: reserva_cancelada_pelo_proprietario_user
+template: reserva_cancel_prop_user
 label: 'Reserva cancelada pelo proprietário'
 description: 'Notificação ao user quando o proprietário cancela.'
 text:

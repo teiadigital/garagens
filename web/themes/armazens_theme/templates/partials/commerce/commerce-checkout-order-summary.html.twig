@@ -1,33 +1,48 @@
 {#
- * Checkout order summary customizado — mostra detalhes da reserva.
+ * Checkout order summary — estilo site.
 #}
 <div{{ attributes.addClass('checkout-order-summary') }}>
-  {% block order_items %}
-    <table class="table table-sm">
-      <tbody>
-      {% for order_item in order_entity.getItems %}
-        <tr>
-          <td>
-            {{- order_item.label -}}
-            {% if order_item.field_garagem_nome.value %}
-              <div class="small text-muted">
-                <div>{{ 'Garagem'|t }}: <strong>{{ order_item.field_garagem_nome.value }}</strong></div>
-                {% if order_item.field_data_inicio.value %}
-                  <div>{{ 'Início'|t }}: {{ order_item.field_data_inicio.value }}</div>
-                {% endif %}
-                {% if order_item.field_data_fim.value %}
-                  <div>{{ 'Fim'|t }}: {{ order_item.field_data_fim.value }}</div>
-                {% endif %}
-              </div>
-            {% endif %}
-          </td>
-          <td class="text-end">{{- order_item.getTotalPrice|commerce_price_format -}}</td>
-        </tr>
-      {% endfor %}
-      </tbody>
-    </table>
-  {% endblock %}
-  {% block totals %}
+
+  {% for order_item in order_entity.getItems %}
+    <div class="mb-4 pb-4 border-b border-gray-200 last:border-0 last:mb-0 last:pb-0">
+
+      {# Nome do item #}
+      <p class="text-xs font-bold uppercase tracking-wide text-gray-500 mb-3">{{ order_item.label }}</p>
+
+      {# Detalhes da garagem #}
+      {% if order_item.field_garagem_nome.value %}
+        <div class="space-y-2 text-sm">
+          <div class="flex justify-between">
+            <span class="text-gray-500">{{ 'Garagem'|t }}</span>
+            <span class="font-medium text-gray-900">{{ order_item.field_garagem_nome.value }}</span>
+          </div>
+          {% if order_item.field_data_inicio.value %}
+            <div class="flex justify-between">
+              <span class="text-gray-500">{{ 'Início'|t }}</span>
+              <span class="font-medium text-gray-900">{{ order_item.field_data_inicio.value }}</span>
+            </div>
+          {% endif %}
+          {% if order_item.field_data_fim.value %}
+            <div class="flex justify-between">
+              <span class="text-gray-500">{{ 'Fim'|t }}</span>
+              <span class="font-medium text-gray-900">{{ order_item.field_data_fim.value }}</span>
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {# Preço #}
+      <div class="flex justify-between mt-3 pt-3 border-t border-gray-100">
+        <span class="text-sm font-bold text-gray-900">{{ 'Total a pagar'|t }}</span>
+        <span class="text-sm font-bold text-gray-900">{{- order_item.getTotalPrice|commerce_price_format -}}</span>
+      </div>
+
+    </div>
+  {% endfor %}
+
+  {# Totais #}
+  <div class="mt-2">
     {{ rendered_totals }}
-  {% endblock %}
+  </div>
+
 </div>

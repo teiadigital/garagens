@@ -112,6 +112,7 @@
                         {{content.field_localidade['#title']}}
                     </div>
                     <div class="field__item">
+                        {{ content.field_localidade.0.postal_code['#value'] }} - 
                         {{content.field_localidade.0.locality['#value']}} -
                         {{content.field_localidade.0.administrative_area['#value']}}, 
                         {{content.field_localidade.0.country['#value']}}
@@ -122,6 +123,34 @@
 
                 {{content.field_descricao}}
                 {{content.field_area_individual}}
+
+                <div class="">
+                    <p class="font-bold text-base tracking-wide mb-2">{{ 'Preços'|t }}</p>
+                
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                        {% if content.field_preco_dia_ativo[0] and content.field_preco_dia[0] %}
+                        <div>
+                            <p class="font-bold text-sm">{{ 'Por dia'|t }}</p>
+                            <p class="text-gray-600">{{ content.field_preco_dia[0] }}€</p>
+                        </div>
+                        {% endif %}
+                
+                        {% if content.field_preco_mes_ativo[0] and content.field_preco_mes[0] %}
+                        <div>
+                            <p class="font-bold text-sm">{{ 'Por mês'|t }}</p>
+                            <p class="text-gray-600">{{ content.field_preco_mes[0] }}€</p>
+                        </div>
+                        {% endif %}
+                
+                        {% if content.field_preco_ano_ativo[0] and content.field_preco_ano[0] %}
+                        <div>
+                            <p class="font-bold text-sm">{{ 'Por ano'|t }}</p>
+                            <p class="text-gray-600">{{ content.field_preco_ano[0] }}€</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
                 
             </div>
             <div class="col-span-full xl:col-span-6 2xl:col-span-5">

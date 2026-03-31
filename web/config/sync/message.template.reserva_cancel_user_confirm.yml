@@ -1,0 +1,19 @@
+uuid: 65b7e4af-97af-4072-8eb3-444fabb3ad19
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+template: reserva_cancel_user_confirm
+label: 'Cancelamento confirmado'
+description: 'Confirmação ao user de que cancelou a reserva.'
+text:
+  -
+    value: '<p>A sua reserva para <strong>@garagem</strong> foi cancelada com sucesso.</p>'
+    format: basic_html
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

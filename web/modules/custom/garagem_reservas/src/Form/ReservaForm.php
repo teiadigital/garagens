@@ -20,6 +20,33 @@ class ReservaForm extends FormBase {
       return [];
     }
 
+    // Verificar que a garagem está publicada.
+    if (!$node->isPublished()) {
+      throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
+    }
+
+    // Não permitir reservar a própria garagem.
+    $current_user = \Drupal::currentUser();
+    if ($node->getOwnerId() == $current_user->id()) {
+      $form['erro'] = [
+        '#markup' => '<p>' . $this->t('Não pode reservar a sua própria garagem.') . '</p>',
+      ];
+      return $form;
+    }
+
+    // Rate limiting — máximo 5 reservas pendentes por utilizador.
+    $pendentes = \Drupal::database()->select('garagem_reserva', 'gr')
+      ->condition('user_id', $current_user->id())
+      ->condition('estado', ['pendente', 'aprovado'], 'IN')
+      ->countQuery()->execute()->fetchField();
+
+    if ($pendentes >= 5) {
+      $form['erro'] = [
+        '#markup' => '<p>' . $this->t('Tem demasiadas reservas pendentes. Cancele ou aguarde aprovação antes de fazer nova reserva.') . '</p>',
+      ];
+      return $form;
+    }
+
     $form_state->set('garagem_node', $node);
 
     $servico_preco = \Drupal::service('garagem_reservas.preco');
@@ -225,6 +252,8 @@ class ReservaForm extends FormBase {
     $tipo = $form_state->getValue('tipo_preco');
     $renovacao = (bool) $form_state->getValue('renovacao_automatica');
     $notas = $form_state->getValue('notas');
+    // Sanitizar notas — remover HTML e limitar tamanho.
+    $notas = $notas ? mb_substr(strip_tags((string) $notas), 0, 1000) : NULL;
     $inicio_ts = $form_state->get('inicio_ts');
     $fim_ts = $form_state->get('fim_ts');
 

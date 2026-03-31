@@ -56,14 +56,6 @@
       <p class="text-gray-700">{{ preco_total|number_format(2) }}€</p>
     </div>
     <div>
-      <p class="text-xs font-bold text-gray-900 uppercase tracking-wide mb-1">{{ 'taxa fixa'|t }}</p>
-      <p class="text-gray-700">{{ taxa_fixa|number_format(2) }}€</p>
-    </div>
-    <div>
-      <p class="text-xs font-bold text-gray-900 uppercase tracking-wide mb-1">{{ 'taxa percentual'|t }}</p>
-      <p class="text-gray-700">{{ taxa_percentual|number_format(2) }}€</p>
-    </div>
-    <div>
       <p class="text-xs font-bold text-gray-900 uppercase tracking-wide mb-1">{{ 'a pagar à plataforma'|t }}</p>
       <p class="font-bold text-gray-900">{{ taxa_plataforma|number_format(2) }}€</p>
     </div>
@@ -83,6 +75,94 @@
     <div class="mb-6">
       <p class="text-xs font-bold text-gray-900 uppercase tracking-wide mb-1">{{ 'notas'|t }}</p>
       <p class="text-gray-700">{{ reserva.notas }}</p>
+    </div>
+  {% endif %}
+
+  {# Confirmação — mostrar ao arrendatário quando pendente #}
+  {% if is_user and reserva.estado == 'pendente' %}
+    <div class="border-t border-gray-300 my-6"></div>
+    <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-5">
+      <div class="flex items-start gap-3">
+        <svg class="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <div>
+          <p class="text-sm font-bold text-yellow-800 mb-1">{{ 'Pedido submetido com sucesso!'|t }}</p>
+          <p class="text-sm text-yellow-700">{{ 'O proprietário irá analisar o seu pedido e receberá uma notificação quando for aprovado ou rejeitado.'|t }}</p>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {# Contactos do arrendatário — só visível para o proprietário após pagamento #}
+  {% if arrendatario_contacto %}
+    <div class="border-t border-gray-300 my-6"></div>
+    <div class="bg-green-50 border border-green-200 rounded-xl p-5">
+      <p class="text-xs font-bold text-green-800 uppercase tracking-wide mb-3">{{ 'Contacto do arrendatário'|t }}</p>
+      <div class="space-y-2 text-sm">
+        <div class="flex items-center gap-2">
+          <span class="font-medium text-gray-700 w-20">{{ 'Nome'|t }}</span>
+          <span class="text-gray-900">{{ arrendatario_contacto.nome }}</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="font-medium text-gray-700 w-20">{{ 'Email'|t }}</span>
+          <a href="mailto:{{ arrendatario_contacto.email }}" class="text-blue-600 hover:underline">
+            {{ arrendatario_contacto.email }}
+          </a>
+        </div>
+        {% if arrendatario_contacto.telefone %}
+          <div class="flex items-center gap-2">
+            <span class="font-medium text-gray-700 w-20">{{ 'Telefone'|t }}</span>
+            <a href="tel:{{ arrendatario_contacto.telefone }}" class="text-blue-600 hover:underline">
+              {{ arrendatario_contacto.telefone }}
+            </a>
+          </div>
+        {% endif %}
+        {% if arrendatario_contacto.telemovel %}
+          <div class="flex items-center gap-2">
+            <span class="font-medium text-gray-700 w-20">{{ 'Telemóvel'|t }}</span>
+            <a href="tel:{{ arrendatario_contacto.telemovel }}" class="text-blue-600 hover:underline">
+              {{ arrendatario_contacto.telemovel }}
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+
+  {# Contactos do proprietário — só visível para o arrendatário após pagamento #}
+  {% if proprietario_contacto %}
+    <div class="border-t border-gray-300 my-6"></div>
+    <div class="bg-green-50 border border-green-200 rounded-xl p-5">
+      <p class="text-xs font-bold text-green-800 uppercase tracking-wide mb-3">{{ 'Contacto do proprietário'|t }}</p>
+      <div class="space-y-2 text-sm">
+        <div class="flex items-center gap-2">
+          <span class="font-medium text-gray-700 w-20">{{ 'Nome'|t }}</span>
+          <span class="text-gray-900">{{ proprietario_contacto.nome }}</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="font-medium text-gray-700 w-20">{{ 'Email'|t }}</span>
+          <a href="mailto:{{ proprietario_contacto.email }}" class="text-blue-600 hover:underline">
+            {{ proprietario_contacto.email }}
+          </a>
+        </div>
+        {% if proprietario_contacto.telefone %}
+          <div class="flex items-center gap-2">
+            <span class="font-medium text-gray-700 w-20">{{ 'Telefone'|t }}</span>
+            <a href="tel:{{ proprietario_contacto.telefone }}" class="text-blue-600 hover:underline">
+              {{ proprietario_contacto.telefone }}
+            </a>
+          </div>
+        {% endif %}
+        {% if proprietario_contacto.telemovel %}
+          <div class="flex items-center gap-2">
+            <span class="font-medium text-gray-700 w-20">{{ 'Telemóvel'|t }}</span>
+            <a href="tel:{{ proprietario_contacto.telemovel }}" class="text-blue-600 hover:underline">
+              {{ proprietario_contacto.telemovel }}
+            </a>
+          </div>
+        {% endif %}
+      </div>
     </div>
   {% endif %}
 
@@ -156,6 +236,14 @@
       </a>
     {% endif %}
 
+    {% if is_proprietario and reserva.estado not in ['cancelado', 'rejeitado', 'expirado'] %}
+      <button type="button"
+              onclick="abrirModalCancelarProprietario()"
+              class="px-5 py-2 text-sm font-bold text-red-600 border border-red-300 rounded-full hover:bg-red-50 transition">
+        {{ 'Cancelar reserva'|t }}
+      </button>
+    {% endif %}
+
     {% if reserva.estado == 'pago' and (is_proprietario or is_user) %}
       <a href="{{ path('garagem_reservas.reserva_pdf', {'reserva': reserva.id}) }}"
          class="px-5 py-2 text-sm font-bold text-gray-700 border border-gray-300 rounded-full hover:bg-gray-100 transition">
@@ -183,7 +271,53 @@ function fecharModalCancelarReserva() {
   modal.classList.add('hidden');
   modal.classList.remove('flex');
 }
-document.getElementById('modal-cancelar-reserva').addEventListener('click', function(e) {
+document.getElementById('modal-cancelar-reserva')?.addEventListener('click', function(e) {
   if (e.target === this) fecharModalCancelarReserva();
 });
+
+function abrirModalCancelarProprietario() {
+  const modal = document.getElementById('modal-cancelar-proprietario');
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
+function fecharModalCancelarProprietario() {
+  const modal = document.getElementById('modal-cancelar-proprietario');
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+}
+document.getElementById('modal-cancelar-proprietario')?.addEventListener('click', function(e) {
+  if (e.target === this) fecharModalCancelarProprietario();
+});
 </script>
+
+{# Modal cancelar — proprietário #}
+<div id="modal-cancelar-proprietario"
+     class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
+  <div class="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 p-6">
+    <div class="flex items-center gap-3 mb-4">
+      <div class="flex-shrink-0 w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
+        <svg class="w-5 h-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+        </svg>
+      </div>
+      <h3 class="text-lg font-semibold text-gray-900">{{ 'Cancelar reserva'|t }}</h3>
+    </div>
+    <p class="text-sm text-gray-600 mb-3">{{ 'Tem a certeza que quer cancelar esta reserva?'|t }}</p>
+    <div class="bg-gray-50 rounded-lg p-3 mb-4 text-sm text-gray-700 space-y-1">
+      <div><span class="font-medium">{{ 'Garagem:'|t }}</span> {{ garagem.title.value }}</div>
+    </div>
+    <p class="text-xs text-gray-400 mb-5">{{ 'O arrendatário será notificado. Esta ação não pode ser desfeita.'|t }}</p>
+    <div class="flex justify-end gap-3">
+      <button type="button"
+              onclick="fecharModalCancelarProprietario()"
+              class="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-200 rounded-full hover:bg-gray-50 transition">
+        {{ 'Voltar'|t }}
+      </button>
+      <a href="{{ path('garagem_reservas.reserva_cancelar_proprietario', {'reserva': reserva.id}) }}"
+         class="px-4 py-2 text-sm font-bold text-white bg-red-600 rounded-full hover:bg-red-700 transition">
+        {{ 'Sim, cancelar'|t }}
+      </a>
+    </div>
+  </div>
+</div>

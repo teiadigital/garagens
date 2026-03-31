@@ -76,16 +76,21 @@ class NotificacoesBlock extends BlockBase implements ContainerFactoryPluginInter
 
     $items = [];
     foreach ($messages as $message) {
-      // Carregar o template para obter o label correto.
       $template_id = $message->bundle();
       $template = \Drupal::entityTypeManager()->getStorage('message_template')->load($template_id);
       $label = $template ? $template->label() : $template_id;
 
-      // Renderizar o texto da mensagem.
+      // Obter texto via getText() que usa os argumentos (@garagem etc).
+      $texto = '';
       try {
-        $view_builder = \Drupal::entityTypeManager()->getViewBuilder('message');
-        $rendered = $view_builder->view($message, 'mail_body');
-        $texto = \Drupal::service('renderer')->renderPlain($rendered);
+        $texts = $message->getText();
+        foreach ($texts as $t) {
+          if (is_array($t)) {
+            $texto .= \Drupal::service('renderer')->renderPlain($t);
+          } else {
+            $texto .= $t;
+          }
+        }
         $texto = trim(strip_tags((string) $texto));
       }
       catch (\Exception $e) {

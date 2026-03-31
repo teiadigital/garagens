@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - filter.format.basic_html
-template: reserva_cancelada_user_confirmacao
+template: reserva_cancel_user_confirm
 label: 'Cancelamento confirmado'
 description: 'Confirmação ao user de que cancelou a reserva.'
 text:

@@ -44,7 +44,7 @@
   <div class="{{ outer_class }} relative px-4 sm:px-0">
 
     {# --- Header --- #}
-    <header role="banner" class="absolute top-0 left-0 w-full z-50">
+    <header role="banner" class="fixed top-0 left-0 w-full z-50">
       <div class="{{ outer_class }} change-logo-color">
         <nav class="py-8 {{ logged_in ? 'px-5' : 'px-4 sm:px-0' }}" aria-label="Global">
           <div class="flex justify-end items-center gap-x-5">
@@ -91,8 +91,7 @@
         <div class="{{ content_class }}">
 
           {% if show_go_back %}
-            <input class="mb-8 cursor-pointer text-sm uppercase bg-black block rounded-full py-3 px-6 font-bold text-white hover:bg-white border-2 hover:text-black border-black transition-all"
-              onclick="window.history.go(-1); return false;" type="submit" value="{{ 'Go back'|t }}" />
+            <input class="mb-8 cursor-pointer text-sm uppercase bg-black block rounded-full py-3 px-6 font-bold text-white hover:bg-white border-2 hover:text-black border-black transition-all" onclick="window.history.go(-1); return false;" type="submit" value="{{ 'Go back'|t }}" />
           {% endif %}
 
           {{ page.title }}

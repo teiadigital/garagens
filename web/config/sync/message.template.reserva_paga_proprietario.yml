@@ -9,7 +9,7 @@ label: 'Pagamento recebido'
 description: 'Notificação ao proprietário quando pagamento é confirmado.'
 text:
   -
-    value: '<p>O pagamento da reserva da garagem <strong>@garagem</strong> foi confirmado.</p>'
+    value: '<p>O pagamento da reserva da garagem <strong>@garagem</strong> foi confirmado. Aceda à plataforma para ver os detalhes.</p>'
     format: basic_html
 settings:
   'token options':

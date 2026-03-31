@@ -87,6 +87,9 @@ class CommerceService {
       'order_items' => [$order_item],
       'state' => 'draft',
     ]);
+    $order->setData('checkout_redirect_url',
+      \Drupal\Core\Url::fromRoute('garagem_reservas.reserva_view', ['reserva' => $reserva_id])->toString()
+    );
     $order->save();
 
     // Associar a order à reserva.

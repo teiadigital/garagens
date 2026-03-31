@@ -102,7 +102,7 @@ class NotificacaoService {
     if (!$reserva) return;
     $garagem_titulo = $this->getGaragemTitulo($reserva->garagem_id);
     $this->enviar('reserva_cancelada_proprietario', $this->loadUser($reserva->proprietario_id), $reserva_id, $garagem_titulo);
-    $this->enviar('reserva_cancelada_user_confirmacao', $this->loadUser($reserva->user_id), $reserva_id, $garagem_titulo);
+    $this->enviar('reserva_cancel_user_confirm', $this->loadUser($reserva->user_id), $reserva_id, $garagem_titulo);
   }
 
   /**
@@ -114,8 +114,8 @@ class NotificacaoService {
     $reserva = $this->getReserva($reserva_id);
     if (!$reserva) return;
     $garagem_titulo = $this->getGaragemTitulo($reserva->garagem_id);
-    $this->enviar('reserva_cancelada_pelo_proprietario_user', $this->loadUser($reserva->user_id), $reserva_id, $garagem_titulo);
-    $this->enviar('reserva_cancelada_proprietario_confirmacao', $this->loadUser($reserva->proprietario_id), $reserva_id, $garagem_titulo);
+    $this->enviar('reserva_cancel_prop_user', $this->loadUser($reserva->user_id), $reserva_id, $garagem_titulo);
+    $this->enviar('reserva_cancel_prop_confirm', $this->loadUser($reserva->proprietario_id), $reserva_id, $garagem_titulo);
   }
 
   /**

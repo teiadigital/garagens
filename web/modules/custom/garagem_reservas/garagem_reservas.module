@@ -190,6 +190,8 @@ function garagem_reservas_theme() {
         'is_proprietario' => FALSE,
         'is_user' => FALSE,
         'commerce_checkout_url' => NULL,
+        'proprietario_contacto' => NULL,
+        'arrendatario_contacto' => NULL,
       ],
       'template' => 'garagem-reserva',
     ],

@@ -1,0 +1,16 @@
+{#
+/**
+ * @file
+ * Template para confirmação de pagamento MB WAY.
+ *
+ * Variáveis:
+ * - phone: Número de telemóvel
+ * - amount: Valor pago
+ */
+#}
+
+<div class="ifthenpay-mbway ifthenpay-mbway--complete">
+  <div class="ifthenpay-mbway__icon ifthenpay-mbway__icon--success">✓</div>
+  <h2 class="ifthenpay-mbway__title ifthenpay-mbway__title--success">{{ 'Pagamento MB WAY confirmado!'|t }}</h2>
+  <p>{{ 'O pagamento de <strong>%amount €</strong> do número <strong>%phone</strong> foi recebido com sucesso.'|t({'%amount': amount, '%phone': phone})|raw }}</p>
+</div>

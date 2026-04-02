@@ -1,0 +1,12 @@
+commerce_ifthenpay.mbway_status:
+  path: '/ifthenpay/mbway/status/{commerce_order}'
+  defaults:
+    _controller: '\Drupal\commerce_ifthenpay\Controller\MbWayStatusController::status'
+    _title: ''
+  requirements:
+    _entity_access: 'commerce_order.view'
+    commerce_order: \d+
+  options:
+    parameters:
+      commerce_order:
+        type: entity:commerce_order

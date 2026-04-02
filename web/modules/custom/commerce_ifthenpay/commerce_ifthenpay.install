@@ -1,0 +1,97 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * @file
+ * Install, update e uninstall functions para o módulo commerce_ifthenpay.
+ */
+
+/**
+ * Implements hook_requirements().
+ *
+ * Verifica os requisitos do módulo na instalação e no status report.
+ */
+function commerce_ifthenpay_requirements(string $phase): array {
+  $requirements = [];
+
+  if ($phase === 'install' || $phase === 'runtime') {
+    // Verificar versão PHP.
+    if (version_compare(PHP_VERSION, '8.1.0', '<')) {
+      $requirements['commerce_ifthenpay_php'] = [
+        'title'       => t('Commerce ifthenpay'),
+        'value'       => PHP_VERSION,
+        'description' => t('O módulo Commerce ifthenpay requer PHP 8.1 ou superior.'),
+        'severity'    => REQUIREMENT_ERROR,
+      ];
+    }
+
+    // Verificar extensão cURL.
+    if (!extension_loaded('curl')) {
+      $requirements['commerce_ifthenpay_curl'] = [
+        'title'       => t('Commerce ifthenpay - cURL'),
+        'value'       => t('Não instalado'),
+        'description' => t('O módulo Commerce ifthenpay requer a extensão cURL do PHP.'),
+        'severity'    => REQUIREMENT_ERROR,
+      ];
+    }
+
+    // Verificar extensão JSON.
+    if (!extension_loaded('json')) {
+      $requirements['commerce_ifthenpay_json'] = [
+        'title'       => t('Commerce ifthenpay - JSON'),
+        'value'       => t('Não instalado'),
+        'description' => t('O módulo Commerce ifthenpay requer a extensão JSON do PHP.'),
+        'severity'    => REQUIREMENT_ERROR,
+      ];
+    }
+  }
+
+  if ($phase === 'runtime') {
+    // Verificar se o site usa HTTPS (recomendado para pagamentos).
+    $request = \Drupal::request();
+    if (!$request->isSecure()) {
+      $requirements['commerce_ifthenpay_https'] = [
+        'title'       => t('Commerce ifthenpay - HTTPS'),
+        'value'       => t('HTTP (não seguro)'),
+        'description' => t('O módulo Commerce ifthenpay deve ser usado com HTTPS para garantir a segurança dos pagamentos. Por favor configure SSL no seu servidor.'),
+        'severity'    => REQUIREMENT_WARNING,
+      ];
+    }
+    else {
+      $requirements['commerce_ifthenpay_https'] = [
+        'title'    => t('Commerce ifthenpay - HTTPS'),
+        'value'    => t('HTTPS activo'),
+        'severity' => REQUIREMENT_OK,
+      ];
+    }
+
+    // Verificar se há gateways configurados.
+    /** @var \Drupal\commerce_payment\Entity\PaymentGatewayInterface[] $gateways */
+    $gateways = \Drupal::entityTypeManager()
+      ->getStorage('commerce_payment_gateway')
+      ->loadMultiple();
+
+    $ifthenPayConfigured = FALSE;
+    foreach ($gateways as $gateway) {
+      $plugin_id = $gateway->getPlugin()->getPluginId();
+      if (in_array($plugin_id, ['ifthenpay_multibanco', 'ifthenpay_mbway'], TRUE)) {
+        $ifthenPayConfigured = TRUE;
+        break;
+      }
+    }
+
+    if (!$ifthenPayConfigured) {
+      $requirements['commerce_ifthenpay_configured'] = [
+        'title'       => t('Commerce ifthenpay'),
+        'value'       => t('Sem gateways configurados'),
+        'description' => t('Nenhum gateway ifthenpay (Multibanco ou MB WAY) está configurado. <a href=":url">Configure um gateway</a>.', [
+          ':url' => '/admin/commerce/config/payment-gateways/add',
+        ]),
+        'severity'    => REQUIREMENT_WARNING,
+      ];
+    }
+  }
+
+  return $requirements;
+}

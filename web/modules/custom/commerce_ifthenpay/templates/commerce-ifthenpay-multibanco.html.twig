@@ -1,0 +1,61 @@
+{#
+/**
+ * @file
+ * Template para exibir os dados de pagamento Multibanco.
+ *
+ * Variáveis:
+ * - entity: Entidade Multibanco (5 dígitos)
+ * - reference: Referência formatada (ex: "123 456 789")
+ * - amount: Valor a pagar (ex: "12,50")
+ * - expiry_date: Data de expiração (opcional)
+ * - sandbox: TRUE se estiver em modo de teste
+ */
+#}
+
+<div class="ifthenpay-mb">
+
+  <div class="ifthenpay-mb__header">
+    <div class="ifthenpay-mb__logo-wrap">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 32" width="120" height="32" aria-label="Multibanco">
+        <rect width="120" height="32" rx="5" fill="#003894"/>
+        <text x="10" y="22" font-family="Arial,sans-serif" font-size="13" font-weight="bold" fill="#ffffff" letter-spacing="1">MULTIBANCO</text>
+      </svg>
+    </div>
+    <h2 class="ifthenpay-mb__title">{{ 'Referência de Pagamento'|t }}</h2>
+    <p class="ifthenpay-mb__subtitle">{{ 'Efectue o pagamento num ATM, homebanking ou aplicação bancária.'|t }}</p>
+  </div>
+
+  {% if sandbox %}
+    <div class="ifthenpay-mb__sandbox">
+      <span class="ifthenpay-mb__sandbox-icon">⚠</span>
+      {{ 'Modo de teste activo — este pagamento não é real.'|t }}
+    </div>
+  {% endif %}
+
+  <div class="ifthenpay-mb__card">
+    <div class="ifthenpay-mb__field">
+      <span class="ifthenpay-mb__field-label">{{ 'Entidade'|t }}</span>
+      <span class="ifthenpay-mb__field-value ifthenpay-mb__field-value--lg">{{ entity }}</span>
+    </div>
+    <div class="ifthenpay-mb__field">
+      <span class="ifthenpay-mb__field-label">{{ 'Referência'|t }}</span>
+      <span class="ifthenpay-mb__field-value ifthenpay-mb__field-value--lg ifthenpay-mb__field-value--mono">{{ reference }}</span>
+    </div>
+    <div class="ifthenpay-mb__field">
+      <span class="ifthenpay-mb__field-label">{{ 'Valor'|t }}</span>
+      <span class="ifthenpay-mb__field-value ifthenpay-mb__field-value--lg ifthenpay-mb__field-value--amount">{{ amount }} €</span>
+    </div>
+    {% if expiry_date %}
+      <div class="ifthenpay-mb__field">
+        <span class="ifthenpay-mb__field-label">{{ 'Válido até'|t }}</span>
+        <span class="ifthenpay-mb__field-value">{{ expiry_date }}</span>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="ifthenpay-mb__notice">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    {{ 'O pedido fica em espera até a confirmação do pagamento.'|t }}
+  </div>
+
+</div>

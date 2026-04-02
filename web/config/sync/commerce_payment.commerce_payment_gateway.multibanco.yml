@@ -1,0 +1,21 @@
+uuid: e5b7caa6-7fa4-4c1c-a14d-b16ef6f95a3a
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - commerce_ifthenpay
+id: multibanco
+label: Multibanco
+weight: null
+plugin: ifthenpay_multibanco
+configuration:
+  display_label: Multibanco
+  mode: live
+  payment_method_types:
+    - credit_card
+  collect_billing_information: true
+  mb_key: MMX-359564
+  anti_phishing_key: garagens2026!XkP9
+  days_to_expire: 3
+conditions: {  }
+conditionOperator: AND

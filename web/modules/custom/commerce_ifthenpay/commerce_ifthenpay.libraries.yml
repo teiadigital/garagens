@@ -1,0 +1,13 @@
+ifthenpay:
+  version: 1.0.0
+  css:
+    component:
+      css/ifthenpay.css: {}
+
+mbway_status:
+  version: 1.0.0
+  js:
+    js/mbway-status.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings

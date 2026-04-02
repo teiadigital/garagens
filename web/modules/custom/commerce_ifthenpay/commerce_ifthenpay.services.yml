@@ -1,0 +1,6 @@
+services:
+  commerce_ifthenpay.api_service:
+    class: Drupal\commerce_ifthenpay\Service\IfthenpayApiService
+    arguments:
+      - '@http_client'
+      - '@logger.factory'

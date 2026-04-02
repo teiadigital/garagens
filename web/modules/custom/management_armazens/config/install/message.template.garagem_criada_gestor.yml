@@ -1,0 +1,19 @@
+uuid: b2c3d4e5-f6a7-8901-bcde-f12345678901
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+template: garagem_criada_gestor
+label: 'Garagem criada - notificação ao gestor'
+description: 'Email enviado aos gestores quando uma nova garagem é criada na plataforma.'
+text:
+  -
+    value: '<p>Foi criada uma nova garagem <strong>@garagem</strong> na plataforma e está a aguardar aprovação.</p>'
+    format: basic_html
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

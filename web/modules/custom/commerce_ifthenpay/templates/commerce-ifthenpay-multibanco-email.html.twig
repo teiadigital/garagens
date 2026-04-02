@@ -1,0 +1,192 @@
+{#
+/**
+ * @file
+ * Template HTML para o email de referência Multibanco.
+ *
+ * Variáveis:
+ * - order: O objeto do pedido Commerce
+ * - entity: Entidade Multibanco
+ * - reference: Referência formatada
+ * - amount: Valor a pagar formatado
+ * - expiry_date: Data de expiração (opcional)
+ * - site_name: Nome do site
+ * - site_url: URL do site
+ */
+#}
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ 'Referência de Pagamento Multibanco'|t }}</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background: #f4f4f4; color: #1a1a1a; }
+    .wrapper { max-width: 600px; margin: 0 auto; background: #fff; }
+    .header { background: #003894; padding: 28px 32px; text-align: center; }
+    .header h1 { color: #fff; font-size: 20px; font-weight: 700; margin: 0; }
+    .header p { color: #a8c4f0; font-size: 13px; margin-top: 4px; }
+    .content { padding: 32px; }
+    .greeting { font-size: 16px; color: #333; margin-bottom: 24px; }
+
+    /* Bloco Multibanco */
+    .mb-card { border: 2px solid #003894; border-radius: 10px; overflow: hidden; margin-bottom: 28px; }
+    .mb-card-header { background: #003894; padding: 14px 20px; display: flex; align-items: center; gap: 12px; }
+    .mb-card-header span { color: #fff; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; }
+    .mb-card-body { padding: 0; }
+    .mb-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid #e8eef8; }
+    .mb-row:last-child { border-bottom: none; }
+    .mb-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #888; }
+    .mb-value { font-size: 22px; font-weight: 800; color: #003894; letter-spacing: 0.05em; }
+    .mb-value--mono { font-family: 'Courier New', Courier, monospace; letter-spacing: 0.15em; }
+    .mb-expiry { font-size: 14px; font-weight: 500; color: #555; }
+
+    /* Instruções */
+    .instructions { background: #f0f7ff; border-radius: 8px; padding: 16px 20px; margin-bottom: 28px; }
+    .instructions p { font-size: 13px; color: #444; line-height: 1.6; margin-bottom: 6px; }
+    .instructions p:last-child { margin-bottom: 0; }
+    .instructions strong { color: #003894; }
+
+    /* Resumo do pedido */
+    .section-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #eee; }
+    .order-items { margin-bottom: 28px; }
+    .order-item { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+    .order-item:last-child { border-bottom: none; }
+    .item-name { font-size: 14px; color: #1a1a1a; font-weight: 500; flex: 1; }
+    .item-qty { font-size: 13px; color: #888; margin: 2px 0; }
+    .item-price { font-size: 14px; font-weight: 600; color: #1a1a1a; text-align: right; white-space: nowrap; margin-left: 16px; }
+
+    /* Totais */
+    .order-totals { margin-bottom: 28px; }
+    .total-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px; color: #555; }
+    .total-row--final { padding-top: 10px; border-top: 2px solid #003894; font-size: 16px; font-weight: 800; color: #003894; margin-top: 4px; }
+
+    /* Morada */
+    .billing { margin-bottom: 28px; }
+    .billing address { font-size: 13px; color: #555; line-height: 1.7; font-style: normal; }
+
+    /* Footer */
+    .footer { background: #f8f8f8; border-top: 1px solid #eee; padding: 20px 32px; text-align: center; }
+    .footer p { font-size: 12px; color: #999; line-height: 1.6; }
+    .footer a { color: #003894; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+
+    {# Cabeçalho #}
+    <div class="header">
+      <h1>{{ site_name }}</h1>
+      <p>{{ 'Referência de Pagamento Multibanco'|t }}</p>
+    </div>
+
+    <div class="content">
+
+      <p class="greeting">
+        {{ 'Olá,'|t }}
+        {% if order.getEmail() %}{{ order.getEmail() }}{% endif %}
+        <br><br>
+        {{ 'O seu pedido #%order foi registado com sucesso. Use os dados abaixo para efectuar o pagamento.'|t({'%order': order.getOrderNumber() ?: order.id()}) }}
+      </p>
+
+      {# Bloco Multibanco #}
+      <div class="mb-card">
+        <div class="mb-card-header">
+          <span>MULTIBANCO</span>
+        </div>
+        <div class="mb-card-body">
+          <div class="mb-row">
+            <span class="mb-label">{{ 'Entidade'|t }}</span>
+            <span class="mb-value">{{ entity }}</span>
+          </div>
+          <div class="mb-row">
+            <span class="mb-label">{{ 'Referência'|t }}</span>
+            <span class="mb-value mb-value--mono">{{ reference }}</span>
+          </div>
+          <div class="mb-row">
+            <span class="mb-label">{{ 'Valor'|t }}</span>
+            <span class="mb-value">{{ amount }} €</span>
+          </div>
+          {% if expiry_date %}
+            <div class="mb-row">
+              <span class="mb-label">{{ 'Válido até'|t }}</span>
+              <span class="mb-expiry">{{ expiry_date }}</span>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      {# Instruções #}
+      <div class="instructions">
+        <p><strong>{{ 'Como pagar:'|t }}</strong></p>
+        <p>{{ '1. Num ATM: Pagamentos → Outros Pagamentos → Introduza a Entidade, Referência e confirme o valor.'|t }}</p>
+        <p>{{ '2. No homebanking: Transferências → Pagamento de Serviços → Introduza os dados acima.'|t }}</p>
+        <p>{{ '3. Na app bancária: Pagamentos → Serviços → Introduza a Entidade e Referência.'|t }}</p>
+      </div>
+
+      {# Resumo do pedido #}
+      <div class="order-items">
+        <div class="section-title">{{ 'Resumo do Pedido'|t }}</div>
+        {% for item in order.getItems() %}
+          <div class="order-item">
+            <div>
+              <div class="item-name">{{ item.getTitle() }}</div>
+              <div class="item-qty">{{ 'Qty: %qty'|t({'%qty': item.getQuantity()|round(0)|int}) }}</div>
+            </div>
+            <div class="item-price">{{ item.getTotalPrice().getNumber()|number_format(2, ',', '.') }} €</div>
+          </div>
+        {% endfor %}
+      </div>
+
+      {# Totais #}
+      <div class="order-totals">
+        {% if order.getAdjustments() %}
+          {% for adjustment in order.getAdjustments() %}
+            <div class="total-row">
+              <span>{{ adjustment.getLabel() }}</span>
+              <span>{{ adjustment.getAmount().getNumber()|number_format(2, ',', '.') }} €</span>
+            </div>
+          {% endfor %}
+        {% endif %}
+        <div class="total-row total-row--final">
+          <span>{{ 'Total'|t }}</span>
+          <span>{{ amount }} €</span>
+        </div>
+      </div>
+
+      {# Morada de faturação #}
+      {% if order.getBillingProfile() %}
+        {% set billing = order.getBillingProfile() %}
+        {% set addr = billing.address %}
+        {% if addr %}
+        <div class="billing">
+          <div class="section-title">{{ 'Dados de Faturação'|t }}</div>
+          <address>
+            {% if addr.given_name or addr.family_name %}
+              {{ addr.given_name }} {{ addr.family_name }}<br>
+            {% endif %}
+            {% if addr.organization %}{{ addr.organization }}<br>{% endif %}
+            {% if addr.address_line1 %}{{ addr.address_line1 }}<br>{% endif %}
+            {% if addr.address_line2 %}{{ addr.address_line2 }}<br>{% endif %}
+            {% if addr.postal_code or addr.locality %}
+              {{ addr.postal_code }} {{ addr.locality }}<br>
+            {% endif %}
+            {% if addr.country_code %}{{ addr.country_code }}{% endif %}
+          </address>
+        </div>
+        {% endif %}
+      {% endif %}
+
+    </div>
+
+    {# Footer #}
+    <div class="footer">
+      <p>
+        {{ 'Este email foi enviado automaticamente por'|t }} <a href="{{ site_url }}">{{ site_name }}</a>.<br>
+        {{ 'Por favor não responda a este email.'|t }}
+      </p>
+    </div>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+uuid: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+template: garagem_criada_user
+label: 'Garagem criada - confirmação ao proprietário'
+description: 'Email enviado ao utilizador após criar uma garagem, aguardando aprovação.'
+text:
+  -
+    value: '<p>A sua garagem foi criada com sucesso e está a aguardar aprovação.</p><p>Nas próximas horas receberá uma notificação a confirmar a publicação ou a solicitar eventuais correções.</p><p>Até breve!</p>'
+    format: basic_html
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

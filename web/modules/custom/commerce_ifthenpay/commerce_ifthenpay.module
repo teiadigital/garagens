@@ -1,0 +1,255 @@
+<?php
+
+/**
+ * @file
+ * Commerce ifthenpay module - Integracao Multibanco e MB WAY.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function commerce_ifthenpay_help(string $route_name, RouteMatchInterface $route_match): string {
+  if ($route_name === 'help.page.commerce_ifthenpay') {
+    return '<p>' . t('Integracao do ifthenpay com o Drupal Commerce. Suporta Multibanco e MB WAY.') . '</p>';
+  }
+  return '';
+}
+
+/**
+ * Implements hook_theme().
+ */
+function commerce_ifthenpay_theme(): array {
+  return [
+    'commerce_ifthenpay_multibanco' => [
+      'variables' => [
+        'entity'      => NULL,
+        'reference'   => NULL,
+        'amount'      => NULL,
+        'expiry_date' => NULL,
+        'sandbox'     => FALSE,
+      ],
+      'template' => 'commerce-ifthenpay-multibanco',
+    ],
+    'commerce_ifthenpay_multibanco_email' => [
+      'variables' => [
+        'order'       => NULL,
+        'entity'      => NULL,
+        'reference'   => NULL,
+        'amount'      => NULL,
+        'expiry_date' => NULL,
+        'site_name'   => NULL,
+        'site_url'    => NULL,
+      ],
+      'template' => 'commerce-ifthenpay-multibanco-email',
+    ],
+    'commerce_ifthenpay_mbway_pending' => [
+      'variables' => [
+        'phone'      => NULL,
+        'amount'     => NULL,
+        'expires_at' => NULL,
+      ],
+      'template' => 'commerce-ifthenpay-mbway-pending',
+    ],
+    'commerce_ifthenpay_mbway_complete' => [
+      'variables' => [
+        'phone'  => NULL,
+        'amount' => NULL,
+      ],
+      'template' => 'commerce-ifthenpay-mbway-complete',
+    ],
+    'commerce_ifthenpay_mbway_failed' => [
+      'variables' => [
+        'message' => NULL,
+      ],
+      'template' => 'commerce-ifthenpay-mbway-failed',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_mail().
+ *
+ * Define o email de referencia Multibanco.
+ */
+function commerce_ifthenpay_mail(string $key, array &$message, array $params): void {
+  if ($key !== 'multibanco_reference') {
+    return;
+  }
+
+  $message['subject'] = t(
+    'Referencia de Pagamento Multibanco — Pedido #@id',
+    ['@id' => $params['order']->id()]
+  );
+
+  $message['headers']['Content-Type'] = 'text/html; charset=UTF-8';
+  $message['headers']['MIME-Version']  = '1.0';
+
+  $build = [
+    '#theme'      => 'commerce_ifthenpay_multibanco_email',
+    '#order'      => $params['order'],
+    '#entity'     => $params['entity'],
+    '#reference'  => $params['reference'],
+    '#amount'     => $params['amount'],
+    '#expiry_date'=> $params['expiry_date'],
+    '#site_name'  => $params['site_name'],
+    '#site_url'   => $params['site_url'],
+  ];
+
+  $message['body'][] = \Drupal::service('renderer')->renderPlain($build);
+}
+
+/**
+ * Envia o email com a referencia Multibanco.
+ *
+ * Chamado pelo buildPaymentInstructions() do gateway Multibanco
+ * depois de gerar a referencia via API do ifthenpay.
+ *
+ * @param \Drupal\commerce_order\Entity\OrderInterface $order
+ *   O pedido Commerce.
+ * @param array $data
+ *   Os dados da referencia Multibanco (entity, reference, expiryDate).
+ */
+function commerce_ifthenpay_send_multibanco_email($order, array $data): void {
+  $email = $order->getEmail();
+  if (empty($email)) {
+    \Drupal::logger('commerce_ifthenpay')->warning(
+      'Nao foi possivel enviar email Multibanco para order #@id — sem email.',
+      ['@id' => $order->id()]
+    );
+    return;
+  }
+
+  $ref   = preg_replace('/\D/', '', $data['reference'] ?? '');
+  $ref   = (strlen($ref) === 9)
+    ? substr($ref, 0, 3) . ' ' . substr($ref, 3, 3) . ' ' . substr($ref, 6, 3)
+    : ($data['reference'] ?? '');
+
+  // Obter o valor do pedido.
+  $total  = $order->getTotalPrice();
+  $amount = $total ? number_format((float) $total->getNumber(), 2, ',', '.') : '0,00';
+
+  $params = [
+    'order'       => $order,
+    'entity'      => $data['entity'] ?? '',
+    'reference'   => $ref,
+    'amount'      => $amount,
+    'expiry_date' => $data['expiryDate'] ?? '',
+    'site_name'   => \Drupal::config('system.site')->get('name'),
+    'site_url'    => \Drupal::request()->getSchemeAndHttpHost(),
+  ];
+
+  $result = \Drupal::service('plugin.manager.mail')->mail(
+    'commerce_ifthenpay',
+    'multibanco_reference',
+    $email,
+    \Drupal::languageManager()->getCurrentLanguage()->getId(),
+    $params,
+    NULL,
+    TRUE
+  );
+
+  if ($result['result'] === TRUE) {
+    \Drupal::logger('commerce_ifthenpay')->info(
+      'Email Multibanco enviado para @email (order #@id).',
+      ['@email' => $email, '@id' => $order->id()]
+    );
+  }
+  else {
+    \Drupal::logger('commerce_ifthenpay')->error(
+      'Falha ao enviar email Multibanco para @email (order #@id).',
+      ['@email' => $email, '@id' => $order->id()]
+    );
+  }
+}
+
+/**
+ * Implements hook_cron().
+ *
+ * Verifica pagamentos Multibanco pendentes cuja data de expiracao ja passou
+ * e marca-os como voided.
+ */
+function commerce_ifthenpay_cron(): void {
+  $logger = \Drupal::logger('commerce_ifthenpay');
+
+  /** @var \Drupal\commerce_payment\PaymentStorageInterface $storage */
+  $storage = \Drupal::entityTypeManager()->getStorage('commerce_payment');
+
+  $payment_ids = $storage->getQuery()
+    ->condition('state', 'pending')
+    ->accessCheck(FALSE)
+    ->execute();
+
+  if (empty($payment_ids)) {
+    return;
+  }
+
+  $payments = $storage->loadMultiple($payment_ids);
+  $now      = time();
+  $voided   = 0;
+
+  foreach ($payments as $payment) {
+    $gateway = $payment->getPaymentGateway();
+    if (!$gateway || $gateway->getPlugin()->getPluginId() !== 'ifthenpay_multibanco') {
+      continue;
+    }
+
+    $remoteId = $payment->getRemoteId();
+    if (!$remoteId || !str_starts_with($remoteId, '{')) {
+      continue;
+    }
+
+    $data       = json_decode($remoteId, TRUE) ?? [];
+    $expiryDate = $data['expiryDate'] ?? '';
+
+    if (empty($expiryDate)) {
+      continue;
+    }
+
+    $expiryTimestamp = _commerce_ifthenpay_parse_expiry_date($expiryDate);
+    if (!$expiryTimestamp) {
+      $logger->warning('Multibanco cron: nao foi possivel parsear data "@date" para payment @id.', [
+        '@date' => $expiryDate,
+        '@id'   => $payment->id(),
+      ]);
+      continue;
+    }
+
+    if ($now > ($expiryTimestamp + 86399)) {
+      $payment->setState('voided');
+      $payment->save();
+      $voided++;
+
+      $logger->info('Multibanco cron: payment @id (order @oid) marcado como voided. Expirou em @date.', [
+        '@id'   => $payment->id(),
+        '@oid'  => $payment->getOrderId(),
+        '@date' => $expiryDate,
+      ]);
+    }
+  }
+
+  if ($voided > 0) {
+    $logger->info('Multibanco cron: @count pagamento(s) expirado(s) marcados como voided.', [
+      '@count' => $voided,
+    ]);
+  }
+}
+
+/**
+ * Converte a data de expiracao do ifthenpay para timestamp Unix.
+ */
+function _commerce_ifthenpay_parse_expiry_date(string $dateStr): ?int {
+  if (preg_match('/^(\d{2})-(\d{2})-(\d{4})$/', $dateStr, $m)) {
+    $ts = mktime(0, 0, 0, (int) $m[2], (int) $m[1], (int) $m[3]);
+    return $ts ?: NULL;
+  }
+  if (preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $dateStr, $m)) {
+    $ts = mktime(0, 0, 0, (int) $m[2], (int) $m[3], (int) $m[1]);
+    return $ts ?: NULL;
+  }
+  $ts = strtotime($dateStr);
+  return ($ts !== FALSE && $ts > 0) ? $ts : NULL;
+}

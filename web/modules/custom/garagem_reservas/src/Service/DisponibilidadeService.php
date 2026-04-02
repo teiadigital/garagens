@@ -103,8 +103,9 @@ class DisponibilidadeService {
     $datas = [];
     foreach ($result as $row) {
       $inicio_dia = mktime(0, 0, 0, date('n', $row->data_inicio), date('j', $row->data_inicio), date('Y', $row->data_inicio));
+      // O dia de fim é exclusivo — não bloquear esse dia no calendário.
       $fim_dia = $row->data_fim
-        ? mktime(23, 59, 59, date('n', $row->data_fim), date('j', $row->data_fim), date('Y', $row->data_fim))
+        ? mktime(0, 0, 0, date('n', $row->data_fim), date('j', $row->data_fim), date('Y', $row->data_fim))
         : NULL;
 
       $datas[] = [

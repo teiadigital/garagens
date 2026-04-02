@@ -1,0 +1,260 @@
+/**
+ * @file
+ * commerce_ifthenpay - Estilos para Multibanco e MB WAY.
+ */
+
+/* ============================================================
+   Variáveis e base
+   ============================================================ */
+
+.ifthenpay-mb,
+.ifthenpay-mbway {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  max-width: 460px;
+  margin: 1.5rem 0;
+}
+
+/* ============================================================
+   MULTIBANCO
+   ============================================================ */
+
+.ifthenpay-mb__header {
+  margin-bottom: 1.25rem;
+}
+
+.ifthenpay-mb__logo-wrap {
+  margin-bottom: 0.75rem;
+}
+
+.ifthenpay-mb__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 0.25rem;
+}
+
+.ifthenpay-mb__subtitle {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0;
+}
+
+/* Sandbox notice */
+.ifthenpay-mb__sandbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #fff8e1;
+  border: 1px solid #f59e0b;
+  border-radius: 6px;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.875rem;
+  color: #92400e;
+  margin-bottom: 1rem;
+}
+
+.ifthenpay-mb__sandbox-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+/* Card com os dados */
+.ifthenpay-mb__card {
+  background: #fff;
+  border: 2px solid #003894;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.ifthenpay-mb__field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #e8eef8;
+}
+
+.ifthenpay-mb__field:last-child {
+  border-bottom: none;
+}
+
+.ifthenpay-mb__field-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #6b7280;
+}
+
+.ifthenpay-mb__field-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  text-align: right;
+}
+
+.ifthenpay-mb__field-value--lg {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #003894;
+}
+
+.ifthenpay-mb__field-value--mono {
+  font-family: 'Courier New', Courier, monospace;
+  letter-spacing: 0.15em;
+}
+
+.ifthenpay-mb__field-value--amount::after {
+  content: '';
+}
+
+/* Aviso inferior */
+.ifthenpay-mb__notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: #6b7280;
+  padding: 0.5rem 0;
+}
+
+.ifthenpay-mb__notice svg {
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+  color: #9ca3af;
+}
+
+/* ============================================================
+   MB WAY — geral
+   ============================================================ */
+
+.ifthenpay-mbway {
+  text-align: center;
+}
+
+.ifthenpay-mbway__header {
+  margin-bottom: 1.5rem;
+}
+
+.ifthenpay-mbway__logo-wrap {
+  margin-bottom: 0.75rem;
+  display: flex;
+  justify-content: center;
+}
+
+.ifthenpay-mbway__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.ifthenpay-mbway__title--success { color: #15803d; }
+.ifthenpay-mbway__title--error   { color: #dc2626; }
+
+/* Spinner */
+.ifthenpay-mbway__spinner {
+  display: flex;
+  justify-content: center;
+  margin: 1.25rem 0;
+}
+
+.ifthenpay-mbway__spinner-ring {
+  width: 52px;
+  height: 52px;
+  border: 5px solid #dbeafe;
+  border-top-color: #004b93;
+  border-radius: 50%;
+  animation: ifthenpay-spin 0.85s linear infinite;
+}
+
+@keyframes ifthenpay-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Info */
+.ifthenpay-mbway__info {
+  margin-bottom: 1.25rem;
+}
+
+.ifthenpay-mbway__info p {
+  margin: 0.25rem 0;
+  font-size: 1rem;
+  color: #1a1a1a;
+}
+
+.ifthenpay-mbway__info-sub {
+  font-size: 0.9rem !important;
+  color: #6b7280 !important;
+}
+
+/* Countdown */
+.ifthenpay-mbway__countdown {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  padding: 0.6rem 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.ifthenpay-mbway__countdown-label {
+  font-size: 0.85rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.ifthenpay-mbway__countdown-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #004b93;
+  min-width: 3.2ch;
+}
+
+/* Ícones de estado */
+.ifthenpay-mbway__icon {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+}
+
+.ifthenpay-mbway__icon--success {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.ifthenpay-mbway__icon--error {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* ============================================================
+   Responsivo
+   ============================================================ */
+
+@media (max-width: 480px) {
+  .ifthenpay-mb__field {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .ifthenpay-mb__field-value {
+    text-align: left;
+  }
+
+  .ifthenpay-mb__field-value--lg {
+    font-size: 1.3rem;
+  }
+}

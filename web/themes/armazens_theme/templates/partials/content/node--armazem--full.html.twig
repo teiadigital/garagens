@@ -166,25 +166,6 @@
                         data-tabs-target="#informacao-geral" type="button" role="tab" aria-controls="informacao-geral"
                         aria-selected="false">{{ 'General Information'|t }}</button>
                 </li>
-                {# <li class="me-2" role="presentation">
-                    <button
-                        class="tab-btn inline-block p-4 border-b-2 rounded-t-lg  hover:text-black hover:border-black "
-                        id="acessos-tab" data-tabs-target="#acessos" type="button" role="tab" aria-controls="acessos"
-                        aria-selected="false">Acessos</button>
-                </li>
-                <li role="presentation">
-                    <button
-                        class="tab-btn inline-block p-4 border-b-2 rounded-t-lg  hover:text-black hover:border-black "
-                        id="seguranca-garantias-tab" data-tabs-target="#seguranca-garantias" type="button" role="tab"
-                        aria-controls="seguranca-garantias" aria-selected="false">{{ 'Security and guarantees'|t }}</button>
-                </li> #}
-                {# {% if ('gestor' in user.getroles(TRUE) ) or ( is_author == true ) or ('administrator' in user.getroles(TRUE) ) %}
-                <li role="presentation">
-                    <button class="tab-btn inline-block p-4 border-b-2 rounded-t-lg  hover:text-black hover:border-black "
-                        id="precos-tab" data-tabs-target="#precos" type="button" role="tab"
-                        aria-controls="precos" aria-selected="false">{{ 'Prices'|t }}</button>
-                </li>
-                {% endif %} #}
             </ul>
         </div>
         
@@ -198,10 +179,6 @@
                         <div class="relative">
 
                             {{content.field_espaco}}
-                        </div>
-
-                        <div class="relative">
-                            {{ content.field_incluir_espaco_exterior }}
                         </div>
 
                         <div class="relative">
@@ -223,7 +200,7 @@
 
                     <div class="col-span-full md:col-span-1">
 
-                      <div class="relative">
+                        <div class="relative">
                             {{ content.field_recursos }}
                         </div>
 
@@ -285,74 +262,6 @@
                     </div>
                 </div>
             </div>
-
-            
-            {# <div class="hidden" id="acessos" role="tabpanel" aria-labelledby="acessos-tab">
-
-                <div class="py-10 grid gap-y-5 gap-x-7 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-                
-                    <div class="col-span-full md:col-span-1 relative flex items-start gap-3">
-                    
-                    
-                    </div>
-                </div>
-    
-            </div>
-            <div class="hidden" id="seguranca-garantias" role="tabpanel" aria-labelledby="seguranca-garantias-tab">
-                <div class="py-10 grid gap-y-5 gap-x-7 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                    
-                </div>
-            </div> #}
-
-            {# {% if ('gestor' in user.getroles(TRUE) ) or ( is_author == true ) or ('administrator' in user.getroles(TRUE) ) %}
-                <div class="hidden" id="precos" role="tabpanel" aria-labelledby="precos-tab">
-
-                    <div class="py-10 grid gap-y-5 gap-x-7 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                
-                        {% if elements['#node'].field_bool_aluguer_do_imovel.value == '1' %}
-                        <div class="col-span-full md:col-span-1">
-                            {{content.field_preco_full}}
-                        </div>
-                        {% endif %}
-
-                        {% if elements['#node'].field_bool_aluguer_por_area.value == '1' %}
-                            <div class="col-span-full md:col-span-1">
-                                {{content.field_preco_partilhado}}
-                            </div>
-                        {% endif %}
-                
-                        {% if elements['#node'].field_bool_aluguer_camara_de_fri.value == '1' %}
-                        <div class="col-span-full md:col-span-1">
-                            {{content.field_preco_temp}}
-                        </div>
-                        {% endif %}
-                
-                        {% if elements['#node'].field_bool_aluguer_euro_paletes.value == '1' %}
-                        <div class="col-span-full md:col-span-1">
-                            {{content.field_euro_paletes}}
-                        </div>
-                        {% endif %}
-                
-                        {% if elements['#node'].field_bool_aluguer_paletes_ameri.value == '1' %}
-                        <div class="col-span-full md:col-span-1">
-                            {{content.field_paletes_americanas}}
-                        </div>
-                        {% endif %}
-
-                        <div class="col-span-full">
-                            {% if elements['#node'].field_servicos_disponiveis.value == 'sim' %}
-                                {{content.field_descreva_servicos_incluido}}
-                            {% else %}
-                                {{content.field_servicos_disponiveis}}
-                            {% endif %}
-                        </div>
-                        
-                        <div class="col-span-full">
-                            {{content.field_preco_minimo}}
-                        </div>
-                    </div>
-                </div>
-            {% endif %} #}
         </div>
 
         {% if ('gestor' in user.getroles(TRUE) ) or ('administrator' in user.getroles(TRUE) ) %}

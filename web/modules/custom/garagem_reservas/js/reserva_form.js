@@ -40,9 +40,11 @@
           if (reserva.renovacao_automatica) {
             return { from: new Date(parseInt(reserva.inicio) * 1000), to: new Date(9999, 0, 1) };
           }
+          // O dia de fim é exclusivo — subtrair 1ms para não bloquear esse dia.
+          const fimMs = parseInt(reserva.fim) * 1000 - 1;
           return {
             from: new Date(parseInt(reserva.inicio) * 1000),
-            to: new Date(parseInt(reserva.fim) * 1000),
+            to: new Date(fimMs),
           };
         });
       }

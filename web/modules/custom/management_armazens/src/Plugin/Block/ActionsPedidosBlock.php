@@ -70,22 +70,6 @@ final class ActionsPedidosBlock extends BlockBase {
       );
     }
 
-    // if (in_array('utilizador', $user->getRoles())) {
-      
-    //   $author_id = $node->getOwner()->id();
-
-    //   if($author_id == \Drupal::currentUser()->id()) {
-
-    //     $url = Url::fromRoute('entity.node.edit_form', array('node' => $nid));
-    //     $link = Link::fromTextAndUrl(t("Edit"), $url)->toRenderable();
-
-    //     $data = array(
-    //       'estado' => $this->states($estado),
-    //       'edit' => $link
-    //     );
-    //   }
-    // }
-
     $block = [
       '#theme' => 'actions_armazens',
       '#data' => $data,

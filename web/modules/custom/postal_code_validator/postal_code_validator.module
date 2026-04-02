@@ -11,7 +11,7 @@ use Drupal\Core\Form\FormStateInterface;
 
 function postal_code_validator_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
 
-    if ($form_id == 'node_armazem_form') {
+    if ($form_id == 'node_armazem_form' || $form_id == 'node_armazem_edit_form') {
         $form['#validate'][] = 'postal_code_validator_validate_postal_code';
     }
 }

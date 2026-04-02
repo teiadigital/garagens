@@ -1,0 +1,15 @@
+{#
+/**
+ * @file
+ * Template para pagamento MB WAY falhado/recusado.
+ *
+ * Variáveis:
+ * - message: Mensagem de erro
+ */
+#}
+
+<div class="ifthenpay-mbway ifthenpay-mbway--failed">
+  <div class="ifthenpay-mbway__icon ifthenpay-mbway__icon--error">✕</div>
+  <h2 class="ifthenpay-mbway__title ifthenpay-mbway__title--error">{{ 'Pagamento não confirmado'|t }}</h2>
+  <p>{{ message }}</p>
+</div>

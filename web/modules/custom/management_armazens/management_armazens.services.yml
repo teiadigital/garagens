@@ -1,6 +1,9 @@
 services:
-  manager_armazens_service:
-    class: Drupal\management_armazens\ManagerArmazensService
+  management_armazens.notificacao_garagem:
+    class: Drupal\management_armazens\Service\NotificacaoGaragemService
+    arguments:
+      - '@entity_type.manager'
+      - '@message_notify.sender'
   management_armazens.armazem_redirect_subscriber:
     class: Drupal\management_armazens\EventSubscriber\ArmazemRedirectSubscriber
     tags:

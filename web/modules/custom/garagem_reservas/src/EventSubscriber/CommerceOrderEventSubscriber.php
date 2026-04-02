@@ -23,6 +23,8 @@ class CommerceOrderEventSubscriber implements EventSubscriberInterface {
     return [
       'commerce_order.place.post_transition' => ['onOrderPlace', 0],
       OrderEvents::ORDER_PAID => ['onOrderPaid', 0],
+      'commerce_payment.void.post_transition' => ['onPaymentVoided', 0],
+
     ];
   }
 
@@ -98,6 +100,49 @@ class CommerceOrderEventSubscriber implements EventSubscriberInterface {
     catch (\Exception $e) {
       \Drupal::logger('garagem_reservas')->warning(
         'Erro ao enviar notificação para reserva #@id: @msg',
+        ['@id' => $reserva->id, '@msg' => $e->getMessage()]
+      );
+    }
+  }
+
+  /**
+ * Quando o pagamento é anulado — cancela a reserva.
+ */
+  public function onPaymentVoided(WorkflowTransitionEvent $event): void {
+    /** @var \Drupal\commerce_payment\Entity\PaymentInterface $payment */
+    $payment = $event->getEntity();
+    $order   = $payment->getOrder();
+
+    if (!$order) {
+      return;
+    }
+
+    $reserva = $this->database->select('garagem_reserva', 'gr')
+      ->fields('gr', ['id', 'estado'])
+      ->condition('commerce_order_id', $order->id())
+      ->execute()
+      ->fetchObject();
+
+    if (!$reserva || $reserva->estado === 'cancelado') {
+      return;
+    }
+
+    $this->database->update('garagem_reserva')
+      ->fields(['estado' => 'cancelado'])
+      ->condition('id', $reserva->id)
+      ->execute();
+
+    \Drupal::logger('garagem_reservas')->info(
+      'Reserva #@id cancelada — pagamento anulado (order #@order).',
+      ['@id' => $reserva->id, '@order' => $order->id()]
+    );
+
+    try {
+      \Drupal::service('garagem_reservas.notificacao')->reservaCancelada($reserva->id);
+    }
+    catch (\Exception $e) {
+      \Drupal::logger('garagem_reservas')->warning(
+        'Erro ao notificar cancelamento reserva #@id: @msg',
         ['@id' => $reserva->id, '@msg' => $e->getMessage()]
       );
     }

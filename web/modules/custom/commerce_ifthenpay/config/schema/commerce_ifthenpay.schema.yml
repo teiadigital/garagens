@@ -1,0 +1,30 @@
+# Schema para o módulo commerce_ifthenpay.
+# Define a estrutura de configuração dos gateways de pagamento.
+
+commerce.payment_gateway.plugin.ifthenpay_multibanco:
+  type: commerce_payment_gateway_configuration
+  label: 'ifthenpay Multibanco configuração'
+  mapping:
+    mb_key:
+      type: string
+      label: 'MB Key'
+    anti_phishing_key:
+      type: string
+      label: 'Chave Anti-Phishing'
+    days_to_expire:
+      type: integer
+      label: 'Dias até expiração'
+
+commerce.payment_gateway.plugin.ifthenpay_mbway:
+  type: commerce_payment_gateway_configuration
+  label: 'ifthenpay MB WAY configuração'
+  mapping:
+    mbway_key:
+      type: string
+      label: 'MBWAY Key'
+    anti_phishing_key:
+      type: string
+      label: 'Chave Anti-Phishing'
+    minutes_to_expire:
+      type: integer
+      label: 'Minutos até expiração'

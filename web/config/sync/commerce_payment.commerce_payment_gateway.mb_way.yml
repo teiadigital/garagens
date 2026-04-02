@@ -1,0 +1,21 @@
+uuid: b5f141c4-73cf-4546-bf5c-9422ef4ebdb9
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - commerce_ifthenpay
+id: mb_way
+label: 'MB WAY'
+weight: null
+plugin: ifthenpay_mbway
+configuration:
+  display_label: 'MB WAY'
+  mode: live
+  payment_method_types:
+    - ifthenpay_mbway
+  collect_billing_information: true
+  mbway_key: PND-105002
+  anti_phishing_key: garagens2026!XkP9
+  minutes_to_expire: 5
+conditions: {  }
+conditionOperator: AND

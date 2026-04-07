@@ -25,6 +25,7 @@ dependencies:
     - field.field.node.armazem.field_limitacoes_de_acesso
     - field.field.node.armazem.field_limitacoes_horario_acesso
     - field.field.node.armazem.field_localidade
+    - field.field.node.armazem.field_min_dias_reserva
     - field.field.node.armazem.field_peso_maximo_piso
     - field.field.node.armazem.field_piso
     - field.field.node.armazem.field_preco_ano
@@ -245,6 +246,15 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 2
+    region: content
+  field_min_dias_reserva:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 104
     region: content
   field_peso_maximo_piso:
     type: number_decimal

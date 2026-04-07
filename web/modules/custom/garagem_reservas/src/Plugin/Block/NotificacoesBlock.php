@@ -97,10 +97,15 @@ class NotificacoesBlock extends BlockBase implements ContainerFactoryPluginInter
         $texto = '';
       }
 
+      $args = $message->get('arguments')->getValue();
+      $reserva_id = $args[0]['@reserva_id'] ?? NULL;
+      $url_reserva = $reserva_id ? \Drupal\Core\Url::fromRoute('garagem_reservas.reserva_view', ['reserva' => $reserva_id])->toString() : NULL;
+
       $items[] = [
         'label' => $label,
         'texto' => $texto,
         'data' => \Drupal::service('date.formatter')->format($message->getCreatedTime(), 'custom', 'd/m/Y H:i'),
+        'url_reserva' => $url_reserva,
       ];
     }
 
@@ -132,11 +137,19 @@ class NotificacoesBlock extends BlockBase implements ContainerFactoryPluginInter
               <div style="padding:20px 16px;color:#fff;font-size:13px;">{{ "Sem notificações."|t }}</div>
             {% else %}
               {% for item in items %}
+                {% if item.url_reserva %}
+                <a href="{{ item.url_reserva }}" style="display:block;padding:14px 16px;text-decoration:none;{% if not loop.last %}border-bottom:1px solid rgba(255,255,255,0.15);{% endif %}">
+                {% else %}
                 <div style="padding:14px 16px;{% if not loop.last %}border-bottom:1px solid rgba(255,255,255,0.15);{% endif %}">
+                {% endif %}
                   <p style="font-size:13px;font-weight:700;color:#fff;margin:0 0 4px;">{{ item.label }}</p>
                   <p style="font-size:12px;color:rgba(255,255,255,0.85);margin:0 0 4px;line-height:1.4;">{{ item.texto }}</p>
                   <p style="font-size:11px;color:rgba(255,255,255,0.6);margin:0;">{{ item.data }}</p>
+                {% if item.url_reserva %}
+                </a>
+                {% else %}
                 </div>
+                {% endif %}
               {% endfor %}
               <div style="padding:12px 16px;border-top:1px solid rgba(255,255,255,0.15);text-align:center;">
                 <a href="{{ url_todas }}" style="font-size:12px;font-weight:700;color:#fff;text-decoration:none;text-transform:uppercase;letter-spacing:0.05em;opacity:0.85;">

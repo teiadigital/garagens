@@ -1,0 +1,19 @@
+uuid: c3d4e5f6-a7b8-9012-cdef-123456789012
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+template: garagem_aprovada_user
+label: 'Garagem aprovada - notificação ao proprietário'
+description: 'Email enviado ao proprietário quando a garagem é aprovada e publicada.'
+text:
+  -
+    value: '<p>A sua garagem <strong>@garagem</strong> foi aprovada e está agora publicada na plataforma.</p>'
+    format: basic_html
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

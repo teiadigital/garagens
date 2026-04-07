@@ -9,7 +9,7 @@ label: 'Reserva cancelada pelo arrendatário'
 description: 'Notificação ao proprietário quando o user cancela.'
 text:
   -
-    value: '<p>O arrendatário cancelou a reserva da garagem <strong>@garagem</strong>.</p>'
+    value: '<p>O arrendatário cancelou a reserva da garagem <strong>@garagem</strong>.@motivo</p>'
     format: basic_html
 settings:
   'token options':

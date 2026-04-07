@@ -1,0 +1,179 @@
+{#
+/**
+ * @file
+ * Template de detalhe de uma encomenda.
+ */
+#}
+
+{% set estado_cores = {
+  'draft': 'bg-gray-100 text-gray-500',
+  'pending': 'bg-yellow-100 text-yellow-700',
+  'fulfillment': 'bg-blue-100 text-blue-700',
+  'completed': 'bg-green-100 text-green-700',
+  'cancelled': 'bg-red-100 text-red-600',
+} %}
+
+<div class="max-w-3xl">
+
+  {# Cabeçalho #}
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">{{ 'Encomenda'|t }}</p>
+      <h2 class="text-2xl font-bold text-gray-900">{{ order.numero }}</h2>
+      <p class="text-sm text-gray-500 mt-1">{{ order.data }}</p>
+    </div>
+    <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide {{ estado_cores[order.estado] ?? 'bg-gray-100 text-gray-500' }}">
+      {{ order.estado_label }}
+    </span>
+  </div>
+
+  {# Reserva associada #}
+  {% if reserva %}
+    <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 mb-6">
+      <p class="text-xs font-bold text-gray-900 uppercase tracking-wide mb-3">{{ 'Reserva associada'|t }}</p>
+      <div class="grid grid-cols-2 gap-3 text-sm">
+        <div>
+          <p class="text-xs text-gray-500">{{ 'Garagem'|t }}</p>
+          <p class="font-medium text-gray-900">{{ reserva.garagem }}</p>
+        </div>
+
+        <div class="flex gap-6">
+          <div>
+            <p class="text-xs text-gray-500">{{ 'Início'|t }}</p>
+            <p class="font-medium text-gray-900">{{ reserva.data_inicio }}</p>
+          </div>
+          <div>
+            <p class="text-xs text-gray-500">{{ 'Fim'|t }}</p>
+            <p class="font-medium text-gray-900">{{ reserva.data_fim }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="mt-3">
+        <a href="{{ path('garagem_reservas.reserva_view', {'reserva': reserva.id}) }}"
+           class="text-xs font-bold text-gray-900 underline">{{ 'Ver reserva'|t }}</a>
+      </div>
+    </div>
+  {% endif %}
+
+  {# Itens #}
+  <div class="border border-gray-200 rounded-xl overflow-hidden mb-6">
+    <div class="bg-gray-50 px-5 py-3 border-b border-gray-200">
+      <p class="text-xs font-bold text-gray-900 uppercase tracking-wide">{{ 'Itens'|t }}</p>
+    </div>
+    <table class="w-full text-sm">
+      <thead>
+        <tr class="border-b border-gray-100">
+          <th class="text-left text-xs font-bold text-gray-500 px-5 py-3">{{ 'Descrição'|t }}</th>
+          <th class="text-center text-xs font-bold text-gray-500 py-3">{{ 'Qtd'|t }}</th>
+          <th class="text-right text-xs font-bold text-gray-500 px-5 py-3">{{ 'Preço unit.'|t }}</th>
+          <th class="text-right text-xs font-bold text-gray-500 px-5 py-3">{{ 'Total'|t }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in items %}
+          <tr class="border-b border-gray-50">
+            <td class="px-5 py-3 text-gray-900">{{ item.titulo }}</td>
+            <td class="text-center py-3 text-gray-500">{{ item.quantidade }}</td>
+            <td class="text-right px-5 py-3 text-gray-500">{{ item.preco_unit }}</td>
+            <td class="text-right px-5 py-3 font-semibold text-gray-900">{{ item.total }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr class="border-t border-gray-200 bg-gray-50">
+          <td colspan="3" class="text-right px-5 py-3 text-sm font-bold text-gray-900">{{ 'Total'|t }}</td>
+          <td class="text-right px-5 py-3 text-sm font-bold text-gray-900">{{ order.total }}</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+
+    {# Pagamento #}
+    {% if payment %}
+      <div class="border border-gray-200 rounded-xl p-5">
+        <p class="text-xs font-bold text-gray-900 uppercase tracking-wide mb-3">{{ 'Pagamento'|t }}</p>
+        <div class="space-y-2 text-sm">
+          <div class="flex justify-between">
+            <span class="text-gray-500">{{ 'Método'|t }}</span>
+            <span class="font-medium text-gray-900">
+              {% if payment.tipo == 'multibanco' %}Multibanco
+              {% elseif payment.tipo == 'mbway' %}MB WAY
+              {% else %}{{ payment.gateway }}
+              {% endif %}
+            </span>
+          </div>
+          {% set payment_labels = {
+            'new': 'Novo'|t,
+            'pending': 'Pendente'|t,
+            'authorization': 'Aguarda pagamento'|t,
+            'completed': 'Pago'|t,
+            'partially_refunded': 'Reembolso parcial'|t,
+            'refunded': 'Reembolsado'|t,
+            'voided': 'Anulado'|t,
+          } %}
+          <div class="flex justify-between">
+            <span class="text-gray-500">{{ 'Estado'|t }}</span>
+            <span class="font-medium text-gray-900">{{ payment_labels[payment.estado] ?? payment.estado }}</span>
+          </div>
+          {% if payment.tipo == 'multibanco' and payment.entidade %}
+            <div class="border-t border-gray-100 pt-2 mt-2">
+              <div class="flex justify-between">
+                <span class="text-gray-500">{{ 'Entidade'|t }}</span>
+                <span class="font-mono font-bold text-gray-900">{{ payment.entidade }}</span>
+              </div>
+              {% if payment.referencia %}
+                <div class="flex justify-between mt-1">
+                  <span class="text-gray-500">{{ 'Referência'|t }}</span>
+                  <span class="font-mono font-bold text-gray-900">{{ payment.referencia }}</span>
+                </div>
+                <div class="flex justify-between mt-1">
+                  <span class="text-gray-500">{{ 'Valor'|t }}</span>
+                  <span class="font-bold text-gray-900">{{ order.total }}</span>
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+
+    {# Morada de faturação #}
+    {% if billing_address %}
+      <div class="border border-gray-200 rounded-xl p-5">
+        <p class="text-xs font-bold text-gray-900 uppercase tracking-wide mb-3">{{ 'Morada de faturação'|t }}</p>
+        <div class="text-sm text-gray-700 space-y-1">
+          {% if billing_address.given_name or billing_address.family_name %}
+            <p class="font-medium text-gray-900">{{ billing_address.given_name }} {{ billing_address.family_name }}</p>
+          {% endif %}
+          {% if billing_address.organization %}
+            <p>{{ billing_address.organization }}</p>
+          {% endif %}
+          {% if billing_address.address_line1 %}
+            <p>{{ billing_address.address_line1 }}</p>
+          {% endif %}
+          {% if billing_address.address_line2 %}
+            <p>{{ billing_address.address_line2 }}</p>
+          {% endif %}
+          {% if billing_address.postal_code or billing_address.locality %}
+            <p>{{ billing_address.postal_code }} {{ billing_address.locality }}</p>
+          {% endif %}
+          {% if billing_address.country_code %}
+            <p>{{ billing_address.country_code }}</p>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+
+  </div>
+
+  {# Ações #}
+  <div class="flex gap-3">
+    <a href="{{ path('garagem_reservas.encomendas_lista') }}"
+       class="px-5 py-2 text-sm font-medium text-gray-700 border border-gray-200 rounded-full hover:bg-gray-50 transition">
+      {{ 'Voltar às encomendas'|t }}
+    </a>
+  </div>
+
+</div>

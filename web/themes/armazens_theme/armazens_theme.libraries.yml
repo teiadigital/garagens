@@ -51,12 +51,6 @@ base:
       css/components/ui-dialog.css:
         weight: -10
   js:
-    js/amcharts5/index.js: { minified: true }
-    js/amcharts5/map.js: { minified: true }
-    js/amcharts5/geodata/worldLow.js: { minified: true }
-    js/geodata/region/world/europeHigh.js: {}
-    js/geodata/spainProvincesHigh.js: {}
-    js/amcharts5/themes/Animated.js: { minified: true }
     js/flowbite.min.js: { minified: true, attributes: { defer: true } }
     js/leafmap/leaf-hover.js: {}
     js/script.js: { attributes: { defer: true } }

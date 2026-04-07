@@ -13,7 +13,11 @@
   {% else %}
     <div class="space-y-3">
       {% for item in items %}
+        {% if item.url_reserva %}
+        <a href="{{ item.url_reserva }}" class="block bg-white border border-gray-200 rounded-xl p-4 hover:border-gray-400 transition no-underline">
+        {% else %}
         <div class="bg-white border border-gray-200 rounded-xl p-4">
+        {% endif %}
           <div class="flex items-center justify-between mb-2">
             <span class="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
               {{ item.label }}
@@ -25,7 +29,11 @@
           <div class="text-sm text-gray-700">
             {{ item.text|raw }}
           </div>
+        {% if item.url_reserva %}
+        </a>
+        {% else %}
         </div>
+        {% endif %}
       {% endfor %}
     </div>
   {% endif %}

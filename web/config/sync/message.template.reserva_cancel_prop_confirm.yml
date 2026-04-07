@@ -1,15 +1,15 @@
-uuid: 08a8ae85-2cbf-4934-8315-060e1ba706ea
+uuid: 44fffb39-b1ed-4993-aa6e-4857d72e2cc7
 langcode: pt-pt
 status: true
 dependencies:
   config:
     - filter.format.basic_html
 template: reserva_cancel_prop_confirm
-label: 'Cancelamento confirmado'
+label: 'Cancelamento confirmado (proprietário)'
 description: 'Confirmação ao proprietário de que cancelou a reserva.'
 text:
   -
-    value: '<p>A reserva da garagem <strong>@garagem</strong> foi cancelada com sucesso.</p>'
+    value: '<p>A reserva da garagem <strong>@garagem</strong> foi cancelada com sucesso.@motivo</p>'
     format: basic_html
 settings:
   'token options':

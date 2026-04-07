@@ -26,6 +26,7 @@ dependencies:
     - field.field.node.armazem.field_limitacoes_de_acesso
     - field.field.node.armazem.field_limitacoes_horario_acesso
     - field.field.node.armazem.field_localidade
+    - field.field.node.armazem.field_min_dias_reserva
     - field.field.node.armazem.field_peso_maximo_piso
     - field.field.node.armazem.field_piso
     - field.field.node.armazem.field_preco_ano
@@ -175,6 +176,7 @@ hidden:
   field_limitacoes_de_acesso: true
   field_limitacoes_horario_acesso: true
   field_localidade: true
+  field_min_dias_reserva: true
   field_preco_ano: true
   field_preco_ano_ativo: true
   field_preco_dia: true

@@ -5,3 +5,8 @@
 .field--name-field-area-individual thead th:last-child {
   display: none;
 }
+
+.precos-field-group legend .fieldset-legend::after {
+  content: " *";
+  color: red;
+}

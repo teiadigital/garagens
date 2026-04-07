@@ -65,7 +65,8 @@ class NotificacaoService {
     $reserva = $this->getReserva($reserva_id);
     if (!$reserva) return;
     $garagem_titulo = $this->getGaragemTitulo($reserva->garagem_id);
-    $this->enviar('reserva_rejeitada_user', $this->loadUser($reserva->user_id), $reserva_id, $garagem_titulo);
+    $motivo = $reserva->motivo ?? '';
+    $this->enviar('reserva_rejeitada_user', $this->loadUser($reserva->user_id), $reserva_id, $garagem_titulo, $motivo);
   }
 
   /**
@@ -101,8 +102,9 @@ class NotificacaoService {
     $reserva = $this->getReserva($reserva_id);
     if (!$reserva) return;
     $garagem_titulo = $this->getGaragemTitulo($reserva->garagem_id);
-    $this->enviar('reserva_cancelada_proprietario', $this->loadUser($reserva->proprietario_id), $reserva_id, $garagem_titulo);
-    $this->enviar('reserva_cancel_user_confirm', $this->loadUser($reserva->user_id), $reserva_id, $garagem_titulo);
+    $motivo = $reserva->motivo ?? '';
+    $this->enviar('reserva_cancelada_proprietario', $this->loadUser($reserva->proprietario_id), $reserva_id, $garagem_titulo, $motivo);
+    $this->enviar('reserva_cancel_user_confirm', $this->loadUser($reserva->user_id), $reserva_id, $garagem_titulo, $motivo);
   }
 
   /**
@@ -114,8 +116,9 @@ class NotificacaoService {
     $reserva = $this->getReserva($reserva_id);
     if (!$reserva) return;
     $garagem_titulo = $this->getGaragemTitulo($reserva->garagem_id);
-    $this->enviar('reserva_cancel_prop_user', $this->loadUser($reserva->user_id), $reserva_id, $garagem_titulo);
-    $this->enviar('reserva_cancel_prop_confirm', $this->loadUser($reserva->proprietario_id), $reserva_id, $garagem_titulo);
+    $motivo = $reserva->motivo ?? '';
+    $this->enviar('reserva_cancel_prop_user', $this->loadUser($reserva->user_id), $reserva_id, $garagem_titulo, $motivo);
+    $this->enviar('reserva_cancel_prop_confirm', $this->loadUser($reserva->proprietario_id), $reserva_id, $garagem_titulo, $motivo);
   }
 
   /**
@@ -140,18 +143,23 @@ class NotificacaoService {
 
   // ─── Helpers ────────────────────────────────────────────────────────────────
 
-  protected function enviar(string $template, $destinatario, int $reserva_id, string $garagem_titulo = ''): void {
+  protected function enviar(string $template, $destinatario, int $reserva_id, string $garagem_titulo = '', string $motivo = ''): void {
     if (!$destinatario) return;
     try {
       $message = Message::create([
         'template' => $template,
         'uid' => $destinatario->id(),
-        'field_reserva_id' => $reserva_id,
       ]);
 
+      $arguments = [
+        '@reserva_id' => $reserva_id,
+      ];
       if ($garagem_titulo) {
-        $message->set('arguments', ['@garagem' => $garagem_titulo]);
+        $arguments['@garagem'] = $garagem_titulo;
       }
+      // Se há motivo, formata como " Motivo: texto" inline na frase.
+      $arguments['@motivo'] = $motivo ? ' ' . t('Motivo') . ': ' . $motivo : '';
+      $message->set('arguments', $arguments);
 
       $message->save();
       $this->messageNotifier->send($message, [], 'email');

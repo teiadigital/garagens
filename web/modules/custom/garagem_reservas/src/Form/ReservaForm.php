@@ -202,6 +202,16 @@ class ReservaForm extends FormBase {
         $form_state->setErrorByName('datas', $this->t('A data de fim deve ser posterior à data de início.'));
         return;
       }
+      // Verificar mínimo de dias definido na garagem.
+      $node = $form_state->get('garagem_node');
+      $min_dias = (int) ($node->get('field_min_dias_reserva')->value ?? 1);
+      if ($min_dias > 1) {
+        $num_dias = (int) round(($fim_ts - $inicio_ts) / 86400);
+        if ($num_dias < $min_dias) {
+          $form_state->setErrorByName('datas', $this->t('O mínimo de dias para esta garagem é @min dias.', ['@min' => $min_dias]));
+          return;
+        }
+      }
     }
     else {
       // Modo mês/ano — só data de início.

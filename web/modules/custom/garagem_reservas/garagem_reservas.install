@@ -128,3 +128,18 @@ function garagem_reservas_update_8003() {
     }
   }
 }
+
+/**
+ * Adiciona coluna motivo à tabela garagem_reserva.
+ */
+function garagem_reservas_update_8004() {
+  $schema = \Drupal::database()->schema();
+  if (!$schema->fieldExists('garagem_reserva', 'motivo')) {
+    $schema->addField('garagem_reserva', 'motivo', [
+      'type' => 'text',
+      'size' => 'medium',
+      'not null' => FALSE,
+      'description' => 'Motivo de cancelamento ou rejeição.',
+    ]);
+  }
+}

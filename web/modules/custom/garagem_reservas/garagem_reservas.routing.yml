@@ -193,3 +193,24 @@ garagem_reservas.notificacoes:
   options:
     no_cache: true
 
+
+garagem_reservas.encomendas_lista:
+  path: '/dashboard/encomendas'
+  defaults:
+    _controller: '\Drupal\garagem_reservas\Controller\ReservaController::listaEncomendas'
+    _title: 'As minhas encomendas'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+  options:
+    no_cache: true
+
+garagem_reservas.encomenda_detalhe:
+  path: '/dashboard/encomendas/{order_id}'
+  defaults:
+    _controller: '\Drupal\garagem_reservas\Controller\ReservaController::detalheEncomenda'
+    _title: 'Detalhe da encomenda'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+    order_id: \d+
+  options:
+    no_cache: true

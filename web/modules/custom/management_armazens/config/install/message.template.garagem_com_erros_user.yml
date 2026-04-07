@@ -1,0 +1,19 @@
+uuid: d4e5f6a7-b8c9-0123-defa-234567890123
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+template: garagem_com_erros_user
+label: 'Garagem com erros - notificação ao proprietário'
+description: 'Email enviado ao proprietário quando a garagem tem erros a corrigir.'
+text:
+  -
+    value: '<p>A sua garagem <strong>@garagem</strong> tem erros que necessitam de correção.</p><p>@descricao</p>'
+    format: basic_html
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

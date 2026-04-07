@@ -15,6 +15,45 @@ management_armazens.json_api_coordinates:
   requirements:
     _access: "TRUE"
 
+management_armazens.armazem_approve:
+  path: "/gestor/armazem/{node}/approve"
+  defaults:
+    _title: "Aprovar Armazém"
+    _controller: '\Drupal\management_armazens\Controller\ApproveArmazemController::build'
+  requirements:
+    _permission: "access content"
+    node: \d+
+  options:
+    parameters:
+      node:
+        type: entity:node
+
+management_armazens.armazem_errors:
+  path: "/gestor/armazem/{node}/errors"
+  defaults:
+    _title: "Armazém com Erros"
+    _controller: '\Drupal\management_armazens\Controller\ErrorsArmazemController::build'
+  requirements:
+    _permission: "access content"
+    node: \d+
+  options:
+    parameters:
+      node:
+        type: entity:node
+
+management_armazens.armazem_reject:
+  path: "/gestor/armazem/{node}/reject"
+  defaults:
+    _title: "Rejeitar Armazém"
+    _controller: '\Drupal\management_armazens\Controller\RejectArmazemController::build'
+  requirements:
+    _permission: "access content"
+    node: \d+
+  options:
+    parameters:
+      node:
+        type: entity:node
+
 management_armazens.remove_advertising:
   path: "/gestor/advertising/remove/{nid}"
   defaults:

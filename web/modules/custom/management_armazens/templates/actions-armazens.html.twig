@@ -1,23 +1,134 @@
 
 <div class="mb-6">
 
-    {% if data %}
+  {% if data %}
 
-        <div class="flex items-center gap-4">
-            {% if data.estado %}
-                <div class="{{data.estado.class}} text-sm font-bold uppercase py-2 px-5 rounded">
-                    {{data.estado.state}}
-                </div>
-            {% endif%}
+    <div class="flex items-center gap-4">
 
-            {% if data.edit %}
-        
-                <a class="text-sm uppercase bg-black block rounded-full py-3 px-6 font-bold text-white hover:bg-white border-2 hover:text-black border-black transition-all" href="{{data.edit['#url']}}">{{data.edit['#title']}}</a>
-            {% endif%}
+      {% if data.estado %}
+        <div class="{{ data.estado.class }} text-sm font-bold uppercase py-2 px-5 rounded">
+          {{ data.estado.state }}
         </div>
-    
-    {% endif%}
+      {% endif %}
 
-    {{form}}
+      {% if data.edit %}
+        <a class="text-sm uppercase bg-black block rounded-full py-3 px-6 font-bold text-white hover:bg-white border-2 hover:text-black border-black transition-all"
+           href="{{ data.edit['#url'] }}">{{ data.edit['#title'] }}</a>
+      {% endif %}
+
+      {% if data.url_approve %}
+        <a href="{{ data.url_approve }}"
+           class="text-sm uppercase bg-green-600 rounded-full py-2 px-5 font-bold text-white hover:bg-green-700 transition-all">
+          {{ 'Approve'|t }}
+        </a>
+      {% endif %}
+
+      {% if data.url_errors %}
+        <button type="button"
+                onclick="abrirModalErros()"
+                class="text-sm uppercase bg-yellow-500 rounded-full py-2 px-5 font-bold text-white hover:bg-yellow-600 transition-all">
+          {{ 'Warehouse with errors'|t }}
+        </button>
+      {% endif %}
+
+      {% if data.url_reject %}
+        <button type="button"
+                onclick="abrirModalRejeitar()"
+                class="text-sm uppercase bg-red-600 rounded-full py-2 px-5 font-bold text-white hover:bg-red-700 transition-all">
+          {{ 'Reject'|t }}
+        </button>
+      {% endif %}
+
+    </div>
+
+  {% endif %}
 
 </div>
+
+{# Modal: Erros #}
+{% if data.url_errors %}
+<div id="modal-erros"
+     class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
+  <div class="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 p-6">
+    <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ 'Warehouse with errors'|t }}</h3>
+    <textarea id="descricao-erros" rows="4"
+              placeholder="{{ 'Error description'|t }}"
+              class="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 mb-4 resize-none focus:outline-none focus:ring-1 focus:ring-gray-400"></textarea>
+    <div class="flex justify-end gap-3">
+      <button type="button"
+              onclick="fecharModalErros()"
+              class="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-200 rounded-full hover:bg-gray-50 transition">
+        {{ 'Cancel'|t }}
+      </button>
+      <button type="button"
+              onclick="confirmarErros('{{ data.url_errors }}')"
+              class="px-4 py-2 text-sm font-bold text-white bg-yellow-500 rounded-full hover:bg-yellow-600 transition">
+        {{ 'Submit'|t }}
+      </button>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{# Modal: Rejeitar #}
+{% if data.url_reject %}
+<div id="modal-rejeitar"
+     class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
+  <div class="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 p-6">
+    <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ 'Reject warehouse'|t }}</h3>
+    <textarea id="motivo-rejeitar" rows="4"
+              placeholder="{{ 'Reason for disapproval'|t }}"
+              class="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 mb-4 resize-none focus:outline-none focus:ring-1 focus:ring-gray-400"></textarea>
+    <div class="flex justify-end gap-3">
+      <button type="button"
+              onclick="fecharModalRejeitar()"
+              class="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-200 rounded-full hover:bg-gray-50 transition">
+        {{ 'Cancel'|t }}
+      </button>
+      <button type="button"
+              onclick="confirmarRejeitar('{{ data.url_reject }}')"
+              class="px-4 py-2 text-sm font-bold text-white bg-red-600 rounded-full hover:bg-red-700 transition">
+        {{ 'Submit'|t }}
+      </button>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<script>
+  function abrirModalErros() {
+    const modal = document.getElementById('modal-erros');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+  function fecharModalErros() {
+    const modal = document.getElementById('modal-erros');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+  document.getElementById('modal-erros')?.addEventListener('click', function(e) {
+    if (e.target === this) fecharModalErros();
+  });
+  function confirmarErros(url) {
+    const descricao = document.getElementById('descricao-erros').value.trim();
+    window.location.href = descricao ? url + '?descricao=' + encodeURIComponent(descricao) : url;
+  }
+
+  function abrirModalRejeitar() {
+    const modal = document.getElementById('modal-rejeitar');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+  function fecharModalRejeitar() {
+    const modal = document.getElementById('modal-rejeitar');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+  document.getElementById('modal-rejeitar')?.addEventListener('click', function(e) {
+    if (e.target === this) fecharModalRejeitar();
+  });
+  function confirmarRejeitar(url) {
+    const motivo = document.getElementById('motivo-rejeitar').value.trim();
+    window.location.href = motivo ? url + '?motivo=' + encodeURIComponent(motivo) : url;
+  }
+</script>

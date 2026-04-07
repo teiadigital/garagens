@@ -5,11 +5,11 @@ dependencies:
   config:
     - filter.format.basic_html
 template: reserva_cancel_user_confirm
-label: 'Cancelamento confirmado'
+label: 'Cancelamento confirmado (arrendatário)'
 description: 'Confirmação ao user de que cancelou a reserva.'
 text:
   -
-    value: '<p>A sua reserva para <strong>@garagem</strong> foi cancelada com sucesso.</p>'
+    value: '<p>A sua reserva para <strong>@garagem</strong> foi cancelada com sucesso.@motivo</p>'
     format: basic_html
 settings:
   'token options':

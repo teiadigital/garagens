@@ -9,7 +9,7 @@ use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Link;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
-use \Drupal\user\Entity\User;
+use Drupal\user\Entity\User;
 use Drupal\Core\Plugin\Context\ContextDefinition;
 use Drupal\node\NodeInterface;
 
@@ -28,43 +28,23 @@ use Drupal\node\NodeInterface;
 final class ActionsArmazensBlock extends BlockBase
 {
 
-
   private function states($state)
   {
-
     switch ($state) {
       case '-1':
-        return [
-          'class' => 'nao-acabado',
-          'state' => t("Unfinished")
-        ];
+        return ['class' => 'nao-acabado',        'state' => t("Unfinished")];
       case '0':
-        return [
-          'class' => 'aguardar-aprovacao',
-          'state' => t("Awaiting approval")
-        ];
+        return ['class' => 'aguardar-aprovacao', 'state' => t("Awaiting approval")];
       case '1':
-        return [
-          'class' => 'com-erros',
-          'state' => t("Warehouse with errors")
-        ];
+        return ['class' => 'com-erros',          'state' => t("Warehouse with errors")];
       case '2':
-        return [
-          'class' => 'nao-aprovado',
-          'state' => t("Not Approved")
-        ];
+        return ['class' => 'nao-aprovado',       'state' => t("Not Approved")];
       case '3':
-        return [
-          'class' => 'aprovado',
-          'state' => t("Approved")
-        ];
+        return ['class' => 'aprovado',           'state' => t("Approved")];
     }
-    return false;
+    return FALSE;
   }
 
-  /**
-   * {@inheritdoc}
-   */
   public function blockAccess(AccountInterface $account) {
     $route_name = \Drupal::routeMatch()->getRouteName();
     if ($route_name !== 'entity.node.canonical') {
@@ -77,27 +57,18 @@ final class ActionsArmazensBlock extends BlockBase
     return AccessResult::forbidden()->addCacheContexts(['route']);
   }
 
-  /**
-   * {@inheritdoc}
-   */
   public function build()
   {
-    $form = NULL;
-    $data = NULL;
-
-    // 1) Tenta contexto; se falhar, tenta node da rota.
+    // Obter o node do contexto ou da rota.
     $node = NULL;
     try {
       $node = $this->getContextValue('node');
-    } catch (\Throwable $e) {
-      // ignorar
-    }
+    } catch (\Throwable $e) {}
+
     if (!$node instanceof NodeInterface) {
-      $route_node = \Drupal::routeMatch()->getParameter('node');
-      if ($route_node instanceof NodeInterface) {
-        $node = $route_node;
-      }
+      $node = \Drupal::routeMatch()->getParameter('node');
     }
+
     if (!$node instanceof NodeInterface || $node->isNew() || $node->bundle() !== 'armazem') {
       return [];
     }
@@ -105,31 +76,35 @@ final class ActionsArmazensBlock extends BlockBase
     $uid  = (int) \Drupal::currentUser()->id();
     $user = User::load($uid);
 
-    // Estado (seguro).
     $estado = NULL;
     if ($node->hasField('field_estado') && !$node->get('field_estado')->isEmpty()) {
       $estado = (string) $node->get('field_estado')->value;
     }
+
     $data = ['estado' => $this->states($estado)];
 
-    // 2) Gestor/admin: mostra o formulário (se existir) quando não é rascunho.
-    if ($user && (in_array('gestor', $user->getRoles(), TRUE) || in_array('administrator', $user->getRoles(), TRUE))) {
-      if ($estado !== '-1' && $estado !== '' && class_exists('Drupal\\management_armazens\\Form\\ActionsArmazensForm')) {
-        $form = \Drupal::formBuilder()->getForm('Drupal\management_armazens\Form\ActionsArmazensForm', $node);
-      }
-    }
-
-    // 3) “Editar” para quem tem acesso de update (mais fiável que só papel 'utilizador').
+    // Link de editar para o próprio proprietário.
     if ($node->access('update')) {
       $url  = Url::fromRoute('entity.node.edit_form', ['node' => $node->id()]);
       $link = Link::fromTextAndUrl(t('Edit'), $url)->toRenderable();
       $data['edit'] = $link;
     }
 
+    // URLs das ações para gestor/admin.
+    $is_gestor = $user && (
+      in_array('gestor', $user->getRoles(), TRUE) ||
+      in_array('administrator', $user->getRoles(), TRUE)
+    );
+
+    if ($is_gestor && $estado !== '-1' && $estado !== '') {
+      $data['url_approve'] = Url::fromRoute('management_armazens.armazem_approve', ['node' => $node->id()])->toString();
+      $data['url_errors']  = Url::fromRoute('management_armazens.armazem_errors',  ['node' => $node->id()])->toString();
+      $data['url_reject']  = Url::fromRoute('management_armazens.armazem_reject',  ['node' => $node->id()])->toString();
+    }
+
     return [
       '#theme' => 'actions_armazens',
       '#data'  => $data,
-      '#form'  => $form,
       '#cache' => [
         'contexts' => ['route', 'user', 'user.roles', 'languages:language_interface'],
         'tags'     => $node->getCacheTags(),

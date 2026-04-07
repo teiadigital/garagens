@@ -1,0 +1,19 @@
+uuid: e5f6a7b8-c9d0-1234-efab-345678901234
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+template: garagem_rejeitada_user
+label: 'Garagem rejeitada - notificação ao proprietário'
+description: 'Email enviado ao proprietário quando a garagem é rejeitada.'
+text:
+  -
+    value: '<p>A sua garagem <strong>@garagem</strong> foi rejeitada.</p><p>@motivo</p>'
+    format: basic_html
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

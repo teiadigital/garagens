@@ -199,8 +199,13 @@ class ReservaController extends ControllerBase {
       return $this->redirect('garagem_reservas.reserva_view', ['reserva' => $reserva]);
     }
 
+    $motivo = \Drupal::request()->query->get('motivo', '');
+    $fields = ['estado' => 'cancelado'];
+    if (!empty($motivo)) {
+      $fields['motivo'] = substr(strip_tags($motivo), 0, 1000);
+    }
     $this->database->update('garagem_reserva')
-      ->fields(['estado' => 'cancelado'])
+      ->fields($fields)
       ->condition('id', $reserva)
       ->execute();
 
@@ -240,8 +245,13 @@ class ReservaController extends ControllerBase {
       return $this->redirect('garagem_reservas.lista_garagem', ['node' => $reserva_data->garagem_id]);
     }
 
+    $motivo = \Drupal::request()->query->get('motivo', '');
+    $fields = ['estado' => 'cancelado'];
+    if (!empty($motivo)) {
+      $fields['motivo'] = substr(strip_tags($motivo), 0, 1000);
+    }
     $this->database->update('garagem_reserva')
-      ->fields(['estado' => 'cancelado'])
+      ->fields($fields)
       ->condition('id', $reserva)
       ->execute();
 
@@ -312,8 +322,13 @@ class ReservaController extends ControllerBase {
       return $this->redirect('garagem_reservas.reserva_view', ['reserva' => $reserva]);
     }
 
+    $motivo = \Drupal::request()->query->get('motivo', '');
+    $fields = ['estado' => 'rejeitado'];
+    if (!empty($motivo)) {
+      $fields['motivo'] = substr(strip_tags($motivo), 0, 1000);
+    }
     $this->database->update('garagem_reserva')
-      ->fields(['estado' => 'rejeitado'])
+      ->fields($fields)
       ->condition('id', $reserva)
       ->execute();
 
@@ -611,6 +626,200 @@ class ReservaController extends ControllerBase {
     }
   }
 
+
+  /**
+   * Lista de encomendas do utilizador.
+   */
+  public function listaEncomendas() {
+    $current_user = \Drupal::currentUser();
+    $uid = $current_user->id();
+
+    $order_storage = $this->entityTypeManager()->getStorage('commerce_order');
+    $ids = $order_storage->getQuery()
+      ->condition('uid', $uid)
+      ->condition('state', 'draft', '!=')
+      ->sort('created', 'DESC')
+      ->accessCheck(FALSE)
+      ->execute();
+
+    $orders = $order_storage->loadMultiple($ids);
+
+    $items = [];
+    foreach ($orders as $order) {
+      $payment_info = $this->getPaymentInfo($order);
+
+      // Reserva associada.
+      $reserva = \Drupal::database()->select('garagem_reserva', 'gr')
+        ->fields('gr', ['id', 'garagem_id'])
+        ->condition('commerce_order_id', $order->id())
+        ->execute()
+        ->fetchObject();
+
+      $garagem_titulo = '';
+      if ($reserva) {
+        $node = $this->entityTypeManager()->getStorage('node')->load($reserva->garagem_id);
+        $garagem_titulo = $node ? $node->getTitle() : '';
+      }
+
+      $items[] = [
+        'id' => $order->id(),
+        'numero' => $order->getOrderNumber() ?: '#' . $order->id(),
+        'estado' => $order->getState()->getId(),
+        'estado_label' => $order->getState()->getLabel(),
+        'total' => $order->getTotalPrice() ? number_format((float)$order->getTotalPrice()->getNumber(), 2, ',', '.') . ' €' : '—',
+        'data' => \Drupal::service('date.formatter')->format($order->getCreatedTime(), 'custom', 'd/m/Y H:i'),
+        'garagem' => $garagem_titulo,
+        'reserva_id' => $reserva ? $reserva->id : NULL,
+        'gateway' => $payment_info['gateway'] ?? '',
+        'payment_estado' => $payment_info['estado'] ?? '',
+      ];
+    }
+
+    return [
+      '#theme' => 'garagem_encomendas_lista',
+      '#items' => $items,
+      '#cache' => ['max-age' => 0],
+    ];
+  }
+
+  /**
+   * Detalhe de uma encomenda.
+   */
+  public function detalheEncomenda(int $order_id) {
+    $current_user = \Drupal::currentUser();
+
+    $order_storage = $this->entityTypeManager()->getStorage('commerce_order');
+    $order = $order_storage->load($order_id);
+
+    if (!$order) {
+      throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
+    }
+
+    // Só o dono pode ver.
+    if ($order->getCustomerId() != $current_user->id() && !$current_user->hasPermission('administer commerce_order')) {
+      throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
+    }
+
+    // Itens da encomenda.
+    $order_items = [];
+    foreach ($order->getItems() as $item) {
+      $order_items[] = [
+        'titulo' => $item->getTitle(),
+        'quantidade' => $item->getQuantity(),
+        'preco_unit' => number_format((float)$item->getUnitPrice()->getNumber(), 2, ',', '.') . ' €',
+        'total' => number_format((float)$item->getTotalPrice()->getNumber(), 2, ',', '.') . ' €',
+      ];
+    }
+
+    // Morada de faturação.
+    $billing_address = NULL;
+    $billing_profile = $order->getBillingProfile();
+    if ($billing_profile) {
+      $addr = $billing_profile->get('address')->first();
+      if ($addr) $billing_address = $addr->getValue();
+    }
+
+    // Pagamento.
+    $payment_info = $this->getPaymentInfo($order);
+
+    // Reserva associada.
+    $reserva = \Drupal::database()->select('garagem_reserva', 'gr')
+      ->fields('gr', ['id', 'garagem_id', 'data_inicio', 'data_fim', 'estado'])
+      ->condition('commerce_order_id', $order_id)
+      ->execute()
+      ->fetchObject();
+
+    $garagem_titulo = '';
+    if ($reserva) {
+      $node = $this->entityTypeManager()->getStorage('node')->load($reserva->garagem_id);
+      $garagem_titulo = $node ? $node->getTitle() : '';
+    }
+
+    return [
+      '#theme' => 'garagem_encomenda_detalhe',
+      '#order' => [
+        'id' => $order->id(),
+        'numero' => $order->getOrderNumber() ?: '#' . $order->id(),
+        'estado' => $order->getState()->getId(),
+        'estado_label' => $order->getState()->getLabel(),
+        'total' => $order->getTotalPrice() ? number_format((float)$order->getTotalPrice()->getNumber(), 2, ',', '.') . ' €' : '—',
+        'data' => \Drupal::service('date.formatter')->format($order->getCreatedTime(), 'custom', 'd/m/Y H:i'),
+        'email' => $order->getEmail(),
+      ],
+      '#items' => $order_items,
+      '#billing_address' => $billing_address,
+      '#payment' => $payment_info,
+      '#reserva' => $reserva ? [
+        'id' => $reserva->id,
+        'garagem' => $garagem_titulo,
+        'data_inicio' => $reserva->data_inicio ? date('d/m/Y', $reserva->data_inicio) : '—',
+        'data_fim' => $reserva->data_fim ? date('d/m/Y', $reserva->data_fim) : '—',
+        'estado' => $reserva->estado,
+      ] : NULL,
+      '#cache' => ['max-age' => 0],
+    ];
+  }
+
+  /**
+   * Helper: obter informação de pagamento de uma order.
+   */
+  protected function getPaymentInfo($order): array {
+    $payments = $this->entityTypeManager()->getStorage('commerce_payment')
+      ->loadByProperties(['order_id' => $order->id()]);
+
+    if (empty($payments)) return [];
+
+    $payment = reset($payments);
+    $gateway_id = $payment->getPaymentGatewayId();
+    $remote_id = $payment->getRemoteId();
+    $estado = $payment->getState()->getId();
+
+    $info = [
+      'gateway' => $gateway_id,
+      'estado' => $estado,
+      'remote_id' => $remote_id,
+      'entidade' => NULL,
+      'referencia' => NULL,
+      'tipo' => 'outro',
+    ];
+
+    // Detectar Multibanco — remote_id é a referência, entidade vem da config do gateway.
+    $gateway_storage = $this->entityTypeManager()->getStorage('commerce_payment_gateway');
+    $gateway = $gateway_storage->load($gateway_id);
+    if ($gateway) {
+      $plugin = $gateway->getPlugin();
+      $plugin_id = $gateway->getPluginId();
+      $gateway_machine_name = $gateway->id();
+
+      if ($plugin_id === 'ifthenpay_multibanco') {
+        $info['tipo'] = 'multibanco';
+        // O remote_id é JSON: {"entity":"12537","reference":"456003808","expiry_date":"..."}
+        $decoded = json_decode((string) $remote_id, TRUE);
+        if ($decoded && isset($decoded['entity'], $decoded['reference'])) {
+          $info['entidade'] = $decoded['entity'];
+          $ref = preg_replace('/\D/', '', $decoded['reference']);
+          $info['referencia'] = strlen($ref) === 9
+            ? substr($ref, 0, 3) . ' ' . substr($ref, 3, 3) . ' ' . substr($ref, 6)
+            : $decoded['reference'];
+        }
+        else {
+          // Fallback: remote_id é a referência direta (módulo antigo)
+          $config = $plugin->getConfiguration();
+          $info['entidade'] = $config['multibanco_entidade'] ?? ($config['multibanco_mb_key'] ?? $config['mb_key'] ?? '');
+          $ref = preg_replace('/\D/', '', (string) $remote_id);
+          $info['referencia'] = strlen($ref) === 9
+            ? substr($ref, 0, 3) . ' ' . substr($ref, 3, 3) . ' ' . substr($ref, 6)
+            : $remote_id;
+        }
+      }
+      elseif ($plugin_id === 'ifthenpay_mbway') {
+        $info['tipo'] = 'mbway';
+      }
+    }
+
+    return $info;
+  }
+
   /**
    * Página de notificações.
    */
@@ -651,10 +860,15 @@ class ReservaController extends ControllerBase {
         }
       }
 
+      $args = $message->get('arguments')->getValue();
+      $reserva_id = $args[0]['@reserva_id'] ?? NULL;
+      $url_reserva = $reserva_id ? \Drupal\Core\Url::fromRoute('garagem_reservas.reserva_view', ['reserva' => $reserva_id])->toString() : NULL;
+
       $items[] = [
         'label' => $label,
         'created' => $message->getCreatedTime(),
         'text' => $text_rendered,
+        'url_reserva' => $url_reserva,
       ];
     }
 

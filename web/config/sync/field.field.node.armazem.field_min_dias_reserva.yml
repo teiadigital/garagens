@@ -1,0 +1,25 @@
+uuid: b74f6adc-cf78-4306-af2c-d4755e4a9e14
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_min_dias_reserva
+    - node.type.armazem
+id: node.armazem.field_min_dias_reserva
+field_name: field_min_dias_reserva
+entity_type: node
+bundle: armazem
+label: 'Mínimo de dias de reserva'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  min: 1
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

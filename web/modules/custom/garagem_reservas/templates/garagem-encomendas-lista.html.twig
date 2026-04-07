@@ -1,0 +1,59 @@
+{#
+/**
+ * @file
+ * Template da lista de encomendas do utilizador.
+ */
+#}
+
+{% set estado_cores = {
+  'draft': 'bg-gray-100 text-gray-500',
+  'pending': 'bg-yellow-100 text-yellow-700',
+  'fulfillment': 'bg-blue-100 text-blue-700',
+  'completed': 'bg-green-100 text-green-700',
+  'cancelled': 'bg-red-100 text-red-600',
+} %}
+
+{% if items is empty %}
+  <div class="bg-blue-50 border border-blue-200 rounded-xl p-5 text-sm text-blue-700">
+    {{ 'Ainda não tem encomendas.'|t }}
+  </div>
+{% else %}
+  <div class="space-y-3">
+    {% for item in items %}
+      <a href="{{ path('garagem_reservas.encomenda_detalhe', {'order_id': item.id}) }}"
+         class="flex items-center justify-between bg-white border border-gray-200 rounded-xl px-5 py-4 hover:border-gray-400 transition no-underline">
+
+        <div class="flex items-center gap-8">
+          <div>
+            <p class="text-xs text-gray-400 mb-0.5">{{ 'Encomenda'|t }}</p>
+            <p class="font-bold text-gray-900 text-sm">{{ item.numero }}</p>
+          </div>
+          {% if item.garagem %}
+          <div>
+            <p class="text-xs text-gray-400 mb-0.5">{{ 'Garagem'|t }}</p>
+            <p class="font-medium text-gray-900 text-sm">{{ item.garagem }}</p>
+          </div>
+          {% endif %}
+          <div>
+            <p class="text-xs text-gray-400 mb-0.5">{{ 'Date'|t }}</p>
+            <p class="text-sm text-gray-600">{{ item.data }}</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-6">
+          <div class="text-right">
+            <p class="text-xs text-gray-400 mb-0.5">{{ 'Total'|t }}</p>
+            <p class="font-bold text-gray-900 text-sm">{{ item.total }}</p>
+          </div>
+          <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide {{ estado_cores[item.estado] ?? 'bg-gray-100 text-gray-500' }}">
+            {{ item.estado_label }}
+          </span>
+          <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </div>
+
+      </a>
+    {% endfor %}
+  </div>
+{% endif %}

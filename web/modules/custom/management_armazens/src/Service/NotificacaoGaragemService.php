@@ -44,13 +44,49 @@ class NotificacaoGaragemService {
     }
   }
 
-  protected function enviar(string $template, $destinatario, string $garagem_titulo): void {
+  /**
+   * Garagem aprovada — notifica o proprietário.
+   */
+  public function garagemAprovada(NodeInterface $node): void {
+    $proprietario = $this->entityTypeManager->getStorage('user')
+      ->load($node->getOwnerId());
+
+    if ($proprietario) {
+      $this->enviar('garagem_aprovada_user', $proprietario, $node->getTitle());
+    }
+  }
+
+  /**
+   * Garagem com erros — notifica o proprietário com a descrição.
+   */
+  public function garagemComErros(NodeInterface $node, string $descricao = ''): void {
+    $proprietario = $this->entityTypeManager->getStorage('user')
+      ->load($node->getOwnerId());
+
+    if ($proprietario) {
+      $this->enviar('garagem_com_erros_user', $proprietario, $node->getTitle(), ['@descricao' => $descricao]);
+    }
+  }
+
+  /**
+   * Garagem rejeitada — notifica o proprietário com o motivo.
+   */
+  public function garagemRejeitada(NodeInterface $node, string $motivo = ''): void {
+    $proprietario = $this->entityTypeManager->getStorage('user')
+      ->load($node->getOwnerId());
+
+    if ($proprietario) {
+      $this->enviar('garagem_rejeitada_user', $proprietario, $node->getTitle(), ['@motivo' => $motivo]);
+    }
+  }
+
+  protected function enviar(string $template, $destinatario, string $garagem_titulo, array $extra_arguments = []): void {
     try {
       $message = Message::create([
         'template' => $template,
         'uid'      => $destinatario->id(),
       ]);
-      $message->set('arguments', ['@garagem' => $garagem_titulo]);
+      $message->set('arguments', array_merge(['@garagem' => $garagem_titulo], $extra_arguments));
       $message->save();
       $this->messageNotifier->send($message, [], 'email');
     }

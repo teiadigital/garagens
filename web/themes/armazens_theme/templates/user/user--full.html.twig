@@ -1,41 +1,86 @@
 {#
 /**
  * @file
- * Theme override to present all user data.
- *
- * This template is used when viewing a registered user's page,
- * e.g., example.com/user/123. 123 being the user's ID.
- *
- * Available variables:
- * - content: A list of content items. Use 'content' to print all content, or
- *   print a subset such as 'content.field_example'. Fields attached to a user
- *   such as 'user_picture' are available as 'content.user_picture'.
- * - attributes: HTML attributes for the container element.
- * - user: A Drupal User entity.
- *
- * @see template_preprocess_user()
+ * Conteúdo do perfil — a sidebar está no page--dashboard.html.twig.
  */
 #}
 <article{{ attributes.addClass('profile') }}>
 
-  {{ drupal_block('management_armazens_info_details_user_dashboard') }}
-  
-  <div class="mt-14">
-    {{ drupal_view('armazens', 'block_armazens_perfil') }}
+  {# ── Informações do utilizador ───────────────────────── #}
+  <div class="mb-8 pb-8 border-b border-gray-100">
+    <div class="flex items-center justify-between mb-5">
+      <h2 class="text-lg font-semibold text-gray-900">{{ 'Informações pessoais'|t }}</h2>
+      <a href="{{ path('entity.user.edit_form', {'user': user.id()}) }}"
+         class="inline-flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-gray-900 border border-gray-200 hover:border-gray-400 rounded-full px-3 py-1.5 transition-colors">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+        {{ 'Editar'|t }}
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-gray-100 rounded-2xl overflow-hidden border border-gray-100">
+
+      <div class="bg-white px-5 py-4">
+        <p class="text-xs text-gray-400 uppercase tracking-widest mb-1">{{ 'Nome'|t }}</p>
+        <p class="text-sm font-semibold text-gray-900">
+          {{ user.get('field_nome').value ?: user.getDisplayName() }}
+        </p>
+      </div>
+
+      <div class="bg-white px-5 py-4">
+        <p class="text-xs text-gray-400 uppercase tracking-widest mb-1">{{ 'Email'|t }}</p>
+        <p class="text-sm font-semibold text-gray-900 truncate">{{ user.getEmail() }}</p>
+      </div>
+
+      {% if user.get('field_telemovel').value %}
+        <div class="bg-white px-5 py-4">
+          <p class="text-xs text-gray-400 uppercase tracking-widest mb-1">{{ 'Telemóvel'|t }}</p>
+          <p class="text-sm font-semibold text-gray-900">{{ user.get('field_telemovel').value }}</p>
+        </div>
+      {% endif %}
+
+      {% if user.get('field_telefone').value %}
+        <div class="bg-white px-5 py-4">
+          <p class="text-xs text-gray-400 uppercase tracking-widest mb-1">{{ 'Telefone'|t }}</p>
+          <p class="text-sm font-semibold text-gray-900">{{ user.get('field_telefone').value }}</p>
+        </div>
+      {% endif %}
+
+      {% if user.get('field_nif').value %}
+        <div class="bg-white px-5 py-4">
+          <p class="text-xs text-gray-400 uppercase tracking-widest mb-1">{{ 'NIF'|t }}</p>
+          <p class="text-sm font-semibold text-gray-900">{{ user.get('field_nif').value }}</p>
+        </div>
+      {% endif %}
+
+      {% if user.get('field_nib').value %}
+        <div class="bg-white px-5 py-4">
+          <p class="text-xs text-gray-400 uppercase tracking-widest mb-1">{{ 'NIB / IBAN'|t }}</p>
+          <p class="text-sm font-semibold text-gray-900">{{ user.get('field_nib').value }}</p>
+        </div>
+      {% endif %}
+
+      {% set morada = user.get('field_morada') %}
+      {% if morada.address_line1 %}
+        <div class="bg-white px-5 py-4 sm:col-span-2 lg:col-span-1">
+          <p class="text-xs text-gray-400 uppercase tracking-widest mb-1">{{ 'Morada'|t }}</p>
+          <p class="text-sm font-semibold text-gray-900 leading-snug">
+            {{ morada.address_line1 }}{% if morada.address_line2 %}, {{ morada.address_line2 }}{% endif %}<br>
+            {{ morada.postal_code }} {{ morada.locality }}
+          </p>
+        </div>
+      {% endif %}
+
+    </div>
   </div>
 
+  {# ── As minhas garagens ──────────────────────────────── #}
+  <div class="flex items-center justify-between mb-6">
+    <h2 class="text-lg font-semibold text-gray-900">{{ 'As minhas garagens'|t }}</h2>
+    <a href="/user/armazens"
+       class="inline-flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-gray-900 border border-gray-200 hover:border-gray-400 rounded-full px-3 py-1.5 transition-colors">
+      {{ 'Ver todos'|t }}
+    </a>
+  </div>
+  {{ drupal_view('armazens', 'block_armazens_perfil') }}
 
-  {# <a href="{{ url('<front>') }}#contacts" class="mt-16 flex items-center bg-white px-8 py-5">
-    <p class="text-lg flex-1">
-      {{ "global garage requests"|t }}
-    </p>
-
-    <svg width="46px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#000000" stroke-width="2" stroke-linecap="round"
-        stroke-linejoin="round" />
-    </svg>
-  </a> #}
-
-
-  
 </article>

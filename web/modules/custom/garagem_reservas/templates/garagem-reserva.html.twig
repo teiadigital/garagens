@@ -15,7 +15,7 @@
   'expirado': 'bg-gray-200 text-gray-400',
 } %}
 
-<div class="max-w-3xl">
+<div class="w-full">
 
   {# Cabeçalho #}
   <div class="flex items-center justify-between mb-8">
@@ -34,7 +34,7 @@
   <div class="border-t border-gray-300 my-6"></div>
 
   {# Período #}
-  <div class="grid grid-cols-2 gap-6 mb-6">
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
     <div>
       <p class="text-xs font-bold text-gray-900 uppercase tracking-wide mb-1">{{ 'início'|t }}</p>
       <p class="text-gray-700">{{ reserva.data_inicio|date('d/m/Y') }}</p>
@@ -50,7 +50,7 @@
   <div class="border-t border-gray-300 my-6"></div>
 
   {# Valores #}
-  <div class="grid grid-cols-2 gap-6 mb-6">
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
     <div>
       <p class="text-xs font-bold text-gray-900 uppercase tracking-wide mb-1">{{ 'preço total da reserva'|t }}</p>
       <p class="text-gray-700">{{ preco_total|number_format(2) }}€</p>

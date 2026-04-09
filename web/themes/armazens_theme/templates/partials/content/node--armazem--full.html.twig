@@ -20,37 +20,37 @@
 
   <div{{ content_attributes.addClass('node__content') }}>
 
-    {# ── Título + localização ───────────────────────────────── #}
-    <div class="mb-6">
+    {# ── Título ───────────────────────────────────────────────── #}
+    <div class="mb-4">
       {% if label %}
-        <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ label }}</h1>
+        <h1 class="text-2xl md:text-3xl font-bold text-gray-900">{{ label }}</h1>
       {% endif %}
-
-      <div class="text-sm text-gray-500">
-        {% if 'gestor' in user.getroles(TRUE) or user.id == node.uid.value.0.target_id %}
-          {{ content.field_localidade }}
-        {% else %}
-          {{ content.field_localidade.0.postal_code['#value'] }} —
-          {{ content.field_localidade.0.locality['#value'] }},
-          {{ content.field_localidade.0.administrative_area['#value'] }}
-        {% endif %}
-      </div>
     </div>
 
-    {# ── Galeria de fotos ───────────────────────────────────── #}
-    <div class="mb-10 rounded-2xl overflow-hidden">
-      {{ content.field_fotos }}
-    </div>
+    {# ── Galeria de fotos ─────────────────────────────────────── #}
+    {{ content.field_fotos }}
 
-    {# ── Layout 2 colunas ──────────────────────────────────── #}
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+    {# ── Layout 2 colunas ─────────────────────────────────────── #}
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mt-8">
 
-      {# Coluna esquerda — conteúdo #}
-      <div class="lg:col-span-7 xl:col-span-8">
+      {# ── Coluna esquerda ──────────────────────────────────────── #}
+      <div class="lg:col-span-7 xl:col-span-8 space-y-8 order-2 lg:order-1">
+
+        {# Localização + tipo de espaço #}
+        <div class="pb-8 border-b border-gray-200">
+          <div class="text-gray-500 text-sm mb-1">
+            {% if 'gestor' in user.getroles(TRUE) or user.id == node.uid.value %}
+              {{ content.field_localidade }}
+            {% else %}
+              {{ content.field_localidade.0.locality['#value'] }},
+              {{ content.field_localidade.0.administrative_area['#value'] }}
+            {% endif %}
+          </div>
+        </div>
 
         {# Descrição #}
         {% if content.field_descricao[0] %}
-          <div class="border-b border-gray-200 pb-8 mb-8">
+          <div class="pb-8 border-b border-gray-200">
             <h2 class="text-lg font-semibold text-gray-900 mb-3">{{ 'Sobre este espaço'|t }}</h2>
             <div class="text-gray-600 text-sm leading-relaxed">
               {{ content.field_descricao }}
@@ -58,14 +58,27 @@
           </div>
         {% endif %}
 
-        {# Área #}
-        {% if content.field_area_individual[0] %}
-          <div class="border-b border-gray-200 pb-8 mb-8">
-            <div class="flex items-center gap-3 text-sm text-gray-700">
-              <svg class="w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
-              </svg>
-              {{ content.field_area_individual }}
+        {# Área e peso #}
+        {% if content.field_area_individual[0] or content.field_peso_maximo_piso[0] %}
+          <div class="pb-8 border-b border-gray-200">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4">{{ 'Dimensões'|t }}</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {% if content.field_area_individual[0] %}
+                <div class="flex items-start gap-3 text-sm text-gray-700">
+                  <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+                  </svg>
+                  <div>{{ content.field_area_individual }}</div>
+                </div>
+              {% endif %}
+              {% if content.field_peso_maximo_piso[0] %}
+                <div class="flex items-start gap-3 text-sm text-gray-700">
+                  <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/>
+                  </svg>
+                  <div>{{ content.field_peso_maximo_piso }}</div>
+                </div>
+              {% endif %}
             </div>
           </div>
         {% endif %}
@@ -97,41 +110,32 @@
           </div>
         {% endif %}
 
-        {# Características do espaço #}
-        <div class="border-b border-gray-200 pb-8 mb-8">
+        {# O que este espaço oferece #}
+        <div class="pb-8 border-b border-gray-200">
           <h2 class="text-lg font-semibold text-gray-900 mb-5">{{ 'O que este espaço oferece'|t }}</h2>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
             {% if content.field_espaco[0] %}
-              <div class="flex items-start gap-3 text-sm">
-                <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="flex items-center gap-2 text-sm text-gray-600 mt-2">
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                 </svg>
-                <div>{{ content.field_espaco }}</div>
+                {{ content.field_espaco }}
               </div>
             {% endif %}
 
             {% if content.field_piso[0] %}
-              <div class="flex items-start gap-3 text-sm">
-                <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="flex items-center gap-3 text-sm text-gray-700">
+                <svg class="w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
                 </svg>
                 <div>{{ content.field_piso }}</div>
               </div>
             {% endif %}
 
-            {% if content.field_peso_maximo_piso[0] %}
-              <div class="flex items-start gap-3 text-sm">
-                <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/>
-                </svg>
-                <div>{{ content.field_peso_maximo_piso }}</div>
-              </div>
-            {% endif %}
-
             {% if content.field_recursos[0] %}
-              <div class="flex items-start gap-3 text-sm">
-                <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="flex items-center gap-3 text-sm text-gray-700">
+                <svg class="w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
                 <div>{{ content.field_recursos }}</div>
@@ -139,7 +143,7 @@
             {% endif %}
 
             {# Controlo de acesso #}
-            <div class="flex items-start gap-3 text-sm">
+            <div class="flex items-start gap-3 text-sm text-gray-700">
               <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
               </svg>
@@ -153,7 +157,7 @@
             </div>
 
             {# Limitações de acesso #}
-            <div class="flex items-start gap-3 text-sm">
+            <div class="flex items-start gap-3 text-sm text-gray-700">
               <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/>
               </svg>
@@ -166,8 +170,8 @@
               </div>
             </div>
 
-            {# Horário de acesso #}
-            <div class="flex items-start gap-3 text-sm">
+            {# Horário #}
+            <div class="flex items-start gap-3 text-sm text-gray-700">
               <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
               </svg>
@@ -181,7 +185,7 @@
             </div>
 
             {# Segurança #}
-            <div class="flex items-start gap-3 text-sm">
+            <div class="flex items-start gap-3 text-sm text-gray-700">
               <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
               </svg>
@@ -198,12 +202,12 @@
         </div>
 
         {# Conformidade legal #}
-        <div class="mb-8">
+        <div class="pb-8 border-b border-gray-200">
           <h2 class="text-lg font-semibold text-gray-900 mb-5">{{ 'Conformidade legal'|t }}</h2>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-sm">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
             {% if content.field_licenca_de_utilizacao[0] %}
-              <div class="flex items-start gap-3">
+              <div class="flex items-start gap-3 text-sm text-gray-700">
                 <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                 </svg>
@@ -211,7 +215,7 @@
               </div>
             {% endif %}
 
-            <div class="flex items-start gap-3">
+            <div class="flex items-start gap-3 text-sm text-gray-700">
               <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
               </svg>
@@ -224,7 +228,7 @@
               </div>
             </div>
 
-            <div class="flex items-start gap-3">
+            <div class="flex items-start gap-3 text-sm text-gray-700">
               <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/>
               </svg>
@@ -237,7 +241,7 @@
               </div>
             </div>
 
-            <div class="flex items-start gap-3">
+            <div class="flex items-start gap-3 text-sm text-gray-700">
               <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
               </svg>
@@ -255,11 +259,14 @@
 
       </div>{# fim coluna esquerda #}
 
-      {# Coluna direita — bloco de reserva (sticky) #}
-      <div class="lg:col-span-5 xl:col-span-4">
-        <div style="position: sticky; top: 100px;">
-          {# O ReservarBlock é injetado aqui via o sistema de blocos do Drupal #}
-          {{ drupal_block('garagem_reservas_reservar_block', {'node': node.id}) }}
+      {# ── Coluna direita — preços + reserva (sticky) ─────────── #}
+      <div class="lg:col-span-5 xl:col-span-4 order-1 lg:order-2">
+        <div class="sticky top-28">
+          <div class="border border-gray-200 rounded-2xl p-6 shadow-sm">
+
+            {{ drupal_block('garagem_card_lateral_block') }}
+
+          </div>
         </div>
       </div>
 
@@ -268,8 +275,7 @@
     {# Vista do proprietário (só para gestores/admins) #}
     {% if 'gestor' in user.getroles(TRUE) or 'administrator' in user.getroles(TRUE) %}
       <div class="mt-12 border-t border-gray-200 pt-10">
-        {% set uid = node.uid.value.0.target_id %}
-        {{ drupal_view('utilizador', 'block_proprietario_armazem', uid) }}
+        {{ drupal_view('utilizador', 'block_proprietario_armazem', node.owner.id()) }}
       </div>
     {% endif %}
 

@@ -1,3 +1,9 @@
+cards:
+  version: 1.0
+  css:
+    theme:
+      css/pesquisa.css: {}
+
 pesquisa:
   version: 1.2
   css:

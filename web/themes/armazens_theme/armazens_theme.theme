@@ -138,6 +138,28 @@ function armazens_theme_form_node_armazem_form_alter(array &$form, \Drupal\Core\
 
 
 
+/**
+ * Implements hook_theme_suggestions_page_alter().
+ *
+ * Aplica page--dashboard.html.twig ao perfil do utilizador e a todas as
+ * rotas do dashboard (reservas, encomendas, notificações).
+ */
+function armazens_theme_theme_suggestions_page_alter(array &$suggestions, array $variables) {
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  $dashboard_routes = [
+    'entity.user.canonical',
+    'entity.user.edit_form',
+    'garagem_reservas.lista_user',
+    'garagem_reservas.reserva_view',
+    'garagem_reservas.encomendas_lista',
+    'garagem_reservas.encomenda_detalhe',
+    'garagem_reservas.notificacoes',
+  ];
+  if (in_array($route_name, $dashboard_routes)) {
+    $suggestions[] = 'page__dashboard';
+  }
+}
+
 function armazens_theme_theme_suggestions_alter(array &$suggestions, array $variables, $hook) {
   if ($hook == 'form' & !empty($variables['element']['#id'])) {
     $suggestions[] = 'form__' . str_replace('-', '_', $variables['element']['#id']);
@@ -169,8 +191,8 @@ function armazens_theme_preprocess_page_title(&$variables) {
       $variables['title'] = 'registo';
       break;
       
-    case 'entity.user.canonical' : 
-      $variables['title'] = 'dashboard';
+    case 'entity.user.canonical' :
+      $variables['title'] = 'O meu perfil';
       break;
   }
 

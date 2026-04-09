@@ -1,156 +1,169 @@
 {#
 /**
-* @file
-* Theme override for a field.
-*
-* To override output, copy the "field.html.twig" from the templates directory
-* to your theme's directory and customize it, just like customizing other
-* Drupal templates such as page.html.twig or node.html.twig.
-*
-* Instead of overriding the theming for all fields, you can also just override
-* theming for a subset of fields using
-* @link themeable Theme hook suggestions. @endlink For example,
-* here are some theme hook suggestions that can be used for a field_foo field
-* on an article node type:
-* - field--node--field-foo--article.html.twig
-* - field--node--field-foo.html.twig
-* - field--node--article.html.twig
-* - field--field-foo.html.twig
-* - field--text-with-summary.html.twig
-* - field.html.twig
-*
-* Available variables:
-* - attributes: HTML attributes for the containing element.
-* - label_hidden: Whether to show the field label or not.
-* - title_attributes: HTML attributes for the title.
-* - label: The label for the field.
-* - multiple: TRUE if a field can contain multiple items.
-* - items: List of all the field items. Each item contains:
-* - attributes: List of HTML attributes for each item.
-* - content: The field item's content.
-* - entity_type: The entity type to which the field belongs.
-* - field_name: The name of the field.
-* - field_type: The type of the field.
-* - label_display: The display settings for the label.
-*
-*
-* @see template_preprocess_field()
-*/
+ * @file
+ * Grid de fotos estilo Airbnb para garagens.
+ */
 #}
-{{ attach_library('armazens_theme/carousel') }}
-{%
-set classes = [
-'field',
-'field--name-' ~ field_name|clean_class,
-'field--type-' ~ field_type|clean_class,
-'field--label-' ~ label_display,
-label_display == 'inline' ? 'clearfix',
-]
-%}
-{%
-set title_classes = [
-'field__label',
-label_display == 'visually_hidden' ? 'visually-hidden',
-]
-%}
+{% set total = items|length %}
 
+<div class="foto-grid relative overflow-hidden rounded-2xl mb-8 h-[300px] sm:h-[380px] lg:h-[480px]">
 
-{% if items|length > 1 %}
-    <div id="default-carousel" class="relative w-full carousel-armazens" data-carousel="static">
-        <div class="relative h-56 overflow-hidden md:h-96">
-            {% for item in items %}
-                <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                    <div{{ item.attributes.addClass('field__item') }}>
-                        <button  data-modal-target="extralarge-modal-{{ loop.index }}" data-modal-toggle="extralarge-modal-{{ loop.index }}"
-                            class="block"
-                            type="button">
-
-                            <div class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-                                {{ item.content }}
-                            </div>
-                        </button>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-
-        {% for item in items %}
-            <div id="extralarge-modal-{{ loop.index }}" tabindex="-1"
-                class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                <div class="relative w-full max-w-7xl max-h-full">
-                    <div class="relative ">
-                        <div class="flex items-center justify-end py-4 md:p-5 ">
-                            <button type="button"
-                                class="text-white bg-transparent  rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center "
-                                data-modal-hide="extralarge-modal-{{ loop.index }}">
-                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                                </svg>
-                                <span class="sr-only">{{ 'Close modal'|t }}</span>
-                            </button>
-                        </div>
-                        <div class="py-4 md:py-5 space-y-4 flex justify-center items-center">
-                            <div class="block max-w-full">
-                                {{ item.content }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-
-        <button type="button"
-            class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-            data-carousel-prev>
-            <span
-                class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M5 1 1 5l4 4" />
-                </svg>
-                <span class="sr-only">{{ 'Previous'|t }}</span>
-            </span>
-        </button>
-        <button type="button"
-            class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-            data-carousel-next>
-            <span
-                class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="m1 9 4-4-4-4" />
-                </svg>
-                <span class="sr-only">{{ 'Next'|t }}</span>
-            </span>
-        </button>
+  {% if total == 1 %}
+    {# ── 1 foto: full width ── #}
+    <div class="foto-item w-full h-full cursor-pointer" onclick="abrirFotoModal(0)">
+      {{ items[0].content }}
     </div>
-{% else %}
-    {% if label_hidden %}
-        {% if multiple %}
-            <div{{ attributes.addClass(classes, 'field__items') }}>
-            {% for item in items %}
-                <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
-            {% endfor %}
-            </div>
-        {% else %}
-            {% for item in items %}
-            <div{{ attributes.addClass(classes, 'field__item') }}>{{ item.content }}</div>
-            {% endfor %}
-        {% endif %}
-        {% else %}
-        <div{{ attributes.addClass(classes) }}>
-            <div{{ title_attributes.addClass(title_classes) }}>{{ label }}</div>
-            {% if multiple %}
-            <div class="field__items">
-            {% endif %}
-            {% for item in items %}
-            <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
-            {% endfor %}
-            {% if multiple %}
-            </div>
-            {% endif %}
+
+  {% elseif total == 2 %}
+    <div class="h-full sm:grid sm:grid-cols-2 sm:gap-2">
+      <div class="foto-item overflow-hidden cursor-pointer h-full" onclick="abrirFotoModal(0)">
+        {{ items[0].content }}
+      </div>
+      <div class="foto-item overflow-hidden cursor-pointer h-full hidden sm:block" onclick="abrirFotoModal(1)">
+        {{ items[1].content }}
+      </div>
+    </div>
+
+  {% elseif total == 3 %}
+    <div class="h-full sm:grid sm:grid-cols-2 sm:gap-2">
+      <div class="foto-item overflow-hidden cursor-pointer h-full" onclick="abrirFotoModal(0)">
+        {{ items[0].content }}
+      </div>
+      <div class="hidden sm:grid grid-rows-2 gap-2 min-h-0 h-full">
+        <div class="foto-item overflow-hidden cursor-pointer min-h-0" onclick="abrirFotoModal(1)">
+          {{ items[1].content }}
         </div>
+        <div class="foto-item overflow-hidden cursor-pointer min-h-0" onclick="abrirFotoModal(2)">
+          {{ items[2].content }}
+        </div>
+      </div>
+    </div>
+
+  {% else %}
+    <div class="h-full sm:grid sm:grid-cols-2 sm:gap-2">
+      <div class="foto-item overflow-hidden cursor-pointer h-full" onclick="abrirFotoModal(0)">
+        {{ items[0].content }}
+      </div>
+      <div class="hidden sm:grid grid-cols-2 grid-rows-2 gap-2 min-h-0 h-full">
+        {% for i in 1..3 %}
+          {% if items[i] is defined %}
+            <div class="foto-item overflow-hidden cursor-pointer min-h-0" onclick="abrirFotoModal({{ i }})">
+              {{ items[i].content }}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  {# Botão "Ver todas" #}
+  {% if total > 0 %}
+    <button type="button" onclick="abrirFotoModal(0)"
+            class="absolute bottom-4 right-4 bg-white text-gray-900 text-sm font-semibold px-4 py-2 rounded-xl border border-gray-300 hover:bg-gray-50 transition shadow-sm flex items-center gap-2">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
+      </svg>
+      {{ 'Ver todas as fotos'|t }}
+    </button>
+  {% endif %}
+
+</div>
+
+{# ── Modal lightbox ── #}
+<div id="foto-lightbox" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.92);align-items:center;justify-content:center;padding:16px;">
+  <button onclick="fecharFotoModal()"
+          style="position:absolute;top:16px;right:16px;background:none;border:none;cursor:pointer;color:#fff;line-height:1;">
+    <svg style="width:32px;height:32px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+    </svg>
+  </button>
+  <div style="max-width:900px;width:100%;position:relative;">
+    <div id="foto-lightbox-img" style="border-radius:16px;overflow:hidden;"></div>
+    <p id="foto-lightbox-count" style="text-align:center;color:#9ca3af;font-size:14px;margin-top:12px;"></p>
+    {% if total > 1 %}
+      <button onclick="navegarFoto(-1)"
+              style="position:absolute;left:8px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.15);border:none;border-radius:50%;width:40px;height:40px;cursor:pointer;color:#fff;display:flex;align-items:center;justify-content:center;">
+        <svg style="width:20px;height:20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+      <button onclick="navegarFoto(1)"
+              style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.15);border:none;border-radius:50%;width:40px;height:40px;cursor:pointer;color:#fff;display:flex;align-items:center;justify-content:center;">
+        <svg style="width:20px;height:20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </button>
     {% endif %}
-{% endif %}
+  </div>
+</div>
+
+{# ── Dados das fotos para JS ── #}
+<div id="foto-data" style="display:none;">
+  {% for i in 0..(total - 1) %}
+    <div class="foto-src">{{ items[i].content }}</div>
+  {% endfor %}
+</div>
+
+<script>
+(function () {
+  var lightbox = document.getElementById('foto-lightbox');
+  var imgEl    = document.getElementById('foto-lightbox-img');
+  var countEl  = document.getElementById('foto-lightbox-count');
+  var total    = {{ total }};
+  var current  = 0;
+
+  // Adicionar onclick a cada foto
+  document.querySelectorAll('.foto-item').forEach(function (el, idx) {
+    el.addEventListener('click', function () { abrirFotoModal(idx); });
+  });
+
+  window.abrirFotoModal = function (idx) {
+    current = idx;
+    renderFoto();
+    lightbox.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.fecharFotoModal = function () {
+    lightbox.style.display = 'none';
+    document.body.style.overflow = '';
+  };
+
+  window.navegarFoto = function (dir) {
+    current = (current + dir + total) % total;
+    renderFoto();
+  };
+
+  function renderFoto() {
+    var src = document.querySelectorAll('#foto-data .foto-src')[current];
+    imgEl.innerHTML = src ? src.innerHTML : '';
+    var img = imgEl.querySelector('img');
+    if (img) { img.style.width = '100%'; img.style.height = 'auto'; img.style.display = 'block'; }
+    if (countEl) countEl.textContent = total > 1 ? (current + 1) + ' / ' + total : '';
+  }
+
+  // Fechar ao clicar fora
+  lightbox.addEventListener('click', function (e) {
+    if (e.target === lightbox) fecharFotoModal();
+  });
+
+  // Teclado
+  document.addEventListener('keydown', function (e) {
+    if (lightbox.style.display === 'none') return;
+    if (e.key === 'Escape') fecharFotoModal();
+    if (e.key === 'ArrowLeft') navegarFoto(-1);
+    if (e.key === 'ArrowRight') navegarFoto(1);
+  });
+})();
+</script>
+
+<style>
+  .foto-item > *,
+  .foto-item img,
+  .foto-item picture,
+  .foto-item .media,
+  .foto-item .field__item,
+  .foto-item .field { width: 100%; height: 100%; display: block; }
+  .foto-item img { object-fit: cover; }
+</style>

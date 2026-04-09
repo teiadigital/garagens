@@ -179,7 +179,7 @@
         mapaPopupPreco.textContent = preco
           ? `${preco.toLocaleString("pt-PT", { minimumFractionDigits: 2 })} € / ${unidade}`
           : "";
-        mapaPopupLink.href = item.url;
+        mapaPopupLink.href = buildGaragemUrl(item.url);
 
         // Posicionar acima do marker
         const point = map.latLngToContainerPoint(marker.getLatLng());
@@ -685,7 +685,7 @@
           ? `<p class="card-preco"><strong>${preco.toLocaleString("pt-PT", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</strong> / ${unidade}</p>`
           : "";
         return `
-          <a href="${escHtml(item.url)}" class="garagem-card" data-nid="${item.nid}">
+          <a href="${escHtml(buildGaragemUrl(item.url))}" class="garagem-card" data-nid="${item.nid}">
             <div class="garagem-card-img">
               <img src="${escHtml(item.foto)}" alt="${escHtml(item.title)}" loading="lazy">
             </div>
@@ -697,6 +697,15 @@
               <p class="card-localidade">${escHtml(item.locality)}</p>
             </div>
           </a>`;
+      }
+
+      function buildGaragemUrl(baseUrl) {
+        if (!dataInicioVal) return baseUrl;
+        const params = new URLSearchParams();
+        params.set("tipo", tipoInput.value);
+        params.set("data_inicio", dataInicioVal);
+        if (tipoInput.value === "dia" && dataFimVal) params.set("data_fim", dataFimVal);
+        return baseUrl + (baseUrl.includes("?") ? "&" : "?") + params.toString();
       }
 
       function escHtml(str) {

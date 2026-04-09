@@ -6,11 +6,18 @@
 #}
 
 {% set estado_cores = {
-  'draft': 'bg-gray-100 text-gray-500',
-  'pending': 'bg-yellow-100 text-yellow-700',
+  'draft':       'bg-gray-100 text-gray-500',
+  'pending':     'bg-amber-100 text-amber-700',
   'fulfillment': 'bg-blue-100 text-blue-700',
-  'completed': 'bg-green-100 text-green-700',
-  'cancelled': 'bg-red-100 text-red-600',
+  'completed':   'bg-green-100 text-green-700',
+  'cancelled':   'bg-red-100 text-red-600',
+} %}
+{% set estado_acentos = {
+  'draft':       '#d1d5db',
+  'pending':     '#f59e0b',
+  'fulfillment': '#60a5fa',
+  'completed':   '#22c55e',
+  'cancelled':   '#f87171',
 } %}
 
 {% if items is empty %}
@@ -18,42 +25,48 @@
     {{ 'Ainda não tem encomendas.'|t }}
   </div>
 {% else %}
-  <div class="space-y-3">
+  <div class="space-y-2 w-full">
     {% for item in items %}
-      <a href="{{ path('garagem_reservas.encomenda_detalhe', {'order_id': item.id}) }}"
-         class="flex items-center justify-between bg-white border border-gray-200 rounded-xl px-5 py-4 hover:border-gray-400 transition no-underline">
+      <div class="w-full bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-sm hover:border-gray-300 transition-all relative">
+        <a href="{{ path('garagem_reservas.encomenda_detalhe', {'order_id': item.id}) }}" class="absolute inset-0" aria-label="{{ item.garagem }}"></a>
 
-        <div class="flex items-center gap-8">
-          <div>
-            <p class="text-xs text-gray-400 mb-0.5">{{ 'Encomenda'|t }}</p>
-            <p class="font-bold text-gray-900 text-sm">{{ item.numero }}</p>
-          </div>
-          {% if item.garagem %}
-          <div>
-            <p class="text-xs text-gray-400 mb-0.5">{{ 'Garagem'|t }}</p>
-            <p class="font-medium text-gray-900 text-sm">{{ item.garagem }}</p>
-          </div>
-          {% endif %}
-          <div>
-            <p class="text-xs text-gray-400 mb-0.5">{{ 'Date'|t }}</p>
-            <p class="text-sm text-gray-600">{{ item.data }}</p>
+        <div class="flex">
+          {# Acento de cor por estado #}
+          <div class="w-1 flex-shrink-0" style="background:{{ estado_acentos[item.estado] ?? '#e5e7eb' }}"></div>
+
+          <div class="flex-1 px-4 py-3.5">
+            <div class="flex items-center gap-3">
+
+              {# Número da encomenda #}
+              <span class="flex-shrink-0 text-xs font-mono font-bold text-gray-300 hidden sm:block">#{{ item.numero }}</span>
+
+              {# Garagem + data #}
+              <div class="min-w-0 flex-1">
+                <p class="font-semibold text-gray-900 text-sm truncate">{{ item.garagem ?: item.numero }}</p>
+                <p class="text-xs text-gray-400 mt-0.5">
+                  <span class="sm:hidden">#{{ item.numero }} · </span>
+                  {{ item.data }}
+                </p>
+              </div>
+
+              {# Total + badge + seta #}
+              <div class="flex items-center gap-2 flex-shrink-0 ml-auto">
+                <p class="font-semibold text-gray-900 text-sm hidden sm:block">{{ item.total }}</p>
+                <span class="px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wide {{ estado_cores[item.estado] ?? 'bg-gray-100 text-gray-500' }}">
+                  {{ item.estado_label }}
+                </span>
+                <svg class="w-4 h-4 text-gray-300 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+              </div>
+
+            </div>
+
+            {# Total mobile #}
+            <p class="text-xs text-gray-500 mt-1.5 sm:hidden">{{ 'Total'|t }}: <strong class="text-gray-900">{{ item.total }}</strong></p>
           </div>
         </div>
-
-        <div class="flex items-center gap-6">
-          <div class="text-right">
-            <p class="text-xs text-gray-400 mb-0.5">{{ 'Total'|t }}</p>
-            <p class="font-bold text-gray-900 text-sm">{{ item.total }}</p>
-          </div>
-          <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide {{ estado_cores[item.estado] ?? 'bg-gray-100 text-gray-500' }}">
-            {{ item.estado_label }}
-          </span>
-          <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
-        </div>
-
-      </a>
+      </div>
     {% endfor %}
   </div>
 {% endif %}

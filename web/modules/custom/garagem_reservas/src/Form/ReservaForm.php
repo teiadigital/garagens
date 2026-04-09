@@ -63,17 +63,40 @@ class ReservaForm extends FormBase {
       return $form;
     }
 
+    // Ler parâmetros de URL para pré-preenchimento.
+    $request = \Drupal::request();
+    $url_tipo = $request->query->get('tipo', '');
+    $url_data_inicio = $request->query->get('data_inicio', '');
+    $url_data_fim = $request->query->get('data_fim', '');
+
+    // Sanitizar.
+    if (!in_array($url_tipo, array_keys($tipos_ativos))) {
+      $url_tipo = '';
+    }
+    // Datas vêm no formato YYYY-MM-DD da página de pesquisa.
+    if ($url_data_inicio && !preg_match('/^\d{4}-\d{2}-\d{2}$/', $url_data_inicio)) {
+      $url_data_inicio = '';
+    }
+    if ($url_data_fim && !preg_match('/^\d{4}-\d{2}-\d{2}$/', $url_data_fim)) {
+      $url_data_fim = '';
+    }
+
+    $tipo_inicial = $url_tipo ?: array_key_first($tipos_ativos);
+
     $form['#attached']['library'][] = 'garagem_reservas/flatpickr';
     $form['#attached']['drupalSettings']['garagemReservas'] = [
       'disponibilidadeUrl' => '/garagem/' . $node->id() . '/disponibilidade',
       'tiposAtivos' => $tipos_ativos,
       'aceitaRenovacao' => $aceita_renovacao,
+      'defaultTipo' => $url_tipo,
+      'defaultDataInicio' => $url_data_inicio,
+      'defaultDataFim' => $url_data_fim,
     ];
 
     // Campo hidden para guardar o tipo selecionado — botões renderizados via JS.
     $form['tipo_preco'] = [
       '#type' => 'hidden',
-      '#default_value' => array_key_first($tipos_ativos),
+      '#default_value' => $tipo_inicial,
       '#attributes' => ['id' => 'tipo-preco-value'],
     ];
 
@@ -84,7 +107,7 @@ class ReservaForm extends FormBase {
       $botoes[] = [
         'tipo' => $tipo,
         'label' => $labels_tipo[$tipo],
-        'ativo' => $tipo === array_key_first($tipos_ativos),
+        'ativo' => $tipo === $tipo_inicial,
       ];
     }
 
@@ -104,10 +127,23 @@ class ReservaForm extends FormBase {
     ];
 
     // Campo de data — range para dia, single para mês/ano.
+    // Converter YYYY-MM-DD para d/m/Y (formato que flatpickr usa no input).
+    $isoParaDmY = function (string $iso): string {
+      $dt = \DateTime::createFromFormat('Y-m-d', $iso);
+      return $dt ? $dt->format('d/m/Y') : '';
+    };
+    $default_datas = '';
+    if ($url_data_inicio) {
+      $d1 = $isoParaDmY($url_data_inicio);
+      $default_datas = ($tipo_inicial === 'dia' && $url_data_fim)
+        ? $d1 . ' - ' . $isoParaDmY($url_data_fim)
+        : $d1;
+    }
     $form['datas'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Período de reserva'),
       '#required' => FALSE,
+      '#default_value' => $default_datas,
       '#attributes' => [
         'class' => ['garagem-flatpickr-datas'],
         'placeholder' => $this->t('Selecione as datas'),
@@ -121,10 +157,11 @@ class ReservaForm extends FormBase {
       '#markup' => '<div id="garagem-info-periodo" class="text-sm text-gray-600 mt-2"></div>',
     ];
 
-    // Preço calculado.
+    // Preço calculado — aparece no topo (order via JS).
     $form['preco_info'] = [
       '#type' => 'item',
-      '#markup' => '<div id="preco-calculado" class="preco-info mt-2"></div>',
+      '#markup' => '<div id="preco-calculado"></div>',
+      '#weight' => -20,
     ];
 
     // Renovação automática — só aparece para mês/ano e se a garagem aceitar
@@ -150,19 +187,12 @@ class ReservaForm extends FormBase {
       ];
     }
 
-    // Notas.
-    $form['notas'] = [
-      '#type' => 'textarea',
-      '#title' => $this->t('Notas adicionais'),
-      '#required' => FALSE,
-      '#rows' => 3,
-    ];
-
-    $form['actions'] = ['#type' => 'actions'];
+$form['actions'] = ['#type' => 'actions', '#weight' => 90];
     $form['actions']['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Pedir reserva'),
       '#button_type' => 'primary',
+      '#attributes' => ['style' => 'width:100%;'],
     ];
 
     return $form;

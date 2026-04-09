@@ -1,66 +1,58 @@
 {#
 /**
  * @file
- * Theme override to display a view of unformatted rows.
- *
- * Available variables:
- * - title: The title of this group of rows. May be empty.
- * - rows: A list of the view's row items.
- *   - attributes: The row's HTML attributes.
- *   - content: The row's content.
- * - view: The view object.
- * - default_row_class: A flag indicating whether default classes should be
- *   used on rows.
- *
- * @see template_preprocess_views_view_unformatted()
+ * Cards de garagens no perfil — idêntico à pesquisa.
  */
 #}
-{% if title %}
-  <h3>{{ title }}</h3>
+{{ attach_library('garagem_pesquisa/cards') }}
+
+{% if rows %}
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6" style="align-items:start;">
+    {% for key, row in rows %}
+      {% set url        = view.style_plugin.getField(key, 'view_node')|render|striptags|spaceless %}
+      {% set estado     = view.style_plugin.getField(key, 'field_estado')|render|striptags|spaceless %}
+      {% set titulo     = view.style_plugin.getField(key, 'title')|render|striptags|spaceless %}
+      {% set localidade = view.style_plugin.getField(key, 'field_localidade')|render|striptags|spaceless %}
+
+      {% if estado == '-1' %}
+        {% set badge_label = 'Não acabado'|t %}
+        {% set badge_class = 'bg-gray-700 text-white' %}
+      {% elseif estado == '0' %}
+        {% set badge_label = 'Aguardar aprovação'|t %}
+        {% set badge_class = 'bg-blue-600 text-white' %}
+      {% elseif estado == '1' %}
+        {% set badge_label = 'Com erros'|t %}
+        {% set badge_class = 'bg-yellow-500 text-white' %}
+      {% elseif estado == '2' %}
+        {% set badge_label = 'Não aprovado'|t %}
+        {% set badge_class = 'bg-red-600 text-white' %}
+      {% elseif estado == '3' %}
+        {% set badge_label = 'Aprovado'|t %}
+        {% set badge_class = 'bg-green-600 text-white' %}
+      {% else %}
+        {% set badge_label = null %}
+      {% endif %}
+
+      <a href="{{ url }}" class="garagem-card">
+        <div class="garagem-card-img">
+          {{ view.style_plugin.getField(key, 'field_fotos') }}
+          {% if badge_label %}
+            <span class="absolute top-2.5 left-2.5 {{ badge_class }} text-xs font-semibold px-2.5 py-1 rounded-full z-10">
+              {{ badge_label }}
+            </span>
+          {% endif %}
+        </div>
+        <div class="card-info">
+          <div class="card-info-top">
+            <p class="card-titulo">{{ titulo }}</p>
+          </div>
+          <p class="card-localidade">{{ localidade }}</p>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="text-center py-16 text-gray-400">
+    <p class="text-sm">{{ 'Ainda não tens garagens.'|t }}</p>
+  </div>
 {% endif %}
-
-<div class="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4 items-center flex-wrap no-underline mt-8">
-  {% for key,row in rows %}
-  {%
-  set row_classes = [
-  default_row_class ? 'views-row col-span-12 md:col-span-1 w-full h-40 sm:h-64 bg-no-repeat bg-center text-white
-  text-lg font-bold p-4 flex items-center justify-center relative no-underline bg-cover relative pt-8',
-  ]
-  %}
-
-
-
-
-  <a {{ row.attributes.addClass(row_classes) }}
-    href="{{ view.style_plugin.getField(key, 'view_node')|render|striptags|spaceless }}">
-
-    <div class="image-full-custom absolute block w-full h-full top-0 left-0 object-cover object-center">
-      {{view.style_plugin.getField(key, 'field_fotos')}}
-    </div>
-
-    <div class="bg-black bg-opacity-60 absolute top-0 left-0 h-full w-full mix-blend-multiply"></div>
-
-    {% if view.style_plugin.getField(key, 'field_estado')|render|striptags|spaceless == "-1" %}
-    
-      <div div class="absolute top-0 left-0 w-full nao-acabado z-40 text-center">{{'Unfinished'|t }}</div>
-    
-    
-    {% elseif view.style_plugin.getField(key, 'field_estado')|render|striptags|spaceless == "1" %}
-    
-      <div class="absolute top-0 left-0 w-full com-erros z-40 text-center">{{ 'Garage with errors'|t }}</div>
-    
-    {% elseif view.style_plugin.getField(key, 'field_estado')|render|striptags|spaceless == "2" %}
-    
-      <div class="absolute top-0 left-0 w-full nao-aprovado z-40 text-center">{{ 'Not Approved'|t }}</div>
-    
-    {% endif %}
-
-    <div class="relative text-center">
-      {{ view.style_plugin.getField(key, 'title') }}
-    </div>
-  </a>
-
-  {% endfor %}
-
-</div>
-

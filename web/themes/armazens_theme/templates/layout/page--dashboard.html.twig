@@ -1,0 +1,171 @@
+{#
+/**
+ * @file
+ * Layout partilhado para todas as páginas de dashboard.
+ * Sidebar esquerda com nav + conteúdo à direita.
+ */
+#}
+{% set uid = logged_in ? user.id() : null %}
+{% set current_path = app.request.pathinfo %}
+
+{% set nav_items = [
+  {
+    'label': 'O meu perfil'|t,
+    'url': uid ? path('entity.user.canonical', {'user': uid}) : '/',
+    'route': 'entity.user.canonical',
+  },
+  {
+    'label': 'As minhas reservas'|t,
+    'url': path('garagem_reservas.lista_user'),
+    'route': 'garagem_reservas.lista_user',
+  },
+  {
+    'label': 'Encomendas'|t,
+    'url': path('garagem_reservas.encomendas_lista'),
+    'route': 'garagem_reservas.encomendas_lista',
+  },
+  {
+    'label': 'Notificações'|t,
+    'url': path('garagem_reservas.notificacoes'),
+    'route': 'garagem_reservas.notificacoes',
+  },
+  {
+    'label': 'Editar perfil'|t,
+    'url': uid ? path('entity.user.edit_form', {'user': uid}) : '/',
+    'route': 'entity.user.edit_form',
+  },
+] %}
+
+{# ── Header ───────────────────────────────── #}
+<header id="site-header" role="banner" class="fixed top-4 md:top-10 left-0 w-full z-50 transition-all duration-300">
+  <div class="container px-4 md:px-10">
+    <nav class="flex items-center justify-between" aria-label="Global">
+      <div class="change-logo-color">
+        {{ page.header.armazens_theme_imagemdemarcadositio }}
+      </div>
+      <div class="flex items-center gap-2 sm:gap-3">
+        {{ page.header.armazens_theme_notificacoesdereservas }}
+        {{ page.header.armazens_theme_seletordeidioma }}
+        {{ page.header.armazens_theme_usermenuavatardropdown }}
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+(function () {
+  var header = document.getElementById('site-header');
+  if (!header) return;
+  function onScroll() {
+    if (window.scrollY > 40) {
+      header.style.top = '0';
+      header.style.background = '#fff';
+      header.style.boxShadow = '0 1px 8px rgba(0,0,0,0.07)';
+      header.style.paddingTop = '12px';
+      header.style.paddingBottom = '12px';
+    } else {
+      header.style.top = '';
+      header.style.background = '';
+      header.style.boxShadow = '';
+      header.style.paddingTop = '';
+      header.style.paddingBottom = '';
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+
+{# ── Layout dashboard ─────────────────────── #}
+<main role="main" class="min-h-screen">
+  <a id="main-content" tabindex="-1"></a>
+
+  <div class="container px-4 md:px-10 pt-28 md:pt-36 lg:pt-44 pb-16">
+    <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
+
+      {# ── Sidebar ───────────────────────────── #}
+      <aside class="lg:w-64 flex-shrink-0">
+        <div class="bg-white border border-gray-100 rounded-2xl p-4 lg:p-6 lg:sticky lg:top-24">
+
+          {# Avatar — só desktop #}
+          {% if uid %}
+            <div class="hidden lg:flex flex-col items-center text-center mb-6 pb-6 border-b border-gray-100">
+              <div class="w-16 h-16 rounded-full bg-gray-900 flex items-center justify-center text-white text-2xl font-bold mb-3">
+                {{ user.getDisplayName()|slice(0,1)|upper }}
+              </div>
+              <h2 class="font-semibold text-gray-900 text-sm">{{ user.getDisplayName() }}</h2>
+              <p class="text-xs text-gray-400 mt-0.5">{{ user.getEmail() }}</p>
+            </div>
+          {% endif %}
+
+          {# Macro para ícones dos nav items #}
+          {% macro nav_icon(route) %}
+            {% if route == 'entity.user.canonical' %}
+              <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+            {% elseif route == 'garagem_reservas.lista_user' %}
+              <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            {% elseif route == 'garagem_reservas.encomendas_lista' %}
+              <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+            {% elseif route == 'garagem_reservas.notificacoes' %}
+              <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+            {% elseif route == 'entity.user.edit_form' %}
+              <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+            {% endif %}
+          {% endmacro %}
+
+          {# Nav mobile: grid 2 colunas compacto #}
+          <nav class="grid grid-cols-2 gap-1 lg:hidden">
+            {% for item in nav_items %}
+              <a href="{{ item.url }}"
+                 class="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors
+                        {{ route_name == item.route ? 'bg-gray-900 text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
+                {{ _self.nav_icon(item.route) }}
+                <span class="truncate">{{ item.label }}</span>
+              </a>
+            {% endfor %}
+            <a href="{{ path('node.add', {'node_type': 'armazem'}) }}"
+               class="col-span-2 flex items-center justify-center gap-2 mt-1 px-3 py-2.5 rounded-xl text-sm font-bold bg-gray-900 text-white hover:bg-gray-700 transition-colors">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+              {{ 'Adicionar garagem'|t }}
+            </a>
+          </nav>
+
+          {# Nav desktop: lista vertical #}
+          <nav class="hidden lg:block space-y-1">
+            {% for item in nav_items %}
+              <a href="{{ item.url }}"
+                 class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors
+                        {{ route_name == item.route ? 'bg-gray-900 text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
+                {{ _self.nav_icon(item.route) }}
+                {{ item.label }}
+              </a>
+            {% endfor %}
+          </nav>
+
+          <div class="hidden lg:block mt-6 pt-6 border-t border-gray-100">
+            <a href="{{ path('node.add', {'node_type': 'armazem'}) }}"
+               class="flex items-center justify-center gap-2 w-full bg-gray-900 text-white text-sm font-bold uppercase tracking-wider py-2.5 px-4 rounded-full hover:bg-gray-700 transition-colors">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+              </svg>
+              {{ 'Adicionar garagem'|t }}
+            </a>
+          </div>
+
+        </div>
+      </aside>
+
+      {# ── Conteúdo ─────────────────────────── #}
+      <div class="flex-1 min-w-0">
+        {{ page.content }}
+      </div>
+
+    </div>
+  </div>
+</main>
+
+{% if page.footer %}
+  <footer role="contentinfo">
+    {{ page.footer }}
+  </footer>
+{% endif %}

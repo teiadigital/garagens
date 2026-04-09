@@ -23,16 +23,24 @@
       let picker = null;
       let tipoAtual = tipoPrecHidden ? tipoPrecHidden.value : 'dia';
 
+      mostrarPlaceholder();
+
+      const defaultTipo = cfg.defaultTipo || '';
+      const defaultDataInicio = cfg.defaultDataInicio || '';
+      const defaultDataFim = cfg.defaultDataFim || '';
+
       fetch(disponibilidadeUrl)
         .then(r => r.json())
         .then(data => {
           datasOcupadas = data.datas || data;
           iniciarPicker();
           atualizarModo(tipoAtual);
+          preencherDatas();
         })
         .catch(() => {
           iniciarPicker();
           atualizarModo(tipoAtual);
+          preencherDatas();
         });
 
       function getDatasDesativadas() {
@@ -40,7 +48,6 @@
           if (reserva.renovacao_automatica) {
             return { from: new Date(parseInt(reserva.inicio) * 1000), to: new Date(9999, 0, 1) };
           }
-          // O dia de fim é exclusivo — subtrair 1ms para não bloquear esse dia.
           const fimMs = parseInt(reserva.fim) * 1000 - 1;
           return {
             from: new Date(parseInt(reserva.inicio) * 1000),
@@ -81,20 +88,17 @@
                 const preco = (tiposAtivos['dia'] || 0) * dias;
                 mostrarInfo(dias + ' ' + Drupal.t('dia(s)'), preco);
               } else {
-                limparInfo();
+                mostrarPlaceholder();
               }
             } else if (selectedDates.length === 1) {
               const inicio = selectedDates[0];
               const fim = calcularFim(inicio, tipoAtual);
 
-              // Verificar se o período calculado colide com datas ocupadas.
               const desativadas = getDatasDesativadas();
-              const inicioMs = inicio.getTime();
-              const fimMs = fim.getTime();
               const colide = desativadas.some(range => {
                 const fromMs = range.from.getTime();
                 const toMs = range.to ? range.to.getTime() : Infinity;
-                return fromMs < fimMs && toMs > inicioMs;
+                return fromMs < fim.getTime() && toMs > inicio.getTime();
               });
 
               if (colide) {
@@ -103,7 +107,7 @@
                     + Drupal.t('Este período inclui datas já reservadas. Escolha outra data de início.')
                     + '</span>';
                 }
-                if (precoInfo) precoInfo.innerHTML = '';
+                mostrarPlaceholder();
                 this.clear();
                 esconderRenovacao();
                 return;
@@ -128,8 +132,25 @@
         datasInput.placeholder = tipo === 'dia'
           ? Drupal.t('Selecione as datas de início e fim')
           : Drupal.t('Selecione a data de início');
-        limparInfo();
+        mostrarPlaceholder();
         esconderRenovacao();
+      }
+
+      function preencherDatas() {
+        if (!defaultDataInicio) return;
+        const parseDate = (str) => {
+          const parts = str.split('-');
+          if (parts.length !== 3) return null;
+          return new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+        };
+        const d1 = parseDate(defaultDataInicio);
+        const d2 = defaultDataFim ? parseDate(defaultDataFim) : null;
+        if (!d1 || isNaN(d1)) return;
+        if (picker.config.mode === 'range' && d2 && !isNaN(d2)) {
+          picker.setDate([d1, d2], true);
+        } else {
+          picker.setDate(d1, true);
+        }
       }
 
       function calcularFim(inicio, tipo) {
@@ -139,26 +160,34 @@
         } else {
           const diaInicio = inicio.getDate();
           fim.setMonth(fim.getMonth() + 1);
-          // Se houve overflow (ex: 31 maio → 1 julho), recuar para último dia do mês correto.
           if (fim.getDate() !== diaInicio) {
-            fim.setDate(0); // último dia do mês anterior
+            fim.setDate(0);
           }
         }
         return fim;
       }
 
-      function mostrarInfo(duracao, preco) {
-        if (infoPeriodo) {
-          infoPeriodo.innerHTML = '<span class="text-sm text-gray-600">' + duracao + '</span>';
-        }
-        if (precoInfo) {
-          precoInfo.innerHTML = '<span class="text-sm font-medium">' + parseFloat(preco).toFixed(2) + '€</span>';
-        }
+      function mostrarPlaceholder() {
+        if (infoPeriodo) infoPeriodo.innerHTML = '';
+        if (precoInfo) precoInfo.innerHTML =
+          '<p style="font-size:13px;color:#9ca3af;margin-bottom:12px;">' +
+            Drupal.t('Selecione as datas para ver o total') +
+          '</p>';
       }
 
-      function limparInfo() {
-        if (infoPeriodo) infoPeriodo.innerHTML = '';
-        if (precoInfo) precoInfo.innerHTML = '';
+      function mostrarInfo(duracao, preco) {
+        if (infoPeriodo) {
+          infoPeriodo.innerHTML = '<div style="font-size:12px;color:#6b7280;margin-top:2px;">' + duracao + '</div>';
+        }
+        if (precoInfo) {
+          precoInfo.innerHTML =
+            '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;">' +
+              '<span style="font-size:15px;font-weight:600;color:#111827;">' + Drupal.t('Total') + '</span>' +
+              '<span style="font-size:26px;font-weight:700;color:#111827;">' +
+                parseFloat(preco).toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €' +
+              '</span>' +
+            '</div>';
+        }
       }
 
       function verificarRenovacao(dataInicio) {
@@ -167,15 +196,8 @@
           return;
         }
         const inicioTs = dataInicio.getTime() / 1000;
-
-        // Esconder se já existe uma reserva com renovação automática.
         const temRenovacaoExistente = datasOcupadas.some(r => r.renovacao_automatica);
-
-        // Esconder se existem reservas normais futuras depois da data selecionada.
-        const temFuturas = datasOcupadas.some(r => {
-          return !r.renovacao_automatica && parseInt(r.inicio) > inicioTs;
-        });
-
+        const temFuturas = datasOcupadas.some(r => !r.renovacao_automatica && parseInt(r.inicio) > inicioTs);
         if (temRenovacaoExistente || temFuturas) {
           esconderRenovacao();
         } else {
@@ -204,6 +226,8 @@
       const estiloInativo = estiloBase + 'border-color:#e5e7eb;background:transparent;color:#374151;';
 
       tipoPrecoBotoes.forEach(btn => {
+        const tipoInicial = tipoPrecHidden ? tipoPrecHidden.value : 'dia';
+        btn.setAttribute('style', btn.dataset.tipo === tipoInicial ? estiloAtivo : estiloInativo);
         btn.addEventListener('click', function() {
           tipoPrecoBotoes.forEach(b => b.setAttribute('style', estiloInativo));
           this.setAttribute('style', estiloAtivo);
@@ -212,11 +236,10 @@
         });
       });
 
-      // Renovação automática.
       if (renovacaoCheckbox) {
         renovacaoCheckbox.addEventListener('change', function() {
           if (this.checked && precoInfo) {
-            precoInfo.innerHTML += '<div class="text-xs text-gray-500 mt-1">' +
+            precoInfo.innerHTML += '<div style="font-size:11px;color:#6b7280;margin-top:4px;">' +
               Drupal.t('Renova automaticamente.') + '</div>';
           }
         });

@@ -1,0 +1,129 @@
+{#
+/**
+ * Card lateral da garagem — proprietário / gestor.
+ *
+ * Variables:
+ * - estado: { label, class } or NULL
+ * - urls: { edit, reservas, disponibilidade, approve, errors, reject }
+ * - is_owner: bool
+ * - is_gestor: bool
+ */
+#}
+{% set btn_base = 'block w-full text-center text-sm font-bold uppercase tracking-wider py-3 px-6 rounded-full transition-all bg-gray-900 text-white hover:bg-gray-700' %}
+
+{# Estado no topo, centrado #}
+{% if estado %}
+  <div class="flex justify-center mb-5">
+    <span class="{{ estado.class }} text-xs font-bold uppercase tracking-widest py-1.5 px-5 rounded-full">
+      {{ estado.label }}
+    </span>
+  </div>
+{% endif %}
+
+<div class="space-y-2">
+
+  {# Proprietário #}
+  {% if urls.reservas %}
+    <a href="{{ urls.reservas }}" class="{{ btn_base }}">{{ 'Ver reservas'|t }}</a>
+  {% endif %}
+
+  {% if urls.disponibilidade %}
+    <a href="{{ urls.disponibilidade }}" class="{{ btn_base }}">{{ 'Gerir disponibilidade'|t }}</a>
+  {% endif %}
+
+  {# Editar (proprietário + gestor) #}
+  {% if urls.edit %}
+    <a href="{{ urls.edit }}" class="{{ btn_base }}">{{ 'Editar'|t }}</a>
+  {% endif %}
+
+  {# Ações de gestor #}
+  {% if urls.approve %}
+    <a href="{{ urls.approve }}" class="{{ btn_base }} bg-green-600 hover:bg-green-700">{{ 'Aprovar'|t }}</a>
+  {% endif %}
+
+  {% if urls.errors %}
+    <button type="button" onclick="abrirModalErros()" class="{{ btn_base }} bg-yellow-500 hover:bg-yellow-600">
+      {{ 'Com erros'|t }}
+    </button>
+
+  {% endif %}
+
+  {% if urls.reject %}
+    <button type="button" onclick="abrirModalRejeitar()" class="{{ btn_base }} bg-red-600 hover:bg-red-700">
+      {{ 'Rejeitar'|t }}
+    </button>
+  {% endif %}
+
+  {# Reservar (gestor) #}
+  {% if urls.reservar %}
+    <a href="{{ urls.reservar }}" class="{{ btn_base }}">{{ 'Reservar'|t }}</a>
+  {% endif %}
+
+</div>
+
+{# Modais #}
+{% if urls.errors %}
+<div id="modal-erros" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
+  <div class="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 p-6">
+    <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ 'Descrever erros'|t }}</h3>
+    <textarea id="descricao-erros" rows="4" placeholder="{{ 'Descrição dos erros'|t }}"
+              class="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 mb-4 resize-none focus:outline-none focus:ring-1 focus:ring-gray-400"></textarea>
+    <div class="flex justify-end gap-3">
+      <button type="button" onclick="fecharModalErros()"
+              class="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-200 rounded-full hover:bg-gray-50 transition">
+        {{ 'Cancelar'|t }}
+      </button>
+      <button type="button" onclick="confirmarErros('{{ urls.errors }}')"
+              class="px-4 py-2 text-sm font-bold text-white bg-yellow-500 rounded-full hover:bg-yellow-600 transition">
+        {{ 'Confirmar'|t }}
+      </button>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% if urls.reject %}
+<div id="modal-rejeitar" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
+  <div class="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 p-6">
+    <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ 'Rejeitar garagem'|t }}</h3>
+    <textarea id="motivo-rejeitar" rows="4" placeholder="{{ 'Motivo da rejeição'|t }}"
+              class="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 mb-4 resize-none focus:outline-none focus:ring-1 focus:ring-gray-400"></textarea>
+    <div class="flex justify-end gap-3">
+      <button type="button" onclick="fecharModalRejeitar()"
+              class="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-200 rounded-full hover:bg-gray-50 transition">
+        {{ 'Cancelar'|t }}
+      </button>
+      <button type="button" onclick="confirmarRejeitar('{{ urls.reject }}')"
+              class="px-4 py-2 text-sm font-bold text-white bg-red-600 rounded-full hover:bg-red-700 transition">
+        {{ 'Confirmar'|t }}
+      </button>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<script>
+(function () {
+  function modal(id) { return document.getElementById(id); }
+  function abrir(id) { const m = modal(id); if (m) { m.classList.remove('hidden'); m.classList.add('flex'); } }
+  function fechar(id) { const m = modal(id); if (m) { m.classList.add('hidden'); m.classList.remove('flex'); } }
+
+  window.abrirModalErros    = () => abrir('modal-erros');
+  window.fecharModalErros   = () => fechar('modal-erros');
+  window.abrirModalRejeitar = () => abrir('modal-rejeitar');
+  window.fecharModalRejeitar= () => fechar('modal-rejeitar');
+
+  ['modal-erros', 'modal-rejeitar'].forEach(id => {
+    modal(id)?.addEventListener('click', e => { if (e.target === modal(id)) fechar(id); });
+  });
+
+  window.confirmarErros = (url) => {
+    const v = document.getElementById('descricao-erros')?.value.trim();
+    window.location.href = v ? url + '?descricao=' + encodeURIComponent(v) : url;
+  };
+  window.confirmarRejeitar = (url) => {
+    const v = document.getElementById('motivo-rejeitar')?.value.trim();
+    window.location.href = v ? url + '?motivo=' + encodeURIComponent(v) : url;
+  };
+})();
+</script>

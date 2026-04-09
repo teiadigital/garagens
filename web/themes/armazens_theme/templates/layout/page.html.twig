@@ -3,112 +3,62 @@
  * @file
  * Theme override to display a single page.
  *
- * Available variables:
- * - logged_in: TRUE if the user is logged in.
- * - is_auth_page: TRUE for login, register, and password routes (set in preprocess).
- * - show_go_back: TRUE when viewing an armazem node (set in preprocess).
- * - content_col_class: xl column span for main content (set in preprocess).
- * - sidebar_right_col_class: xl column span for right sidebar (set in preprocess).
- *
  * @see template_preprocess_page()
  * @see armazens_theme_preprocess_page()
  */
 #}
 
-{# --- Layout variables --- #}
-{% set outer_class = logged_in ? 'container-big' : 'container' %}
-
-{% set content_class = [
-  'pb-16',
-  'col-span-full',
-  page.sidebar_menu ? 'sm:px-4 md:px-14' : '',
-  (page.sidebar_menu and page.sidebar_right) ? content_col_class : '',
-  is_auth_page ? 'pt-52' : 'pt-36',
-]|join(' ') %}
-
-{% set sidebar_right_class = [
-  'col-span-full',
-  'xl:sticky top-0 xl:h-screen xl:bg-blue-dark',
-  'pt-10 pb-10 xl:pt-40 xl:pb-0',
-  'pl-4 pr-4 md:pl-14 md:pr-14 xl:pr-0',
-  sidebar_right_col_class,
-]|join(' ') %}
-
-{# --- Page wrapper --- #}
-<div class="relative layout-container bg-no-repeat bg-right-top{% if logged_in %} bg-gray-light user-logged-in{% endif %}{% if is_auth_page %} lg:bg-[url('/themes/armazens_theme/images/bg_small.png')]{% endif %}">
-
-  {% if page.sidebar_right %}
-    <div class="xl:absolute xl:top-0 xl:right-0 xl:w-1/2 xl:h-full xl:bg-blue-dark" aria-hidden="true"></div>
-  {% endif %}
-
-  <div class="{{ outer_class }} relative px-4 sm:px-0">
-
-    {# --- Header --- #}
-    <header role="banner" class="fixed top-0 left-0 w-full z-50">
-      <div class="{{ outer_class }} change-logo-color">
-        <nav class="py-8 {{ logged_in ? 'px-5' : 'px-4 sm:px-0' }}" aria-label="Global">
-          <div class="flex justify-end items-center gap-x-5">
-
-            {% if page.sidebar_menu %}
-              <div class="mr-auto flex gap-4 items-center">
-                <div class="block">{{ page.header.armazens_theme_imagemdemarcadositio }}</div>
-                <button data-drawer-target="sidebar-menu" data-drawer-toggle="sidebar-menu" aria-controls="sidebar-menu"
-                  type="button" class="inline-flex items-center text-sm text-gray-500 rounded-lg sm:hidden relative z-10">
-                  <span class="sr-only">Open sidebar</span>
-                  <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
-                  </svg>
-                </button>
-              </div>
-            {% else %}
-              <div class="mr-auto">{{ page.header.armazens_theme_imagemdemarcadositio }}</div>
-            {% endif %}
-
-            {{ page.header.armazens_theme_notificacoesdereservas }}
-            {{ page.header.armazens_theme_seletordeidioma }}
-            {{ page.header.armazens_theme_usermenuavatardropdown }}
-
-          </div>
-        </nav>
+{# ── Header ───────────────────────────────── #}
+<header id="site-header" role="banner" class="fixed top-4 md:top-10 left-0 w-full z-50 transition-all duration-300">
+  <div class="container px-4 md:px-10">
+    <nav class="flex items-center justify-between" aria-label="Global">
+      <div class="change-logo-color">
+        {{ page.header.armazens_theme_imagemdemarcadositio }}
       </div>
-    </header>
-
-    {# --- Main --- #}
-    <main role="main" class="min-h-screen flex w-full{% if logged_in %} bg-gray-light{% endif %}">
-      <a id="main-content" tabindex="-1"></a>
-
-      {% if page.sidebar_menu %}
-        <aside id="sidebar-menu"
-          class="fixed sm:sticky top-0 left-0 z-40 w-28 sm:w-24 h-screen transition-transform -translate-x-full sm:translate-x-0 bg-white py-14"
-          aria-label="Sidebar" role="complementary">
-          {{ page.sidebar_menu }}
-        </aside>
-      {% endif %}
-
-      <div class="grid grid-cols-12 flex-1">
-
-        {# --- Content --- #}
-        <div class="{{ content_class }}">
-
-          {% if show_go_back %}
-            <input class="mb-8 cursor-pointer text-sm uppercase bg-black block rounded-full py-3 px-6 font-bold text-white hover:bg-white border-2 hover:text-black border-black transition-all" onclick="window.history.go(-1); return false;" type="submit" value="{{ 'Go back'|t }}" />
-          {% endif %}
-
-          {{ page.title }}
-          {{ page.content }}
-
-        </div>
-
-        {# --- Right sidebar --- #}
-        {% if page.sidebar_right %}
-          <div class="{{ sidebar_right_class }}">
-            {{ page.sidebar_right }}
-          </div>
-        {% endif %}
-
+      <div class="flex items-center gap-2 sm:gap-3">
+        {{ page.header.armazens_theme_notificacoesdereservas }}
+        {{ page.header.armazens_theme_seletordeidioma }}
+        {{ page.header.armazens_theme_usermenuavatardropdown }}
       </div>
-    </main>
-
+    </nav>
   </div>
+</header>
 
-</div>{# /.layout-container #}
+<script>
+  (function () {
+    var header = document.getElementById('site-header');
+    if (!header) return;
+    function onScroll() {
+      if (window.scrollY > 40) {
+        header.style.top = '0';
+        header.style.background = '#fff';
+        header.style.boxShadow = '0 1px 8px rgba(0,0,0,0.07)';
+        header.style.paddingTop = '12px';
+        header.style.paddingBottom = '12px';
+      } else {
+        header.style.top = '';
+        header.style.background = '';
+        header.style.boxShadow = '';
+        header.style.paddingTop = '';
+        header.style.paddingBottom = '';
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+</script>
+
+{# ── Conteúdo ─────────────────────────────── #}
+<main role="main" class="min-h-screen">
+  <a id="main-content" tabindex="-1"></a>
+  <div class="container px-4 md:px-10 pt-36 md:pt-48 pb-16">
+    {{ page.content }}
+  </div>
+</main>
+
+{# ── Footer — o region--footer.html.twig trata do seu próprio layout #}
+{% if page.footer %}
+  <footer role="contentinfo">
+    {{ page.footer }}
+  </footer>
+{% endif %}

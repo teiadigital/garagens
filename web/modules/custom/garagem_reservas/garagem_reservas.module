@@ -165,6 +165,15 @@ function garagem_reservas_preprocess_page(&$variables) {
 
 function garagem_reservas_theme() {
   return [
+    'garagem_card_lateral' => [
+      'variables' => [
+        'estado'          => NULL,
+        'urls'            => [],
+        'is_owner'        => FALSE,
+        'is_gestor'       => FALSE,
+      ],
+      'template' => 'garagem-card-lateral',
+    ],
     'garagem_reserva_form' => [
       'variables' => [
         'form' => NULL,

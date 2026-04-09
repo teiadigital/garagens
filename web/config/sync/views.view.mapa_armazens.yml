@@ -205,8 +205,8 @@ display:
             options: '{"permanent":false,"direction":"center"}'
           leaflet_popup:
             value: '#rendered_entity'
-            view_mode: teaser
             options: '{"maxWidth":"300","minWidth":"50","autoPan":true}'
+            view_mode: teaser
           leaflet_map: google-roadmap
           height: '400'
           height_unit: px
@@ -260,9 +260,9 @@ display:
             circle_marker_options: '{"radius":100,"color":"red","fillColor":"#f03","fillOpacity":0.5}'
           leaflet_markercluster:
             control: true
-            excluded: '0'
-            options: '{"spiderfyOnMaxZoom":false,"showCoverageOnHover":true,"zoomToBoundsOnClick":true,"removeOutsideVisibleBounds":false,"disableClusteringAtZoom":6}'
             include_path: true
+            options: '{"spiderfyOnMaxZoom":false,"showCoverageOnHover":true,"zoomToBoundsOnClick":true,"removeOutsideVisibleBounds":false,"disableClusteringAtZoom":6}'
+            excluded: '0'
           fullscreen:
             control: true
             options: '{"position":"topleft","pseudoFullscreen":false}'
@@ -279,6 +279,9 @@ display:
               position: topright
               input_size: 20
               providers:
+                googlemaps:
+                  weight: '0'
+                  checked: 0
                 nominatim:
                   weight: '0'
                   checked: 0

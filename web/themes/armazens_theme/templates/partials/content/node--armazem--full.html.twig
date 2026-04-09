@@ -1,281 +1,277 @@
 {#
 /**
  * @file
- * Theme override to display a node.
- *
- * Available variables:
- * - node: The node entity with limited access to object properties and methods.
- *   Only method names starting with "get", "has", or "is" and a few common
- *   methods such as "id", "label", and "bundle" are available. For example:
- *   - node.getCreatedTime() will return the node creation timestamp.
- *   - node.hasField('field_example') returns TRUE if the node bundle includes
- *     field_example. (This does not indicate the presence of a value in this
- *     field.)
- *   - node.isPublished() will return whether the node is published or not.
- *   Calling other methods, such as node.delete(), will result in an exception.
- *   See \Drupal\node\Entity\Node for a full list of public properties and
- *   methods for the node object.
- * - label: (optional) The title of the node.
- * - content: All node items. Use {{ content }} to print them all,
- *   or print a subset such as {{ content.field_example }}. Use
- *   {{ content|without('field_example') }} to temporarily suppress the printing
- *   of a given child element.
- * - author_picture: The node author user entity, rendered using the "compact"
- *   view mode.
- * - metadata: Metadata for this node.
- * - date: (optional) Themed creation date field.
- * - author_name: (optional) Themed author name field.
- * - url: Direct URL of the current node.
- * - display_submitted: Whether submission information should be displayed.
- * - attributes: HTML attributes for the containing element.
- *   The attributes.class element may contain one or more of the following
- *   classes:
- *   - node: The current template type (also known as a "theming hook").
- *   - node--type-[type]: The current node type. For example, if the node is an
- *     "Article" it would result in "node--type-article". Note that the machine
- *     name will often be in a short form of the human readable label.
- *   - node--view-mode-[view_mode]: The View Mode of the node; for example, a
- *     teaser would result in: "node--view-mode-teaser", and
- *     full: "node--view-mode-full".
- *   The following are controlled through the node publishing options.
- *   - node--promoted: Appears on nodes promoted to the front page.
- *   - node--sticky: Appears on nodes ordered above other non-sticky nodes in
- *     teaser listings.
- *   - node--unpublished: Appears on unpublished nodes visible only to site
- *     admins.
- * - title_attributes: Same as attributes, except applied to the main title
- *   tag that appears in the template.
- * - content_attributes: Same as attributes, except applied to the main
- *   content tag that appears in the template.
- * - author_attributes: Same as attributes, except applied to the author of
- *   the node tag that appears in the template.
- * - title_prefix: Additional output populated by modules, intended to be
- *   displayed in front of the main title tag that appears in the template.
- * - title_suffix: Additional output populated by modules, intended to be
- *   displayed after the main title tag that appears in the template.
- * - view_mode: View mode; for example, "teaser" or "full".
- * - teaser: Flag for the teaser state. Will be true if view_mode is 'teaser'.
- * - page: Flag for the full page state. Will be true if view_mode is 'full'.
- * - readmore: Flag for more state. Will be true if the teaser content of the
- *   node cannot hold the main body content.
- * - logged_in: Flag for authenticated user status. Will be true when the
- *   current user is a logged-in member.
- * - is_admin: Flag for admin user status. Will be true when the current user
- *   is an administrator.
- *
- * @see template_preprocess_node()
- *
+ * Template da garagem — estilo Airbnb.
  */
 #}
 {%
   set classes = [
     'node',
     'node--type-' ~ node.bundle|clean_class,
-    node.isPromoted() ? 'node--promoted',
-    node.isSticky() ? 'node--sticky',
     not node.isPublished() ? 'node--unpublished',
     view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
   ]
 %}
 {{ attach_library('armazens_theme/node') }}
-<article{{ attributes.addClass(classes) }}>
 
+<article{{ attributes.addClass(classes) }}>
   {{ title_prefix }}
-  {% if label and not page %}
-    <h2{{ title_attributes }}>
-      <a href="{{ url }}" rel="bookmark">{{ label }}</a>
-    </h2>
-  {% endif %}
   {{ title_suffix }}
 
-  {% if display_submitted %}
-    <footer class="node__meta">
-      {{ author_picture }}
-      <div{{ author_attributes.addClass('node__submitted') }}>
-        {% trans %}Submitted by {{ author_name }} on {{ date }}{% endtrans %}
-        {{ metadata }}
-      </div>
-    </footer>
-  {% endif %}
+  <div{{ content_attributes.addClass('node__content') }}>
 
-    <div{{ content_attributes.addClass('node__content') }}>
+    {# ── Título + localização ───────────────────────────────── #}
+    <div class="mb-6">
+      {% if label %}
+        <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ label }}</h1>
+      {% endif %}
 
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-7 py-12 border-b border-black">
-            <div class="col-span-full xl:col-span-6 2xl:col-span-7">
-
-                {% if 'gestor' in user.getroles(TRUE) or user.id == node.uid.value.0.target_id  %}
-                    {{content.field_localidade}}
-                {% else %}
-
-                <div class="field field--name-field-localidade field--type-address field--label-above">
-                    <div class="field__label">
-                        {{content.field_localidade['#title']}}
-                    </div>
-                    <div class="field__item">
-                        {{ content.field_localidade.0.postal_code['#value'] }} - 
-                        {{content.field_localidade.0.locality['#value']}} -
-                        {{content.field_localidade.0.administrative_area['#value']}}, 
-                        {{content.field_localidade.0.country['#value']}}
-                    </div>
-                    
-                </div>
-                {% endif %}
-
-                {{content.field_descricao}}
-                {{content.field_area_individual}}
-
-                <div class="">
-                    <p class="font-bold text-base tracking-wide mb-2">{{ 'Preços'|t }}</p>
-                
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                
-                        {% if content.field_preco_dia_ativo[0] and content.field_preco_dia[0] %}
-                        <div>
-                            <p class="font-bold text-sm">{{ 'Por dia'|t }}</p>
-                            <p class="text-gray-600">{{ content.field_preco_dia[0] }}€</p>
-                        </div>
-                        {% endif %}
-                
-                        {% if content.field_preco_mes_ativo[0] and content.field_preco_mes[0] %}
-                        <div>
-                            <p class="font-bold text-sm">{{ 'Por mês'|t }}</p>
-                            <p class="text-gray-600">{{ content.field_preco_mes[0] }}€</p>
-                        </div>
-                        {% endif %}
-                
-                        {% if content.field_preco_ano_ativo[0] and content.field_preco_ano[0] %}
-                        <div>
-                            <p class="font-bold text-sm">{{ 'Por ano'|t }}</p>
-                            <p class="text-gray-600">{{ content.field_preco_ano[0] }}€</p>
-                        </div>
-                        {% endif %}
-                    </div>
-                </div>
-                
-            </div>
-            <div class="col-span-full xl:col-span-6 2xl:col-span-5">
-                {{content.field_fotos}}
-            </div>
-        </div>
-
-        <div class="mb-4 mt-10">
-            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab"
-                data-tabs-toggle="#default-tab-content" role="tablist">
-                <li class="me-2" role="presentation">
-                    <button class="tab-btn inline-block p-4 border-b-2 rounded-t-lg" id="informacao-geral-tab"
-                        data-tabs-target="#informacao-geral" type="button" role="tab" aria-controls="informacao-geral"
-                        aria-selected="false">{{ 'General Information'|t }}</button>
-                </li>
-            </ul>
-        </div>
-        
-        <div id="default-tab-content">
-            <div class="hidden p-4" id="informacao-geral" role="tabpanel" aria-labelledby="informacao-geral-tab">
-                
-                <div class="py-10 grid gap-y-5 gap-x-7 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                
-                    <div class="col-span-full md:col-span-1">
-
-                        <div class="relative">
-
-                            {{content.field_espaco}}
-                        </div>
-
-                        <div class="relative">
-                            {{ content.field_piso }}
-                        </div>
-
-                        <div class="relative">
-                            {{ content.field_peso_maximo_piso }}
-                        </div>
-
-                        <div class="relative flex items-start gap-3">
-                            {% if elements['#node'].field_limitacoes_de_acesso.value == 'sim' %} 
-                                {{ content.field_desc_limitacoes_acesso }}
-                            {% else %}
-                                {{ content.field_limitacoes_de_acesso }}
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    <div class="col-span-full md:col-span-1">
-
-                        <div class="relative">
-                            {{ content.field_recursos }}
-                        </div>
-
-                        <div class="relative flex items-start gap-3">
-                            {% if elements['#node'].field_controlo_acesso.value == 'sim' %} 
-                                {{ content.field_desc_controlo_acesso }}
-                            {% else %}
-                                {{ content.field_controlo_acesso }}
-                            {% endif %}
-                        </div>
-
-                        <div class="relative flex items-start gap-3">
-                            {% if elements['#node'].field_limitacoes_horario_acesso.value == 'sim' %} 
-                                {{ content.field_desc_lim_horario_acesso }}
-                            {% else %}
-                                {{ content.field_limitacoes_horario_acesso }}
-                            {% endif %}
-                        </div>
-
-                        <div class="relative flex items-start gap-3">
-                            {% if elements['#node'].field_seguranca.value == 'sim' %} 
-                                {{ content.field_desc_seguranca }}
-                            {% else %}
-                                {{ content.field_seguranca }}
-                            {% endif %}
-                        </div>
-
-                    </div>
-                    
-                    <div class="col-span-full md:col-span-1">
-
-                        <div class="relative flex items-start gap-3">
-                            {% if elements['#node'].field_sistema_detecao_incendios.value == 'sim' %} 
-                                {{ content.field_desc_sistema_det_incendios }}
-                            {% else %}
-                                {{ content.field_sistema_detecao_incendios }}
-                            {% endif %}
-                        </div>
-
-                        <div class="relative flex items-start gap-3">
-                            {{ content.field_licenca_de_utilizacao }}
-                        </div>
-
-                        <div class="relative flex items-start gap-3">
-                            {% if elements['#node'].field_certificados.value == 'sim' %} 
-                                {{ content.field_identifique_os_certificado }}
-                            {% else %}
-                                {{ content.field_certificados }}
-                            {% endif %}
-                        </div>
-
-                        <div class="relative flex items-start gap-3">
-                            {% if elements['#node'].field_seguro.value == 'sim' %} 
-                                {{ content.field_desc_seguros }}
-                            {% else %}
-                                {{ content.field_seguro }}
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {% if ('gestor' in user.getroles(TRUE) ) or ('administrator' in user.getroles(TRUE) ) %}
-
-            {% set uid = node.uid.value.0.target_id %}
-            
-            {{ drupal_view('utilizador', 'block_proprietario_armazem', uid) }}
+      <div class="text-sm text-gray-500">
+        {% if 'gestor' in user.getroles(TRUE) or user.id == node.uid.value.0.target_id %}
+          {{ content.field_localidade }}
+        {% else %}
+          {{ content.field_localidade.0.postal_code['#value'] }} —
+          {{ content.field_localidade.0.locality['#value'] }},
+          {{ content.field_localidade.0.administrative_area['#value'] }}
         {% endif %}
+      </div>
     </div>
+
+    {# ── Galeria de fotos ───────────────────────────────────── #}
+    <div class="mb-10 rounded-2xl overflow-hidden">
+      {{ content.field_fotos }}
+    </div>
+
+    {# ── Layout 2 colunas ──────────────────────────────────── #}
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+
+      {# Coluna esquerda — conteúdo #}
+      <div class="lg:col-span-7 xl:col-span-8">
+
+        {# Descrição #}
+        {% if content.field_descricao[0] %}
+          <div class="border-b border-gray-200 pb-8 mb-8">
+            <h2 class="text-lg font-semibold text-gray-900 mb-3">{{ 'Sobre este espaço'|t }}</h2>
+            <div class="text-gray-600 text-sm leading-relaxed">
+              {{ content.field_descricao }}
+            </div>
+          </div>
+        {% endif %}
+
+        {# Área #}
+        {% if content.field_area_individual[0] %}
+          <div class="border-b border-gray-200 pb-8 mb-8">
+            <div class="flex items-center gap-3 text-sm text-gray-700">
+              <svg class="w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+              </svg>
+              {{ content.field_area_individual }}
+            </div>
+          </div>
+        {% endif %}
+
+        {# Preços #}
+        {% if content.field_preco_dia[0] or content.field_preco_mes[0] or content.field_preco_ano[0] %}
+          <div class="border-b border-gray-200 pb-8 mb-8">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4">{{ 'Preços'|t }}</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {% if content.field_preco_dia_ativo[0] and content.field_preco_dia[0] %}
+                <div class="border border-gray-200 rounded-xl p-4">
+                  <p class="text-xs text-gray-400 uppercase tracking-widest mb-1">{{ 'Por dia'|t }}</p>
+                  <p class="text-xl font-bold text-gray-900">{{ content.field_preco_dia[0] }} €</p>
+                </div>
+              {% endif %}
+              {% if content.field_preco_mes_ativo[0] and content.field_preco_mes[0] %}
+                <div class="border border-gray-200 rounded-xl p-4">
+                  <p class="text-xs text-gray-400 uppercase tracking-widest mb-1">{{ 'Por mês'|t }}</p>
+                  <p class="text-xl font-bold text-gray-900">{{ content.field_preco_mes[0] }} €</p>
+                </div>
+              {% endif %}
+              {% if content.field_preco_ano_ativo[0] and content.field_preco_ano[0] %}
+                <div class="border border-gray-200 rounded-xl p-4">
+                  <p class="text-xs text-gray-400 uppercase tracking-widest mb-1">{{ 'Por ano'|t }}</p>
+                  <p class="text-xl font-bold text-gray-900">{{ content.field_preco_ano[0] }} €</p>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+
+        {# Características do espaço #}
+        <div class="border-b border-gray-200 pb-8 mb-8">
+          <h2 class="text-lg font-semibold text-gray-900 mb-5">{{ 'O que este espaço oferece'|t }}</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
+
+            {% if content.field_espaco[0] %}
+              <div class="flex items-start gap-3 text-sm">
+                <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                </svg>
+                <div>{{ content.field_espaco }}</div>
+              </div>
+            {% endif %}
+
+            {% if content.field_piso[0] %}
+              <div class="flex items-start gap-3 text-sm">
+                <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+                </svg>
+                <div>{{ content.field_piso }}</div>
+              </div>
+            {% endif %}
+
+            {% if content.field_peso_maximo_piso[0] %}
+              <div class="flex items-start gap-3 text-sm">
+                <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/>
+                </svg>
+                <div>{{ content.field_peso_maximo_piso }}</div>
+              </div>
+            {% endif %}
+
+            {% if content.field_recursos[0] %}
+              <div class="flex items-start gap-3 text-sm">
+                <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <div>{{ content.field_recursos }}</div>
+              </div>
+            {% endif %}
+
+            {# Controlo de acesso #}
+            <div class="flex items-start gap-3 text-sm">
+              <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
+              </svg>
+              <div>
+                {% if elements['#node'].field_controlo_acesso.value == 'sim' %}
+                  {{ content.field_desc_controlo_acesso }}
+                {% else %}
+                  {{ content.field_controlo_acesso }}
+                {% endif %}
+              </div>
+            </div>
+
+            {# Limitações de acesso #}
+            <div class="flex items-start gap-3 text-sm">
+              <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/>
+              </svg>
+              <div>
+                {% if elements['#node'].field_limitacoes_de_acesso.value == 'sim' %}
+                  {{ content.field_desc_limitacoes_acesso }}
+                {% else %}
+                  {{ content.field_limitacoes_de_acesso }}
+                {% endif %}
+              </div>
+            </div>
+
+            {# Horário de acesso #}
+            <div class="flex items-start gap-3 text-sm">
+              <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              <div>
+                {% if elements['#node'].field_limitacoes_horario_acesso.value == 'sim' %}
+                  {{ content.field_desc_lim_horario_acesso }}
+                {% else %}
+                  {{ content.field_limitacoes_horario_acesso }}
+                {% endif %}
+              </div>
+            </div>
+
+            {# Segurança #}
+            <div class="flex items-start gap-3 text-sm">
+              <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+              <div>
+                {% if elements['#node'].field_seguranca.value == 'sim' %}
+                  {{ content.field_desc_seguranca }}
+                {% else %}
+                  {{ content.field_seguranca }}
+                {% endif %}
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {# Conformidade legal #}
+        <div class="mb-8">
+          <h2 class="text-lg font-semibold text-gray-900 mb-5">{{ 'Conformidade legal'|t }}</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-sm">
+
+            {% if content.field_licenca_de_utilizacao[0] %}
+              <div class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+                <div>{{ content.field_licenca_de_utilizacao }}</div>
+              </div>
+            {% endif %}
+
+            <div class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+              </svg>
+              <div>
+                {% if elements['#node'].field_certificados.value == 'sim' %}
+                  {{ content.field_identifique_os_certificado }}
+                {% else %}
+                  {{ content.field_certificados }}
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/>
+              </svg>
+              <div>
+                {% if elements['#node'].field_sistema_detecao_incendios.value == 'sim' %}
+                  {{ content.field_desc_sistema_det_incendios }}
+                {% else %}
+                  {{ content.field_sistema_detecao_incendios }}
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+              <div>
+                {% if elements['#node'].field_seguro.value == 'sim' %}
+                  {{ content.field_desc_seguros }}
+                {% else %}
+                  {{ content.field_seguro }}
+                {% endif %}
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>{# fim coluna esquerda #}
+
+      {# Coluna direita — bloco de reserva (sticky) #}
+      <div class="lg:col-span-5 xl:col-span-4">
+        <div style="position: sticky; top: 100px;">
+          {# O ReservarBlock é injetado aqui via o sistema de blocos do Drupal #}
+          {{ drupal_block('garagem_reservas_reservar_block', {'node': node.id}) }}
+        </div>
+      </div>
+
+    </div>{# fim grid 2 colunas #}
+
+    {# Vista do proprietário (só para gestores/admins) #}
+    {% if 'gestor' in user.getroles(TRUE) or 'administrator' in user.getroles(TRUE) %}
+      <div class="mt-12 border-t border-gray-200 pt-10">
+        {% set uid = node.uid.value.0.target_id %}
+        {{ drupal_view('utilizador', 'block_proprietario_armazem', uid) }}
+      </div>
+    {% endif %}
+
+  </div>
 </article>
-
-
-
-
-
-
-

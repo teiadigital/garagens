@@ -36,7 +36,7 @@ final class ActionsArmazensBlock extends BlockBase
       case '0':
         return ['class' => 'aguardar-aprovacao', 'state' => t("Awaiting approval")];
       case '1':
-        return ['class' => 'com-erros',          'state' => t("Warehouse with errors")];
+        return ['class' => 'com-erros',          'state' => t("Garage with errors")];
       case '2':
         return ['class' => 'nao-aprovado',       'state' => t("Not Approved")];
       case '3':
@@ -50,11 +50,18 @@ final class ActionsArmazensBlock extends BlockBase
     if ($route_name !== 'entity.node.canonical') {
       return AccessResult::forbidden()->addCacheContexts(['route']);
     }
+
     $node = \Drupal::routeMatch()->getParameter('node');
-    if ($node instanceof NodeInterface && $node->bundle() === 'armazem') {
-      return AccessResult::allowed()->addCacheContexts(['route']);
+    if (!$node instanceof NodeInterface || $node->bundle() !== 'armazem') {
+      return AccessResult::forbidden()->addCacheContexts(['route']);
     }
-    return AccessResult::forbidden()->addCacheContexts(['route']);
+
+    $is_owner = (int) $node->getOwnerId() === (int) $account->id();
+    $is_gestor = in_array('gestor', $account->getRoles(), TRUE)
+      || in_array('administrator', $account->getRoles(), TRUE);
+
+    return AccessResult::allowedIf($is_owner || $is_gestor)
+      ->addCacheContexts(['route', 'user', 'user.roles']);
   }
 
   public function build()

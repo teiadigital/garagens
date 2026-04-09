@@ -28,6 +28,7 @@ third_party_settings:
       children:
         - field_nome
         - field_nif
+        - field_morada
       label: 'Step 1'
       region: content
       parent_name: ''
@@ -47,12 +48,11 @@ third_party_settings:
         delete_button: ''
         delete_path: ''
     group_step_2:
-      children:
-        - field_morada
+      children: {  }
       label: 'Step 2'
-      region: content
+      region: hidden
       parent_name: ''
-      weight: 1
+      weight: 2
       format_type: steps
       format_settings:
         classes: ''
@@ -72,15 +72,12 @@ third_party_settings:
         - field_telemovel
         - field_telefone
         - account
-        - language
-      label: 'Step 3'
+      label: 'Step 2'
       region: content
       parent_name: ''
-      weight: 2
+      weight: 1
       format_type: steps
       format_settings:
-        classes: ''
-        id: ''
         add_label: ''
         edit_label: ''
         cancel_button: ''
@@ -105,14 +102,14 @@ content:
     third_party_settings: {  }
   field_morada:
     type: address_default
-    weight: 17
+    weight: 3
     region: content
     settings:
       wrapper_type: fieldset
     third_party_settings: {  }
   field_nif:
     type: number
-    weight: 5
+    weight: 2
     region: content
     settings:
       placeholder: ''
@@ -150,11 +147,6 @@ content:
         - PT
       countries: exclude
     third_party_settings: {  }
-  language:
-    weight: 10
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   terms_of_use:
     weight: 10
     region: content
@@ -172,6 +164,7 @@ hidden:
   field_tipo: true
   google_analytics: true
   langcode: true
+  language: true
   path: true
   timezone: true
   translation: true

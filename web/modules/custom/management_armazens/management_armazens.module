@@ -11,7 +11,6 @@ function management_armazens_theme($existing, $type, $theme, $path) {
   $module_path = \Drupal::service('extension.list.module')->getPath('management_armazens');
 
   return [
-    'info_details_user' => ['variables' => ['data' => []]],
     'info_details_user_dashboard' => ['variables' => ['data' => []]],
     'actions_armazens' => [
       'variables' => ['data' => NULL, 'form' => NULL],
@@ -36,27 +35,6 @@ function management_armazens_options_list_alter(array &$options, array $context)
  * Implements hook_form_alter().
  */
 function management_armazens_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  // View exposed filter (mapa).
-  if ($form_id == 'views_exposed_form' && ($form['#id'] ?? '') === 'views-exposed-form-armazens-page-armazens') {
-    $country = $form_state->getUserInput()['field_localidade_country_code'] ?? NULL;
-    $administrative_area = $form_state->getUserInput()['field_localidade_administrative_area'] ?? NULL;
-
-    if ($country && $country !== 'All') {
-      $address = ($administrative_area && $administrative_area !== 'All') ? ($administrative_area . ', ' . $country) : $country;
-      $api_key = '65e051e8653e3622949358ujic3da8d';
-      $url     = "https://geocode.maps.co/search?q=" . urlencode($address) . "&api_key=" . $api_key;
-
-      $json = @file_get_contents($url);
-      $json = $json ? json_decode($json) : NULL;
-
-      if ($json && !empty($json[0])) {
-        $html = '<div style="display: none;" id="cc_map_lon">' . $json[0]->lon . '</div>'
-          . '<div style="display: none;" id="cc_map_lat">' . $json[0]->lat . '</div>';
-        $form['mymarkup'] = ['#markup' => $html];
-      }
-    }
-  }
-
   // Node pedidos.
   if ($form_id == 'node_pedidos_form') {
     if (isset($form['title']['widget'][0]['value']['#default_value']) && $form['title']['widget'][0]['value']['#default_value'] === NULL) {

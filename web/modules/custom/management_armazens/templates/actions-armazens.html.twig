@@ -27,7 +27,7 @@
         <button type="button"
                 onclick="abrirModalErros()"
                 class="text-sm uppercase bg-yellow-500 rounded-full py-2 px-5 font-bold text-white hover:bg-yellow-600 transition-all">
-          {{ 'Warehouse with errors'|t }}
+          {{ 'Garage with errors'|t }}
         </button>
       {% endif %}
 
@@ -50,7 +50,7 @@
 <div id="modal-erros"
      class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
   <div class="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 p-6">
-    <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ 'Warehouse with errors'|t }}</h3>
+    <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ 'Garage with errors'|t }}</h3>
     <textarea id="descricao-erros" rows="4"
               placeholder="{{ 'Error description'|t }}"
               class="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 mb-4 resize-none focus:outline-none focus:ring-1 focus:ring-gray-400"></textarea>
@@ -75,7 +75,7 @@
 <div id="modal-rejeitar"
      class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
   <div class="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 p-6">
-    <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ 'Reject warehouse'|t }}</h3>
+    <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ 'Reject garage'|t }}</h3>
     <textarea id="motivo-rejeitar" rows="4"
               placeholder="{{ 'Reason for disapproval'|t }}"
               class="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 mb-4 resize-none focus:outline-none focus:ring-1 focus:ring-gray-400"></textarea>

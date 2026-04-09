@@ -1,0 +1,12 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for garagem_pesquisa module.
+ */
+
+function garagem_pesquisa_theme($existing, $type, $theme, $path) {
+  return [
+    'garagem_pesquisa' => ['variables' => []],
+  ];
+}

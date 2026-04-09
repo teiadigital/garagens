@@ -4,9 +4,8 @@ namespace Drupal\storitflex_geocode\Drush;
 
 use Drush\Attributes as CLI;
 use Drush\Drush;
-use Drush\Commands\DrushCommands; // Adicione esta linha
+use Drush\Commands\DrushCommands;
 use Drupal\node\Entity\Node;
-use Drupal\geocoder\GeocoderInterface;
 
 class GeocodeCommands extends DrushCommands {
 
@@ -21,79 +20,103 @@ class GeocodeCommands extends DrushCommands {
     $atualizados = 0;
     $coords_map = [];
 
-    // 1. Primeiro passo: calcular as coordenadas base de todos os nodes
+    // 1. Calcular coordenadas base de todos os nodes.
     $nodes = Node::loadMultiple($nids);
     foreach ($nodes as $node) {
-      if ($node->hasField('field_localidade') && $node->hasField('field_geo_coordenadas')) {
-        if (!$node->get('field_localidade')->isEmpty()) {
-          $address = $node->get('field_localidade')->first();
-          $street = $address->address_line1 ?? '';
-          $locality = $address->locality ?? '';
-          $postal_code = $address->postal_code ?? '';
-          $admin_area = $address->administrative_area ?? '';
-          $country_name = $this->getCountryName($address->country_code);
+      if (!$node->hasField('field_localidade') || !$node->hasField('field_geo_coordenadas')) {
+        continue;
+      }
+      if ($node->get('field_localidade')->isEmpty()) {
+        continue;
+      }
 
-          // Monta o endereço mais completo possível
-          $morada = trim("{$postal_code} {$locality}, {$admin_area}, {$country_name}");
+      $address      = $node->get('field_localidade')->first();
+      $postal_code  = trim($address->postal_code ?? '');
+      $locality     = trim($address->locality ?? '');
+      $administrative = trim($address->administrative_area ?? '');
+      $countries    = \Drupal::service('country_manager')->getList();
+      $country_name = (string) ($countries[$address->country_code] ?? $address->country_code);
 
-          $geocoder = \Drupal::service('geocoder');
-          $result = $geocoder->geocode($morada, ['googlemaps']);
+      if (empty($postal_code)) {
+        Drush::output()->writeln("⚠️  Sem código postal: {$node->label()}");
+        continue;
+      }
 
-          if ($result && $result->first() && $result->first()->getCoordinates()) {
-            $coordinates = $result->first()->getCoordinates();
-            $lat = $coordinates->getLatitude();
-            $lng = $coordinates->getLongitude();
-            $key = sprintf('%F,%F', $lat, $lng);
-            $coords_map[$key][] = $node;
-          }
-        }
+      $postal_short = explode('-', $postal_code)[0];
+      $parts  = array_filter([$postal_short, $locality, $administrative, $country_name]);
+      $morada = implode(', ', $parts);
+
+      $geocoder = \Drupal::service('geocoder');
+      $result   = $geocoder->geocode($morada, ['nominatim']);
+
+      if ($result && $result->first() && $result->first()->getCoordinates()) {
+        $coordinates = $result->first()->getCoordinates();
+        $lat = $coordinates->getLatitude();
+        $lng = $coordinates->getLongitude();
+        $key = sprintf('%.6f,%.6f', $lat, $lng);
+        $coords_map[$key][] = $node;
+      }
+      else {
+        Drush::output()->writeln("⚠️  Sem resultado para: {$node->label()} ($morada)");
       }
     }
 
-    // 2. Segundo passo: distribuir os nodes de cada grupo em círculo
+    // 2. Distribuir nodes com a mesma coordenada base em círculo.
     foreach ($coords_map as $key => $nodes_group) {
       $count = count($nodes_group);
 
-      // Ordena os nodes por nid para garantir consistência
-      usort($nodes_group, function($a, $b) {
-        return $a->id() <=> $b->id();
-      });
+      usort($nodes_group, fn($a, $b) => $a->id() <=> $b->id());
 
-      // Extrai as coordenadas base do grupo (atenção à ordem: lng,lat)
-      list($lat, $lng) = explode(',', $key);
-      $lat = floatval($lat);
-      $lng = floatval($lng);
+      [$lat, $lng] = array_map('floatval', explode(',', $key));
 
       foreach ($nodes_group as $i => $node) {
         if ($count > 1) {
-          $angle = 2 * M_PI * $i / $count;
-          $radius = 0.045; // 5km
+          $angle      = 2 * M_PI * $i / $count;
+          $radius     = 0.045; // ~5km
           $lat_offset = $lat + cos($angle) * $radius;
           $lng_offset = $lng + sin($angle) * $radius;
-        } else {
+        }
+        else {
           $lat_offset = $lat;
           $lng_offset = $lng;
         }
 
-        // WKT espera ordem: lng lat
-        $wkt = sprintf('POINT(%F %F)', $lng_offset, $lat_offset);
+        $wkt = 'POINT(' . number_format($lng_offset, 6, '.', '') . ' ' . number_format($lat_offset, 6, '.', '') . ')';
 
-        $node->set('field_geo_coordenadas', [
-          'value' => $wkt,
-        ]);
-        $node->save();
+        // Escreve diretamente na DB para contornar o entity_presave (que re-geocodificaria).
+        $db = \Drupal::database();
+        $vid = $node->getRevisionId();
+
+        foreach (['node__field_geo_coordenadas', 'node_revision__field_geo_coordenadas'] as $table) {
+          $exists = $db->select($table, 't')
+            ->condition('entity_id', $node->id())
+            ->countQuery()->execute()->fetchField();
+
+          if ($exists) {
+            $db->update($table)
+              ->fields(['field_geo_coordenadas_value' => $wkt])
+              ->condition('entity_id', $node->id())
+              ->execute();
+          }
+          else {
+            $db->insert($table)->fields([
+              'bundle'                     => 'armazem',
+              'deleted'                    => 0,
+              'entity_id'                  => $node->id(),
+              'revision_id'                => $vid,
+              'langcode'                   => $node->language()->getId(),
+              'delta'                      => 0,
+              'field_geo_coordenadas_value' => $wkt,
+            ])->execute();
+          }
+        }
+
         \Drupal::entityTypeManager()->getStorage('node')->resetCache([$node->id()]);
         $atualizados++;
-        Drush::output()->writeln("📍 Gravado em {$node->label()}: $wkt");
+        Drush::output()->writeln("📍 {$node->label()}: $wkt");
       }
     }
 
-    Drush::output()->writeln("✅ $atualizados armazéns atualizados com coordenadas.");
-  }
-
-
-  private function getCountryName(string $country_code): string {
-    $countries = \Drupal::service('country_manager')->getList();
-    return $countries[$country_code] ?? $country_code;
+    Drush::output()->writeln("✅ $atualizados armazéns atualizados.");
   }
 }

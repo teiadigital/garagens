@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s \"https://photon.komoot.io/api/?q=porto&limit=5&lang=pt\")",
+      "Bash(curl -s \"https://photon.komoot.io/api/?q=porto&limit=5&lang=en\")",
+      "Bash(curl -s \"https://nominatim.openstreetmap.org/search?q=oliveira+do+hospital&format=json&limit=5&countrycodes=pt&addressdetails=1\" -H \"User-Agent: garagens/1.0\")",
+      "Bash(ddev drush:*)",
+      "Bash(ddev exec:*)",
+      "Bash(vendor/bin/drush cr:*)",
+      "Bash(curl -s \"https://photon.komoot.io/api/?q=oliveira+do+hospital&limit=3&lang=en&lat=39.5&lon=-8.0\")",
+      "Bash(curl -s \"https://photon.komoot.io/api/?q=oliveira&limit=20&lang=en&lat=39.5&lon=-8.0\")",
+      "Bash(python3 -c \"import json,sys; data=json.load\\(sys.stdin\\); [print\\(f['properties'].get\\('name',''\\), '-', f['properties'].get\\('osm_key',''\\), '-', f['properties'].get\\('type',''\\)\\) for f in data['features'] if \\(f['properties'].get\\('countrycode',''\\) or ''\\).lower\\(\\)=='pt']\")",
+      "Bash(curl -s \"https://photon.komoot.io/api/?q=oliveira&limit=20&lang=en\")",
+      "Bash(python3 -c \"import json,sys; data=json.load\\(sys.stdin\\); [print\\(f['properties'].get\\('name',''\\), '-', f['properties'].get\\('osm_key',''\\), '-', f['properties'].get\\('countrycode',''\\)\\) for f in data['features']]\")",
+      "Bash(curl -s \"https://photon.komoot.io/api/?q=oli&limit=10&lang=en&osm_tag=place&osm_tag=boundary\")",
+      "Bash(python3 -c \"import json,sys; data=json.load\\(sys.stdin\\); [print\\(f['properties'].get\\('countrycode',''\\), f['properties'].get\\('name',''\\)\\) for f in data['features']]\")",
+      "Bash(curl -s \"https://photon.komoot.io/api/?q=oliv&limit=50&lang=en&osm_tag=place&osm_tag=boundary\")",
+      "Bash(python3 -c ':*)",
+      "WebSearch",
+      "Bash(curl -s 'https://photon.komoot.io/api/?q=__TRACKED_VAR__&limit=200&lang=en&osm_tag=place&osm_tag=boundary')",
+      "Bash(curl -s \"https://photon.komoot.io/api/?q=olivei&limit=200&lang=en&osm_tag=place&osm_tag=boundary\")"
+    ]
+  }
+}

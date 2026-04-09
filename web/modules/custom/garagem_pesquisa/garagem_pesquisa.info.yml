@@ -1,0 +1,8 @@
+name: 'Garagem Pesquisa'
+type: module
+description: 'Página de pesquisa de garagens com mapa e filtro de disponibilidade.'
+core_version_requirement: ^10
+package: Custom
+dependencies:
+  - drupal:node
+  - garagem_reservas:garagem_reservas

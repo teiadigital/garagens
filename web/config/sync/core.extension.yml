@@ -52,6 +52,7 @@ module:
   file: 0
   filter: 0
   fullcalendar_library: 0
+  garagem_pesquisa: 0
   garagem_reservas: 0
   geocoder: 0
   geocoder_field: 0

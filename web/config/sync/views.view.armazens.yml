@@ -21,7 +21,7 @@ dependencies:
     - user
     - views_infinite_scroll
 id: armazens
-label: Armazens
+label: Garagens
 module: views
 description: ''
 tag: ''
@@ -551,10 +551,11 @@ display:
         - 'config:field.storage.node.field_fotos'
   block_armazens_homepage:
     id: block_armazens_homepage
-    display_title: 'armazéns homepage'
+    display_title: 'garagens homepage'
     display_plugin: block
     position: 1
     display_options:
+      title: ' garagens'
       fields:
         title:
           id: title
@@ -1102,6 +1103,7 @@ display:
       defaults:
         access: false
         query: false
+        title: false
         group_by: false
         fields: false
         sorts: false
@@ -1462,10 +1464,11 @@ display:
         - 'config:field.storage.node.field_fotos'
   page_armazens:
     id: page_armazens
-    display_title: 'Página armazens lista'
+    display_title: 'Página garagens lista'
     display_plugin: page
     position: 4
     display_options:
+      title: ' garagens'
       fields:
         title:
           id: title
@@ -1791,6 +1794,7 @@ display:
             field_identifier: ''
           exposed: false
       defaults:
+        title: false
         use_ajax: false
         pager: false
         group_by: false
@@ -1844,11 +1848,11 @@ display:
         - 'config:field.storage.node.field_fotos'
   page_gestao_armazens:
     id: page_gestao_armazens
-    display_title: 'Armazens Gestor'
+    display_title: 'Garagens Gestor'
     display_plugin: page
     position: 5
     display_options:
-      title: ' Gestão de Armazéns'
+      title: ' Gestão de Garagens'
       fields:
         title:
           id: title
@@ -2619,10 +2623,11 @@ display:
         - 'config:field.storage.user.field_nome'
   page_lista_armazens_user:
     id: page_lista_armazens_user
-    display_title: ' Lista armazéns User'
+    display_title: ' Lista garagens User'
     display_plugin: page
     position: 3
     display_options:
+      title: ' garagens'
       fields:
         title:
           id: title
@@ -3022,6 +3027,7 @@ display:
         groups:
           1: AND
       defaults:
+        title: false
         pager: false
         fields: false
         arguments: false

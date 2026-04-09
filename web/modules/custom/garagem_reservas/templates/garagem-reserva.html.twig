@@ -82,7 +82,7 @@
   {% if reserva.motivo and reserva.estado in ['cancelado', 'rejeitado'] %}
     <div class="border-t border-gray-300 my-6"></div>
     <div class="mb-6">
-      <p class="text-xs font-bold text-gray-900 uppercase tracking-wide mb-1">{{ 'Motivo'|t }}</p>
+      <p class="text-xs font-bold text-gray-900 uppercase tracking-wide mb-1">{{ 'Motivo de cancelamento'|t }}</p>
       <p class="text-gray-700">{{ reserva.motivo }}</p>
     </div>
   {% endif %}

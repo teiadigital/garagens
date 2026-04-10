@@ -1,0 +1,62 @@
+{#
+/**
+ * @file
+ * Reservas pendentes de aceitação no perfil do arrendatário.
+ */
+#}
+
+{% if items is not empty %}
+<div class="mb-8 pb-8 border-b border-gray-100">
+
+  <div class="flex items-center gap-2 mb-4">
+    <div class="w-2 h-2 rounded-full bg-yellow-400"></div>
+    <h2 class="text-lg font-semibold text-gray-900">{{ 'Reservas a aguardar resposta'|t }}</h2>
+    <span class="ml-1 px-2 py-0.5 bg-yellow-100 text-yellow-700 rounded-full text-xs font-bold">{{ items|length }}</span>
+  </div>
+
+  <div class="space-y-2">
+    {% for item in items %}
+      {% set estado_class = item.estado == 'pendente' ? 'bg-yellow-100 text-yellow-700' : 'bg-blue-100 text-blue-700' %}
+      {% set estado_label =
+        item.estado == 'pendente' ? 'Pendente'|t :
+        (item.estado == 'aprovado' ? 'Pagar'|t :
+        'Aguarda pagamento'|t)
+      %}
+
+      <a href="{{ item.url_reserva }}"
+         class="flex items-center gap-4 p-4 bg-white border border-gray-100 rounded-2xl hover:border-yellow-200 hover:shadow-sm transition-all no-underline group">
+
+        {% if item.foto_url %}
+          <img src="{{ item.foto_url }}" alt="{{ item.titulo }}"
+               class="w-14 h-14 rounded-xl object-cover flex-shrink-0">
+        {% else %}
+          <div class="w-14 h-14 rounded-xl bg-gray-100 flex items-center justify-center flex-shrink-0">
+            <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+            </svg>
+          </div>
+        {% endif %}
+
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-semibold text-gray-900 truncate">{{ item.titulo }}</p>
+          {% if item.localidade %}
+            <p class="text-xs text-gray-400 mt-0.5">{{ item.localidade }}</p>
+          {% endif %}
+          <p class="text-xs text-gray-400 mt-1">{{ item.data_inicio }} → {{ item.data_fim }}</p>
+        </div>
+
+        <div class="flex items-center gap-3 flex-shrink-0">
+          <span class="px-2.5 py-1 rounded-full text-xs font-bold {{ estado_class }}">
+            {{ estado_label }}
+          </span>
+          <svg class="w-4 h-4 text-gray-300 group-hover:text-gray-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </div>
+
+      </a>
+    {% endfor %}
+  </div>
+
+</div>
+{% endif %}

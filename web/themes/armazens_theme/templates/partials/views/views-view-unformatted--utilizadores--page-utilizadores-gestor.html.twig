@@ -1,0 +1,67 @@
+{#
+/**
+ * @file
+ * Template de linhas para a gestão de utilizadores.
+ */
+#}
+
+
+<div class="space-y-2">
+  {% for key, row in rows %}
+    {% set entity   = row.content['#row']._entity %}
+    {% set nome     = view.style_plugin.getField(key, 'name')|render|striptags|trim %}
+    {% set email    = view.style_plugin.getField(key, 'init')|render|striptags|trim %}
+    {% set status   = view.style_plugin.getField(key, 'status')|render|striptags|trim|lower %}
+    {% set criado   = view.style_plugin.getField(key, 'created')|render|striptags|trim %}
+    {% set acesso   = view.style_plugin.getField(key, 'access')|render|striptags|trim %}
+    {% set uid      = row.content['#row'].uid %}
+    {% set url      = path('entity.user.canonical', {'user': uid}) %}
+    {% set inicial  = nome|slice(0,1)|upper %}
+
+    {% set status_class = 'ativo' in status or 'active' in status ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500' %}
+
+    <a href="{{ url }}"
+       class="grid grid-cols-12 gap-4 items-center p-4 bg-white border border-gray-100 rounded-2xl hover:border-gray-300 hover:shadow-sm transition-all no-underline group">
+
+      {# Nome + avatar #}
+      <div class="col-span-12 md:col-span-3 flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full bg-gray-900 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+          {{ inicial }}
+        </div>
+        <span class="text-sm font-semibold text-gray-900 truncate">{{ nome }}</span>
+      </div>
+
+      {# Email #}
+      <div class="col-span-8 md:col-span-3">
+        <span class="text-sm text-gray-500 truncate block">{{ email }}</span>
+      </div>
+
+      {# Estado #}
+      <div class="col-span-4 md:col-span-2">
+        <span class="inline-flex px-2.5 py-1 rounded-full text-xs font-bold {{ status_class }}">
+          {{ status|capitalize }}
+        </span>
+      </div>
+
+      {# Datas #}
+      <div class="col-span-11 md:col-span-3 flex flex-col gap-1">
+        <div class="flex items-center gap-1.5">
+          <span class="text-xs text-gray-400 w-24 flex-shrink-0">{{ 'Membro desde'|t }}:</span>
+          <span class="text-xs text-gray-600">{{ criado }}</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="text-xs text-gray-400 w-24 flex-shrink-0">{{ 'Último acesso'|t }}:</span>
+          <span class="text-xs text-gray-600">{{ acesso }}</span>
+        </div>
+      </div>
+
+      {# Seta #}
+      <div class="col-span-1 flex justify-end">
+        <svg class="w-4 h-4 text-gray-300 group-hover:text-gray-500 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </div>
+
+    </a>
+  {% endfor %}
+</div>

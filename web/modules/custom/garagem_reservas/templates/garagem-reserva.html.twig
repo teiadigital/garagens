@@ -6,58 +6,83 @@
 #}
 
 {% set estado_cores = {
-  'pendente': 'bg-yellow-100 text-yellow-800',
-  'aprovado': 'bg-green-100 text-green-700',
+  'pendente':          'bg-yellow-100 text-yellow-800',
+  'aprovado':          'bg-blue-100 text-blue-700',
   'aguarda_pagamento': 'bg-orange-100 text-orange-700',
-  'pago': 'bg-green-100 text-green-700',
-  'rejeitado': 'bg-red-100 text-red-600',
-  'cancelado': 'bg-gray-200 text-gray-500',
-  'expirado': 'bg-gray-200 text-gray-400',
+  'pago':              'bg-green-100 text-green-700',
+  'rejeitado':         'bg-red-100 text-red-600',
+  'cancelado':         'bg-gray-100 text-gray-500',
+  'expirado':          'bg-gray-100 text-gray-400',
+} %}
+
+{% set estado_labels = {
+  'pendente':          'Pendente'|t,
+  'aprovado':          'Aprovado'|t,
+  'aguarda_pagamento': 'Aguarda pagamento'|t,
+  'pago':              'Pago'|t,
+  'rejeitado':         'Rejeitado'|t,
+  'cancelado':         'Cancelado'|t,
+  'expirado':          'Expirado'|t,
 } %}
 
 <div class="w-full">
 
-  {# Cabeçalho #}
-  <div class="flex items-center justify-between mb-8">
-    <h2 class="text-2xl font-bold text-gray-900">{{ 'Reserva #'|t }}{{ reserva.id }}</h2>
+  {# ── Título + estado ──────────────────────────────── #}
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-bold text-gray-900">{{ 'Reserva'|t }} <span class="font-mono">#{{ reserva.id }}</span></h1>
     <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide {{ estado_cores[reserva.estado] ?? 'bg-gray-100 text-gray-500' }}">
-      {{ reserva.estado }}
+      {{ estado_labels[reserva.estado] ?? reserva.estado }}
     </span>
   </div>
 
-  {# Garagem #}
-  <div class="mb-6">
-    <p class="text-xs font-bold text-gray-900 uppercase tracking-wide mb-1">{{ 'garagem'|t }}</p>
-    <p class="text-gray-700">{{ garagem.title.value }}</p>
-  </div>
-
-  <div class="border-t border-gray-300 my-6"></div>
-
-  {# Período #}
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-    <div>
-      <p class="text-xs font-bold text-gray-900 uppercase tracking-wide mb-1">{{ 'início'|t }}</p>
-      <p class="text-gray-700">{{ reserva.data_inicio|date('d/m/Y') }}</p>
+  {# ── Card da garagem ──────────────────────────────── #}
+  <a href="{{ path('entity.node.canonical', {'node': garagem.id()}) }}"
+     class="flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-2xl mb-6 hover:border-gray-300 hover:shadow-sm transition-all group">
+    <div class="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 bg-gray-100">
+      {% if garagem_foto_url %}
+        <img src="{{ garagem_foto_url }}" alt="{{ garagem.title.value }}" class="w-full h-full object-cover">
+      {% else %}
+        <div class="w-full h-full flex items-center justify-center">
+          <svg class="w-6 h-6 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+          </svg>
+        </div>
+      {% endif %}
     </div>
-    <div>
-      <p class="text-xs font-bold text-gray-900 uppercase tracking-wide mb-1">{{ 'fim'|t }}</p>
-      <p class="text-gray-700">
+    <div class="flex-1 min-w-0">
+      <p class="font-semibold text-gray-900 text-sm group-hover:text-gray-700 truncate">{{ garagem.title.value }}</p>
+      {% if garagem_localidade %}
+        <p class="text-xs text-gray-400 mt-0.5">{{ garagem_localidade }}</p>
+      {% endif %}
+    </div>
+    <svg class="w-4 h-4 text-gray-300 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+    </svg>
+  </a>
+
+  {# ── Período ──────────────────────────────────────── #}
+  <div class="grid grid-cols-2 gap-3 mb-3">
+    <div class="bg-gray-50 rounded-2xl px-5 py-4">
+      <p class="text-xs text-gray-400 uppercase tracking-widest mb-1">{{ 'Início'|t }}</p>
+      <p class="text-sm font-semibold text-gray-900">{{ reserva.data_inicio|date('d/m/Y') }}</p>
+    </div>
+    <div class="bg-gray-50 rounded-2xl px-5 py-4">
+      <p class="text-xs text-gray-400 uppercase tracking-widest mb-1">{{ 'Fim'|t }}</p>
+      <p class="text-sm font-semibold text-gray-900">
         {% if reserva.renovacao_automatica %}{{ 'Renovação automática'|t }}{% else %}{{ reserva.data_fim|date('d/m/Y') }}{% endif %}
       </p>
     </div>
   </div>
 
-  <div class="border-t border-gray-300 my-6"></div>
-
-  {# Valores #}
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-    <div>
-      <p class="text-xs font-bold text-gray-900 uppercase tracking-wide mb-1">{{ 'preço total da reserva'|t }}</p>
-      <p class="text-gray-700">{{ preco_total|number_format(2) }}€</p>
+  {# ── Valores ──────────────────────────────────────── #}
+  <div class="grid grid-cols-2 gap-3 mb-3">
+    <div class="bg-gray-50 rounded-2xl px-5 py-4">
+      <p class="text-xs text-gray-400 uppercase tracking-widest mb-1">{{ 'Preço total'|t }}</p>
+      <p class="text-sm font-semibold text-gray-900">{{ preco_total|number_format(2) }}€</p>
     </div>
-    <div>
-      <p class="text-xs font-bold text-gray-900 uppercase tracking-wide mb-1">{{ 'a pagar à plataforma'|t }}</p>
-      <p class="font-bold text-gray-900">{{ taxa_plataforma|number_format(2) }}€</p>
+    <div class="bg-gray-50 rounded-2xl px-5 py-4">
+      <p class="text-xs text-gray-400 uppercase tracking-widest mb-1">{{ 'Taxa da plataforma'|t }}</p>
+      <p class="text-sm font-semibold text-gray-900">{{ taxa_plataforma|number_format(2) }}€</p>
     </div>
   </div>
 
@@ -69,204 +94,134 @@
     {% endif %}
   </p>
 
-  {# Notas #}
+  {# ── Notas ────────────────────────────────────────── #}
   {% if reserva.notas %}
-    <div class="border-t border-gray-300 my-6"></div>
-    <div class="mb-6">
-      <p class="text-xs font-bold text-gray-900 uppercase tracking-wide mb-1">{{ 'notas'|t }}</p>
-      <p class="text-gray-700">{{ reserva.notas }}</p>
+    <div class="bg-gray-50 rounded-2xl px-5 py-4 mb-3">
+      <p class="text-xs text-gray-400 uppercase tracking-widest mb-1">{{ 'Notas'|t }}</p>
+      <p class="text-sm text-gray-700">{{ reserva.notas }}</p>
     </div>
   {% endif %}
 
-  {# Motivo de cancelamento/rejeição #}
+  {# ── Motivo cancelamento/rejeição ─────────────────── #}
   {% if reserva.motivo and reserva.estado in ['cancelado', 'rejeitado'] %}
-    <div class="border-t border-gray-300 my-6"></div>
-    <div class="mb-6">
-      <p class="text-xs font-bold text-gray-900 uppercase tracking-wide mb-1">{{ 'Motivo de cancelamento'|t }}</p>
-      <p class="text-gray-700">{{ reserva.motivo }}</p>
+    <div class="bg-red-50 border border-red-100 rounded-2xl px-5 py-4 mb-6">
+      <p class="text-xs text-red-400 uppercase tracking-widest mb-1">{{ 'Motivo'|t }}</p>
+      <p class="text-sm text-red-700">{{ reserva.motivo }}</p>
     </div>
   {% endif %}
 
-  {# Confirmação — mostrar ao arrendatário quando pendente #}
+  {# ── Banners de estado ────────────────────────────── #}
   {% if is_user and reserva.estado == 'pendente' %}
-    <div class="border-t border-gray-300 my-6"></div>
-    <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-5">
-      <div class="flex items-start gap-3">
-        <svg class="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-        </svg>
-        <div>
-          <p class="text-sm font-bold text-yellow-800 mb-1">{{ 'Pedido submetido com sucesso!'|t }}</p>
-          <p class="text-sm text-yellow-700">{{ 'O proprietário irá analisar o seu pedido e receberá uma notificação quando for aprovado ou rejeitado.'|t }}</p>
-        </div>
+    <div class="flex items-start gap-3 bg-yellow-50 border border-yellow-100 rounded-2xl p-5 mb-6">
+      <svg class="w-5 h-5 text-yellow-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+      <div>
+        <p class="text-sm font-semibold text-yellow-800 mb-0.5">{{ 'Pedido em análise'|t }}</p>
+        <p class="text-sm text-yellow-700">{{ 'O proprietário irá analisar o seu pedido. Receberá uma notificação quando for aprovado ou rejeitado.'|t }}</p>
       </div>
     </div>
   {% endif %}
 
-  {# Contactos do arrendatário — só visível para o proprietário após pagamento #}
-  {% if arrendatario_contacto %}
-    <div class="border-t border-gray-300 my-6"></div>
-    <div class="bg-green-50 border border-green-200 rounded-xl p-5">
-      <p class="text-xs font-bold text-green-800 uppercase tracking-wide mb-3">{{ 'Contacto do arrendatário'|t }}</p>
-      <div class="space-y-2 text-sm">
-        <div class="flex items-center gap-2">
-          <span class="font-medium text-gray-700 w-20">{{ 'Nome'|t }}</span>
-          <span class="text-gray-900">{{ arrendatario_contacto.nome }}</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <span class="font-medium text-gray-700 w-20">{{ 'Email'|t }}</span>
-          <a href="mailto:{{ arrendatario_contacto.email }}" class="text-blue-600 hover:underline">
-            {{ arrendatario_contacto.email }}
-          </a>
-        </div>
-        {% if arrendatario_contacto.telefone %}
-          <div class="flex items-center gap-2">
-            <span class="font-medium text-gray-700 w-20">{{ 'Telefone'|t }}</span>
-            <a href="tel:{{ arrendatario_contacto.telefone }}" class="text-blue-600 hover:underline">
-              {{ arrendatario_contacto.telefone }}
-            </a>
-          </div>
-        {% endif %}
-        {% if arrendatario_contacto.telemovel %}
-          <div class="flex items-center gap-2">
-            <span class="font-medium text-gray-700 w-20">{{ 'Telemóvel'|t }}</span>
-            <a href="tel:{{ arrendatario_contacto.telemovel }}" class="text-blue-600 hover:underline">
-              {{ arrendatario_contacto.telemovel }}
-            </a>
-          </div>
-        {% endif %}
+  {% if is_user and reserva.estado == 'aprovado' and reserva.commerce_order_id %}
+    <div class="flex items-start gap-3 bg-blue-50 border border-blue-100 rounded-2xl p-5 mb-6">
+      <svg class="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+      <div>
+        <p class="text-sm font-semibold text-blue-800 mb-0.5">{{ 'Reserva aprovada!'|t }}</p>
+        <p class="text-sm text-blue-700">{{ 'Pode agora proceder ao pagamento para confirmar a sua reserva.'|t }}</p>
       </div>
     </div>
   {% endif %}
 
-  {# Contactos do proprietário — só visível para o arrendatário após pagamento #}
-  {% if proprietario_contacto %}
-    <div class="border-t border-gray-300 my-6"></div>
-    <div class="bg-green-50 border border-green-200 rounded-xl p-5">
-      <p class="text-xs font-bold text-green-800 uppercase tracking-wide mb-3">{{ 'Contacto do proprietário'|t }}</p>
-      <div class="space-y-2 text-sm">
-        <div class="flex items-center gap-2">
-          <span class="font-medium text-gray-700 w-20">{{ 'Nome'|t }}</span>
-          <span class="text-gray-900">{{ proprietario_contacto.nome }}</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <span class="font-medium text-gray-700 w-20">{{ 'Email'|t }}</span>
-          <a href="mailto:{{ proprietario_contacto.email }}" class="text-blue-600 hover:underline">
-            {{ proprietario_contacto.email }}
-          </a>
-        </div>
-        {% if proprietario_contacto.telefone %}
-          <div class="flex items-center gap-2">
-            <span class="font-medium text-gray-700 w-20">{{ 'Telefone'|t }}</span>
-            <a href="tel:{{ proprietario_contacto.telefone }}" class="text-blue-600 hover:underline">
-              {{ proprietario_contacto.telefone }}
-            </a>
-          </div>
-        {% endif %}
-        {% if proprietario_contacto.telemovel %}
-          <div class="flex items-center gap-2">
-            <span class="font-medium text-gray-700 w-20">{{ 'Telemóvel'|t }}</span>
-            <a href="tel:{{ proprietario_contacto.telemovel }}" class="text-blue-600 hover:underline">
-              {{ proprietario_contacto.telemovel }}
-            </a>
-          </div>
-        {% endif %}
-      </div>
-    </div>
-  {% endif %}
+  {# ── Contacto ─────────────────────────────────────── #}
+  {% set contacto = proprietario_contacto ?? arrendatario_contacto ?? null %}
+  {% set contacto_label = proprietario_contacto ? 'Contacto do proprietário'|t : 'Contacto do arrendatário'|t %}
 
-  <div class="border-t border-gray-300 my-6"></div>
-
-  {# Modal de confirmação de cancelamento #}
-  <div id="modal-cancelar-reserva"
-       class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
-    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 p-6">
+  {% if contacto %}
+    <div class="border border-gray-200 rounded-2xl p-5 mb-6">
+      <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4">{{ contacto_label }}</p>
       <div class="flex items-center gap-3 mb-4">
-        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
-          <svg class="w-5 h-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+        <div class="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
+          {{ contacto.nome|slice(0,1)|upper }}
+        </div>
+        <p class="font-semibold text-gray-900 text-sm">{{ contacto.nome }}</p>
+      </div>
+      <div class="space-y-2.5">
+        <a href="mailto:{{ contacto.email }}" class="flex items-center gap-3 text-sm text-gray-600 hover:text-gray-900 transition">
+          <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
           </svg>
-        </div>
-        <h3 class="text-lg font-semibold text-gray-900">{{ 'Cancelar reserva'|t }}</h3>
-      </div>
-      <p class="text-sm text-gray-600 mb-3">{{ 'Tem a certeza que quer cancelar esta reserva?'|t }}</p>
-      <div class="bg-gray-50 rounded-lg p-3 mb-4 text-sm text-gray-700 space-y-1">
-        <div><span class="font-medium">{{ 'Garagem:'|t }}</span> {{ garagem.title.value }}</div>
-        <div><span class="font-medium">{{ 'Início:'|t }}</span> {{ reserva.data_inicio|date('d/m/Y') }}</div>
-      </div>
-      {% if reserva.estado == 'pago' %}
-        <div class="bg-red-50 border border-red-200 rounded-lg p-3 mb-4">
-          <p class="text-xs font-semibold text-red-700 uppercase tracking-wide mb-1">{{ 'Atenção'|t }}</p>
-          <p class="text-sm text-red-600">{{ 'Esta reserva já foi paga. Não existe qualquer devolução do valor pago.'|t }}</p>
-        </div>
-      {% endif %}
-      <textarea id="motivo-cancelar-user" rows="3"
-                placeholder="{{ 'Motivo (opcional)'|t }}"
-                class="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 mb-3 resize-none focus:outline-none focus:ring-1 focus:ring-gray-400"></textarea>
-      <p class="text-xs text-gray-400 mb-1">{{ 'Esta ação não pode ser desfeita.'|t }}</p>
-      <p class="text-xs text-amber-700 font-medium mb-5">{{ 'Este tipo de operação não dispensa procedimentos legais vigentes em contrato.'|t }}</p>
-      <div class="flex justify-end gap-3">
-        <button type="button"
-                onclick="fecharModalCancelarReserva()"
-                class="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-200 rounded-full hover:bg-gray-50 transition">
-          {{ 'Voltar'|t }}
-        </button>
-        <button type="button"
-                onclick="confirmarCancelarUser('{{ path('garagem_reservas.reserva_cancelar_direto', {'reserva': reserva.id}) }}')"
-                class="px-4 py-2 text-sm font-bold text-white bg-red-600 rounded-full hover:bg-red-700 transition">
-          {{ 'Sim, cancelar'|t }}
-        </button>
+          {{ contacto.email }}
+        </a>
+        {% if contacto.telefone %}
+          <a href="tel:{{ contacto.telefone }}" class="flex items-center gap-3 text-sm text-gray-600 hover:text-gray-900 transition">
+            <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+            </svg>
+            {{ contacto.telefone }}
+          </a>
+        {% endif %}
+        {% if contacto.telemovel %}
+          <a href="tel:{{ contacto.telemovel }}" class="flex items-center gap-3 text-sm text-gray-600 hover:text-gray-900 transition">
+            <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+            </svg>
+            {{ contacto.telemovel }}
+          </a>
+        {% endif %}
       </div>
     </div>
-  </div>
+  {% endif %}
 
-  {# Ações #}
-  <div class="flex flex-wrap gap-3">
-
-    {% if is_user and reserva.estado in ['pendente', 'aprovado', 'aguarda_pagamento', 'pago'] %}
-      <button type="button"
-              onclick="abrirModalCancelarReserva()"
-              class="px-5 py-2 text-sm font-bold text-red-600 border border-red-300 rounded-full hover:bg-red-50 transition">
-        {{ 'Cancelar reserva'|t }}
-      </button>
-    {% endif %}
+  {# ── Ações ────────────────────────────────────────── #}
+  <div class="flex flex-wrap gap-3 pt-2">
 
     {% if is_user and reserva.estado == 'aprovado' and reserva.commerce_order_id %}
       <a href="{{ path('commerce_checkout.form', {'commerce_order': reserva.commerce_order_id}) }}"
-         class="px-5 py-2 text-sm font-bold text-white bg-gray-900 rounded-full hover:bg-gray-700 transition">
+         class="px-5 py-2.5 text-sm font-bold text-white bg-gray-900 rounded-full hover:bg-gray-700 transition">
         {{ 'Pagar agora'|t }} — {{ taxa_plataforma|number_format(2) }}€
       </a>
     {% endif %}
 
     {% if is_proprietario and reserva.estado == 'pendente' %}
       <a href="{{ path('garagem_reservas.reserva_aprovar', {'reserva': reserva.id}) }}"
-         class="px-5 py-2 text-sm font-bold text-white bg-gray-900 rounded-full hover:bg-gray-700 transition">
+         class="px-5 py-2.5 text-sm font-bold text-white bg-gray-900 rounded-full hover:bg-gray-700 transition">
         {{ 'Aprovar'|t }}
       </a>
-      <button type="button" onclick="abrirModalRejeitar('{{ path('garagem_reservas.reserva_rejeitar', {'reserva': reserva.id}) }}')" 
-         class="px-5 py-2 text-sm font-bold text-red-600 border border-red-300 rounded-full hover:bg-red-50 transition">
+      <button type="button"
+              onclick="abrirModalRejeitar('{{ path('garagem_reservas.reserva_rejeitar', {'reserva': reserva.id}) }}')"
+              class="px-5 py-2.5 text-sm font-bold text-red-600 border border-red-200 rounded-full hover:bg-red-50 transition">
         {{ 'Rejeitar'|t }}
+      </button>
+    {% endif %}
+
+    {% if is_user and reserva.estado in ['pendente', 'aprovado', 'aguarda_pagamento', 'pago'] %}
+      <button type="button"
+              onclick="abrirModalCancelarReserva()"
+              class="px-5 py-2.5 text-sm font-bold text-red-600 border border-red-200 rounded-full hover:bg-red-50 transition">
+        {{ 'Cancelar reserva'|t }}
       </button>
     {% endif %}
 
     {% if is_proprietario and reserva.estado not in ['pendente', 'cancelado', 'rejeitado', 'expirado'] %}
       <button type="button"
               onclick="abrirModalCancelarProprietario()"
-              class="px-5 py-2 text-sm font-bold text-red-600 border border-red-300 rounded-full hover:bg-red-50 transition">
+              class="px-5 py-2.5 text-sm font-bold text-red-600 border border-red-200 rounded-full hover:bg-red-50 transition">
         {{ 'Cancelar reserva'|t }}
       </button>
     {% endif %}
 
     {% if reserva.estado == 'pago' and (is_proprietario or is_user) %}
       <a href="{{ path('garagem_reservas.reserva_pdf', {'reserva': reserva.id}) }}"
-         class="px-5 py-2 text-sm font-bold text-gray-700 border border-gray-300 rounded-full hover:bg-gray-100 transition">
+         class="px-5 py-2.5 text-sm font-medium text-gray-700 border border-gray-200 rounded-full hover:bg-gray-50 transition">
         {{ 'Descarregar PDF'|t }}
       </a>
     {% endif %}
 
     <a href="{{ path('garagem_reservas.lista_user') }}"
-       class="px-5 py-2 text-sm font-medium text-gray-500 border border-gray-200 rounded-full hover:bg-gray-100 transition">
+       class="px-5 py-2.5 text-sm font-medium text-gray-500 border border-gray-200 rounded-full hover:bg-gray-50 transition">
       {{ 'Voltar à lista'|t }}
     </a>
 
@@ -274,30 +229,130 @@
 
 </div>
 
+{# ── Modais ───────────────────────────────────────────── #}
+
+{# Modal cancelar — utilizador #}
+<div id="modal-cancelar-reserva" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
+  <div class="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 p-6">
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+        <svg class="w-5 h-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+        </svg>
+      </div>
+      <h3 class="text-lg font-semibold text-gray-900">{{ 'Cancelar reserva'|t }}</h3>
+    </div>
+    <p class="text-sm text-gray-600 mb-3">{{ 'Tem a certeza que quer cancelar esta reserva?'|t }}</p>
+    <div class="bg-gray-50 rounded-xl p-3 mb-4 text-sm text-gray-700 space-y-1">
+      <div><span class="font-medium">{{ 'Garagem:'|t }}</span> {{ garagem.title.value }}</div>
+      <div><span class="font-medium">{{ 'Início:'|t }}</span> {{ reserva.data_inicio|date('d/m/Y') }}</div>
+    </div>
+    {% if reserva.estado == 'pago' %}
+      <div class="bg-red-50 border border-red-200 rounded-xl p-3 mb-4">
+        <p class="text-xs font-semibold text-red-700 uppercase tracking-wide mb-1">{{ 'Atenção'|t }}</p>
+        <p class="text-sm text-red-600">{{ 'Esta reserva já foi paga. Não existe qualquer devolução do valor pago.'|t }}</p>
+      </div>
+    {% endif %}
+    <textarea id="motivo-cancelar-user" rows="3"
+              placeholder="{{ 'Motivo (opcional)'|t }}"
+              class="w-full text-sm border border-gray-200 rounded-xl px-3 py-2 mb-3 resize-none focus:outline-none focus:ring-1 focus:ring-gray-400"></textarea>
+    <p class="text-xs text-gray-400 mb-1">{{ 'Esta ação não pode ser desfeita.'|t }}</p>
+    <p class="text-xs text-amber-700 font-medium mb-5">{{ 'Este tipo de operação não dispensa procedimentos legais vigentes em contrato.'|t }}</p>
+    <div class="flex justify-end gap-3">
+      <button type="button" onclick="fecharModalCancelarReserva()"
+              class="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-200 rounded-full hover:bg-gray-50 transition">
+        {{ 'Voltar'|t }}
+      </button>
+      <button type="button" onclick="confirmarCancelarUser('{{ path('garagem_reservas.reserva_cancelar_direto', {'reserva': reserva.id}) }}')"
+              class="px-4 py-2 text-sm font-bold text-white bg-red-600 rounded-full hover:bg-red-700 transition">
+        {{ 'Sim, cancelar'|t }}
+      </button>
+    </div>
+  </div>
+</div>
+
+{# Modal cancelar — proprietário #}
+<div id="modal-cancelar-proprietario" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
+  <div class="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 p-6">
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+        <svg class="w-5 h-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+        </svg>
+      </div>
+      <h3 class="text-lg font-semibold text-gray-900">{{ 'Cancelar reserva'|t }}</h3>
+    </div>
+    <p class="text-sm text-gray-600 mb-3">{{ 'Tem a certeza que quer cancelar esta reserva?'|t }}</p>
+    <div class="bg-gray-50 rounded-xl p-3 mb-4 text-sm text-gray-700">
+      <span class="font-medium">{{ 'Garagem:'|t }}</span> {{ garagem.title.value }}
+    </div>
+    <textarea id="motivo-cancelar-prop" rows="3"
+              placeholder="{{ 'Motivo (opcional)'|t }}"
+              class="w-full text-sm border border-gray-200 rounded-xl px-3 py-2 mb-3 resize-none focus:outline-none focus:ring-1 focus:ring-gray-400"></textarea>
+    <p class="text-xs text-gray-400 mb-1">{{ 'O arrendatário será notificado. Esta ação não pode ser desfeita.'|t }}</p>
+    <p class="text-xs text-amber-700 font-medium mb-5">{{ 'Este tipo de operação não dispensa procedimentos legais vigentes em contrato.'|t }}</p>
+    <div class="flex justify-end gap-3">
+      <button type="button" onclick="fecharModalCancelarProprietario()"
+              class="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-200 rounded-full hover:bg-gray-50 transition">
+        {{ 'Voltar'|t }}
+      </button>
+      <button type="button" onclick="confirmarCancelarProp('{{ path('garagem_reservas.reserva_cancelar_proprietario', {'reserva': reserva.id}) }}')"
+              class="px-4 py-2 text-sm font-bold text-white bg-red-600 rounded-full hover:bg-red-700 transition">
+        {{ 'Sim, cancelar'|t }}
+      </button>
+    </div>
+  </div>
+</div>
+
+{# Modal rejeitar #}
+<div id="modal-rejeitar" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
+  <div class="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 p-6">
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+        <svg class="w-5 h-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </div>
+      <h3 class="text-lg font-semibold text-gray-900">{{ 'Rejeitar reserva'|t }}</h3>
+    </div>
+    <p class="text-sm text-gray-600 mb-3">{{ 'Tem a certeza que quer rejeitar esta reserva?'|t }}</p>
+    <textarea id="motivo-rejeitar" rows="3"
+              placeholder="{{ 'Motivo (opcional)'|t }}"
+              class="w-full text-sm border border-gray-200 rounded-xl px-3 py-2 mb-3 resize-none focus:outline-none focus:ring-1 focus:ring-gray-400"></textarea>
+    <p class="text-xs text-gray-400 mb-5">{{ 'O arrendatário será notificado. Esta ação não pode ser desfeita.'|t }}</p>
+    <div class="flex justify-end gap-3">
+      <button type="button" onclick="fecharModalRejeitar()"
+              class="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-200 rounded-full hover:bg-gray-50 transition">
+        {{ 'Voltar'|t }}
+      </button>
+      <button type="button" id="modal-rejeitar-url" onclick="confirmarRejeitar(this.dataset.url)"
+              class="px-4 py-2 text-sm font-bold text-white bg-red-600 rounded-full hover:bg-red-700 transition">
+        {{ 'Sim, rejeitar'|t }}
+      </button>
+    </div>
+  </div>
+</div>
+
 <script>
 function abrirModalCancelarReserva() {
-  const modal = document.getElementById('modal-cancelar-reserva');
-  modal.classList.remove('hidden');
-  modal.classList.add('flex');
+  const m = document.getElementById('modal-cancelar-reserva');
+  m.classList.remove('hidden'); m.classList.add('flex');
 }
 function fecharModalCancelarReserva() {
-  const modal = document.getElementById('modal-cancelar-reserva');
-  modal.classList.add('hidden');
-  modal.classList.remove('flex');
+  const m = document.getElementById('modal-cancelar-reserva');
+  m.classList.add('hidden'); m.classList.remove('flex');
 }
 document.getElementById('modal-cancelar-reserva')?.addEventListener('click', function(e) {
   if (e.target === this) fecharModalCancelarReserva();
 });
 
 function abrirModalCancelarProprietario() {
-  const modal = document.getElementById('modal-cancelar-proprietario');
-  modal.classList.remove('hidden');
-  modal.classList.add('flex');
+  const m = document.getElementById('modal-cancelar-proprietario');
+  m.classList.remove('hidden'); m.classList.add('flex');
 }
 function fecharModalCancelarProprietario() {
-  const modal = document.getElementById('modal-cancelar-proprietario');
-  modal.classList.add('hidden');
-  modal.classList.remove('flex');
+  const m = document.getElementById('modal-cancelar-proprietario');
+  m.classList.add('hidden'); m.classList.remove('flex');
 }
 document.getElementById('modal-cancelar-proprietario')?.addEventListener('click', function(e) {
   if (e.target === this) fecharModalCancelarProprietario();
@@ -312,96 +367,20 @@ function confirmarCancelarProp(url) {
   window.location.href = motivo ? url + '?motivo=' + encodeURIComponent(motivo) : url;
 }
 
-</script>
-
-{# Modal cancelar — proprietário #}
-<div id="modal-cancelar-proprietario"
-     class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
-  <div class="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 p-6">
-    <div class="flex items-center gap-3 mb-4">
-      <div class="flex-shrink-0 w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
-        <svg class="w-5 h-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
-        </svg>
-      </div>
-      <h3 class="text-lg font-semibold text-gray-900">{{ 'Cancelar reserva'|t }}</h3>
-    </div>
-    <p class="text-sm text-gray-600 mb-3">{{ 'Tem a certeza que quer cancelar esta reserva?'|t }}</p>
-    <div class="bg-gray-50 rounded-lg p-3 mb-4 text-sm text-gray-700 space-y-1">
-      <div><span class="font-medium">{{ 'Garagem:'|t }}</span> {{ garagem.title.value }}</div>
-    </div>
-    <textarea id="motivo-cancelar-prop" rows="3"
-              placeholder="{{ 'Motivo (opcional)'|t }}"
-              class="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 mb-3 resize-none focus:outline-none focus:ring-1 focus:ring-gray-400"></textarea>
-    <p class="text-xs text-gray-400 mb-1">{{ 'O arrendatário será notificado. Esta ação não pode ser desfeita.'|t }}</p>
-    <p class="text-xs text-amber-700 font-medium mb-5">{{ 'Este tipo de operação não dispensa procedimentos legais vigentes em contrato.'|t }}</p>
-    <div class="flex justify-end gap-3">
-      <button type="button"
-              onclick="fecharModalCancelarProprietario()"
-              class="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-200 rounded-full hover:bg-gray-50 transition">
-        {{ 'Voltar'|t }}
-      </button>
-      <button type="button"
-              onclick="confirmarCancelarProp('{{ path('garagem_reservas.reserva_cancelar_proprietario', {'reserva': reserva.id}) }}')"
-              class="px-4 py-2 text-sm font-bold text-white bg-red-600 rounded-full hover:bg-red-700 transition">
-        {{ 'Sim, cancelar'|t }}
-      </button>
-    </div>
-  </div>
-</div>
-
-{# Modal rejeitar #}
-<div id="modal-rejeitar"
-     class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
-  <div class="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 p-6">
-    <div class="flex items-center gap-3 mb-4">
-      <div class="flex-shrink-0 w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
-        <svg class="w-5 h-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"/>
-        </svg>
-      </div>
-      <h3 class="text-lg font-semibold text-gray-900">{{ 'Rejeitar reserva'|t }}</h3>
-    </div>
-    <p class="text-sm text-gray-600 mb-3">{{ 'Tem a certeza que quer rejeitar esta reserva?'|t }}</p>
-    <textarea id="motivo-rejeitar" rows="3"
-              placeholder="{{ 'Motivo (opcional)'|t }}"
-              class="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 mb-3 resize-none focus:outline-none focus:ring-1 focus:ring-gray-400"></textarea>
-    <p class="text-xs text-gray-400 mb-5">{{ 'O arrendatário será notificado. Esta ação não pode ser desfeita.'|t }}</p>
-    <div class="flex justify-end gap-3">
-      <button type="button"
-              onclick="fecharModalRejeitar()"
-              class="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-200 rounded-full hover:bg-gray-50 transition">
-        {{ 'Voltar'|t }}
-      </button>
-      <button type="button"
-              id="modal-rejeitar-url"
-              onclick="confirmarRejeitar(this.dataset.url)"
-              class="px-4 py-2 text-sm font-bold text-white bg-red-600 rounded-full hover:bg-red-700 transition">
-        {{ 'Sim, rejeitar'|t }}
-      </button>
-    </div>
-  </div>
-</div>
-
-<script>
+function abrirModalRejeitar(url) {
+  document.getElementById('modal-rejeitar-url').dataset.url = url;
+  const m = document.getElementById('modal-rejeitar');
+  m.classList.remove('hidden'); m.classList.add('flex');
+}
+function fecharModalRejeitar() {
+  const m = document.getElementById('modal-rejeitar');
+  m.classList.add('hidden'); m.classList.remove('flex');
+}
 function confirmarRejeitar(url) {
   const motivo = document.getElementById('motivo-rejeitar').value.trim();
   window.location.href = motivo ? url + '?motivo=' + encodeURIComponent(motivo) : url;
 }
-function abrirModalRejeitar(url) {
-  document.getElementById('modal-rejeitar-url').dataset.url = url;
-  const modal = document.getElementById('modal-rejeitar');
-  modal.classList.remove('hidden');
-  modal.classList.add('flex');
-}
-function fecharModalRejeitar() {
-  const modal = document.getElementById('modal-rejeitar');
-  modal.classList.add('hidden');
-  modal.classList.remove('flex');
-}
-document.getElementById('modal-rejeitar').addEventListener('click', function(e) {
+document.getElementById('modal-rejeitar')?.addEventListener('click', function(e) {
   if (e.target === this) fecharModalRejeitar();
 });
 </script>

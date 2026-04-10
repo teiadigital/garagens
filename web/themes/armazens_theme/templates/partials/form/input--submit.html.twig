@@ -13,11 +13,10 @@
 
 {%
 set classes = [
-        'text-sm uppercase block rounded-3xl py-4 px-20 xl:px-20 font-bold  cursor-pointer  transition-all m-0 w-full sm:w-auto',
-        element['#attributes'].name == 'entity_form_steps_previous' ? 'bg-gray text-black border-2 border-gray hover:border-black hover:bg-black hover:text-white' : ' border-2 bg-black text-white hover:bg-white hover:text-black border-black'
+        'text-sm font-bold cursor-pointer transition rounded-full py-2.5 px-6 m-0 w-full sm:w-auto',
+        element['#attributes'].name == 'entity_form_steps_previous' ? 'bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200' : 'bg-gray-900 text-white hover:bg-gray-700'
     ]
 %}
-
 
 {% if 'remove_button' in element['#name'] %}
     {%
@@ -25,16 +24,14 @@ set classes = [
             'w-10 h-10 rounded-full text-transparent cursor-pointer bg-black bg-[url("/themes/armazens_theme/images/icons/trash.svg")] bg-no-repeat bg-center bg-auto !mb-1 !ml-4 static'
         ]
     %}
-
 {% endif %}
 
 {% if 'add_more' in element['#name'] %}
     {%
         set classes = [
-        'text-sm uppercase block rounded-3xl py-4 px-8 font-bold cursor-pointer transition-all m-0 w-full sm:w-auto border-2 bg-black text-white hover:bg-white hover:text-black border-black'
+        'text-sm font-bold cursor-pointer transition rounded-full py-2.5 px-6 m-0 w-full sm:w-auto bg-gray-900 text-white hover:bg-gray-700'
         ]
     %}
-
 {% endif %}
 
-<input{{ attributes.addClass(classes) }}/>{{ children }}
+<input{{ attributes.removeClass(['button', 'button--primary', 'button--secondary', 'button--danger', 'js-form-submit', 'form-submit']).addClass(classes) }}/>{{ children }}

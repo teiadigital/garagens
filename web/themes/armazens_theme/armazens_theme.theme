@@ -147,6 +147,7 @@ function armazens_theme_form_node_armazem_form_alter(array &$form, \Drupal\Core\
 function armazens_theme_theme_suggestions_page_alter(array &$suggestions, array $variables) {
   $route_name = \Drupal::routeMatch()->getRouteName();
   $dashboard_routes = [
+    // Utilizador normal
     'entity.user.canonical',
     'entity.user.edit_form',
     'garagem_reservas.lista_user',
@@ -154,6 +155,15 @@ function armazens_theme_theme_suggestions_page_alter(array &$suggestions, array 
     'garagem_reservas.encomendas_lista',
     'garagem_reservas.encomenda_detalhe',
     'garagem_reservas.notificacoes',
+    'view.armazens.page_lista_armazens_user',
+    // Gestor
+    'view.armazens.page_gestao_armazens',
+    'view.advertising.page_advertising_gestor',
+    'view.utilizadores.page_utilizadores_gestor',
+    'garagem_reservas.admin_lista',
+    'garagem_reservas.admin_settings',
+    'garagem_reservas.admin_reserva_editar',
+    'garagem_reservas.admin_reserva_apagar',
   ];
   if (in_array($route_name, $dashboard_routes)) {
     $suggestions[] = 'page__dashboard';

@@ -28,6 +28,7 @@ function garagem_reservas_schema() {
       'data_pagamento' => ['type' => 'int', 'not null' => FALSE],
       'commerce_order_id' => ['type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE],
       'notas' => ['type' => 'text', 'not null' => FALSE],
+      'review_email_enviado' => ['type' => 'int', 'size' => 'tiny', 'not null' => TRUE, 'default' => 0],
     ],
     'primary key' => ['id'],
     'indexes' => [
@@ -49,6 +50,24 @@ function garagem_reservas_schema() {
     'primary key' => ['id'],
     'indexes' => [
       'garagem_id' => ['garagem_id'],
+    ],
+  ];
+
+  $schema['garagem_review'] = [
+    'description' => 'Reviews de garagens por arrendatários.',
+    'fields' => [
+      'id' => ['type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE],
+      'garagem_id' => ['type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE],
+      'user_id' => ['type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE],
+      'reserva_id' => ['type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE],
+      'rating' => ['type' => 'int', 'size' => 'tiny', 'unsigned' => TRUE, 'not null' => TRUE],
+      'texto' => ['type' => 'text', 'not null' => FALSE],
+      'created' => ['type' => 'int', 'not null' => TRUE],
+    ],
+    'primary key' => ['id'],
+    'indexes' => [
+      'garagem_id' => ['garagem_id'],
+      'user_id' => ['user_id'],
     ],
   ];
 
@@ -126,6 +145,89 @@ function garagem_reservas_update_8003() {
       $config->set('text', [['value' => $novo_texto, 'format' => 'basic_html']]);
       $config->save();
     }
+  }
+}
+
+/**
+ * Adicionar campo review_email_enviado e criar template de mensagem de review.
+ */
+function garagem_reservas_update_8006() {
+  // Adicionar coluna review_email_enviado.
+  $schema = \Drupal::database()->schema();
+  if (!$schema->fieldExists('garagem_reserva', 'review_email_enviado')) {
+    $schema->addField('garagem_reserva', 'review_email_enviado', [
+      'type' => 'int',
+      'size' => 'tiny',
+      'not null' => TRUE,
+      'default' => 0,
+      'description' => 'Se o email de convite para review já foi enviado.',
+    ]);
+  }
+
+  // Criar template de mensagem para convite de review via entity API.
+  $storage = \Drupal::entityTypeManager()->getStorage('message_template');
+  if (!$storage->load('review_convite')) {
+    $template = $storage->create([
+      'template'    => 'review_convite',
+      'label'       => 'Convite para avaliar garagem',
+      'description' => 'Email enviado ao arrendatário após o início da estadia.',
+      'text'        => [[
+        'value'  => '<p>Olá! A sua estadia em <strong>@garagem</strong> já começou. Partilhe a sua experiência e ajude outros utilizadores avaliando esta garagem.</p><p><a href="@url_review">Avaliar agora →</a></p>',
+        'format' => 'basic_html',
+      ]],
+    ]);
+    $template->save();
+  }
+}
+
+/**
+ * Corrigir template review_convite — apagar config malformada e recriar.
+ */
+function garagem_reservas_update_8007() {
+  $config_factory = \Drupal::configFactory();
+
+  // Apagar config malformada criada pelo update_8006.
+  $config_factory->getEditable('message.template.review_convite')->delete();
+
+  // Recriar com estrutura correta (igual aos outros templates).
+  $config_factory->getEditable('message.template.review_convite')
+    ->set('langcode', 'pt')
+    ->set('status', TRUE)
+    ->set('id', 'review_convite')
+    ->set('template', 'review_convite')
+    ->set('label', 'Convite para avaliar garagem')
+    ->set('description', 'Email enviado ao arrendatário após o início da estadia.')
+    ->set('text', [[
+      'value'  => '<p>Olá! A sua estadia em <strong>@garagem</strong> já começou. Partilhe a sua experiência e ajude outros utilizadores avaliando esta garagem.</p><p><a href="@url_review">Avaliar agora →</a></p>',
+      'format' => 'basic_html',
+    ]])
+    ->save();
+}
+
+/**
+ * Criar tabela garagem_review.
+ */
+function garagem_reservas_update_8005() {
+  $schema = \Drupal::database()->schema();
+  if (!$schema->tableExists('garagem_review')) {
+    $spec = [
+      'description' => 'Reviews de garagens por arrendatários.',
+      'fields' => [
+        'id' => ['type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE],
+        'garagem_id' => ['type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE],
+        'user_id' => ['type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE],
+        'reserva_id' => ['type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE],
+        'rating' => ['type' => 'int', 'size' => 'tiny', 'unsigned' => TRUE, 'not null' => TRUE],
+        'texto' => ['type' => 'text', 'not null' => FALSE],
+        'created' => ['type' => 'int', 'not null' => TRUE],
+      ],
+      'primary key' => ['id'],
+      'indexes' => [
+        'garagem_id' => ['garagem_id'],
+        'user_id' => ['user_id'],
+      ],
+    ];
+    $schema->createTable('garagem_review', $spec);
   }
 }
 

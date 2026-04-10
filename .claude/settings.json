@@ -18,7 +18,8 @@
       "Bash(python3 -c ':*)",
       "WebSearch",
       "Bash(curl -s 'https://photon.komoot.io/api/?q=__TRACKED_VAR__&limit=200&lang=en&osm_tag=place&osm_tag=boundary')",
-      "Bash(curl -s \"https://photon.komoot.io/api/?q=olivei&limit=200&lang=en&osm_tag=place&osm_tag=boundary\")"
+      "Bash(curl -s \"https://photon.komoot.io/api/?q=olivei&limit=200&lang=en&osm_tag=place&osm_tag=boundary\")",
+      "Bash(npx tailwindcss:*)"
     ]
   }
 }

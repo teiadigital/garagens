@@ -1,0 +1,10 @@
+langcode: pt
+status: true
+template: review_convite
+label: 'Convite para avaliar garagem'
+description: 'Email enviado ao arrendatário após o início da estadia.'
+text:
+  -
+    value: '<p>Olá! A sua estadia em <strong>@garagem</strong> já começou. Partilhe a sua experiência e ajude outros utilizadores avaliando esta garagem.</p><p><a href="@url_review">Avaliar agora →</a></p>'
+    format: basic_html
+id: review_convite

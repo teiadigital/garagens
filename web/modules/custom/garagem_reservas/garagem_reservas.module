@@ -44,6 +44,31 @@ function garagem_reservas_cron() {
       ['@count' => count($ids)]
     );
   }
+
+  // Enviar emails de convite para review.
+  $now = \Drupal::time()->getRequestTime();
+  $para_review = $database->select('garagem_reserva', 'gr')
+    ->fields('gr', ['id'])
+    ->condition('estado', 'pago')
+    ->condition('data_inicio', $now, '<=')
+    ->condition('review_email_enviado', 0)
+    ->execute()
+    ->fetchCol();
+
+  foreach ($para_review as $id) {
+    \Drupal::service('garagem_reservas.notificacao')->reviewConvite((int) $id);
+    $database->update('garagem_reserva')
+      ->fields(['review_email_enviado' => 1])
+      ->condition('id', $id)
+      ->execute();
+  }
+
+  if (!empty($para_review)) {
+    \Drupal::logger('garagem_reservas')->info(
+      '@count emails de convite para review enviados.',
+      ['@count' => count($para_review)]
+    );
+  }
 }
 
 /**
@@ -53,6 +78,14 @@ function garagem_reservas_mail($key, &$message, $params) {
   $options = ['langcode' => $message['langcode']];
 
   switch ($key) {
+    case 'review_convite':
+      $message['subject'] = t('Avalie a sua estadia em @garagem', ['@garagem' => $params['garagem']], $options);
+      $message['body'][] = t('Olá @nome,', ['@nome' => $params['user_name']], $options);
+      $message['body'][] = t('A sua estadia em @garagem já começou. Partilhe a sua experiência e ajude outros utilizadores avaliando esta garagem.', ['@garagem' => $params['garagem']], $options);
+      $message['body'][] = '';
+      $message['body'][] = t('Avaliar agora: @url', ['@url' => $params['url_review']], $options);
+      break;
+
     case 'reserva_criada_proprietario':
       $message['subject'] = t('Nova reserva para a sua garagem', [], $options);
       $message['body'][] = $params['body'];
@@ -163,8 +196,365 @@ function garagem_reservas_preprocess_page(&$variables) {
   }
 }
 
+/**
+ * Implements hook_user_view().
+ *
+ * Injeta os cards de reviews pendentes na página de perfil.
+ */
+function garagem_reservas_user_view(array &$build, \Drupal\Core\Entity\EntityInterface $account, $display, $view_mode) {
+  if ($view_mode !== 'full') {
+    return;
+  }
+
+  $current_user = \Drupal::currentUser();
+  if (!$current_user->isAuthenticated() || $current_user->id() != $account->id()) {
+    return;
+  }
+
+  $database = \Drupal::database();
+  $now = \Drupal::time()->getRequestTime();
+
+  // Reservas pagas com estadia iniciada e sem review.
+  $reservas = $database->select('garagem_reserva', 'gr')
+    ->fields('gr', ['id', 'garagem_id', 'data_inicio', 'data_fim', 'renovacao_automatica'])
+    ->condition('user_id', $account->id())
+    ->condition('estado', 'pago')
+    ->condition('data_inicio', $now, '<=')
+    ->orderBy('data_inicio', 'DESC')
+    ->execute()
+    ->fetchAll();
+
+  $items = [];
+  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+  $file_url_generator = \Drupal::service('file_url_generator');
+
+  foreach ($reservas as $r) {
+    // Verificar se já avaliou.
+    $ja_avaliou = $database->select('garagem_review', 'rv')
+      ->fields('rv', ['id'])
+      ->condition('reserva_id', $r->id)
+      ->execute()
+      ->fetchField();
+
+    if ($ja_avaliou) {
+      continue;
+    }
+
+    $node = $node_storage->load($r->garagem_id);
+    if (!$node) {
+      continue;
+    }
+
+    // Foto.
+    $foto_url = NULL;
+    if ($node->hasField('field_fotos') && !$node->get('field_fotos')->isEmpty()) {
+      $media = $node->get('field_fotos')->first()->entity;
+      if ($media && $media->hasField('field_media_image') && !$media->get('field_media_image')->isEmpty()) {
+        $file = $media->get('field_media_image')->entity;
+        if ($file) {
+          $foto_url = $file_url_generator->generateAbsoluteString($file->getFileUri());
+        }
+      }
+    }
+
+    // Localidade.
+    $localidade = '';
+    if (!$node->get('field_localidade')->isEmpty()) {
+      $addr = $node->get('field_localidade')->first();
+      $localidade = trim(($addr->locality ?? '') . ', ' . ($addr->administrative_area ?? ''), ', ');
+    }
+
+    $items[] = [
+      'titulo'      => $node->getTitle(),
+      'localidade'  => $localidade,
+      'foto_url'    => $foto_url,
+      'data_inicio' => date('d/m/Y', $r->data_inicio),
+      'data_fim'    => $r->renovacao_automatica ? t('Renovação automática') : date('d/m/Y', $r->data_fim),
+      'url_review'  => \Drupal\Core\Url::fromRoute('garagem_reservas.review_add', ['node' => $r->garagem_id])->toString(),
+    ];
+  }
+
+  if (!empty($items)) {
+    $build['reviews_pendentes'] = [
+      '#theme'  => 'garagem_reviews_pendentes',
+      '#items'  => $items,
+      '#cache'  => ['max-age' => 0],
+      '#weight' => -10,
+    ];
+  }
+
+  // Reservas a aguardar aceitação (pendente ou aguarda_pagamento).
+  $reservas_pendentes = $database->select('garagem_reserva', 'gr')
+    ->fields('gr', ['id', 'garagem_id', 'data_inicio', 'data_fim', 'renovacao_automatica', 'estado'])
+    ->condition('user_id', $account->id())
+    ->condition('estado', ['pendente','aprovado','aguarda_pagamento'], 'IN')
+    ->orderBy('data_criacao', 'DESC')
+    ->execute()
+    ->fetchAll();
+
+  $items_pendentes = [];
+  foreach ($reservas_pendentes as $r) {
+    $node = $node_storage->load($r->garagem_id);
+    if (!$node) {
+      continue;
+    }
+
+    $foto_url = NULL;
+    if ($node->hasField('field_fotos') && !$node->get('field_fotos')->isEmpty()) {
+      $media = $node->get('field_fotos')->first()->entity;
+      if ($media && $media->hasField('field_media_image') && !$media->get('field_media_image')->isEmpty()) {
+        $file = $media->get('field_media_image')->entity;
+        if ($file) {
+          $foto_url = $file_url_generator->generateAbsoluteString($file->getFileUri());
+        }
+      }
+    }
+
+    $localidade = '';
+    if (!$node->get('field_localidade')->isEmpty()) {
+      $addr = $node->get('field_localidade')->first();
+      $localidade = trim(($addr->locality ?? '') . ', ' . ($addr->administrative_area ?? ''), ', ');
+    }
+
+    $items_pendentes[] = [
+      'id'          => $r->id,
+      'titulo'      => $node->getTitle(),
+      'localidade'  => $localidade,
+      'foto_url'    => $foto_url,
+      'data_inicio' => date('d/m/Y', $r->data_inicio),
+      'data_fim'    => $r->renovacao_automatica ? t('Renovação automática') : ($r->data_fim ? date('d/m/Y', $r->data_fim) : '-'),
+      'estado'      => $r->estado,
+      'url_reserva' => \Drupal\Core\Url::fromRoute('garagem_reservas.reserva_view', ['reserva' => $r->id])->toString(),
+    ];
+  }
+
+  if (!empty($items_pendentes)) {
+    $build['reservas_pendentes'] = [
+      '#theme'  => 'garagem_reservas_pendentes_perfil',
+      '#items'  => $items_pendentes,
+      '#cache'  => ['max-age' => 0],
+      '#weight' => -15,
+    ];
+  }
+
+  // Reservas por aprovar nas garagens do proprietário.
+  $por_aprovar = $database->select('garagem_reserva', 'gr')
+    ->fields('gr', ['id', 'garagem_id', 'data_inicio', 'data_fim', 'renovacao_automatica', 'user_id'])
+    ->condition('proprietario_id', $account->id())
+    ->condition('estado', 'pendente')
+    ->orderBy('data_criacao', 'DESC')
+    ->execute()
+    ->fetchAll();
+
+  $items_aprovar = [];
+  $user_storage  = \Drupal::entityTypeManager()->getStorage('user');
+
+  foreach ($por_aprovar as $r) {
+    $node = $node_storage->load($r->garagem_id);
+    if (!$node) continue;
+
+    $foto_url = NULL;
+    if ($node->hasField('field_fotos') && !$node->get('field_fotos')->isEmpty()) {
+      $media = $node->get('field_fotos')->first()->entity;
+      if ($media && $media->hasField('field_media_image') && !$media->get('field_media_image')->isEmpty()) {
+        $file = $media->get('field_media_image')->entity;
+        if ($file) {
+          $foto_url = $file_url_generator->generateAbsoluteString($file->getFileUri());
+        }
+      }
+    }
+
+    $localidade = '';
+    if (!$node->get('field_localidade')->isEmpty()) {
+      $addr = $node->get('field_localidade')->first();
+      $localidade = trim(($addr->locality ?? '') . ', ' . ($addr->administrative_area ?? ''), ', ');
+    }
+
+    $arrendatario = $user_storage->load($r->user_id);
+
+    $items_aprovar[] = [
+      'id'           => $r->id,
+      'titulo'       => $node->getTitle(),
+      'localidade'   => $localidade,
+      'foto_url'     => $foto_url,
+      'data_inicio'  => date('d/m/Y', $r->data_inicio),
+      'data_fim'     => $r->renovacao_automatica ? t('Renovação automática') : ($r->data_fim ? date('d/m/Y', $r->data_fim) : '-'),
+      'arrendatario' => $arrendatario ? $arrendatario->getDisplayName() : '-',
+      'url_reserva'  => \Drupal\Core\Url::fromRoute('garagem_reservas.reserva_view', ['reserva' => $r->id])->toString(),
+    ];
+  }
+
+  if (!empty($items_aprovar)) {
+    $build['reservas_por_aprovar'] = [
+      '#theme'  => 'garagem_reservas_por_aprovar_perfil',
+      '#items'  => $items_aprovar,
+      '#cache'  => ['max-age' => 0],
+      '#weight' => -20,
+    ];
+  }
+
+  // Gestor: injetar estatísticas globais.
+  if ($account->hasRole('gestor') || $account->hasRole('administrator')) {
+    $stats_garagens = (int) \Drupal::entityQuery('node')
+      ->condition('type', 'armazem')
+      ->condition('status', 1)
+      ->accessCheck(FALSE)
+      ->count()
+      ->execute();
+
+    $stats_utilizadores = (int) \Drupal::entityQuery('user')
+      ->condition('status', 1)
+      ->condition('roles', 'utilizador')
+      ->accessCheck(FALSE)
+      ->count()
+      ->execute();
+
+    $stats_reservas_total = (int) $database->select('garagem_reserva', 'gr')->countQuery()->execute()->fetchField();
+    $stats_reservas_pendentes = (int) $database->select('garagem_reserva', 'gr')->condition('estado', 'pendente')->countQuery()->execute()->fetchField();
+    $stats_receita = (float) array_sum(
+      $database->select('garagem_reserva', 'gr')->fields('gr', ['taxa_plataforma'])->condition('estado', 'pago')->execute()->fetchCol()
+    );
+
+    $build['gestor_stats'] = [
+      '#theme' => 'garagem_gestor_stats',
+      '#stats' => [
+        'garagens'           => $stats_garagens,
+        'utilizadores'       => $stats_utilizadores,
+        'reservas_total'     => $stats_reservas_total,
+        'reservas_pendentes' => $stats_reservas_pendentes,
+        'receita'            => number_format($stats_receita, 2, ',', '.') . '€',
+      ],
+      '#cache' => ['max-age' => 0],
+      '#weight' => -20,
+    ];
+  }
+}
+
+/**
+ * Implements hook_node_view().
+ *
+ * Injeta a secção de reviews na página da garagem.
+ */
+function garagem_reservas_node_view(array &$build, \Drupal\Core\Entity\EntityInterface $entity, $display, $view_mode) {
+  if ($entity->getType() !== 'armazem' || $view_mode !== 'full') {
+    return;
+  }
+
+  $nid = $entity->id();
+  $database = \Drupal::database();
+
+  $rows = $database->select('garagem_review', 'r')
+    ->fields('r')
+    ->condition('garagem_id', $nid)
+    ->orderBy('created', 'DESC')
+    ->execute()
+    ->fetchAll();
+
+  $reviews = [];
+  foreach ($rows as $r) {
+    $user = \Drupal\user\Entity\User::load($r->user_id);
+    $nome = '';
+    if ($user) {
+      $nome = $user->get('field_nome')->value ?: $user->getDisplayName();
+    }
+    $reviews[] = [
+      'id'        => (int) $r->id,
+      'rating'    => (int) $r->rating,
+      'texto'     => $r->texto,
+      'created'   => (int) $r->created,
+      'user_name' => $nome ?: 'Utilizador',
+    ];
+  }
+
+  $total = count($reviews);
+  $media = $total > 0 ? round(array_sum(array_column($reviews, 'rating')) / $total, 1) : 0;
+
+  $pode_avaliar = FALSE;
+  $reserva_para_review = NULL;
+  $current_user = \Drupal::currentUser();
+
+  if ($current_user->isAuthenticated()) {
+    $now = \Drupal::time()->getRequestTime();
+    $reserva_id = $database->select('garagem_reserva', 'gr')
+      ->fields('gr', ['id'])
+      ->condition('garagem_id', $nid)
+      ->condition('user_id', $current_user->id())
+      ->condition('estado', 'pago')
+      ->condition('data_inicio', $now, '<=')
+      ->range(0, 1)
+      ->execute()
+      ->fetchField();
+
+    if ($reserva_id) {
+      $ja_avaliou = $database->select('garagem_review', 'r')
+        ->fields('r', ['id'])
+        ->condition('reserva_id', $reserva_id)
+        ->execute()
+        ->fetchField();
+
+      if (!$ja_avaliou) {
+        $pode_avaliar = TRUE;
+        $reserva_para_review = (int) $reserva_id;
+      }
+    }
+  }
+
+  $build['garagem_reviews'] = [
+    '#theme'        => 'garagem_reviews',
+    '#reviews'      => $reviews,
+    '#total'        => $total,
+    '#media'        => $media,
+    '#garagem_id'   => $nid,
+    '#pode_avaliar' => $pode_avaliar,
+    '#reserva_id'   => $reserva_para_review,
+    '#cache'        => ['max-age' => 0],
+    '#weight'       => 100,
+  ];
+}
+
+/**
+ * Implements template_preprocess_HOOK() for garagem_review_form.
+ */
+function template_preprocess_garagem_review_form(&$variables) {
+  $form = $variables['form'];
+  $variables['garagem_foto']      = $form['#garagem_foto'] ?? NULL;
+  $variables['garagem_titulo']    = $form['#garagem_titulo'] ?? '';
+  $variables['garagem_localidade'] = $form['#garagem_localidade'] ?? '';
+  $variables['data_inicio']       = $form['#data_inicio'] ?? '';
+  $variables['data_fim']          = $form['#data_fim'] ?? '';
+  $variables['garagem_url']       = $form['#garagem_url'] ?? '';
+}
+
 function garagem_reservas_theme() {
   return [
+    'garagem_review_form' => [
+      'render element' => 'form',
+      'template' => 'garagem-review-form',
+    ],
+    'garagem_reviews_pendentes' => [
+      'variables' => [
+        'items' => [],
+      ],
+      'template' => 'garagem-reviews-pendentes',
+    ],
+    'garagem_gestor_stats' => [
+      'variables' => [
+        'stats' => [],
+      ],
+      'template' => 'garagem-gestor-stats',
+    ],
+    'garagem_reservas_pendentes_perfil' => [
+      'variables' => [
+        'items' => [],
+      ],
+      'template' => 'garagem-reservas-pendentes-perfil',
+    ],
+    'garagem_reservas_por_aprovar_perfil' => [
+      'variables' => [
+        'items' => [],
+      ],
+      'template' => 'garagem-reservas-por-aprovar-perfil',
+    ],
     'garagem_card_lateral' => [
       'variables' => [
         'estado'          => NULL,
@@ -201,6 +591,8 @@ function garagem_reservas_theme() {
         'commerce_checkout_url' => NULL,
         'proprietario_contacto' => NULL,
         'arrendatario_contacto' => NULL,
+        'garagem_foto_url' => NULL,
+        'garagem_localidade' => '',
       ],
       'template' => 'garagem-reserva',
     ],
@@ -235,6 +627,17 @@ function garagem_reservas_theme() {
         'items' => [],
       ],
       'template' => 'garagem-reservas-notificacoes',
+    ],
+    'garagem_reviews' => [
+      'variables' => [
+        'reviews'      => [],
+        'total'        => 0,
+        'media'        => 0,
+        'garagem_id'   => NULL,
+        'pode_avaliar' => FALSE,
+        'reserva_id'   => NULL,
+      ],
+      'template' => 'garagem-reviews',
     ],
     'garagem_reserva_pdf' => [
       'variables' => [

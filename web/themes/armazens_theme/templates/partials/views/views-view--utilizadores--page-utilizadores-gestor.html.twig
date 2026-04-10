@@ -1,0 +1,39 @@
+{#
+/**
+ * @file
+ * Template para a página de gestão de utilizadores (gestor).
+ */
+#}
+<div class="w-full">
+
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-bold text-gray-900">{{ 'Utilizadores'|t }}</h1>
+    {% if view.total_rows %}
+      <span class="text-xs text-gray-400">{{ view.total_rows }} {{ 'utilizadores'|t }}</span>
+    {% endif %}
+  </div>
+
+  {% if exposed %}
+    <div class="flex flex-wrap gap-3 mb-6">
+      {{ exposed }}
+    </div>
+  {% endif %}
+
+  {% if rows %}
+    {{ rows }}
+  {% elseif empty %}
+    <div class="flex flex-col items-center justify-center py-16 text-center">
+      <div class="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center mb-4">
+        <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+        </svg>
+      </div>
+      <p class="text-sm font-medium text-gray-500">{{ 'Sem utilizadores'|t }}</p>
+    </div>
+  {% endif %}
+
+  {% if pager %}
+    <div class="mt-6">{{ pager }}</div>
+  {% endif %}
+
+</div>

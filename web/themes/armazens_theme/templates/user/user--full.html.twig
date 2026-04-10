@@ -73,14 +73,16 @@
     </div>
   </div>
 
+  {# ── Reservas por aprovar (proprietário) ────────────── #}
+  {{ content.reservas_por_aprovar }}
+
+  {# ── Reservas pendentes de aceitação (arrendatário) ── #}
+  {{ content.reservas_pendentes }}
+
+  {# ── Reviews pendentes ──────────────────────────────── #}
+  {{ content.reviews_pendentes }}
+
   {# ── As minhas garagens ──────────────────────────────── #}
-  <div class="flex items-center justify-between mb-6">
-    <h2 class="text-lg font-semibold text-gray-900">{{ 'As minhas garagens'|t }}</h2>
-    <a href="/user/armazens"
-       class="inline-flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-gray-900 border border-gray-200 hover:border-gray-400 rounded-full px-3 py-1.5 transition-colors">
-      {{ 'Ver todos'|t }}
-    </a>
-  </div>
   {{ drupal_view('armazens', 'block_armazens_perfil') }}
 
 </article>

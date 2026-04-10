@@ -1,0 +1,57 @@
+{#
+/**
+ * @file
+ * Template de linhas para a gestão de garagens.
+ */
+#}
+
+
+<div class="space-y-2">
+  {% for key, row in rows %}
+    {% set entity    = row.content['#row']._entity %}
+    {% set title     = view.style_plugin.getField(key, 'title')|render|striptags|trim %}
+    {% set estado    = view.style_plugin.getField(key, 'field_estado')|render|striptags|trim|lower %}
+    {% set autor     = view.style_plugin.getField(key, 'uid')|render|striptags|trim %}
+    {% set locality  = entity.field_localidade[0].locality %}
+    {% set url       = path('entity.node.canonical', {'node': row.content['#row'].nid}) %}
+
+    {% set estado_class =
+      'aprovado'  in estado ? 'bg-green-100 text-green-700' :
+      'pendente'  in estado ? 'bg-yellow-100 text-yellow-700' :
+      'rejeitado' in estado ? 'bg-red-100 text-red-600' :
+                              'bg-gray-100 text-gray-500'
+    %}
+
+    <a href="{{ url }}"
+       class="grid grid-cols-12 gap-4 items-center p-4 bg-white border border-gray-100 rounded-2xl hover:border-gray-300 hover:shadow-sm transition-all no-underline group">
+
+      <div class="col-span-12 md:col-span-5">
+        <p class="text-sm font-semibold text-gray-900 truncate">{{ title }}</p>
+      </div>
+
+      <div class="col-span-5 md:col-span-3 flex items-center gap-1.5">
+        {% if locality %}
+          <svg class="w-3.5 h-3.5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+          <span class="text-sm text-gray-500 truncate">{{ locality }}</span>
+        {% endif %}
+      </div>
+
+      <div class="col-span-4 md:col-span-2">
+        <span class="text-sm text-gray-500 truncate">{{ autor }}</span>
+      </div>
+
+      <div class="col-span-3 md:col-span-2 flex items-center justify-between">
+        <span class="inline-flex px-2.5 py-1 rounded-full text-xs font-bold {{ estado_class }}">
+          {{ estado|capitalize }}
+        </span>
+        <svg class="w-4 h-4 text-gray-300 group-hover:text-gray-500 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </div>
+
+    </a>
+  {% endfor %}
+</div>

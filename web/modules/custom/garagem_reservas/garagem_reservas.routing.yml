@@ -1,3 +1,17 @@
+garagem_reservas.review_add:
+  path: '/garagem/{node}/avaliar'
+  defaults:
+    _form: '\Drupal\garagem_reservas\Form\GaragemReviewForm'
+    _title: 'Avaliar garagem'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+    node: \d+
+  options:
+    no_cache: true
+    parameters:
+      node:
+        type: entity:node
+
 garagem_reservas.admin_settings:
   path: '/admin/config/garagem-reservas/settings'
   defaults:

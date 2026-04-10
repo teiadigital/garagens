@@ -117,7 +117,12 @@ class ReservaAdminController extends ControllerBase {
     return [
       '#type' => 'inline_template',
       '#template' => '
-        <div class="py-4">
+        <div class="w-full">
+
+          <div class="flex items-center justify-between mb-6">
+            <h1 class="text-2xl font-bold text-gray-900">{{ "Reservas"|t }}</h1>
+            <span class="text-xs text-gray-400">{{ total }} {{ "total"|t }}</span>
+          </div>
 
           {# Filtros #}
           <form method="get" class="flex flex-wrap gap-3 mb-8">

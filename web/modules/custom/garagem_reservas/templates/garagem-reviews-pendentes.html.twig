@@ -1,0 +1,56 @@
+{#
+  Secção de reviews pendentes no perfil do utilizador.
+
+  Variables:
+  - items: lista de garagens por avaliar, cada uma com:
+    - titulo, localidade, foto_url, data_inicio, data_fim, url_review
+#}
+
+{% if items %}
+<div class="mb-10">
+  <div class="flex items-center gap-3 mb-5">
+    <div class="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center flex-shrink-0">
+      <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+      </svg>
+    </div>
+    <div>
+      <h2 class="text-base font-semibold text-gray-900">{{ 'Avalie a sua estadia'|t }}</h2>
+      <p class="text-xs text-gray-400 mt-0.5">{{ 'Tem estadias por avaliar. A sua opinião ajuda outros utilizadores.'|t }}</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+    {% for item in items %}
+      <div class="group flex gap-4 items-center p-4 bg-white border border-gray-200 rounded-2xl hover:border-gray-300 hover:shadow-sm transition-all">
+        {# Foto #}
+        <div class="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 bg-gray-100">
+          {% if item.foto_url %}
+            <img src="{{ item.foto_url }}" alt="{{ item.titulo }}" class="w-full h-full object-cover">
+          {% else %}
+            <div class="w-full h-full flex items-center justify-center">
+              <svg class="w-6 h-6 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+              </svg>
+            </div>
+          {% endif %}
+        </div>
+
+        {# Info #}
+        <div class="flex-1 min-w-0">
+          <p class="font-semibold text-gray-900 text-sm truncate">{{ item.titulo }}</p>
+          {% if item.localidade %}
+            <p class="text-xs text-gray-400 mt-0.5 truncate">{{ item.localidade }}</p>
+          {% endif %}
+          <p class="text-xs text-gray-500 mt-1">{{ item.data_inicio }} → {{ item.data_fim }}</p>
+        </div>
+
+        {# Botão #}
+        <a href="{{ item.url_review }}" class="flex-shrink-0 px-3.5 py-2 text-xs font-bold text-white bg-gray-900 rounded-full hover:bg-gray-700 transition-colors whitespace-nowrap">
+          {{ 'Avaliar'|t }}
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}

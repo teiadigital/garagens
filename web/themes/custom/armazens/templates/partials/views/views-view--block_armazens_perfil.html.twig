@@ -50,15 +50,14 @@
   {{ attachment_before }}
 
   {% if rows -%}
-    {{ rows }}
-
-    <div>
-      <a href="#" class="mt-8 w-fit text-sm uppercase bg-black block rounded-full py-4 px-10 font-bold text-white hover:bg-white border-2 hover:text-black border-black transition-all">
-        Ver todos
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-lg font-semibold text-gray-900">{{ 'As minhas garagens'|t }}</h2>
+      <a href="/user/armazens"
+         class="inline-flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-gray-900 border border-gray-200 hover:border-gray-400 rounded-full px-3 py-1.5 transition-colors">
+        {{ 'Ver todos'|t }}
       </a>
     </div>
-  {% elseif empty -%}
-    {{ empty }}
+    {{ rows }}
   {% endif %}
   {{ pager }}
 

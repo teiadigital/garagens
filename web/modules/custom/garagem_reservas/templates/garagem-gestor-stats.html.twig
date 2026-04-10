@@ -1,0 +1,106 @@
+{#
+/**
+ * @file
+ * Estatísticas resumo para o painel do gestor.
+ */
+#}
+
+<div class="w-full mb-6">
+
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+
+    <div class="bg-white border border-gray-100 rounded-2xl p-5">
+      <div class="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center mb-3">
+        <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+        </svg>
+      </div>
+      <p class="text-2xl font-bold text-gray-900">{{ stats.garagens }}</p>
+      <p class="text-xs text-gray-400 mt-0.5">{{ 'Garagens ativas'|t }}</p>
+    </div>
+
+    <div class="bg-white border border-gray-100 rounded-2xl p-5">
+      <div class="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center mb-3">
+        <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+        </svg>
+      </div>
+      <p class="text-2xl font-bold text-gray-900">{{ stats.utilizadores }}</p>
+      <p class="text-xs text-gray-400 mt-0.5">{{ 'Utilizadores'|t }}</p>
+    </div>
+
+    <div class="bg-white border border-gray-100 rounded-2xl p-5">
+      <div class="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center mb-3">
+        <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+        </svg>
+      </div>
+      <p class="text-2xl font-bold text-gray-900">{{ stats.reservas_total }}</p>
+      <p class="text-xs text-gray-400 mt-0.5">
+        {{ 'Reservas'|t }}
+        {% if stats.reservas_pendentes > 0 %}
+          <span class="ml-1 px-1.5 py-0.5 bg-yellow-100 text-yellow-700 rounded-full text-xs font-bold">{{ stats.reservas_pendentes }} {{ 'pendentes'|t }}</span>
+        {% endif %}
+      </p>
+    </div>
+
+    <div class="bg-gray-900 rounded-2xl p-5">
+      <div class="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center mb-3">
+        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+      </div>
+      <p class="text-2xl font-bold text-white">{{ stats.receita }}</p>
+      <p class="text-xs text-white/50 mt-0.5">{{ 'Receita (taxas)'|t }}</p>
+    </div>
+
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+    <a href="{{ path('view.armazens.page_gestao_armazens') }}"
+       class="flex items-center gap-3 p-4 bg-white border border-gray-100 rounded-2xl hover:bg-gray-900 transition-all no-underline group">
+      <div class="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center flex-shrink-0 group-hover:bg-white/10 transition-colors">
+        <svg class="w-4 h-4 text-gray-600 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+        </svg>
+      </div>
+      <div>
+        <p class="text-sm font-semibold text-gray-900 group-hover:text-white transition-colors">{{ 'Gerir garagens'|t }}</p>
+        <p class="text-xs text-gray-400 group-hover:text-white/50 transition-colors">{{ 'Ver todas as garagens'|t }}</p>
+      </div>
+    </a>
+
+    <a href="{{ path('garagem_reservas.admin_lista') }}"
+       class="flex items-center gap-3 p-4 bg-white border border-gray-100 rounded-2xl hover:bg-gray-900 transition-all no-underline group">
+      <div class="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center flex-shrink-0 group-hover:bg-white/10 transition-colors">
+        <svg class="w-4 h-4 text-gray-600 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+        </svg>
+      </div>
+      <div>
+        <p class="text-sm font-semibold text-gray-900 group-hover:text-white transition-colors">{{ 'Ver reservas'|t }}</p>
+        <p class="text-xs text-gray-400 group-hover:text-white/50 transition-colors">
+          {% if stats.reservas_pendentes > 0 %}
+            {{ stats.reservas_pendentes }} {{ 'a aguardar ação'|t }}
+          {% else %}
+            {{ 'Nenhuma pendente'|t }}
+          {% endif %}
+        </p>
+      </div>
+    </a>
+
+    <a href="{{ path('view.utilizadores.page_utilizadores_gestor') }}"
+       class="flex items-center gap-3 p-4 bg-white border border-gray-100 rounded-2xl hover:bg-gray-900 transition-all no-underline group">
+      <div class="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center flex-shrink-0 group-hover:bg-white/10 transition-colors">
+        <svg class="w-4 h-4 text-gray-600 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+        </svg>
+      </div>
+      <div>
+        <p class="text-sm font-semibold text-gray-900 group-hover:text-white transition-colors">{{ 'Utilizadores'|t }}</p>
+        <p class="text-xs text-gray-400 group-hover:text-white/50 transition-colors">{{ 'Gerir utilizadores'|t }}</p>
+      </div>
+    </a>
+  </div>
+
+</div>

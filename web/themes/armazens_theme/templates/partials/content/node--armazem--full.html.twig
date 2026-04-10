@@ -272,6 +272,9 @@
 
     </div>{# fim grid 2 colunas #}
 
+    {# ── Reviews ─────────────────────────────────────────────── #}
+    {{ content.garagem_reviews }}
+
     {# Vista do proprietário (só para gestores/admins) #}
     {% if 'gestor' in user.getroles(TRUE) or 'administrator' in user.getroles(TRUE) %}
       <div class="mt-12 border-t border-gray-200 pt-10">

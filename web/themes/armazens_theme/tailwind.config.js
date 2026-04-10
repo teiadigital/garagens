@@ -8,6 +8,9 @@ module.exports = {
     "../../modules/custom/**/*.twig",
     "../../modules/custom/**/*.php",
   ],
+  corePlugins: {
+    preflight: false,
+  },
   theme: {
     container: {
       center: true,

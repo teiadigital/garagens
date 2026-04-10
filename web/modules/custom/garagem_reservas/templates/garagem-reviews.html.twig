@@ -1,0 +1,163 @@
+{#
+/**
+ * @file
+ * Secção de reviews de uma garagem.
+ *
+ * Variáveis:
+ *  - reviews: lista de reviews com id, rating, texto, created, user_name
+ *  - total: número total de reviews
+ *  - media: nota média (float)
+ *  - garagem_id: nid da garagem
+ *  - pode_avaliar: TRUE se o utilizador pode submeter review
+ *  - reserva_id: ID da reserva qualificada (se pode_avaliar)
+ */
+#}
+
+{% macro estrelas(rating) %}
+  <div class="flex gap-0.5">
+    {% for i in 1..5 %}
+      <svg class="w-3.5 h-3.5 {% if i <= rating %}text-gray-900{% else %}text-gray-300{% endif %}" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+      </svg>
+    {% endfor %}
+  </div>
+{% endmacro %}
+
+<div class="mt-10 pt-10">
+
+  {# Cabeçalho da secção #}
+  <div class="flex items-center justify-between mb-8">
+    <div class="flex items-center gap-3">
+      {% if total > 0 %}
+        <svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+        <span class="text-xl font-bold text-gray-900">{{ media }}</span>
+        <span class="text-gray-300">·</span>
+      {% endif %}
+      <h2 class="text-xl font-bold text-gray-900">
+        {% if total == 0 %}
+          {{ 'Sem avaliações ainda'|t }}
+        {% elseif total == 1 %}
+          {{ '1 avaliação'|t }}
+        {% else %}
+          {{ total }} {{ 'avaliações'|t }}
+        {% endif %}
+      </h2>
+    </div>
+
+    {# Botão avaliar #}
+    {% if pode_avaliar %}
+      <a href="{{ path('garagem_reservas.review_add', {'node': garagem_id}) }}"
+         class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-gray-700 border border-gray-200 rounded-full hover:bg-gray-50 transition">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+        </svg>
+        {{ 'Avaliar'|t }}
+      </a>
+    {% endif %}
+  </div>
+
+  {% if total > 0 %}
+
+    {# Grid de reviews — máx 6 visíveis #}
+    <div class="{{ total == 1 ? 'max-w-sm' : 'grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8' }}">
+      {% for review in reviews|slice(0, 6) %}
+        <div class="flex flex-col gap-3">
+          {# Avatar + nome + data + estrelas #}
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full bg-gray-800 flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
+              {{ review.user_name|slice(0, 1)|upper }}
+            </div>
+            <div>
+              <p class="font-semibold text-sm text-gray-900 leading-tight">{{ review.user_name }}</p>
+              <p class="text-xs text-gray-400">{{ review.created|date('M Y') }}</p>
+            </div>
+            <div class="ml-auto">
+              {{ _self.estrelas(review.rating) }}
+            </div>
+          </div>
+
+          {# Texto #}
+          {% if review.texto %}
+            <p class="text-sm text-gray-600 leading-relaxed line-clamp-4">{{ review.texto }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+    {# Botão "Mostrar todas" se > 6 #}
+    {% if total > 6 %}
+      <div class="mt-8">
+        <button type="button"
+                onclick="document.getElementById('modal-reviews').classList.remove('hidden'); document.getElementById('modal-reviews').classList.add('flex');"
+                class="px-5 py-2.5 text-sm font-bold text-white bg-gray-900 rounded-full hover:bg-gray-700 transition">
+          {{ 'Mostrar todas as %total% avaliações'|t({'%total%': total}) }}
+        </button>
+      </div>
+
+      {# Modal com todas as reviews #}
+      <div id="modal-reviews"
+           class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 p-4">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-3xl max-h-[90vh] flex flex-col">
+
+          {# Header do modal #}
+          <div class="flex items-center justify-between px-6 py-5 border-b border-gray-200 flex-shrink-0">
+            <div class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-gray-900" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+              <span class="font-bold text-gray-900">{{ media }}</span>
+              <span class="text-gray-300">·</span>
+              <span class="font-bold text-gray-900">{{ total }} {{ 'avaliações'|t }}</span>
+            </div>
+            <button type="button"
+                    onclick="document.getElementById('modal-reviews').classList.add('hidden'); document.getElementById('modal-reviews').classList.remove('flex');"
+                    class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition">
+              <svg class="w-4 h-4 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+
+          {# Lista de reviews — scrollável #}
+          <div class="overflow-y-auto px-6 py-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+              {% for review in reviews %}
+                <div>
+                  <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
+                      {{ review.user_name|slice(0, 1)|upper }}
+                    </div>
+                    <div>
+                      <p class="font-semibold text-sm text-gray-900">{{ review.user_name }}</p>
+                      <p class="text-xs text-gray-400">{{ review.created|date('M Y') }}</p>
+                    </div>
+                  </div>
+                  <div class="mb-2">
+                    {{ _self.estrelas(review.rating) }}
+                  </div>
+                  {% if review.texto %}
+                    <p class="text-sm text-gray-600 leading-relaxed">{{ review.texto }}</p>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <script>
+      document.getElementById('modal-reviews')?.addEventListener('click', function(e) {
+        if (e.target === this) {
+          this.classList.add('hidden');
+          this.classList.remove('flex');
+        }
+      });
+      </script>
+    {% endif %}
+
+  {% endif %}
+
+</div>

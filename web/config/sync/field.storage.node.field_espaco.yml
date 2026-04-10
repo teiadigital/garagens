@@ -16,7 +16,7 @@ settings:
       label: Fechado
     -
       value: comum
-      label: 'Comum c/marcação no piso'
+      label: 'Comum c/ marcação no piso'
   allowed_values_function: ''
 module: options
 locked: false

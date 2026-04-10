@@ -141,9 +141,40 @@ class NotificacaoService {
     $this->reservaCanceladaPeloUser($reserva_id);
   }
 
+  /**
+   * Convite para avaliar a garagem após início da estadia.
+   * → User: link para submeter review (via hook_mail, sem message module).
+   */
+  public function reviewConvite(int $reserva_id): void {
+    $reserva = $this->getReserva($reserva_id);
+    if (!$reserva) return;
+
+    $user = $this->loadUser($reserva->user_id);
+    if (!$user || !$user->getEmail()) return;
+
+    $garagem_titulo = $this->getGaragemTitulo($reserva->garagem_id);
+    $url_review = \Drupal\Core\Url::fromRoute(
+      'garagem_reservas.review_add',
+      ['node' => $reserva->garagem_id],
+      ['absolute' => TRUE]
+    )->toString();
+
+    \Drupal::service('plugin.manager.mail')->mail(
+      'garagem_reservas',
+      'review_convite',
+      $user->getEmail(),
+      $user->getPreferredLangcode(),
+      [
+        'garagem'    => $garagem_titulo,
+        'url_review' => $url_review,
+        'user_name'  => $user->getDisplayName(),
+      ]
+    );
+  }
+
   // ─── Helpers ────────────────────────────────────────────────────────────────
 
-  protected function enviar(string $template, $destinatario, int $reserva_id, string $garagem_titulo = '', string $motivo = ''): void {
+  protected function enviar(string $template, $destinatario, int $reserva_id, string $garagem_titulo = '', string $motivo = '', array $extra = []): void {
     if (!$destinatario) return;
     try {
       $message = Message::create([
@@ -151,14 +182,11 @@ class NotificacaoService {
         'uid' => $destinatario->id(),
       ]);
 
-      $arguments = [
+      $arguments = array_merge([
         '@reserva_id' => $reserva_id,
-      ];
-      if ($garagem_titulo) {
-        $arguments['@garagem'] = $garagem_titulo;
-      }
-      // Se há motivo, formata como " Motivo: texto" inline na frase.
-      $arguments['@motivo'] = $motivo ? ' ' . t('Motivo') . ': ' . $motivo : '';
+        '@garagem'    => $garagem_titulo,
+        '@motivo'     => $motivo ? ' ' . t('Motivo') . ': ' . $motivo : '',
+      ], $extra);
       $message->set('arguments', $arguments);
 
       $message->save();

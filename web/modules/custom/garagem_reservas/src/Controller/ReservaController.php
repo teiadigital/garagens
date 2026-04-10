@@ -161,6 +161,25 @@ class ReservaController extends ControllerBase {
       ];
     }
 
+    // Foto da garagem.
+    $garagem_foto_url = NULL;
+    if ($garagem && $garagem->hasField('field_fotos') && !$garagem->get('field_fotos')->isEmpty()) {
+      $media = $garagem->get('field_fotos')->first()->entity;
+      if ($media && $media->hasField('field_media_image') && !$media->get('field_media_image')->isEmpty()) {
+        $file = $media->get('field_media_image')->entity;
+        if ($file) {
+          $garagem_foto_url = \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri());
+        }
+      }
+    }
+
+    // Localidade da garagem.
+    $garagem_localidade = '';
+    if ($garagem && $garagem->hasField('field_localidade') && !$garagem->get('field_localidade')->isEmpty()) {
+      $loc = $garagem->get('field_localidade')->first();
+      $garagem_localidade = trim(($loc->locality ?? '') . ', ' . ($loc->administrative_area ?? ''), ', ');
+    }
+
     return [
       '#theme' => 'garagem_reserva',
       '#reserva' => $reserva_data,
@@ -174,6 +193,8 @@ class ReservaController extends ControllerBase {
       '#is_user' => $is_user,
       '#proprietario_contacto' => $proprietario_contacto,
       '#arrendatario_contacto' => $arrendatario_contacto,
+      '#garagem_foto_url' => $garagem_foto_url,
+      '#garagem_localidade' => $garagem_localidade,
       '#cache' => ['max-age' => 0],
     ];
   }
@@ -844,9 +865,16 @@ class ReservaController extends ControllerBase {
       \Drupal::time()->getRequestTime()
     );
 
+    // Templates que são apenas e-mail — não aparecem como notificação in-app.
+    $email_only_templates = ['review_convite'];
+
     $template_storage = \Drupal::entityTypeManager()->getStorage('message_template');
     $items = [];
     foreach ($messages as $message) {
+      if (in_array($message->bundle(), $email_only_templates)) {
+        continue;
+      }
+
       $template = $template_storage->load($message->bundle());
       $label = $template ? $template->label() : $message->bundle();
 
@@ -865,9 +893,10 @@ class ReservaController extends ControllerBase {
       $url_reserva = $reserva_id ? \Drupal\Core\Url::fromRoute('garagem_reservas.reserva_view', ['reserva' => $reserva_id])->toString() : NULL;
 
       $items[] = [
-        'label' => $label,
-        'created' => $message->getCreatedTime(),
-        'text' => $text_rendered,
+        'bundle'     => $message->bundle(),
+        'label'      => $label,
+        'created'    => $message->getCreatedTime(),
+        'text'       => $text_rendered,
         'url_reserva' => $url_reserva,
       ];
     }

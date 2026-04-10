@@ -8,5 +8,9 @@
 function garagem_pesquisa_theme($existing, $type, $theme, $path) {
   return [
     'garagem_pesquisa' => ['variables' => []],
+    'garagem_barra_pesquisa' => [
+      'variables' => [],
+      'template'  => 'garagem-barra-pesquisa',
+    ],
   ];
 }

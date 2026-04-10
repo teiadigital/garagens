@@ -44,15 +44,15 @@ set classes = [
         'paragraph--type--' ~ paragraph.bundle|clean_class,
         view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
         not paragraph.isPublished() ? 'paragraph--unpublished',
+        'p-4 md:p-10 mt-20',
     ]
 %}
 
 {% block paragraph %}
     <div{{ attributes.addClass(classes) }}>
         {% block content %}
-        <div class="container bg-white mt-10 sm:mt-20 md:mt-0 px-4">
-            {{content}}
-        </div>
+
+            {{ drupal_block('garagem_barra_pesquisa') }}
         {% endblock %}
     </div>
 {% endblock paragraph %}

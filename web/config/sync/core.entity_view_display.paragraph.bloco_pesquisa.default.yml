@@ -1,0 +1,22 @@
+uuid: 26075315-c157-4a25-b55f-419d4747ce8b
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.bloco_pesquisa.field_title
+    - paragraphs.paragraphs_type.bloco_pesquisa
+  module:
+    - text
+id: paragraph.bloco_pesquisa.default
+targetEntityType: paragraph
+bundle: bloco_pesquisa
+mode: default
+content:
+  field_title:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }

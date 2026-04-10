@@ -1,0 +1,22 @@
+uuid: 07903cc8-adce-441f-a1eb-f9f653cc8a23
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_title
+    - paragraphs.paragraphs_type.bloco_pesquisa
+  module:
+    - text
+id: paragraph.bloco_pesquisa.field_title
+field_name: field_title
+entity_type: paragraph
+bundle: bloco_pesquisa
+label: Title
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

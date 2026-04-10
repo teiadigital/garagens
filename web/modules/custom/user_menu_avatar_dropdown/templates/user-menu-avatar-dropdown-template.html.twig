@@ -38,7 +38,7 @@ set classes = [
 {% if not is_anonymous %}
 
     {% block user_menu %}
-    <button type="button" class="flex mr-3 text-sm rounded-full md:mr-0 focus:ring-4 focus:ring-black "
+    <button type="button" class="flex text-sm rounded-full focus:ring-4 focus:ring-black "
         id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
         <img src="{{user_picture['#uri']}}" class="w-10 h-10 md:w-14 md:h-14 rounded-full" alt="">
     </button>

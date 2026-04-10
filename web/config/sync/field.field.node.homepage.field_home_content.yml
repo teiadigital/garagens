@@ -7,6 +7,7 @@ dependencies:
     - node.type.homepage
     - paragraphs.paragraphs_type.advertising
     - paragraphs.paragraphs_type.armazens_homepage
+    - paragraphs.paragraphs_type.bloco_pesquisa
     - paragraphs.paragraphs_type.contact
     - paragraphs.paragraphs_type.image
     - paragraphs.paragraphs_type.location
@@ -36,6 +37,7 @@ settings:
       location: location
       what_we_do: what_we_do
       armazens_homepage: armazens_homepage
+      bloco_pesquisa: bloco_pesquisa
       why_choose_us: why_choose_us
     negate: 0
     target_bundles_drag_drop:
@@ -60,11 +62,17 @@ settings:
       block_registo:
         weight: 7
         enabled: false
+      bloco_pesquisa:
+        weight: 27
+        enabled: true
       camaras_de_frio:
         weight: 8
         enabled: false
       carousel_banner:
         weight: 17
+        enabled: false
+      clausula_contrato:
+        weight: 37
         enabled: false
       contact:
         weight: 21
@@ -74,6 +82,9 @@ settings:
         enabled: false
       equipamentos_carga_descarga:
         weight: 9
+        enabled: false
+      faqs:
+        weight: 41
         enabled: false
       icon_text:
         weight: 15

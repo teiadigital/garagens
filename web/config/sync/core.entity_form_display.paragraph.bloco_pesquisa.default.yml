@@ -1,0 +1,25 @@
+uuid: 8c6d1555-65e4-4e91-8b3d-7d2c1cb635e4
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.bloco_pesquisa.field_title
+    - paragraphs.paragraphs_type.bloco_pesquisa
+  module:
+    - text
+id: paragraph.bloco_pesquisa.default
+targetEntityType: paragraph
+bundle: bloco_pesquisa
+mode: default
+content:
+  field_title:
+    type: text_textarea
+    weight: 1
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

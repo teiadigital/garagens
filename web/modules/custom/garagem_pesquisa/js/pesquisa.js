@@ -8,6 +8,136 @@
 
       const cfg = drupalSettings.garagemPesquisa || {};
       const ajaxUrl = cfg.ajaxUrl || "/pesquisa/ajax";
+      const modoBloco = form.dataset.mode === "block";
+      const pesquisaUrl = form.dataset.pesquisaUrl || "/pesquisa";
+
+      // Modo bloco: só autocomplete + redirect no submit, sem AJAX inline.
+      if (modoBloco) {
+        const locationInput = form.querySelector("#pesquisa-location");
+        const latInput      = form.querySelector("#pesquisa-lat");
+        const lngInput      = form.querySelector("#pesquisa-lng");
+        const autocomplete  = form.querySelector("#pesquisa-autocomplete");
+        const limparBtn     = form.querySelector("#limpar-location");
+        const campoDatas    = form.querySelector("#campo-datas");
+        const datasPanel    = form.querySelector("#datas-panel");
+        const datasDisplay  = form.querySelector("#datas-display");
+        const tipoInput     = form.querySelector("#pesquisa-tipo");
+        const inputInicio   = form.querySelector("#pesquisa-data-inicio");
+        const inputFim      = form.querySelector("#pesquisa-data-fim");
+        let dataInicioVal = "", dataFimVal = "", panelAberto = false, fp = null;
+
+        // Autocomplete
+        let acTimeout;
+        locationInput.addEventListener("input", function () {
+          clearTimeout(acTimeout);
+          const q = this.value.trim();
+          limparBtn.classList.toggle("hidden", !q);
+          limparBtn.style.display = q ? "flex" : "";
+          if (q.length < 2) { fecharAc(); return; }
+          acTimeout = setTimeout(() => {
+            fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&limit=200&lang=en&osm_tag=place&osm_tag=boundary`)
+              .then(r => r.json())
+              .then(data => renderAc(data.features || []))
+              .catch(() => fecharAc());
+          }, 300);
+        });
+
+        function fecharAc() {
+          autocomplete.classList.add("hidden");
+          autocomplete.innerHTML = "";
+        }
+        function escHtml(str) {
+          return String(str||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+        }
+        function renderAc(features) {
+          const vistos = new Set();
+          const unicos = features.filter(f => {
+            const p = f.properties || {};
+            if ((p.countrycode||"").toLowerCase() !== "pt") return false;
+            if (!p.name || !["place","boundary"].includes(p.osm_key)) return false;
+            if (vistos.has(p.name)) return false;
+            vistos.add(p.name); return true;
+          });
+          if (!unicos.length) { fecharAc(); return; }
+          autocomplete.innerHTML = unicos.slice(0,5).map(f => {
+            const p = f.properties||{}, coords = f.geometry.coordinates;
+            const detalhe = [p.city||p.county,p.state,p.country].filter(Boolean).filter((v,i,a)=>a.indexOf(v)===i).join(", ");
+            return `<div class="autocomplete-item" data-lat="${coords[1]}" data-lng="${coords[0]}" data-label="${escHtml(p.name)}">
+              <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
+              <div class="flex flex-col min-w-0"><span class="text-sm font-semibold text-gray-900 truncate">${escHtml(p.name)}</span><span class="text-xs text-gray-400 truncate">${escHtml(detalhe)}</span></div>
+            </div>`;
+          }).join("");
+          autocomplete.classList.remove("hidden");
+          autocomplete.querySelectorAll(".autocomplete-item").forEach(el => {
+            el.addEventListener("click", () => {
+              locationInput.value = el.dataset.label;
+              latInput.value = el.dataset.lat;
+              lngInput.value = el.dataset.lng;
+              fecharAc();
+            });
+          });
+        }
+        document.addEventListener("click", e => { if (!autocomplete.contains(e.target) && e.target !== locationInput) fecharAc(); });
+        limparBtn.addEventListener("click", e => { e.stopPropagation(); locationInput.value=""; latInput.value=""; lngInput.value=""; limparBtn.classList.add("hidden"); limparBtn.style.display=""; fecharAc(); });
+
+        // Painel datas
+        const tiposDisponiveis = cfg.tipos || [];
+        const tipoLabels = { dia: Drupal.t("Por dia"), mes: Drupal.t("Por mês"), ano: Drupal.t("Por ano") };
+        const tipoTabsEl = form.querySelector("#tipo-tabs");
+        tiposDisponiveis.forEach((valor, idx) => {
+          const btn = document.createElement("button");
+          btn.type="button"; btn.className="tipo-tab"+(idx===0?" tipo-tab-ativo":""); btn.dataset.valor=valor; btn.textContent=tipoLabels[valor]||valor;
+          tipoTabsEl.appendChild(btn);
+        });
+        if (tiposDisponiveis.length > 0) tipoInput.value = tiposDisponiveis[0];
+
+        function criarFp(modo) {
+          if (fp) fp.destroy();
+          const calEl = form.querySelector("#datas-cal"); calEl.innerHTML="";
+          fp = flatpickr(calEl, { locale:"pt", inline:true, mode:modo==="dia"?"range":"single", minDate:"today", showMonths:window.innerWidth>=640?2:1, dateFormat:"d/m/Y", disableMobile:true,
+            onReady(_,__,instance){ const cal=instance.calendarContainer; if(!cal)return; cal.style.position="static"; cal.style.boxShadow="none"; cal.style.border="none"; cal.style.margin="0 auto"; },
+            onChange(selectedDates) {
+              const tipo=tipoInput.value; if(!selectedDates[0]) return;
+              const fmt=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+              dataInicioVal=fmt(selectedDates[0]);
+              if(tipo==="dia"){ if(!selectedDates[1]){dataFimVal="";return;} dataFimVal=fmt(selectedDates[1]); datasDisplay.textContent=`${flatpickr.formatDate(selectedDates[0],"d/m/Y")} – ${flatpickr.formatDate(selectedDates[1],"d/m/Y")}`; }
+              else { datasDisplay.textContent=flatpickr.formatDate(selectedDates[0],"d/m/Y"); dataFimVal=""; }
+              inputInicio.value=dataInicioVal; inputFim.value=dataFimVal;
+              fecharPanel();
+            }
+          });
+        }
+        function scrollParaBarra(){ const barRect=form.getBoundingClientRect(); window.scrollTo({top: window.scrollY+barRect.top-(window.innerHeight*0.25), behavior:"smooth"}); }
+        function abrirPanel(){
+          datasPanel.classList.remove("datas-panel-hidden");
+          datasPanel.classList.add("datas-panel-visible");
+          panelAberto=true;
+          campoDatas.classList.add("campo-ativo");
+          if(!fp) criarFp(tipoInput.value);
+          scrollParaBarra();
+        }
+        const campoOnde = form.querySelector("#campo-onde");
+        campoOnde.addEventListener("click", () => scrollParaBarra());
+        function fecharPanel(){ datasPanel.classList.add("datas-panel-hidden"); datasPanel.classList.remove("datas-panel-visible"); panelAberto=false; campoDatas.classList.remove("campo-ativo"); }
+        campoDatas.addEventListener("click", e=>{ e.stopPropagation(); panelAberto?fecharPanel():abrirPanel(); });
+        document.addEventListener("click", e=>{ if(panelAberto&&!datasPanel.contains(e.target)&&!campoDatas.contains(e.target)) fecharPanel(); });
+        tipoTabsEl.addEventListener("click", e=>{ const tab=e.target.closest(".tipo-tab"); if(!tab)return; e.stopPropagation(); tipoInput.value=tab.dataset.valor; tipoTabsEl.querySelectorAll(".tipo-tab").forEach(t=>t.classList.remove("tipo-tab-ativo")); tab.classList.add("tipo-tab-ativo"); dataInicioVal=""; dataFimVal=""; datasDisplay.textContent=Drupal.t("Adicionar datas"); criarFp(tab.dataset.valor); });
+
+        // Submit → redirect
+        form.addEventListener("submit", e => {
+          e.preventDefault();
+          fecharPanel();
+          const params = new URLSearchParams();
+          if (latInput.value && lngInput.value) { params.set("lat", latInput.value); params.set("lng", lngInput.value); }
+          if (locationInput.value) params.set("q", locationInput.value);
+          params.set("tipo", tipoInput.value);
+          if (dataInicioVal) params.set("date_start", dataInicioVal);
+          if (dataFimVal)    params.set("date_end",   dataFimVal);
+          window.location.href = pesquisaUrl + (params.toString() ? "?" + params.toString() : "");
+        });
+
+        return; // não continuar para o comportamento da página completa
+      }
 
       const locationInput = document.getElementById("pesquisa-location");
       const latInput = document.getElementById("pesquisa-lat");
@@ -200,7 +330,7 @@
 
       function criarMarker(item) {
         if (!map) return;
-        const tipo = tipoInput.value;
+        const tipo = tipoInput.value || "dia";
         const precoValor =
           (tipo === "dia" && item.preco_dia) ? item.preco_dia
           : (tipo === "mes" && item.preco_mes) ? item.preco_mes
@@ -592,7 +722,25 @@
         pesquisar();
       });
 
-      pesquisar(); // arranque sem mostrar mapa
+      // Ler parâmetros da URL (vindos do bloco noutras páginas)
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlLat  = urlParams.get("lat");
+      const urlLng  = urlParams.get("lng");
+      const urlQ    = urlParams.get("q");
+      const urlTipo = urlParams.get("tipo");
+      const urlStart = urlParams.get("date_start");
+      const urlEnd   = urlParams.get("date_end");
+
+      if (urlLat && urlLng) { latInput.value = urlLat; lngInput.value = urlLng; }
+      if (urlQ)    locationInput.value = urlQ;
+      if (urlTipo) tipoInput.value = urlTipo;
+      if (urlStart) { dataInicioVal = urlStart; inputInicio.value = urlStart; }
+      if (urlEnd)   { dataFimVal   = urlEnd;   inputFim.value   = urlEnd; }
+      if (urlStart && urlEnd)  datasDisplay.textContent = urlStart.split("-").reverse().join("/") + " – " + urlEnd.split("-").reverse().join("/");
+      else if (urlStart)       datasDisplay.textContent = urlStart.split("-").reverse().join("/");
+
+      if (urlLat || urlQ) pesquisaUtilizador = true;
+      pesquisar(); // arranque
 
       function pesquisar() {
         const lat = latInput.value;
@@ -668,19 +816,23 @@
       }
 
       function renderCard(item) {
-        const tipo = tipoInput.value;
-        let preco = null;
+        const tipo = tipoInput.value || "dia";
+        let preco = null, tipoReal = null;
+        // Com datas: usa exatamente o tipo selecionado
         if (dataInicioVal) {
-          if (tipo === "dia" && item.preco_dia) preco = item.preco_dia;
-          else if (tipo === "mes" && item.preco_mes) preco = item.preco_mes;
-          else if (tipo === "ano" && item.preco_ano) preco = item.preco_ano;
+          if (tipo === "dia" && item.preco_dia) { preco = item.preco_dia; tipoReal = "dia"; }
+          else if (tipo === "mes" && item.preco_mes) { preco = item.preco_mes; tipoReal = "mes"; }
+          else if (tipo === "ano" && item.preco_ano) { preco = item.preco_ano; tipoReal = "ano"; }
+        } else {
+          // Sem datas: mostra preço disponível com a unidade correta
+          if (tipo === "dia" && item.preco_dia) { preco = item.preco_dia; tipoReal = "dia"; }
+          else if (tipo === "mes" && item.preco_mes) { preco = item.preco_mes; tipoReal = "mes"; }
+          else if (tipo === "ano" && item.preco_ano) { preco = item.preco_ano; tipoReal = "ano"; }
+          else if (item.preco_dia) { preco = item.preco_dia; tipoReal = "dia"; }
+          else if (item.preco_mes) { preco = item.preco_mes; tipoReal = "mes"; }
+          else if (item.preco_ano) { preco = item.preco_ano; tipoReal = "ano"; }
         }
-        const unidade =
-          tipo === "dia"
-            ? Drupal.t("dia")
-            : tipo === "mes"
-              ? Drupal.t("mês")
-              : Drupal.t("ano");
+        const unidade = tipoReal === "dia" ? Drupal.t("dia") : tipoReal === "mes" ? Drupal.t("mês") : Drupal.t("ano");
         const precoHtml = preco
           ? `<p class="card-preco"><strong>${preco.toLocaleString("pt-PT", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</strong> / ${unidade}</p>`
           : "";

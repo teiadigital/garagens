@@ -4,6 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 @layer components {
   body {
     @apply font-Montserrat antialiased text-black-text;
@@ -39,10 +43,6 @@
   .container-big {
     max-width: 1640px;
   }
-}
-
-.front-page .language-btn-nav {
-  @apply text-white;
 }
 
 .change-logo-color .block-system-branding-block img {
@@ -251,7 +251,7 @@ header .block-menu.navigation .menu .btn-menu a {
 }
 
 .paragraph--type--carousel-banner .field--name-field-title {
-  @apply text-white text-2xl sm:text-4xl xl:text-6xl font-bold;
+  @apply text-white text-2xl sm:text-4xl font-bold;
 }
 
 .paragraph--type--carousel-banner .field--name-field-sub-title {
@@ -259,11 +259,11 @@ header .block-menu.navigation .menu .btn-menu a {
 }
 
 .paragraph--type--carousel-banner .field--name-field-link {
-  @apply mt-20;
+  @apply mt-6;
 }
 
 .paragraph--type--carousel-banner .field--name-field-link a {
-  @apply text-white text-base bg-green-custom px-7 sm:px-16 py-5 block w-fit hover:text-green-custom hover:bg-white transition-all;
+  @apply text-white text-base bg-green-custom px-5 py-3 block w-fit hover:text-green-custom hover:bg-white transition-all;
 }
 
 /* paragraph--type--advertising */

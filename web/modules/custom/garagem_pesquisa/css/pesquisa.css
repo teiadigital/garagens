@@ -139,6 +139,14 @@
   height: 40px !important;
   line-height: 40px !important;
   border-radius: 50% !important;
+  text-align: center !important;
+}
+#datas-cal .flatpickr-weekday {
+  flex: 1 !important;
+  text-align: center !important;
+}
+#datas-cal .flatpickr-current-month {
+  text-align: center !important;
 }
 #datas-cal .flatpickr-day.selected,
 #datas-cal .flatpickr-day.startRange,

@@ -50,27 +50,24 @@
 {% block paragraph %}
 
 
-
   <div{{ attributes.addClass(classes) }}>
     {% block content %}
 
-       
-        <div class="absolute block w-full h-full top-0 left-0 object-cover object-center">
-          {{content.field_p_image}}
-        </div>
+      <div class="absolute block w-full h-full top-0 left-0 object-cover object-center">
+        {{content.field_p_image}}
+      </div>
 
-        
-        <div class="bg-black/40 absolute top-0 left-0 w-full h-full"></div>
+      <div class="bg-black/40 absolute top-0 left-0 w-full h-full"></div>
 
-        <div class="container px-4 md:px-10 relative">
-          <div class="flex flex-col gap-2">
-           
-            {{content.field_pre_title}}
-            {{content.field_title}}
-            {{content.field_sub_title}}
-            {{content.field_link}}
-          </div>
+      <div class="container p-4 md:p-10 relative">
+        <div class="flex flex-col gap-2">
+          
+          {{content.field_pre_title}}
+          {{content.field_title}}
+          {{content.field_sub_title}}
+          {{content.field_link}}
         </div>
+      </div>
 
     {% endblock %}
   </div>

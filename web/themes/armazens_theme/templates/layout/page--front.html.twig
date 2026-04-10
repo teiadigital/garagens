@@ -44,14 +44,47 @@
 #}
 <div class="layout-container front-page">
 
-  <header role="banner" class="absolute top-4 md:top-10 left-0 w-full z-50">
-    <div class="container px-4 md:px-10 relative">
-      {{ page.header }}
-    </div>
-    
-  </header>
+{# ── Header ───────────────────────────────── #}
+<header id="site-header" role="banner" class="fixed top-4 md:top-10 left-0 w-full z-50 transition-all duration-300">
+  <div class="container px-4">
+    <nav class="flex items-center justify-between" aria-label="Global">
+      <div class="change-logo-color">
+        {{ page.header.armazens_theme_imagemdemarcadositio }}
+      </div>
+      <div class="flex items-center gap-2 sm:gap-3">
+        {{ page.header.armazens_theme_notificacoesdereservas }}
+        {{ page.header.armazens_theme_seletordeidioma }}
+        {{ page.header.armazens_theme_usermenuavatardropdown }}
+      </div>
+    </nav>
+  </div>
+</header>
 
-  <main role="main">
+<script>
+  (function () {
+    var header = document.getElementById('site-header');
+    if (!header) return;
+    function onScroll() {
+      if (window.scrollY > 40) {
+        header.style.top = '0';
+        header.style.background = '#fff';
+        header.style.boxShadow = '0 1px 8px rgba(0,0,0,0.07)';
+        header.style.paddingTop = '12px';
+        header.style.paddingBottom = '12px';
+      } else {
+        header.style.top = '';
+        header.style.background = '';
+        header.style.boxShadow = '';
+        header.style.paddingTop = '';
+        header.style.paddingBottom = '';
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+</script>
+
+  <main role="main" class="pt-36 md:pt-48 pb-16">
     <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
 
     <div class="layout-content">

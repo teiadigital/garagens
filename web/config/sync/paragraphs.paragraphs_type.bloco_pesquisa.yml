@@ -1,0 +1,10 @@
+uuid: 64a9266b-b950-4c4a-a1b4-3d9e7cd59e38
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: bloco_pesquisa
+label: 'Bloco Pesquisa'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

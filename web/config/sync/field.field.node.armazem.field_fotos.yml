@@ -12,7 +12,7 @@ entity_type: node
 bundle: armazem
 label: Fotos
 description: "insira até 4 fotos do seu imóvel. A primeira que colocar será a que aparece em destaque\r\n"
-required: false
+required: true
 translatable: true
 default_value: {  }
 default_value_callback: ''

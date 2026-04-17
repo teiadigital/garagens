@@ -639,11 +639,28 @@ class ReservaController extends ControllerBase {
    * Enriquece reservas com dados de garagem e utilizador.
    */
   protected function enriquecerReservas(array &$reservas, $node_storage, $user_storage): void {
+    $file_url_generator = \Drupal::service('file_url_generator');
     foreach ($reservas as $reserva) {
       $garagem = $node_storage->load($reserva->garagem_id);
       $user = $user_storage->load($reserva->user_id);
       $reserva->garagem_titulo = $garagem ? $garagem->getTitle() : '—';
       $reserva->user_nome = $user ? $user->getDisplayName() : '—';
+      $reserva->garagem_foto_url = NULL;
+      if ($garagem && $garagem->hasField('field_fotos') && !$garagem->get('field_fotos')->isEmpty()) {
+        $media = $garagem->get('field_fotos')->first()->entity;
+        if ($media && $media->hasField('field_media_image') && !$media->get('field_media_image')->isEmpty()) {
+          $file = $media->get('field_media_image')->entity;
+          if ($file) {
+            $reserva->garagem_foto_url = $file_url_generator->generateAbsoluteString($file->getFileUri());
+          }
+        }
+      }
+      $reserva->garagem_localidade = '';
+      if ($garagem && $garagem->hasField('field_localidade') && !$garagem->get('field_localidade')->isEmpty()) {
+        $loc = $garagem->get('field_localidade')->getValue()[0] ?? [];
+        $parts = array_filter([$loc['locality'] ?? '', $loc['administrative_area'] ?? '']);
+        $reserva->garagem_localidade = implode(', ', $parts);
+      }
     }
   }
 
@@ -677,9 +694,22 @@ class ReservaController extends ControllerBase {
         ->fetchObject();
 
       $garagem_titulo = '';
+      $data_inicio = NULL;
+      $data_fim = NULL;
+      $renovacao_automatica = FALSE;
       if ($reserva) {
         $node = $this->entityTypeManager()->getStorage('node')->load($reserva->garagem_id);
         $garagem_titulo = $node ? $node->getTitle() : '';
+        $reserva_full = \Drupal::database()->select('garagem_reserva', 'gr')
+          ->fields('gr', ['data_inicio', 'data_fim', 'renovacao_automatica'])
+          ->condition('id', $reserva->id)
+          ->execute()
+          ->fetchObject();
+        if ($reserva_full) {
+          $data_inicio = $reserva_full->data_inicio;
+          $data_fim = $reserva_full->data_fim;
+          $renovacao_automatica = (bool) $reserva_full->renovacao_automatica;
+        }
       }
 
       $items[] = [
@@ -691,6 +721,9 @@ class ReservaController extends ControllerBase {
         'data' => \Drupal::service('date.formatter')->format($order->getCreatedTime(), 'custom', 'd/m/Y H:i'),
         'garagem' => $garagem_titulo,
         'reserva_id' => $reserva ? $reserva->id : NULL,
+        'data_inicio' => $data_inicio,
+        'data_fim' => $data_fim,
+        'renovacao_automatica' => $renovacao_automatica,
         'gateway' => $payment_info['gateway'] ?? '',
         'payment_estado' => $payment_info['estado'] ?? '',
       ];
@@ -978,6 +1011,63 @@ class ReservaController extends ControllerBase {
       'datas' => $datas,
       'tem_reservas_futuras' => $tem_futuras,
     ]);
+  }
+
+  /**
+   * Lista as garagens do utilizador autenticado.
+   */
+  public function minhasGaragens(): array {
+    $account = $this->currentUser();
+    $node_storage = $this->entityTypeManager()->getStorage('node');
+    $file_url_generator = \Drupal::service('file_url_generator');
+
+    $nids = $node_storage->getQuery()
+      ->condition('type', 'armazem')
+      ->condition('uid', $account->id())
+      ->sort('created', 'DESC')
+      ->accessCheck(TRUE)
+      ->execute();
+
+    $items = [];
+    foreach ($node_storage->loadMultiple($nids) as $node) {
+      $foto_url = NULL;
+      if ($node->hasField('field_fotos') && !$node->get('field_fotos')->isEmpty()) {
+        $media = $node->get('field_fotos')->first()->entity;
+        if ($media && $media->hasField('field_media_image') && !$media->get('field_media_image')->isEmpty()) {
+          $file = $media->get('field_media_image')->entity;
+          if ($file) {
+            $foto_url = $file_url_generator->generateAbsoluteString($file->getFileUri());
+          }
+        }
+      }
+
+      $localidade = '';
+      if ($node->hasField('field_localidade') && !$node->get('field_localidade')->isEmpty()) {
+        $addr = $node->get('field_localidade')->first();
+        $localidade = trim(($addr->locality ?? '') . ', ' . ($addr->administrative_area ?? ''), ', ');
+      }
+
+      $estado = $node->hasField('field_estado') && !$node->get('field_estado')->isEmpty()
+        ? (int) $node->get('field_estado')->value
+        : NULL;
+
+      $items[] = [
+        'id'        => $node->id(),
+        'titulo'    => $node->getTitle(),
+        'url'       => \Drupal\Core\Url::fromRoute('entity.node.canonical', ['node' => $node->id()])->toString(),
+        'edit_url'  => \Drupal\Core\Url::fromRoute('entity.node.edit_form', ['node' => $node->id()])->toString(),
+        'foto_url'  => $foto_url,
+        'localidade'=> $localidade,
+        'estado'    => $estado,
+        'publicado' => $node->isPublished(),
+      ];
+    }
+
+    return [
+      '#theme' => 'garagem_minhas_garagens',
+      '#items' => $items,
+      '#cache' => ['max-age' => 0],
+    ];
   }
 
   /**

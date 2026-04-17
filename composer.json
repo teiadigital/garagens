@@ -204,7 +204,8 @@
                 "entity_reference_revisions_support": "web/patches/entity_reference_revisions_support.patch"
             },
             "drupal/entity_browser": {
-                "multi_step_selection_with_automatic_select": "https://www.drupal.org/files/issues/2019-09-06/multi_step_selection_with_automatic_select_2853751_14.patch"
+                "multi_step_selection_with_automatic_select": "https://www.drupal.org/files/issues/2019-09-06/multi_step_selection_with_automatic_select_2853751_14.patch",
+                "fix_auto_select_timing": "web/patches/entity_browser_auto_select_fix.patch"
             },
             "drupal/simple_menu_icons": {
                 "simple_menu_icons-no_icons": "https://www.drupal.org/files/issues/2023-06-22/simple_menu_icons-no_icons-3026947-17.patch"

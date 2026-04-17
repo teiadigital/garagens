@@ -1,0 +1,5 @@
+eb_autoselect:
+  js:
+    js/eb_autoselect.js: {}
+  dependencies:
+    - core/drupal

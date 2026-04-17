@@ -1,0 +1,34 @@
+--- src/Plugin/EntityBrowser/SelectionDisplay/MultiStepDisplay.php	2026-04-16 17:19:53.661295587 +0100
++++ src/Plugin/EntityBrowser/SelectionDisplay/MultiStepDisplay.php	2026-04-16 17:20:54.403357170 +0100
+@@ -284,6 +284,15 @@
+           $ajax->addCommand(
+             new AfterCommand('.entities-list', static::trimSingleHtmlTag($renderer->render($form['selection_display']['use_selected'])))
+           );
++
++          $entity_browser = $form_state->getFormObject()->getEntityBrowser();
++          $configuration = $entity_browser->getSelectionDisplay()->getConfiguration();
++
++          if (!empty($configuration['automatic_selection_submit'])) {
++            $ajax->addCommand(
++              new InvokeCommand('.entity-browser-use-selected.button--primary', 'click')
++            );
++          }
+         }
+       }
+ 
+@@ -294,15 +303,6 @@
+       );
+     }
+ 
+-    $entity_browser = $form_state->getFormObject()->getEntityBrowser();
+-    $configuration = $entity_browser->getSelectionDisplay()->getConfiguration();
+-
+-    if (isset($configuration['automatic_selection_submit']) && $configuration['automatic_selection_submit']) {
+-      $ajax->addCommand(
+-        new InvokeCommand('.entity-browser-use-selected.button--primary', 'click')
+-      );
+-    }
+-
+     return $ajax;
+   }
+ 

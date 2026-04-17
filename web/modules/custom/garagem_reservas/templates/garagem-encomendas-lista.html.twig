@@ -5,67 +5,123 @@
  */
 #}
 
-{% set estado_cores = {
-  'draft':       'bg-gray-100 text-gray-500',
-  'pending':     'bg-amber-100 text-amber-700',
-  'fulfillment': 'bg-blue-100 text-blue-700',
-  'completed':   'bg-green-100 text-green-700',
-  'cancelled':   'bg-red-100 text-red-600',
+{% import '@garagem_reservas/_estados.html.twig' as estados %}
+{% set meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'] %}
+
+{% set estado_panel = {
+  'draft':       '#f3f4f6',
+  'pending':     '#fef3c7',
+  'fulfillment': '#dbeafe',
+  'completed':   '#dcfce7',
+  'cancelled':   '#fee2e2',
 } %}
-{% set estado_acentos = {
-  'draft':       '#d1d5db',
-  'pending':     '#f59e0b',
-  'fulfillment': '#60a5fa',
-  'completed':   '#22c55e',
-  'cancelled':   '#f87171',
-} %}
+
+<div class="flex items-center justify-between mb-6">
+  <h1 class="text-2xl font-bold text-gray-900">{{ 'Encomendas'|t }}</h1>
+</div>
 
 {% if items is empty %}
-  <div class="bg-blue-50 border border-blue-200 rounded-xl p-5 text-sm text-blue-700">
-    {{ 'Ainda não tem encomendas.'|t }}
+  <div class="rounded-2xl p-10 flex flex-col items-center gap-3 text-center" style="background:#f9fafb; border:1px solid #e5e7eb">
+    <div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background:#f3f4f6">
+      <svg class="w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+      </svg>
+    </div>
+    <p class="text-sm font-semibold text-gray-500">{{ 'Ainda não tem encomendas.'|t }}</p>
+    <p class="text-xs text-gray-400">{{ 'As suas faturas aparecem aqui após efetuar um pagamento.'|t }}</p>
   </div>
 {% else %}
-  <div class="space-y-2 w-full">
+  <div class="space-y-3 w-full">
     {% for item in items %}
-      <div class="w-full bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-sm hover:border-gray-300 transition-all relative">
-        <a href="{{ path('garagem_reservas.encomenda_detalhe', {'order_id': item.id}) }}" class="absolute inset-0" aria-label="{{ item.garagem }}"></a>
+      {% set panel_bg = estado_panel[item.estado]|default('#f3f4f6') %}
 
-        <div class="flex">
-          {# Acento de cor por estado #}
-          <div class="w-1 flex-shrink-0" style="background:{{ estado_acentos[item.estado] ?? '#e5e7eb' }}"></div>
+      <div class="w-full rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-0.5 hover:border-gray-300 transition-all duration-200 relative"
+           style="background:#fff; border:1px solid #e5e7eb">
 
-          <div class="flex-1 px-4 py-3.5">
-            <div class="flex items-center gap-3">
+        <a href="{{ path('garagem_reservas.encomenda_detalhe', {'order_id': item.id}) }}"
+           class="absolute inset-0 z-0" aria-label="{{ item.numero }}"></a>
 
-              {# Número da encomenda #}
-              <span class="flex-shrink-0 text-xs font-mono font-bold text-gray-300 hidden sm:block">#{{ item.numero }}</span>
+        <div class="flex flex-col sm:flex-row relative z-10 pointer-events-none">
 
-              {# Garagem + data #}
-              <div class="min-w-0 flex-1">
-                <p class="font-semibold text-gray-900 text-sm truncate">{{ item.garagem ?: item.numero }}</p>
-                <p class="text-xs text-gray-400 mt-0.5">
-                  <span class="sm:hidden">#{{ item.numero }} · </span>
-                  {{ item.data }}
+          {# ── PAINEL ESQUERDO com ícone ───────────────────── #}
+          <div class="relative flex-shrink-0 h-36 sm:h-auto sm:w-40 flex items-center justify-center"
+               style="background:{{ panel_bg }}">
+            <svg class="w-14 h-14 opacity-50" style="color:{{ color }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+          </div>
+
+          {# ── CONTEÚDO + BOTÃO ───────────────────────────── #}
+          <div class="flex-1 flex min-w-0">
+
+            <div class="flex-1 flex flex-col justify-center px-4 py-3 sm:px-5 sm:py-4 min-w-0">
+
+              <div>
+                <p class="font-bold text-gray-900 text-base sm:text-lg leading-tight truncate">
+                  {{ item.garagem ?: item.numero }}
                 </p>
               </div>
 
-              {# Total + badge + seta #}
-              <div class="flex items-center gap-2 flex-shrink-0 ml-auto">
-                <p class="font-semibold text-gray-900 text-sm hidden sm:block">{{ item.total }}</p>
-                <span class="px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wide {{ estado_cores[item.estado] ?? 'bg-gray-100 text-gray-500' }}">
-                  {{ item.estado_label }}
-                </span>
-                <svg class="w-4 h-4 text-gray-300 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              {# Datas de reserva como info principal #}
+              <div class="flex flex-wrap items-center gap-2 my-3">
+                {% if item.data_inicio %}
+                  <span class="text-sm font-semibold px-3 py-1.5 rounded-lg" style="background:#f3f4f6; color:#111827">
+                    {{ item.data_inicio|date('d') }} {{ meses[item.data_inicio|date('n') - 1] }}
+                  </span>
+                {% endif %}
+                <svg class="w-4 h-4 flex-shrink-0 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                 </svg>
+                {% if item.renovacao_automatica %}
+                  <span class="text-sm font-semibold px-3 py-1.5 rounded-lg" style="background:#f3f4f6; color:#111827">
+                    {{ 'Renovação auto.'|t }}
+                  </span>
+                {% elseif item.data_fim %}
+                  <span class="text-sm font-semibold px-3 py-1.5 rounded-lg" style="background:#f3f4f6; color:#111827">
+                    {{ item.data_fim|date('d') }} {{ meses[item.data_fim|date('n') - 1] }} {{ item.data_fim|date('Y') }}
+                  </span>
+                {% endif %}
               </div>
+
+
+              {# Estado descritivo #}
+              <div class="mb-2">
+                {{ estados.pill_encomenda(item.estado) }}
+              </div>
+
 
             </div>
 
-            {# Total mobile #}
-            <p class="text-xs text-gray-500 mt-1.5 sm:hidden">{{ 'Total'|t }}: <strong class="text-gray-900">{{ item.total }}</strong></p>
+            {# Preço + botão lateral desktop #}
+            <div class="hidden sm:flex flex-shrink-0 flex-col items-end justify-center gap-2 px-5">
+              <p class="text-lg font-black text-gray-900">{{ item.total }}</p>
+              <a href="{{ path('garagem_reservas.encomenda_detalhe', {'order_id': item.id}) }}"
+                 class="inline-flex items-center gap-1.5 text-sm font-bold px-4 py-2 rounded-xl transition hover:opacity-80 whitespace-nowrap pointer-events-auto"
+                 style="background:#111827 !important; color:#fff !important">
+                {{ 'Ver fatura'|t }}
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </div>
+
           </div>
+
         </div>
+
+        {# Botão mobile #}
+        <div class="sm:hidden px-4 pb-4 relative z-10 pointer-events-auto">
+          <a href="{{ path('garagem_reservas.encomenda_detalhe', {'order_id': item.id}) }}"
+             class="flex items-center justify-center gap-1.5 text-sm font-bold w-full py-2.5 rounded-xl transition hover:opacity-80"
+             style="background:#111827 !important; color:#fff !important">
+            {{ 'Ver fatura'|t }}
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+
       </div>
     {% endfor %}
   </div>

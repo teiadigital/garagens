@@ -1416,3 +1416,7 @@ form table tbody td {
 .carousel-armazens .field--name-field-media-image .field__item img {
   @apply w-full;
 }
+
+.replace-button {
+  @apply !hidden;
+}

@@ -81,6 +81,7 @@ class NotificacaoGaragemService {
   }
 
   protected function enviar(string $template, $destinatario, string $garagem_titulo, array $extra_arguments = []): void {
+    if (!$destinatario || !$destinatario->getEmail()) return;
     try {
       $message = Message::create([
         'template' => $template,

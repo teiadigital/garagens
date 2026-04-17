@@ -1,6 +1,6 @@
 uuid: f70a4669-7402-44f4-8004-02176219a1e3
 langcode: pt-pt
-status: true
+status: false
 dependencies:
   module:
     - language

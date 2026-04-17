@@ -2697,7 +2697,7 @@ display:
         filter_groups: false
       display_description: ''
       display_extenders: {  }
-      path: dashboard/garagens
+      path: dashboard/garagens/old
     cache_metadata:
       max-age: -1
       contexts:

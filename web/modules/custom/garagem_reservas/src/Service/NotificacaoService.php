@@ -175,7 +175,7 @@ class NotificacaoService {
   // ─── Helpers ────────────────────────────────────────────────────────────────
 
   protected function enviar(string $template, $destinatario, int $reserva_id, string $garagem_titulo = '', string $motivo = '', array $extra = []): void {
-    if (!$destinatario) return;
+    if (!$destinatario || !$destinatario->getEmail()) return;
     try {
       $message = Message::create([
         'template' => $template,

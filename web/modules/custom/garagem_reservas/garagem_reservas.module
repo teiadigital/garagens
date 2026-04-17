@@ -612,6 +612,12 @@ function garagem_reservas_theme() {
       ],
       'template' => 'garagem-encomendas-lista',
     ],
+    'garagem_minhas_garagens' => [
+      'variables' => [
+        'items' => [],
+      ],
+      'template' => 'garagem-minhas-garagens',
+    ],
     'garagem_encomenda_detalhe' => [
       'variables' => [
         'order' => NULL,

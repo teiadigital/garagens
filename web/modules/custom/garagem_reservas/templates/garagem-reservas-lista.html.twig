@@ -6,115 +6,148 @@
 #}
 
 {% macro tabela_reservas(reservas, tipo) %}
-  {% set estado_cores = {
-    'pago':             'bg-green-100 text-green-700',
-    'aprovado':         'bg-blue-100 text-blue-700',
-    'pendente':         'bg-amber-100 text-amber-700',
-    'aguarda_pagamento':'bg-orange-100 text-orange-700',
-    'cancelado':        'bg-gray-100 text-gray-500',
-    'rejeitado':        'bg-red-100 text-red-600',
-    'expirado':         'bg-gray-100 text-gray-400',
-  } %}
-  {% set estado_acentos = {
-    'pago':             '#22c55e',
-    'aprovado':         '#1d4ed8',
-    'pendente':         '#f59e0b',
-    'aguarda_pagamento':'#f97316',
-    'cancelado':        '#d1d5db',
-    'rejeitado':        '#f87171',
-    'expirado':         '#e5e7eb',
-  } %}
+  {% import '@garagem_reservas/_estados.html.twig' as estados %}
+  {% set meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'] %}
+
 
   {% if reservas is empty %}
-    <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 text-sm text-gray-500">
-      {{ 'Não existem reservas.'|t }}
+    <div class="rounded-2xl p-10 flex flex-col items-center gap-3 text-center" style="background:#f9fafb; border:1px solid #e5e7eb">
+      <div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background:#f3f4f6">
+        <svg class="w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+        </svg>
+      </div>
+      <p class="text-sm font-semibold text-gray-500">{{ 'Não existem reservas.'|t }}</p>
+      <p class="text-xs text-gray-400">{{ 'As suas reservas aparecem aqui após fazer um pedido.'|t }}</p>
     </div>
   {% else %}
-    <div class="space-y-2 w-full">
+    <div class="space-y-3 w-full">
       {% for reserva in reservas %}
-        <div class="w-full bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-sm hover:border-gray-300 transition-all relative">
-          <a href="{{ path('garagem_reservas.reserva_view', {'reserva': reserva.id}) }}" class="absolute inset-0" aria-label="{{ reserva.garagem_titulo }}"></a>
+        {% set panel_bg = estado_panel[reserva.estado]|default('#2a2a2a') %}
+        {% set badge_color = estado_badge_color[reserva.estado]|default('#9ca3af') %}
+        {% set badge_bg = estado_badge_bg[reserva.estado]|default('#1a1a1a') %}
+        {% set label = estado_label[reserva.estado]|default(reserva.estado) %}
 
-          <div class="flex">
-            {# Acento de cor por estado #}
-            <div class="w-1 flex-shrink-0" style="background:{{ estado_acentos[reserva.estado] ?? '#e5e7eb' }}"></div>
+        {# Calcular duração #}
+        {% if reserva.renovacao_automatica %}
+          {% set duracao_label = 'Auto' %}
+        {% else %}
+          {% set dias = ((reserva.data_fim|date('U') - reserva.data_inicio|date('U')) / 86400)|round %}
+          {% set duracao_label = dias ~ ' ' ~ (dias == 1 ? 'dia'|t : 'dias'|t) %}
+        {% endif %}
 
-            <div class="flex-1 px-4 py-3.5">
-              <div class="flex items-center gap-3">
+        <div class="w-full rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-0.5 hover:border-gray-300 transition-all duration-200 relative"
+             style="background:#fff; border:1px solid #e5e7eb">
 
-                {# ID #}
-                <span class="flex-shrink-0 text-xs font-mono font-bold text-gray-300 hidden sm:block">#{{ reserva.id }}</span>
+          {# Link invisível cobre o card todo — exceto botões com z-10 #}
+          <a href="{{ path('garagem_reservas.reserva_view', {'reserva': reserva.id}) }}"
+             class="absolute inset-0 z-0" aria-label="{{ reserva.garagem_titulo }}"></a>
 
-                {# Garagem + datas #}
-                <div class="min-w-0 flex-1">
-                  <p class="font-semibold text-gray-900 text-sm truncate">{{ reserva.garagem_titulo }}</p>
-                  <p class="text-xs text-gray-400 mt-0.5">
-                    <span class="sm:hidden">#{{ reserva.id }} · </span>
-                    {{ reserva.data_inicio|date('d/m/Y') }}
-                    {% if reserva.renovacao_automatica %}
-                      · <em>{{ 'renov. auto.'|t }}</em>
-                    {% else %}
-                      → {{ reserva.data_fim|date('d/m/Y') }}
-                    {% endif %}
+          {# Mobile: foto no topo; Desktop: foto lateral #}
+          <div class="flex flex-col sm:flex-row relative z-10 pointer-events-none">
+
+            {# ── FOTO / PAINEL ──────────────────────────────────── #}
+            <div class="relative flex-shrink-0 h-40 sm:h-auto sm:w-40 overflow-hidden"
+                 style="background:{{ panel_bg }}">
+              {% if reserva.garagem_foto_url %}
+                <img src="{{ reserva.garagem_foto_url }}"
+                     alt="{{ reserva.garagem_titulo }}"
+                     class="absolute inset-0 w-full h-full object-cover">
+              {% endif %}
+              <div class="absolute bottom-2 left-2">
+                <span class="text-xs font-bold px-2 py-1 rounded-lg"
+                      style="background:rgba(0,0,0,0.55); color:#fff">
+                  {{ duracao_label }}
+                </span>
+              </div>
+            </div>
+
+            {# ── CONTEÚDO + BOTÃO ───────────────────────────────── #}
+            <div class="flex-1 flex min-w-0">
+
+            {# Conteúdo principal #}
+            <div class="flex-1 flex flex-col justify-center px-4 py-3 sm:px-5 sm:py-4 min-w-0">
+
+              {# Nome + estado #}
+              <div>
+                <p class="font-bold text-gray-900 text-base sm:text-lg leading-tight truncate">{{ reserva.garagem_titulo }}</p>
+                {% if reserva.garagem_localidade %}
+                  <p class="text-xs sm:text-sm mt-0.5 flex items-center gap-1" style="color:#888">
+                    <svg class="w-3 h-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                    </svg>
+                    {{ reserva.garagem_localidade }}
                   </p>
-                </div>
-
-                {# Badge + botões + seta #}
-                <div class="flex items-center gap-2 flex-shrink-0 ml-auto relative z-10">
-                  <span class="px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wide {{ estado_cores[reserva.estado] ?? 'bg-gray-100 text-gray-500' }}">
-                    {{ reserva.estado|upper }}
-                  </span>
-                  {% if tipo == 'proprietario' and reserva.estado == 'pendente' %}
-                    <a href="{{ path('garagem_reservas.reserva_aprovar', {'reserva': reserva.id}) }}"
-                       class="hidden sm:inline-flex px-3 py-1.5 text-xs font-bold text-white bg-green-600 rounded-full hover:bg-green-700 transition">
-                      {{ 'Aprovar'|t }}
-                    </a>
-                    <button type="button"
-                            onclick="abrirModalRejeitar('{{ path('garagem_reservas.reserva_rejeitar', {'reserva': reserva.id}) }}', '{{ reserva.garagem_titulo|e('js') }}')"
-                            class="hidden sm:inline-flex px-3 py-1.5 text-xs font-bold text-white bg-red-600 rounded-full hover:bg-red-700 transition">
-                      {{ 'Rejeitar'|t }}
-                    </button>
-                  {% endif %}
-                  {% if tipo == 'proprietario' and reserva.estado not in ['pendente', 'cancelado', 'rejeitado', 'expirado'] %}
-                    <button type="button"
-                            onclick="abrirModalCancelar('{{ path('garagem_reservas.reserva_cancelar_proprietario', {'reserva': reserva.id}) }}', '{{ reserva.garagem_titulo|e('js') }}')"
-                            class="hidden sm:inline-flex px-3 py-1.5 text-xs font-bold text-red-600 border border-red-200 rounded-full hover:bg-red-50 transition">
-                      {{ 'Cancelar'|t }}
-                    </button>
-                  {% endif %}
-                  <svg class="w-4 h-4 text-gray-300 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                  </svg>
-                </div>
-
+                {% endif %}
               </div>
 
-              {# Botões mobile (proprietário) #}
-              {% if tipo == 'proprietario' and reserva.estado == 'pendente' %}
-                <div class="flex gap-2 mt-3 sm:hidden relative z-10">
-                  <a href="{{ path('garagem_reservas.reserva_aprovar', {'reserva': reserva.id}) }}"
-                     class="flex-1 text-center px-3 py-1.5 text-xs font-bold text-white bg-green-600 rounded-full hover:bg-green-700 transition">
-                    {{ 'Aprovar'|t }}
-                  </a>
-                  <button type="button"
-                          onclick="abrirModalRejeitar('{{ path('garagem_reservas.reserva_rejeitar', {'reserva': reserva.id}) }}', '{{ reserva.garagem_titulo|e('js') }}')"
-                          class="flex-1 px-3 py-1.5 text-xs font-bold text-white bg-red-600 rounded-full hover:bg-red-700 transition">
-                    {{ 'Rejeitar'|t }}
-                  </button>
-                </div>
-              {% endif %}
-              {% if tipo == 'proprietario' and reserva.estado not in ['pendente', 'cancelado', 'rejeitado', 'expirado'] %}
-                <div class="mt-2.5 sm:hidden relative z-10">
-                  <button type="button"
-                          onclick="abrirModalCancelar('{{ path('garagem_reservas.reserva_cancelar_proprietario', {'reserva': reserva.id}) }}', '{{ reserva.garagem_titulo|e('js') }}')"
-                          class="w-full px-3 py-1.5 text-xs font-bold text-red-600 border border-red-200 rounded-full hover:bg-red-50 transition">
-                    {{ 'Cancelar'|t }}
-                  </button>
-                </div>
-              {% endif %}
+              {# Datas #}
+              <div class="flex flex-wrap items-center gap-2 my-3">
+                <span class="text-sm font-semibold px-3 py-1.5 rounded-lg" style="background:#f3f4f6; color:#111827">
+                  {{ reserva.data_inicio|date('d') }} {{ meses[reserva.data_inicio|date('n') - 1] }}
+                </span>
+                <svg class="w-4 h-4 flex-shrink-0 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+                {% if reserva.renovacao_automatica %}
+                  <span class="text-sm font-semibold px-3 py-1.5 rounded-lg" style="background:#f3f4f6; color:#111827">
+                    {{ 'Renovação auto.'|t }}
+                  </span>
+                {% else %}
+                  <span class="text-sm font-semibold px-3 py-1.5 rounded-lg" style="background:#f3f4f6; color:#111827">
+                    {{ reserva.data_fim|date('d') }} {{ meses[reserva.data_fim|date('n') - 1] }} {{ reserva.data_fim|date('Y') }}
+                  </span>
+                {% endif %}
+              </div>
+
+              {# Estado descritivo — substitui o badge do canto #}
+              <div class="mb-2">
+                {{ estados.pill(reserva.estado, tipo) }}
+              </div>
+
+              {# <p class="text-xs font-mono text-gray-400 mt-2">#{{ reserva.id }}</p> #}
 
             </div>
+
+            {# ── BOTÃO lateral centrado (desktop) / fundo (mobile) ── #}
+            <div class="hidden sm:flex flex-shrink-0 items-center justify-center px-4">
+              <a href="{{ path('garagem_reservas.reserva_view', {'reserva': reserva.id}) }}"
+                   class="inline-flex items-center justify-center gap-1.5 text-sm font-bold px-4 py-2.5 rounded-xl transition hover:opacity-80 whitespace-nowrap"
+                   style="background:#111827 !important; color:#fff !important">
+                  {{ 'Ver detalhes'|t }}
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                  </svg>
+                </a>
+            </div>
+
+            </div>{# fim flex conteúdo+botão #}
+
           </div>
+
+          {# Botão mobile — fundo do card #}
+          <div class="sm:hidden px-4 pb-4">
+            {% if tipo != 'proprietario' and reserva.estado == 'aprovado' %}
+              <a href="{{ path('garagem_reservas.reserva_view', {'reserva': reserva.id}) }}"
+                 class="flex items-center justify-center gap-1.5 text-sm font-bold w-full py-2.5 rounded-xl transition hover:opacity-90"
+                 style="background:#16a34a !important; color:#fff !important">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                </svg>
+                {{ 'Pagar agora'|t }}
+              </a>
+            {% else %}
+              <a href="{{ path('garagem_reservas.reserva_view', {'reserva': reserva.id}) }}"
+                 class="flex items-center justify-center gap-1.5 text-sm font-bold w-full py-2.5 rounded-xl transition hover:opacity-80"
+                 style="background:#111827 !important; color:#fff !important">
+                {{ 'Ver detalhes'|t }}
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+              </a>
+            {% endif %}
+          </div>
+
         </div>
       {% endfor %}
     </div>
@@ -142,13 +175,11 @@
               class="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 mb-3 resize-none focus:outline-none focus:ring-1 focus:ring-gray-400"></textarea>
     <p class="text-xs text-gray-400 mb-5">{{ 'O arrendatário será notificado. Esta ação não pode ser desfeita.'|t }}</p>
     <div class="flex justify-end gap-3">
-      <button type="button"
-              onclick="fecharModalRejeitar()"
+      <button type="button" onclick="fecharModalRejeitar()"
               class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-full hover:bg-gray-50 transition">
         {{ 'Voltar'|t }}
       </button>
-      <button type="button"
-              onclick="confirmarRejeitar()"
+      <button type="button" onclick="confirmarRejeitar()"
               class="px-4 py-2 text-sm font-bold text-white bg-red-600 rounded-full hover:bg-red-700 transition">
         {{ 'Sim, rejeitar'|t }}
       </button>
@@ -179,13 +210,11 @@
     <p class="text-xs text-gray-400 mb-1">{{ 'O arrendatário será notificado. Esta ação não pode ser desfeita.'|t }}</p>
     <p class="text-xs text-amber-700 font-medium mb-5">{{ 'Este tipo de operação não dispensa procedimentos legais vigentes em contrato.'|t }}</p>
     <div class="flex justify-end gap-3">
-      <button type="button"
-              onclick="fecharModalCancelar()"
+      <button type="button" onclick="fecharModalCancelar()"
               class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-full hover:bg-gray-50 transition">
         {{ 'Voltar'|t }}
       </button>
-      <button type="button"
-              onclick="confirmarCancelarLista()"
+      <button type="button" onclick="confirmarCancelarLista()"
               class="px-4 py-2 text-sm font-bold text-white bg-red-600 rounded-full hover:bg-red-700 transition">
         {{ 'Sim, cancelar'|t }}
       </button>
@@ -196,6 +225,9 @@
 <div class="garagem-reservas-lista w-full">
 
   {% if tipo == 'dashboard' %}
+    <div class="flex items-center justify-between mb-6">
+      <h1 class="text-2xl font-bold text-gray-900">{{ 'Reservas'|t }}</h1>
+    </div>
     {% if reservas_user is not empty or reservas_proprietario is not empty %}
       {% if reservas_user is not empty %}
         <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">{{ 'Garagens que arrendei'|t }}</h4>
@@ -206,12 +238,21 @@
         {{ _self.tabela_reservas(reservas_proprietario, 'proprietario') }}
       {% endif %}
     {% else %}
-      <div class="bg-blue-50 border border-blue-200 rounded-xl p-5 text-sm text-blue-700">
-        {{ 'Não existem reservas.'|t }}
+      <div class="rounded-2xl p-10 flex flex-col items-center gap-3 text-center" style="background:#f9fafb; border:1px solid #e5e7eb">
+        <div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background:#f3f4f6">
+          <svg class="w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+          </svg>
+        </div>
+        <p class="text-sm font-semibold text-gray-500">{{ 'Não existem reservas.'|t }}</p>
+        <p class="text-xs text-gray-400">{{ 'As suas reservas aparecem aqui após fazer um pedido.'|t }}</p>
       </div>
     {% endif %}
 
   {% else %}
+    <div class="flex items-center justify-between mb-6">
+      <h1 class="text-2xl font-bold text-gray-900">{{ 'Reservas'|t }}</h1>
+    </div>
     {% if tipo == 'proprietario' %}
       {{ _self.tabela_reservas(reservas, 'proprietario') }}
     {% else %}

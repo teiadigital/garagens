@@ -218,6 +218,16 @@ garagem_reservas.encomendas_lista:
   options:
     no_cache: true
 
+garagem_reservas.minhas_garagens:
+  path: '/dashboard/garagens'
+  defaults:
+    _controller: '\Drupal\garagem_reservas\Controller\ReservaController::minhasGaragens'
+    _title: 'As minhas garagens'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+  options:
+    no_cache: true
+
 garagem_reservas.encomenda_detalhe:
   path: '/dashboard/encomendas/{order_id}'
   defaults:

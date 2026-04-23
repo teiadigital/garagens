@@ -107,7 +107,56 @@
 
   $(document).ready(function () {
     if (!$.fn.owlCarousel) return;
-    $(".owl-carousel-homepage").owlCarousel({
+
+    function applyOwlAccessibility($carousel) {
+      const $dots = $carousel.find(".owl-dot");
+      const total = $dots.length;
+
+      $dots.each(function (index) {
+        const isActive = $(this).hasClass("active");
+        $(this).attr({
+          "aria-label": Drupal.t("Ir para slide @current de @total", {
+            "@current": index + 1,
+            "@total": total,
+          }),
+          "aria-current": isActive ? "true" : "false",
+        });
+      });
+    }
+
+    function watchOwlAccessibility($carousel) {
+      const carouselEl = $carousel.get(0);
+      if (!carouselEl || typeof MutationObserver === "undefined") {
+        return;
+      }
+
+      const observer = new MutationObserver(function () {
+        applyOwlAccessibility($carousel);
+      });
+
+      observer.observe(carouselEl, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ["class"],
+      });
+    }
+
+    function initAccessibleCarousel(selector, options) {
+      $(selector)
+        .on("initialized.owl.carousel refreshed.owl.carousel changed.owl.carousel", function () {
+          applyOwlAccessibility($(this));
+          window.setTimeout(function () {
+            applyOwlAccessibility($(this));
+          }.bind(this), 0);
+        })
+        .each(function () {
+          watchOwlAccessibility($(this));
+        })
+        .owlCarousel(options);
+    }
+
+    initAccessibleCarousel(".owl-carousel-homepage", {
       center: true,
       items: 1,
       loop: true,
@@ -119,7 +168,7 @@
       dots: true,
     });
 
-    $(".owl-carousel-advertising").owlCarousel({
+    initAccessibleCarousel(".owl-carousel-advertising", {
       center: true,
       items: 1,
       loop: true,

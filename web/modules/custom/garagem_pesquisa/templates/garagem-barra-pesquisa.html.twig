@@ -4,7 +4,7 @@
  #}
 
 <div id="barra-pesquisa" class="py-6 px-4">
-  <form id="pesquisa-form" data-mode="block" data-pesquisa-url="{{ path('garagem_pesquisa.page') }}" class="max-w-3xl mx-auto">
+  <form id="pesquisa-form" data-mode="block" data-pesquisa-url="{{ path('garagem_pesquisa.list') }}" class="max-w-3xl mx-auto">
 
     <div id="pesquisa-bar-container" style="position:relative;">
 
@@ -14,11 +14,12 @@
         {# Onde #}
         <div style="position:relative; flex:1; min-width:0;">
           <div id="campo-onde" class="px-6 py-3 rounded-2xl sm:rounded-full hover:bg-gray-50 transition cursor-pointer h-full" style="position:relative;">
-            <label class="block text-xs font-bold text-gray-900 pointer-events-none">{{ 'Onde'|t }}</label>
+            <label for="pesquisa-location" class="block text-xs font-bold text-gray-900 pointer-events-none">{{ 'Onde'|t }}</label>
             <input id="pesquisa-location" type="text" autocomplete="off"
                    placeholder="{{ 'Pesquisar destinos'|t }}"
                    class="w-full border-none p-0 text-sm text-gray-500 placeholder-gray-500 focus:outline-none bg-transparent leading-5 pr-7">
             <button id="limpar-location" type="button"
+                    aria-label="{{ 'Limpar localização'|t }}"
                     class="hidden items-center justify-center w-5 h-5 rounded-full bg-gray-200 hover:bg-gray-300 transition"
                     style="position:absolute; right:10px; top:50%; transform:translateY(-50%);">
               <svg class="w-3 h-3 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -32,19 +33,13 @@
           </div>
           <input type="hidden" id="pesquisa-lat">
           <input type="hidden" id="pesquisa-lng">
+          <input type="hidden" id="pesquisa-radius" value="15">
         </div>
 
         {# Datas #}
         <div id="campo-datas" class="px-6 py-3 rounded-2xl sm:rounded-full hover:bg-gray-50 transition cursor-pointer flex-shrink-0" style="min-width:280px; position:relative;">
-          <label class="block text-xs font-bold text-gray-900 pointer-events-none">{{ 'Datas'|t }}</label>
-          <div id="datas-display" class="text-sm text-gray-500 leading-5 select-none pointer-events-none pr-7">{{ 'Adicionar datas'|t }}</div>
-          <button id="limpar-datas" type="button"
-                  class="hidden items-center justify-center w-5 h-5 rounded-full bg-gray-200 hover:bg-gray-300 transition pointer-events-auto"
-                  style="position:absolute; right:10px; top:50%; transform:translateY(-50%);">
-            <svg class="w-3 h-3 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-          </button>
+          <label for="pesquisa-data-inicio" class="block text-xs font-bold text-gray-900 pointer-events-none">{{ 'Datas'|t }}</label>
+          <div id="datas-display" class="text-sm text-gray-500 leading-5 select-none pointer-events-none">{{ 'Adicionar datas'|t }}</div>
           <input type="hidden" id="pesquisa-tipo" value="dia">
           <input type="hidden" id="pesquisa-data-inicio">
           <input type="hidden" id="pesquisa-data-fim">
@@ -52,7 +47,7 @@
 
         {# Botão pesquisar #}
         <div class="flex items-center justify-end sm:justify-center px-3 py-3 flex-shrink-0">
-          <button type="submit" class="bg-black text-white rounded-full p-3 hover:bg-gray-800 transition-all">
+          <button type="submit" class="bg-black text-white rounded-full p-3 hover:bg-gray-800 transition-all" aria-label="{{ 'Pesquisar garagens'|t }}">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>

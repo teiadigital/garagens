@@ -1149,7 +1149,7 @@ body{
 
 .border-green-custom{
   --tw-border-opacity: 1;
-  border-color: rgb(111 155 58 / var(--tw-border-opacity));
+  border-color: rgb(79 127 31 / var(--tw-border-opacity));
 }
 
 .border-red-100{
@@ -1275,7 +1275,7 @@ body{
 
 .bg-green-custom{
   --tw-bg-opacity: 1;
-  background-color: rgb(111 155 58 / var(--tw-bg-opacity));
+  background-color: rgb(79 127 31 / var(--tw-bg-opacity));
 }
 
 .bg-orange-100{
@@ -1285,7 +1285,7 @@ body{
 
 .bg-orange-custom{
   --tw-bg-opacity: 1;
-  background-color: rgb(243 60 18 / var(--tw-bg-opacity));
+  background-color: rgb(217 63 18 / var(--tw-bg-opacity));
 }
 
 .bg-red-100{
@@ -1751,6 +1751,10 @@ body{
 
 .leading-tight{
   line-height: 1.25;
+}
+
+.tracking-tight{
+  letter-spacing: -0.025em;
 }
 
 .tracking-wide{
@@ -2413,7 +2417,7 @@ fieldset.form-item{
   width: fit-content;
   border-left-width: 4px;
   --tw-border-opacity: 1;
-  border-color: rgb(111 155 58 / var(--tw-border-opacity));
+  border-color: rgb(79 127 31 / var(--tw-border-opacity));
   background-color: rgb(232 232 232 / 0.5);
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
@@ -2556,7 +2560,7 @@ header .block-menu.navigation .menu li a{
   width: -moz-fit-content;
   width: fit-content;
   --tw-bg-opacity: 1;
-  background-color: rgb(111 155 58 / var(--tw-bg-opacity));
+  background-color: rgb(79 127 31 / var(--tw-bg-opacity));
   padding-left: 1.25rem;
   padding-right: 1.25rem;
   padding-top: 0.75rem;
@@ -2574,7 +2578,7 @@ header .block-menu.navigation .menu li a{
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
-  color: rgb(111 155 58 / var(--tw-text-opacity));
+  color: rgb(79 127 31 / var(--tw-text-opacity));
 }
 
 /* paragraph--type--advertising */
@@ -2586,7 +2590,7 @@ header .block-menu.navigation .menu li a{
   width: -moz-fit-content;
   width: fit-content;
   --tw-bg-opacity: 1;
-  background-color: rgb(111 155 58 / var(--tw-bg-opacity));
+  background-color: rgb(79 127 31 / var(--tw-bg-opacity));
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
   padding-right: 1.25rem;
@@ -2610,7 +2614,7 @@ header .block-menu.navigation .menu li a{
   width: -moz-fit-content;
   width: fit-content;
   --tw-bg-opacity: 1;
-  background-color: rgb(243 60 18 / var(--tw-bg-opacity));
+  background-color: rgb(217 63 18 / var(--tw-bg-opacity));
   padding-left: 3rem;
   padding-right: 3rem;
   padding-top: 0.5rem;
@@ -2626,7 +2630,7 @@ header .block-menu.navigation .menu li a{
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
-  color: rgb(243 60 18 / var(--tw-text-opacity));
+  color: rgb(217 63 18 / var(--tw-text-opacity));
 }
 
 @media (min-width: 768px){
@@ -2721,9 +2725,9 @@ header .block-menu.navigation .menu li a{
   border-radius: 0px;
   border-width: 2px;
   --tw-border-opacity: 1;
-  border-color: rgb(111 155 58 / var(--tw-border-opacity));
+  border-color: rgb(79 127 31 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
-  background-color: rgb(111 155 58 / var(--tw-bg-opacity));
+  background-color: rgb(79 127 31 / var(--tw-bg-opacity));
   padding-top: 1rem;
   padding-bottom: 1rem;
   padding-left: 2.25rem;
@@ -2738,7 +2742,7 @@ header .block-menu.navigation .menu li a{
 .paragraph--type--why-choose-us .field--name-field-link a:hover{
   background-color: transparent;
   --tw-text-opacity: 1;
-  color: rgb(111 155 58 / var(--tw-text-opacity));
+  color: rgb(79 127 31 / var(--tw-text-opacity));
 }
 
 /* paragraph--type--contact */
@@ -2782,9 +2786,9 @@ header .block-menu.navigation .menu li a{
 .paragraph--type--contact form .form-actions .webform-button--submit{
   border-radius: 0px;
   --tw-border-opacity: 1;
-  border-color: rgb(111 155 58 / var(--tw-border-opacity));
+  border-color: rgb(79 127 31 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
-  background-color: rgb(111 155 58 / var(--tw-bg-opacity));
+  background-color: rgb(79 127 31 / var(--tw-bg-opacity));
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
   padding-left: 2.25rem;
@@ -2797,7 +2801,7 @@ header .block-menu.navigation .menu li a{
 .paragraph--type--contact form .form-actions .webform-button--submit:hover{
   background-color: transparent;
   --tw-text-opacity: 1;
-  color: rgb(111 155 58 / var(--tw-text-opacity));
+  color: rgb(79 127 31 / var(--tw-text-opacity));
 }
 
 /* paragraph--type--contacts-icon-text-text */
@@ -2942,7 +2946,7 @@ header .block-menu.navigation .menu li a{
 footer{
   position: relative;
   --tw-bg-opacity: 1;
-  background-color: rgb(111 155 58 / var(--tw-bg-opacity));
+  background-color: rgb(79 127 31 / var(--tw-bg-opacity));
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 3rem;
@@ -3947,7 +3951,7 @@ form table tbody td{
   width: -moz-fit-content;
   width: fit-content;
   --tw-bg-opacity: 1;
-  background-color: rgb(243 60 18 / var(--tw-bg-opacity));
+  background-color: rgb(217 63 18 / var(--tw-bg-opacity));
   padding-left: 3rem;
   padding-right: 3rem;
   padding-top: 0.5rem;
@@ -3963,7 +3967,7 @@ form table tbody td{
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
-  color: rgb(243 60 18 / var(--tw-text-opacity));
+  color: rgb(217 63 18 / var(--tw-text-opacity));
 }
 
 @media (min-width: 768px){
@@ -4092,7 +4096,7 @@ form table tbody td{
 
 .view-display-id-page_armazens .view-footer .field--name-field-pre-title{
   --tw-border-opacity: 1;
-  border-color: rgb(243 60 18 / var(--tw-border-opacity));
+  border-color: rgb(217 63 18 / var(--tw-border-opacity));
 }
 
 .view-display-id-page_armazens .field_link a{
@@ -4100,7 +4104,7 @@ form table tbody td{
   width: -moz-fit-content;
   width: fit-content;
   --tw-bg-opacity: 1;
-  background-color: rgb(243 60 18 / var(--tw-bg-opacity));
+  background-color: rgb(217 63 18 / var(--tw-bg-opacity));
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   padding-top: 0.5rem;
@@ -4116,7 +4120,7 @@ form table tbody td{
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
-  color: rgb(243 60 18 / var(--tw-text-opacity));
+  color: rgb(217 63 18 / var(--tw-text-opacity));
 }
 
 @media (min-width: 768px){
@@ -4474,7 +4478,7 @@ form table tbody td{
   width: -moz-fit-content;
   width: fit-content;
   --tw-bg-opacity: 1;
-  background-color: rgb(243 60 18 / var(--tw-bg-opacity));
+  background-color: rgb(217 63 18 / var(--tw-bg-opacity));
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   padding-top: 0.5rem;
@@ -4490,7 +4494,7 @@ form table tbody td{
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
-  color: rgb(243 60 18 / var(--tw-text-opacity));
+  color: rgb(217 63 18 / var(--tw-text-opacity));
 }
 
 @media (min-width: 768px){
@@ -4706,12 +4710,12 @@ form table tbody td{
 
 .hover\:text-green-custom:hover{
   --tw-text-opacity: 1;
-  color: rgb(111 155 58 / var(--tw-text-opacity));
+  color: rgb(79 127 31 / var(--tw-text-opacity));
 }
 
 .hover\:text-orange-custom:hover{
   --tw-text-opacity: 1;
-  color: rgb(243 60 18 / var(--tw-text-opacity));
+  color: rgb(217 63 18 / var(--tw-text-opacity));
 }
 
 .hover\:text-white:hover{
@@ -4977,6 +4981,16 @@ form table tbody td{
     text-align: start;
   }
 
+  .sm\:text-4xl{
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+
+  .sm\:text-base{
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
   .sm\:text-lg{
     font-size: 1.125rem;
     line-height: 1.75rem;
@@ -5227,10 +5241,6 @@ form table tbody td{
 
   .lg\:w-64{
     width: 16rem;
-  }
-
-  .lg\:w-\[45\%\]{
-    width: 45%;
   }
 
   .lg\:max-w-2xl{

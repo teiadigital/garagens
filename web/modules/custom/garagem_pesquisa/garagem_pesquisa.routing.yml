@@ -1,18 +1,18 @@
-garagem_pesquisa.page:
-  path: '/pesquisa'
+garagem_pesquisa.list:
+  path: "/garagens"
   defaults:
     _controller: '\Drupal\garagem_pesquisa\Controller\PesquisaController::page'
-    _title: 'Pesquisar Garagens'
+    _title: "Garagens"
   requirements:
-    _access: 'TRUE'
+    _access: "TRUE"
   options:
     no_cache: true
 
 garagem_pesquisa.ajax:
-  path: '/pesquisa/ajax'
+  path: "/pesquisa/ajax"
   defaults:
     _controller: '\Drupal\garagem_pesquisa\Controller\PesquisaController::ajax'
   requirements:
-    _access: 'TRUE'
+    _access: "TRUE"
   options:
     no_cache: true

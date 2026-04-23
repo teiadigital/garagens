@@ -8,5 +8,6 @@ id: global
 label: Global
 tags:
   canonical_url: '[current-page:url]'
+  description: 'Encontre garagens e espaços disponíveis em Portugal para estacionamento e armazenamento, com pesquisa por localização e disponibilidade.'
   keywords: 'Warehouse,Warehouse rental,Rent warehouse,Rent warehouse,Freestanding warehouse,Store pallets,Euro pallets,American pallets,Temporary storage,Temporary storage,Warehouse Spain,Warehouse Portugal,Warehouse space,Place for storage,Warehouse with racks,Cold storage,Cold room,Free warehouse,Warehouse register,List of warehouses,Certified warehouses,Certified warehouse,ADR warehouse,ADR warehouses'
   title: '[current-page:title] | [site:name]'

@@ -8,5 +8,6 @@ id: front
 label: 'Front page'
 tags:
   canonical_url: '[site:url]'
+  description: 'Plataforma para encontrar e anunciar garagens em Portugal, com pesquisa por localização, disponibilidade e tipo de aluguer.'
   keywords: 'garages, garage rental, rent a garage, garage for rent, private garage, parking space, private parking, garage in Portugal, garage sharing, garage platform, list your garage, find a garage, garage near me, secure garage, car storage, storage garage, monthly garage rental, parking rental, available garages, garage marketplace'
   shortlink: '[site:url]'

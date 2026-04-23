@@ -7,7 +7,28 @@
 
 function garagem_pesquisa_theme($existing, $type, $theme, $path) {
   return [
-    'garagem_pesquisa' => ['variables' => []],
+    'garagem_pesquisa' => [
+      'variables' => [
+        'heading' => NULL,
+        'intro' => NULL,
+        'results' => [],
+        'total' => 0,
+        'has_results' => FALSE,
+        'show_map' => FALSE,
+        'query' => '',
+        'lat' => '',
+        'lng' => '',
+        'radius' => '15',
+        'bbox_n' => '',
+        'bbox_s' => '',
+        'bbox_e' => '',
+        'bbox_w' => '',
+        'tipo' => 'dia',
+        'date_start' => '',
+        'date_end' => '',
+        'date_display' => NULL,
+      ],
+    ],
     'garagem_barra_pesquisa' => [
       'variables' => [],
       'template'  => 'garagem-barra-pesquisa',

@@ -13,6 +13,7 @@ module:
   block_content: 0
   block_exclude_pages: 0
   breakpoint: 0
+  checklistapi: 0
   ckeditor5: 0
   color_field: 0
   comment: 0
@@ -105,12 +106,14 @@ module:
   phone_international: 0
   postal_code_validator: 0
   profile: 0
+  redirect: 0
   registration_role: 0
   reroute_email: 0
   responsive_image: 0
   rest: 0
   search: 0
   select_or_other: 0
+  seo_checklist: 0
   serialization: 0
   services: 0
   shield: 0
@@ -118,6 +121,7 @@ module:
   show_email: 0
   simple_menu_icons: 0
   simple_password_policy: 0
+  simple_sitemap: 0
   smtp: 0
   state_machine: 0
   storitflex_geocode: 0

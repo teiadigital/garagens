@@ -7,17 +7,16 @@ dependencies:
 id: armazem
 label: Armazem
 type: 'canonical_entities:node'
-pattern: '[node:title]'
+pattern: 'garagens/[node:title]'
 selection_criteria:
-  8f413a7d-8466-4322-8f60-91c727e274a6:
+  b1bc29ff-1cad-40c4-93fc-2a31bbf92803:
     id: 'entity_bundle:node'
     negate: false
-    uuid: 8f413a7d-8466-4322-8f60-91c727e274a6
+    uuid: b1bc29ff-1cad-40c4-93fc-2a31bbf92803
     context_mapping:
       node: node
     bundles:
       armazem: armazem
-      pedidos: pedidos
 selection_logic: and
 weight: -5
 relationships: {  }

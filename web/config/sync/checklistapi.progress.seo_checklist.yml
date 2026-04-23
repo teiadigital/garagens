@@ -1,0 +1,47 @@
+progress:
+  '#changed': 1776938010
+  '#changed_by': '1'
+  '#completed_items': 14
+  '#items':
+    install_and_enable_redirect_module:
+      '#completed': 1776937306
+      '#uid': '1'
+    configure_the_redirect_module:
+      '#completed': 1776937306
+      '#uid': '1'
+    install_and_enable_pathauto_module:
+      '#completed': 1776937306
+      '#uid': '1'
+    configure_pathauto_module:
+      '#completed': 1776937306
+      '#uid': '1'
+    create_pathauto_patterns:
+      '#completed': 1776937306
+      '#uid': '1'
+    install_and_enable_metatag_module:
+      '#completed': 1776937306
+      '#uid': '1'
+    set_metatags_for_your_site:
+      '#completed': 1776937476
+      '#uid': '1'
+    install_and_enable_xml_sitemap_module:
+      '#completed': 1776937306
+      '#uid': '1'
+    configure_xml_sitemap_module:
+      '#completed': 1776937869
+      '#uid': '1'
+    add_xml_sitemap_to_your_robotstxt_file:
+      '#completed': 1776937869
+      '#uid': '1'
+    set_up_cron:
+      '#completed': 1776937869
+      '#uid': '1'
+    submit_xml_sitemap_to_google:
+      '#completed': 1776937869
+      '#uid': '1'
+    run_a_speed_test_for_your_site:
+      '#completed': 1776938010
+      '#uid': '1'
+    adjust_performance_admin_settings:
+      '#completed': 1776938010
+      '#uid': '1'

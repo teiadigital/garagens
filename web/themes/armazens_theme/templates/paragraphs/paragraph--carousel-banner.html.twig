@@ -63,7 +63,9 @@
         <div class="flex flex-col gap-2">
           
           {{content.field_pre_title}}
-          {{content.field_title}}
+          {% if heading_content is not empty %}
+            <{{ heading_tag|default('h2') }} class="{{ heading_classes|default([])|join(' ') }}">{{ heading_content|raw }}</{{ heading_tag|default('h2') }}>
+          {% endif %}
           {{content.field_sub_title}}
           {{content.field_link}}
         </div>

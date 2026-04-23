@@ -277,3 +277,60 @@ function armazens_theme_preprocess_node(&$variables){
     }
   }
 }
+
+function armazens_theme_preprocess_paragraph(array &$variables) {
+  $paragraph = $variables['paragraph'] ?? NULL;
+
+  if (!$paragraph || $paragraph->bundle() !== 'carousel_banner') {
+    return;
+  }
+
+  $variables['heading_tag'] = 'h2';
+  $variables['heading_classes'] = [
+    'field',
+    'field--name-field-title',
+    'field--type-text-long',
+    'field--label-hidden',
+    'field__item',
+  ];
+  $variables['heading_content'] = '';
+
+  if (!$paragraph->get('field_title')->isEmpty()) {
+    $processed = $paragraph->get('field_title')->processed;
+    $processed = preg_replace('/<p>\s*/i', '<span class="block">', $processed);
+    $processed = preg_replace('/\s*<\/p>/i', '</span>', $processed);
+    $variables['heading_content'] = $processed;
+  }
+
+  if (!\Drupal::service('path.matcher')->isFrontPage()) {
+    return;
+  }
+
+  $parent = $paragraph->getParentEntity();
+  if (!$parent || !$parent->hasField('field_carousel_banner')) {
+    return;
+  }
+
+  foreach ($parent->get('field_carousel_banner') as $delta => $item) {
+    if ((int) $item->target_id === (int) $paragraph->id()) {
+      $variables['heading_tag'] = $delta === 0 ? 'h1' : 'h2';
+      break;
+    }
+  }
+}
+
+function armazens_theme_preprocess_field(array &$variables) {
+  $element = $variables['element'] ?? [];
+
+  if (($element['#entity_type'] ?? NULL) !== 'paragraph' || ($element['#field_name'] ?? NULL) !== 'field_title') {
+    return;
+  }
+
+  $paragraph = $element['#object'] ?? NULL;
+  if (!$paragraph || !in_array($paragraph->bundle(), ['what_we_do', 'icon_title_text', 'why_choose_us', 'contact'], TRUE) || $paragraph->get('field_title')->isEmpty()) {
+    return;
+  }
+
+  $processed = trim($paragraph->get('field_title')->processed);
+  $variables['heading_content'] = preg_replace('/^<p>(.*)<\/p>$/is', '$1', $processed);
+}

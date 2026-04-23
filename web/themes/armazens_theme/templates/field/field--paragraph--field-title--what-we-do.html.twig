@@ -1,0 +1,31 @@
+{#
+/**
+ * @file
+ * Theme override for the "field_title" field on the "what_we_do" paragraph.
+ */
+#}
+{%
+  set classes = [
+    'field',
+    'field--name-' ~ field_name|clean_class,
+    'field--type-' ~ field_type|clean_class,
+    'field--label-' ~ label_display,
+    label_display == 'inline' ? 'clearfix',
+  ]
+%}
+
+{% if label_hidden %}
+  {% for item in items %}
+    <h2{{ attributes.addClass(classes, 'field__item') }}>
+      {{ heading_content|default(item.content)|raw }}
+    </h2>
+  {% endfor %}
+{% else %}
+  <div{{ attributes.addClass(classes) }}>
+    {% for item in items %}
+      <h2{{ item.attributes.addClass('field__item') }}>
+        {{ heading_content|default(item.content)|raw }}
+      </h2>
+    {% endfor %}
+  </div>
+{% endif %}

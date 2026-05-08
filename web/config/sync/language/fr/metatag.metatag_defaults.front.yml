@@ -1,3 +1,5 @@
-label: "Page d'accueil"
 tags:
   keywords: 'garages, location de garages, louer un garage, garage à louer, garage privé, place de parking, parking privé, garage au Portugal, plateforme de garages, partage de garages, publier un garage, trouver un garage, garage près de chez moi, garage sécurisé, stockage de voiture, location mensuelle de garage, location de parking, garages disponibles, marketplace de garages'
+  canonical_url: '[site:url]'
+  shortlink: '[site:url]'
+label: "Page d'accueil"

@@ -19,7 +19,13 @@
       "WebSearch",
       "Bash(curl -s 'https://photon.komoot.io/api/?q=__TRACKED_VAR__&limit=200&lang=en&osm_tag=place&osm_tag=boundary')",
       "Bash(curl -s \"https://photon.komoot.io/api/?q=olivei&limit=200&lang=en&osm_tag=place&osm_tag=boundary\")",
-      "Bash(npx tailwindcss:*)"
+      "Bash(npx tailwindcss:*)",
+      "Bash(grep -A 30 \"config.*field.storage.node.field_recursos\" /home/fabio/Música/db_garagens_10_04.sql | head -80)",
+      "Read(//home/fabio/Música/**)",
+      "Bash(grep -A2 \"INSERT INTO \\\\`node__field_recursos\\\\`\" /home/fabio/Música/db_garagens_10_04.sql)",
+      "Bash(grep \"INSERT INTO \\\\`node__field_recursos\\\\`\" /home/fabio/Música/db_garagens_10_04.sql)",
+      "Bash(./vendor/bin/drush sql:query \"SELECT n.nid, n.title, GROUP_CONCAT\\(r.field_recursos_value SEPARATOR ', '\\) as recursos FROM node_field_data n LEFT JOIN node__field_recursos r ON n.nid = r.entity_id WHERE n.type = 'garagem' GROUP BY n.nid, n.title ORDER BY n.nid;\")",
+      "Bash(docker exec *)"
     ]
   }
 }

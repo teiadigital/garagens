@@ -589,7 +589,7 @@ content:
       other_placeholder: ''
       other_option: Outro
       other_field_label: ''
-      add_other_value_to_allowed_values: true
+      add_other_value_to_allowed_values: false
     third_party_settings:
       entity_form_field_label:
         new_label: ''
@@ -619,6 +619,11 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  simple_sitemap:
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   title:
     type: field_hidden_string_textfield
     weight: 0
@@ -626,6 +631,11 @@ content:
     settings:
       size: 60
       placeholder: ''
+    third_party_settings: {  }
+  url_redirects:
+    weight: 50
+    region: content
+    settings: {  }
     third_party_settings: {  }
 hidden:
   created: true

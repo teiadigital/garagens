@@ -33,6 +33,7 @@
         "drupal/color_field": "^3.0",
         "drupal/commerce": "^2.38",
         "drupal/conditional_fields": "^4.0@alpha",
+        "drupal/config_ignore": "^3.4",
         "drupal/core-composer-scaffold": "^10.5.1",
         "drupal/core-project-message": "^10.5.1",
         "drupal/core-recommended": "^10.5.1",

@@ -2821,6 +2821,14 @@ header .block-menu.navigation .menu li a{
   width: 100%;
 }
 
+.paragraph--type--image .field--name-field-p-image img {
+  max-height: 500px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+}
+
 /* MAP  */
 
 #map-location-front{
@@ -4641,6 +4649,15 @@ form table tbody td{
 
 .replace-button{
   display: none !important;
+}
+
+.paragraph--type--why-our-solution .field--name-field-big-image img {
+  width: 100%;
+  max-height: 500px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
 }
 
 .first-letter\:uppercase::first-letter{

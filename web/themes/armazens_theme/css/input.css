@@ -362,6 +362,12 @@ header .block-menu.navigation .menu .btn-menu a {
   @apply w-full;
 }
 
+.paragraph--type--image .field--name-field-p-image img {
+  max-height: 500px;
+  object-fit: cover;
+  object-position: center;
+}
+
 /* MAP  */
 
 #map-location-front {
@@ -1419,4 +1425,11 @@ form table tbody td {
 
 .replace-button {
   @apply !hidden;
+}
+
+.paragraph--type--why-our-solution .field--name-field-big-image img {
+  width: 100%;
+  max-height: 500px;
+  object-fit: cover;
+  object-position: center;
 }

@@ -369,12 +369,222 @@
       });
 
       if (modoBloco) {
+        const mapaEl = document.getElementById("pesquisa-map");
+        const mapaStatus = document.getElementById("homepage-mapa-status");
+        const mapaPopup = document.getElementById("mapa-popup");
+        const mapaPopupFoto = document.getElementById("mapa-popup-foto");
+        const mapaPopupTitulo = document.getElementById("mapa-popup-titulo");
+        const mapaPopupLocalidade = document.getElementById("mapa-popup-localidade");
+        const mapaPopupPreco = document.getElementById("mapa-popup-preco");
+        const mapaPopupLink = document.getElementById("mapa-popup-link");
+        const mapaPopupFechar = document.getElementById("mapa-popup-fechar");
+        let homepageMap = null;
+        let homepageMarkers = {};
+        let homepageMapMoveTimeout = null;
+        let homepageRequestId = 0;
+
+        function setHomepageStatus(message) {
+          if (!mapaStatus) return;
+          mapaStatus.textContent = message;
+          mapaStatus.classList.toggle("hidden", !message);
+        }
+
+        function initHomepageMap() {
+          if (!mapaEl || homepageMap) return;
+
+          homepageMap = L.map(mapaEl, { scrollWheelZoom: true, zoomControl: true }).setView([39.5, -8.0], 7);
+          L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+            attribution: "© OpenStreetMap contributors © CARTO",
+            subdomains: "abcd",
+            maxZoom: 19,
+          }).addTo(homepageMap);
+
+          homepageMap.on("movestart zoomstart", () => {
+            mapaPopup?.classList.add("hidden");
+            setHomepageStatus(Drupal.t("A carregar pontos..."));
+          });
+
+          homepageMap.on("moveend zoomend", () => {
+            clearTimeout(homepageMapMoveTimeout);
+            homepageMapMoveTimeout = setTimeout(carregarHomepageViewport, 500);
+          });
+
+          setTimeout(() => homepageMap?.invalidateSize(), 200);
+        }
+
+        function updateHomepageViewportInputs() {
+          if (!homepageMap || !bboxNInput || !bboxSInput || !bboxEInput || !bboxWInput) return;
+          const bounds = homepageMap.getBounds();
+          bboxNInput.value = String(bounds.getNorth());
+          bboxSInput.value = String(bounds.getSouth());
+          bboxEInput.value = String(bounds.getEast());
+          bboxWInput.value = String(bounds.getWest());
+        }
+
+        function limparHomepageMapa() {
+          if (!homepageMap) return;
+          Object.values(homepageMarkers).forEach((marker) => homepageMap.removeLayer(marker));
+          homepageMarkers = {};
+        }
+
+        function buildHomepageGaragemUrl(baseUrl) {
+          const params = new URLSearchParams();
+          params.set("tipo", datas.getTipo());
+          if (datas.getDateStart()) params.set("data_inicio", datas.getDateStart());
+          if (datas.getTipo() === "dia" && datas.getDateEnd()) params.set("data_fim", datas.getDateEnd());
+
+          const query = params.toString();
+          return query ? `${baseUrl}${baseUrl.includes("?") ? "&" : "?"}${query}` : baseUrl;
+        }
+
+        function mostrarHomepagePopup(item, marker) {
+          if (!homepageMap || !mapaPopup) return;
+
+          const tipo = datas.getTipo();
+          const preco =
+            (tipo === "dia" && item.preco_dia) ? item.preco_dia
+              : (tipo === "mes" && item.preco_mes) ? item.preco_mes
+                : (tipo === "ano" && item.preco_ano) ? item.preco_ano
+                  : item.preco_dia || item.preco_mes || item.preco_ano || null;
+          const unidade = tipo === "dia" ? Drupal.t("dia") : tipo === "mes" ? Drupal.t("mês") : Drupal.t("ano");
+
+          mapaPopupFoto.src = item.foto;
+          mapaPopupFoto.alt = item.title;
+          mapaPopupTitulo.textContent = item.title;
+          mapaPopupLocalidade.textContent = item.locality;
+          mapaPopupPreco.textContent = preco
+            ? `${preco.toLocaleString("pt-PT", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} € / ${unidade}`
+            : "";
+          mapaPopupLink.href = buildHomepageGaragemUrl(item.url);
+
+          const point = homepageMap.latLngToContainerPoint(marker.getLatLng());
+          const popupWidth = 260;
+          const popupHeight = 240;
+          let left = point.x - popupWidth / 2;
+          let top = point.y - popupHeight - 16;
+
+          if (left < 8) left = 8;
+          if (left + popupWidth > mapaEl.offsetWidth - 8) {
+            left = mapaEl.offsetWidth - popupWidth - 8;
+          }
+          if (top < 8) top = point.y + 24;
+
+          mapaPopup.style.left = `${left}px`;
+          mapaPopup.style.top = `${top}px`;
+          mapaPopup.classList.remove("hidden");
+        }
+
+        function criarHomepageMarker(item) {
+          if (!homepageMap || !item.lat || !item.lng) return;
+
+          const tipo = datas.getTipo() || "dia";
+          const precoValor =
+            (tipo === "dia" && item.preco_dia) ? item.preco_dia
+              : (tipo === "mes" && item.preco_mes) ? item.preco_mes
+                : (tipo === "ano" && item.preco_ano) ? item.preco_ano
+                  : item.preco_dia || item.preco_mes || item.preco_ano || null;
+
+          const icon = L.divIcon({
+            className: "",
+            html: `<div class="pesquisa-marker" data-nid="${item.nid}">${precoValor ? `€${Math.round(precoValor)}` : ""}</div>`,
+            iconSize: null,
+            iconAnchor: [0, 0],
+          });
+
+          const marker = L.marker([item.lat, item.lng], { icon })
+            .addTo(homepageMap)
+            .on("click", () => mostrarHomepagePopup(item, marker));
+
+          homepageMarkers[item.nid] = marker;
+        }
+
+        function carregarHomepageViewport(clearStatus = true) {
+          if (!homepageMap) return;
+          updateHomepageViewportInputs();
+          const requestId = ++homepageRequestId;
+
+          const bounds = homepageMap.getBounds();
+          const params = {
+            bbox_n: bounds.getNorth(),
+            bbox_s: bounds.getSouth(),
+            bbox_e: bounds.getEast(),
+            bbox_w: bounds.getWest(),
+            tipo: datas.getTipo(),
+            map_only: 1,
+          };
+
+          if (datas.getDateStart()) params.date_start = datas.getDateStart();
+          if (datas.getDateEnd()) params.date_end = datas.getDateEnd();
+
+          fetch(`${ajaxUrl}?${new URLSearchParams(params).toString()}`)
+            .then((response) => response.json())
+            .then((data) => {
+              if (requestId !== homepageRequestId) return;
+              limparHomepageMapa();
+              (data.markers || []).forEach((item) => criarHomepageMarker(item));
+              if (clearStatus) {
+                setHomepageStatus("");
+              }
+            })
+            .catch(() => {
+              if (requestId === homepageRequestId) {
+                setHomepageStatus(Drupal.t("Não foi possível carregar o mapa."));
+              }
+            });
+        }
+
+        function pedirLocalizacaoHomepage() {
+          if (!mapaEl || !("geolocation" in navigator)) {
+            setHomepageStatus("");
+            carregarHomepageViewport();
+            return;
+          }
+
+          setHomepageStatus(Drupal.t("A pedir a sua localização..."));
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const lat = position.coords.latitude;
+              const lng = position.coords.longitude;
+              latInput.value = String(lat);
+              lngInput.value = String(lng);
+              locationInput.value = Drupal.t("A sua localização");
+              autocomplete.showClearButton();
+              homepageMap.setView([lat, lng], 11);
+              carregarHomepageViewport();
+            },
+            () => {
+              setHomepageStatus(Drupal.t("Ative a localização para ver garagens perto de si."));
+              carregarHomepageViewport(false);
+            },
+            { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 },
+          );
+        }
+
+        if (mapaEl && typeof L !== "undefined") {
+          initHomepageMap();
+          pedirLocalizacaoHomepage();
+        }
+
+        mapaPopupFechar?.addEventListener("click", (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          mapaPopup.classList.add("hidden");
+        });
+
         form.addEventListener("submit", (event) => {
           event.preventDefault();
           datas.fecharPanel();
 
           const params = new URLSearchParams();
-          if (locationInput.value.trim()) params.set("q", locationInput.value.trim());
+          if (locationInput.value.trim() && locationInput.value.trim() !== Drupal.t("A sua localização")) {
+            params.set("q", locationInput.value.trim());
+          }
+          if (latInput.value) params.set("lat", latInput.value);
+          if (lngInput.value) params.set("lng", lngInput.value);
+          if (bboxNInput?.value) params.set("bbox_n", bboxNInput.value);
+          if (bboxSInput?.value) params.set("bbox_s", bboxSInput.value);
+          if (bboxEInput?.value) params.set("bbox_e", bboxEInput.value);
+          if (bboxWInput?.value) params.set("bbox_w", bboxWInput.value);
           if (radiusInput?.value && !isDefaultRadius(radiusInput.value)) {
             params.set("radius", radiusInput.value);
           }

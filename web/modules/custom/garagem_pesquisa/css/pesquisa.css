@@ -320,6 +320,30 @@
   #pesquisa-mapa-wrapper {
     display: none !important;
   }
+
+  #pesquisa-mapa-wrapper.homepage-mapa-wrapper {
+    display: block !important;
+  }
+}
+
+.homepage-mapa-status {
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  z-index: 500;
+  max-width: calc(100% - 32px);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+  color: #111827;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.25;
+  padding: 8px 12px;
+}
+
+.homepage-mapa-status.hidden {
+  display: none;
 }
 
 /* ── Loading viewport ──────────────────────── */

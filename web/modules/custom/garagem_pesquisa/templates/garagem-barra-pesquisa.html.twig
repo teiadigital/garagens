@@ -76,11 +76,13 @@
   <div id="pesquisa-mapa-wrapper" class="homepage-mapa-wrapper max-w-7xl mx-auto mt-6">
     <div style="position:relative;">
       <div id="pesquisa-map" class="rounded-2xl overflow-hidden shadow-md" style="height:300px;" aria-label="{{ 'Mapa de garagens perto de si'|t }}"></div>
-      <div id="homepage-mapa-status" class="homepage-mapa-status">
-        <span id="homepage-mapa-status-text">{{ 'Use a sua localização para ver garagens perto de si.'|t }}</span>
-        <button id="homepage-mapa-localizacao" type="button" class="homepage-mapa-localizacao">
-          {{ 'Usar localização atual'|t }}
-        </button>
+      <div id="homepage-mapa-status" class="homepage-mapa-status homepage-mapa-status--overlay">
+        <div class="homepage-mapa-overlay-card">
+          <span id="homepage-mapa-status-text">{{ 'Use a sua localização para ver garagens perto de si.'|t }}</span>
+          <button id="homepage-mapa-localizacao" type="button" class="homepage-mapa-localizacao" style="background:#111827;color:#fff;">
+            {{ 'Permitir localização'|t }}
+          </button>
+        </div>
       </div>
       <div id="mapa-popup" class="hidden" style="position:absolute;z-index:1000;width:260px;background:#fff;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.18);overflow:hidden;">
         <button id="mapa-popup-fechar" aria-label="{{ 'Fechar detalhes do mapa'|t }}" style="position:absolute;top:8px;right:8px;z-index:1;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.9);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;">

@@ -386,7 +386,7 @@
         let homepageRequestId = 0;
         let homepageTemLocalizacao = false;
 
-        function setHomepageStatus(message, showLocationButton = !homepageTemLocalizacao) {
+        function setHomepageStatus(message, showLocationButton = !homepageTemLocalizacao, overlayMode = showLocationButton) {
           if (!mapaStatus) return;
           if (mapaStatusText) {
             mapaStatusText.textContent = message;
@@ -397,6 +397,8 @@
           if (mapaLocalizacaoBtn) {
             mapaLocalizacaoBtn.classList.toggle("hidden", !showLocationButton);
           }
+          mapaStatus.classList.toggle("homepage-mapa-status--overlay", Boolean(overlayMode));
+          mapaStatus.classList.toggle("homepage-mapa-status--notice", !overlayMode);
           mapaStatus.classList.toggle("hidden", !message);
         }
 
@@ -412,7 +414,7 @@
 
           homepageMap.on("movestart zoomstart", () => {
             mapaPopup?.classList.add("hidden");
-            setHomepageStatus(Drupal.t("A carregar pontos..."));
+            setHomepageStatus(Drupal.t("A carregar pontos..."), false, false);
           });
 
           homepageMap.on("moveend zoomend", () => {
@@ -534,24 +536,31 @@
               limparHomepageMapa();
               (data.markers || []).forEach((item) => criarHomepageMarker(item));
               if (clearStatus) {
-                setHomepageStatus("", false);
+                setHomepageStatus("", false, false);
               }
             })
             .catch(() => {
               if (requestId === homepageRequestId) {
-                setHomepageStatus(Drupal.t("Não foi possível carregar o mapa."));
+                setHomepageStatus(Drupal.t("Não foi possível carregar o mapa."), false, false);
               }
             });
         }
 
         function pedirLocalizacaoHomepage() {
+          const secureLocalhost = ["localhost", "127.0.0.1"].includes(window.location.hostname);
+          if (!window.isSecureContext && !secureLocalhost) {
+            setHomepageStatus(Drupal.t("A localização só pode ser autorizada numa ligação segura HTTPS."), false, true);
+            carregarHomepageViewport(false);
+            return;
+          }
+
           if (!mapaEl || !("geolocation" in navigator)) {
-            setHomepageStatus("", false);
+            setHomepageStatus(Drupal.t("Este browser não disponibiliza localização."), false, true);
             carregarHomepageViewport();
             return;
           }
 
-          setHomepageStatus(Drupal.t("A pedir a sua localização..."), false);
+          setHomepageStatus(Drupal.t("A pedir a sua localização..."), false, true);
           navigator.geolocation.getCurrentPosition(
             (position) => {
               const lat = position.coords.latitude;
@@ -571,6 +580,7 @@
                   ? Drupal.t("A localização está bloqueada. Autorize no browser e tente novamente.")
                   : Drupal.t("Não foi possível obter a sua localização. Tente novamente."),
                 true,
+                true,
               );
               carregarHomepageViewport(false);
             },
@@ -580,12 +590,25 @@
 
         if (mapaEl && typeof L !== "undefined") {
           initHomepageMap();
-          setHomepageStatus(Drupal.t("Use a sua localização para ver garagens perto de si."), true);
-          pedirLocalizacaoHomepage();
+          setHomepageStatus(Drupal.t("Use a sua localização para ver garagens perto de si."), true, true);
+          carregarHomepageViewport(false);
         }
+
+        mapaStatus?.addEventListener("click", (event) => {
+          event.stopPropagation();
+        });
+
+        mapaStatus?.addEventListener("pointerdown", (event) => {
+          event.stopPropagation();
+        });
+
+        mapaStatus?.addEventListener("touchstart", (event) => {
+          event.stopPropagation();
+        }, { passive: true });
 
         mapaLocalizacaoBtn?.addEventListener("click", (event) => {
           event.preventDefault();
+          event.stopPropagation();
           pedirLocalizacaoHomepage();
         });
 

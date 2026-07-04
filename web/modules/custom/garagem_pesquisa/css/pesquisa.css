@@ -331,8 +331,12 @@
   left: 16px;
   top: 16px;
   z-index: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
   max-width: calc(100% - 32px);
-  border-radius: 9999px;
+  border-radius: 18px;
   background: rgba(255, 255, 255, 0.94);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
   color: #111827;
@@ -340,6 +344,27 @@
   font-weight: 600;
   line-height: 1.25;
   padding: 8px 12px;
+}
+
+.homepage-mapa-localizacao {
+  border: none;
+  border-radius: 9999px;
+  background: #111827;
+  color: #fff;
+  cursor: pointer;
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 8px 10px;
+}
+
+.homepage-mapa-localizacao:hover {
+  background: #000;
+}
+
+.homepage-mapa-localizacao.hidden {
+  display: none;
 }
 
 .homepage-mapa-status.hidden {

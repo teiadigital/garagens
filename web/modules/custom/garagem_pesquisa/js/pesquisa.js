@@ -371,6 +371,8 @@
       if (modoBloco) {
         const mapaEl = document.getElementById("pesquisa-map");
         const mapaStatus = document.getElementById("homepage-mapa-status");
+        const mapaStatusText = document.getElementById("homepage-mapa-status-text");
+        const mapaLocalizacaoBtn = document.getElementById("homepage-mapa-localizacao");
         const mapaPopup = document.getElementById("mapa-popup");
         const mapaPopupFoto = document.getElementById("mapa-popup-foto");
         const mapaPopupTitulo = document.getElementById("mapa-popup-titulo");
@@ -382,10 +384,19 @@
         let homepageMarkers = {};
         let homepageMapMoveTimeout = null;
         let homepageRequestId = 0;
+        let homepageTemLocalizacao = false;
 
-        function setHomepageStatus(message) {
+        function setHomepageStatus(message, showLocationButton = !homepageTemLocalizacao) {
           if (!mapaStatus) return;
-          mapaStatus.textContent = message;
+          if (mapaStatusText) {
+            mapaStatusText.textContent = message;
+          }
+          else {
+            mapaStatus.textContent = message;
+          }
+          if (mapaLocalizacaoBtn) {
+            mapaLocalizacaoBtn.classList.toggle("hidden", !showLocationButton);
+          }
           mapaStatus.classList.toggle("hidden", !message);
         }
 
@@ -523,7 +534,7 @@
               limparHomepageMapa();
               (data.markers || []).forEach((item) => criarHomepageMarker(item));
               if (clearStatus) {
-                setHomepageStatus("");
+                setHomepageStatus("", false);
               }
             })
             .catch(() => {
@@ -535,16 +546,17 @@
 
         function pedirLocalizacaoHomepage() {
           if (!mapaEl || !("geolocation" in navigator)) {
-            setHomepageStatus("");
+            setHomepageStatus("", false);
             carregarHomepageViewport();
             return;
           }
 
-          setHomepageStatus(Drupal.t("A pedir a sua localização..."));
+          setHomepageStatus(Drupal.t("A pedir a sua localização..."), false);
           navigator.geolocation.getCurrentPosition(
             (position) => {
               const lat = position.coords.latitude;
               const lng = position.coords.longitude;
+              homepageTemLocalizacao = true;
               latInput.value = String(lat);
               lngInput.value = String(lng);
               locationInput.value = Drupal.t("A sua localização");
@@ -552,8 +564,14 @@
               homepageMap.setView([lat, lng], 11);
               carregarHomepageViewport();
             },
-            () => {
-              setHomepageStatus(Drupal.t("Ative a localização para ver garagens perto de si."));
+            (error) => {
+              const denied = error && error.code === error.PERMISSION_DENIED;
+              setHomepageStatus(
+                denied
+                  ? Drupal.t("A localização está bloqueada. Autorize no browser e tente novamente.")
+                  : Drupal.t("Não foi possível obter a sua localização. Tente novamente."),
+                true,
+              );
               carregarHomepageViewport(false);
             },
             { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 },
@@ -562,8 +580,14 @@
 
         if (mapaEl && typeof L !== "undefined") {
           initHomepageMap();
+          setHomepageStatus(Drupal.t("Use a sua localização para ver garagens perto de si."), true);
           pedirLocalizacaoHomepage();
         }
+
+        mapaLocalizacaoBtn?.addEventListener("click", (event) => {
+          event.preventDefault();
+          pedirLocalizacaoHomepage();
+        });
 
         mapaPopupFechar?.addEventListener("click", (event) => {
           event.preventDefault();

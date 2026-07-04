@@ -668,7 +668,7 @@
       let mapProntoParaViewport = false;
       let mapListenersAttached = false;
       let mapMoveTimeout = null;
-      let userViewportInteraction = false;
+      let viewportRequestId = 0;
       let currentParams = { ...(initialState.params || {}) };
 
       function bindCardsHover() {
@@ -763,7 +763,7 @@
 
       function initMapa() {
         if (map) return;
-        map = L.map("pesquisa-map", { zoomControl: true }).setView([39.5, -8.0], 7);
+        map = L.map("pesquisa-map", { scrollWheelZoom: true, zoomControl: true }).setView([39.5, -8.0], 7);
         L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
           attribution: "© OpenStreetMap contributors © CARTO",
           subdomains: "abcd",
@@ -883,28 +883,20 @@
 
         if (mapListenersAttached) return;
 
-        map.on("mousedown touchstart", () => {
-          userViewportInteraction = true;
-        });
-
-        map.on("wheel", () => {
-          userViewportInteraction = true;
-        });
-
-        map.on("dragstart zoomstart", () => {
-          if (!mapProntoParaViewport || !userViewportInteraction) return;
+        map.on("movestart zoomstart", () => {
+          if (!mapProntoParaViewport) return;
           latInput.value = "";
           lngInput.value = "";
+          mapaPopup?.classList.add("hidden");
           autocomplete.clearViewportBounds();
         });
 
         map.on("moveend zoomend", () => {
-          if (!mapProntoParaViewport || !userViewportInteraction) return;
+          if (!mapProntoParaViewport) return;
           clearTimeout(mapMoveTimeout);
           mapMoveTimeout = setTimeout(() => {
             carregarViewport();
-            userViewportInteraction = false;
-          }, 700);
+          }, 500);
         });
 
         mapListenersAttached = true;
@@ -916,11 +908,13 @@
 
         currentParams = { ...bboxParams };
         updateViewportInputs();
+        const requestId = ++viewportRequestId;
         resultados.classList.add("a-carregar");
 
         fetch(`${ajaxUrl}?${new URLSearchParams({ ...bboxParams, map_only: 1 }).toString()}`)
           .then((response) => response.json())
           .then((data) => {
+            if (requestId !== viewportRequestId) return;
             limparMapa();
             (data.markers || []).forEach((item) => criarMarker(item));
           })
@@ -929,6 +923,7 @@
         fetch(`${ajaxUrl}?${new URLSearchParams({ ...bboxParams, limit: pageLimit, offset: 0 }).toString()}`)
           .then((response) => response.json())
           .then((data) => {
+            if (requestId !== viewportRequestId) return;
             const items = data.results || [];
             totalResultados = Number(data.total || 0);
             offsetAtual = items.length;
@@ -937,11 +932,14 @@
             bindCardsHover();
           })
           .catch(() => {
+            if (requestId !== viewportRequestId) return;
             resultados.innerHTML = "";
             updateHeader(0);
           })
           .finally(() => {
-            resultados.classList.remove("a-carregar");
+            if (requestId === viewportRequestId) {
+              resultados.classList.remove("a-carregar");
+            }
           });
       }
 

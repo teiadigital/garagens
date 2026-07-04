@@ -35,6 +35,7 @@ class PesquisaController extends ControllerBase {
     $page_results = array_slice($all_results, 0, self::PAGE_LIMIT);
     $has_geolocation = $filters['lat'] !== NULL && $filters['lng'] !== NULL;
     $has_bbox = $this->hasBbox($filters);
+    $should_show_map = TRUE;
     $meta_description = $this->buildMetaDescription($filters);
 
     $heading = $filters['q'] !== ''
@@ -52,7 +53,7 @@ class PesquisaController extends ControllerBase {
       '#results' => $page_results,
       '#total' => count($all_results),
       '#has_results' => !empty($page_results),
-      '#show_map' => $has_geolocation || $has_bbox,
+      '#show_map' => $should_show_map,
       '#query' => $filters['q'],
       '#lat' => $filters['lat'] !== NULL ? (string) $filters['lat'] : '',
       '#lng' => $filters['lng'] !== NULL ? (string) $filters['lng'] : '',
@@ -89,7 +90,7 @@ class PesquisaController extends ControllerBase {
               'offset' => count($page_results),
               'params' => $this->buildAjaxParams($filters),
               'markers' => $this->buildMarkers($all_results),
-              'showMap' => $has_geolocation || $has_bbox,
+              'showMap' => $should_show_map,
               'lat' => $filters['lat'],
               'lng' => $filters['lng'],
             ],

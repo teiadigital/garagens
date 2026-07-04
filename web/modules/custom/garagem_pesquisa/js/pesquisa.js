@@ -507,9 +507,10 @@
       function initMapa() {
         if (map) return;
         map = L.map("pesquisa-map", { zoomControl: true }).setView([39.5, -8.0], 7);
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-          attribution: "© OpenStreetMap contributors",
-          maxZoom: 18,
+        L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+          attribution: "© OpenStreetMap contributors © CARTO",
+          subdomains: "abcd",
+          maxZoom: 19,
         }).addTo(map);
       }
 
@@ -735,7 +736,7 @@
       updateHeader(totalResultados);
       bindCardsHover();
 
-      if (!mapaWrapper.classList.contains("hidden") && initialState.showMap) {
+      if (initialState.showMap) {
         mostrarMapa();
 
         if (initialState.lat && initialState.lng) {

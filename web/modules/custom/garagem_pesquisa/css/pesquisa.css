@@ -297,6 +297,25 @@
   align-items: start;
 }
 
+#pesquisa-mapa-wrapper {
+  width: 100%;
+  max-width: 100%;
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
+#pesquisa-map {
+  width: 100%;
+  min-width: 0;
+}
+
+@media (min-width: 1024px) {
+  #pesquisa-mapa-wrapper {
+    width: 45%;
+    flex: 0 0 45%;
+  }
+}
+
 @media (max-width: 1023px) {
   #pesquisa-mapa-wrapper {
     display: none !important;

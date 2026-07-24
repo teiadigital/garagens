@@ -34,6 +34,13 @@ final class PasswordResetAccessSubscriber implements EventSubscriberInterface {
       return;
     }
 
+    // Do not intercept stylesheets, scripts, images or other non-page
+    // requests. These may be handled by Drupal when aggregation is enabled.
+    $accept = (string) $request->headers->get('Accept', '');
+    if ($accept !== '' && !str_contains($accept, 'text/html')) {
+      return;
+    }
+
     $uid = (int) $this->currentUser->id();
     $session_key = 'pass_reset_' . $uid;
     $token = $request->getSession()->get($session_key);
@@ -42,7 +49,7 @@ final class PasswordResetAccessSubscriber implements EventSubscriberInterface {
     }
 
     $route_name = (string) $request->attributes->get('_route');
-    if ($route_name === 'user.logout') {
+    if (in_array($route_name, ['user.logout', 'user.logout.confirm'], TRUE)) {
       return;
     }
 
@@ -61,10 +68,11 @@ final class PasswordResetAccessSubscriber implements EventSubscriberInterface {
       return;
     }
 
-    $url = Url::fromRoute('entity.user.edit_form', ['user' => $uid], [
-      'query' => ['pass-reset-token' => $token],
-    ])->toString();
-    $event->setResponse(new RedirectResponse($url));
+    // Leaving the recovery form cancels the temporary authenticated session.
+    // The user can restart recovery or log in normally instead of being
+    // trapped in a redirect loop.
+    user_logout();
+    $event->setResponse(new RedirectResponse(Url::fromRoute('user.login')->toString()));
   }
 
   /**

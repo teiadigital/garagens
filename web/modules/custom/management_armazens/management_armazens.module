@@ -86,8 +86,15 @@ function management_armazens_form_user_form_alter(array &$form, FormStateInterfa
 
   // During recovery the user may only choose a new password. The one-time
   // session remains restricted until Drupal saves it and removes the token.
+  $recovery_form_elements = [
+    'account',
+    'actions',
+    'form_build_id',
+    'form_token',
+    'form_id',
+  ];
   foreach (\Drupal\Core\Render\Element::children($form) as $key) {
-    if (!in_array($key, ['account', 'actions'], TRUE)) {
+    if (!in_array($key, $recovery_form_elements, TRUE)) {
       $form[$key]['#access'] = FALSE;
     }
   }
@@ -112,6 +119,21 @@ function management_armazens_form_user_form_alter(array &$form, FormStateInterfa
   $form['account']['pass']['#weight'] = -90;
   $form['actions']['submit']['#value'] = t('Guardar nova palavra-passe');
   $form['actions']['submit']['#submit'][] = 'management_armazens_password_reset_submit';
+}
+
+/**
+ * Implements hook_entity_ENTITY_TYPE_form_steps_alter().
+ */
+function management_armazens_entity_user_form_steps_alter(array &$steps, FormStateInterface $form_state, \Drupal\Core\Entity\FieldableEntityInterface $entity): void {
+  $request = \Drupal::request();
+  $token = (string) $request->query->get('pass-reset-token', '');
+  $session_token = $request->getSession()->get('pass_reset_' . $entity->id());
+
+  if ($token !== '' && is_string($session_token) && hash_equals($session_token, $token)) {
+    // Password recovery must be a single-purpose form. Otherwise the account
+    // password (configured in step 3) is hidden behind two empty wizard steps.
+    $steps = [];
+  }
 }
 
 /**

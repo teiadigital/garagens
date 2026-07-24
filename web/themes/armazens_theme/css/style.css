@@ -349,6 +349,11 @@ footer {
   width: auto;
 }
 
+/* Keep the fixed navigation above form widgets such as the file dropzone. */
+#site-header {
+  z-index: 100000 !important;
+}
+
 /* FAQ accordion controls are content navigation, not calls to action. */
 body .faq-sections .faq-accordion button,
 body .faq-sections .faq-accordion button:hover,

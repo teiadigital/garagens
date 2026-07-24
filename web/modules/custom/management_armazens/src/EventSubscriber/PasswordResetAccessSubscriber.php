@@ -48,6 +48,12 @@ final class PasswordResetAccessSubscriber implements EventSubscriberInterface {
       return;
     }
 
+    // Administrator accounts are allowed to complete password recovery
+    // without the temporary navigation restriction.
+    if ($uid === 1 || in_array('administrator', $this->currentUser->getRoles(), TRUE)) {
+      return;
+    }
+
     $route_name = (string) $request->attributes->get('_route');
     if (in_array($route_name, ['user.logout', 'user.logout.confirm'], TRUE)) {
       return;

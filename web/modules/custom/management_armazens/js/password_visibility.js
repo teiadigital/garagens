@@ -5,8 +5,19 @@
     attach(context) {
       once('management-password-visibility', 'input[type="password"]', context)
         .forEach((input) => {
+          const alignToggle = () => {
+            const wrapper = input.closest('.password-visibility-wrapper');
+            if (wrapper) {
+              wrapper.style.setProperty(
+                '--password-input-height',
+                `${input.getBoundingClientRect().height}px`,
+              );
+            }
+          };
+
           // The public theme may already have added this control.
           if (input.dataset.passwordToggleReady === 'true') {
+            window.requestAnimationFrame(alignToggle);
             return;
           }
           input.dataset.passwordToggleReady = 'true';
@@ -40,6 +51,7 @@
           });
 
           wrapper.appendChild(button);
+          window.requestAnimationFrame(alignToggle);
         });
     },
   };

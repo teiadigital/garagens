@@ -42,6 +42,15 @@
         });
 
         $input.after($button);
+        window.requestAnimationFrame(function () {
+          const wrapper = input.closest(".password-visibility-wrapper");
+          if (wrapper) {
+            wrapper.style.setProperty(
+              "--password-input-height",
+              input.getBoundingClientRect().height + "px"
+            );
+          }
+        });
       });
     },
   };

@@ -67,6 +67,14 @@ function management_armazens_form_user_form_alter(array &$form, FormStateInterfa
   // The account form may use either the public or the administration theme.
   $form['#attached']['library'][] = 'management_armazens/password_visibility';
 
+  // Only administrators may view or change whether an account is active.
+  $current_user = \Drupal::currentUser();
+  $is_administrator = (int) $current_user->id() === 1
+    || in_array('administrator', $current_user->getRoles(), TRUE);
+  if (isset($form['account']['status'])) {
+    $form['account']['status']['#access'] = $is_administrator;
+  }
+
   $account = $form_state->getFormObject()->getEntity();
   $request = \Drupal::request();
   $token = (string) $request->query->get('pass-reset-token', '');

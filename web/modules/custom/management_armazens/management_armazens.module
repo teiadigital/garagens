@@ -103,6 +103,11 @@ function management_armazens_form_user_form_alter(array &$form, FormStateInterfa
     '#markup' => '<p class="password-reset-intro">' . t('Defina uma nova palavra-passe para concluir a recuperação da sua conta.') . '</p>',
     '#weight' => -100,
   ];
+  // Field Group may associate the password widget with a profile group that
+  // is hidden above. Keep it directly inside the visible account container.
+  $form['account']['#access'] = TRUE;
+  $form['account']['pass']['#access'] = TRUE;
+  unset($form['account']['pass']['#group']);
   $form['account']['pass']['#required'] = TRUE;
   $form['account']['pass']['#weight'] = -90;
   $form['actions']['submit']['#value'] = t('Guardar nova palavra-passe');

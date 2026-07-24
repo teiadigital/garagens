@@ -12,3 +12,9 @@ services:
     class: Drupal\management_armazens\EventSubscriber\SanitizeLoginRedirectSubscriber
     tags:
       - { name: event_subscriber }
+  management_armazens.password_reset_access_subscriber:
+    class: Drupal\management_armazens\EventSubscriber\PasswordResetAccessSubscriber
+    arguments:
+      - '@current_user'
+    tags:
+      - { name: event_subscriber }

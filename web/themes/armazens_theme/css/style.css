@@ -10,3 +10,61 @@
   content: " *";
   color: red;
 }
+
+.password-visibility-wrapper {
+  display: block;
+  position: relative;
+}
+
+.password-visibility-wrapper > input {
+  padding-right: 3rem !important;
+  width: 100%;
+}
+
+.password-visibility-toggle {
+  align-items: center;
+  color: #4b5563;
+  display: flex;
+  height: 2.75rem;
+  justify-content: center;
+  position: absolute;
+  right: 0.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.75rem;
+  z-index: 1;
+}
+
+.password-visibility-toggle:hover,
+.password-visibility-toggle:focus-visible {
+  color: #111827;
+}
+
+.password-visibility-toggle:focus-visible {
+  border-radius: 0.25rem;
+  outline: 2px solid currentColor;
+  outline-offset: -4px;
+}
+
+.password-eye {
+  fill: none;
+  height: 1.35rem;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+  width: 1.35rem;
+}
+
+.password-eye--hide,
+.password-visibility-toggle.is-visible .password-eye--show {
+  display: none;
+}
+
+.password-visibility-toggle.is-visible .password-eye--hide {
+  display: block;
+}
+
+.password-reset-intro {
+  margin-bottom: 1.5rem;
+}

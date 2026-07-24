@@ -138,7 +138,7 @@
   });
 
   $(".paragraph--type--why-choose-us .content-text").each(function (index) {
-    var color = $(this).data("color");
+    var color = "#2f5665";
 
     $(this).find(".field--name-field-pre-title").css("border-color", color);
 

@@ -1,6 +1,14 @@
-<svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M1.89856 51.999V1.99902H51.8986L1.89856 51.999ZM2.86555 2.96601V49.6647L49.5642 2.96601H2.86555Z" fill="white" stroke="white" stroke-width="3" stroke-miterlimit="10"/>
-<path d="M26.8985 26.3153L26.2148 26.999L50.3895 51.1737L51.0732 50.49L26.8985 26.3153Z" fill="white" stroke="white" stroke-width="3" stroke-miterlimit="10"/>
-<path d="M40.1927 27.1738H27.5567V28.1408H40.1927V27.1738Z" fill="white" stroke="white" stroke-width="3" stroke-miterlimit="10"/>
-<path d="M28.0402 27.6572H27.0732V40.2932H28.0402V27.6572Z" fill="white" stroke="white" stroke-width="3" stroke-miterlimit="10"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Camada_1" data-name="Camada 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f9a902;
+      }
+    </style>
+  </defs>
+  <path d="M392.76,194.67c2.26,21.17.13,41.93-6.4,61.87l-2.89,7.92c-4.83,11.95-10.74,23.39-19.14,33.35l-28.91,34.3-57.37,67.99-27.89,33.27-72.8-86.19-39.58-46.7c-3.44-4.06-6.41-7.94-9.15-12.4l-1.31-2.12c-23.09-37.45-27.17-84.41-11.9-125.69,13.11-35.45,40.32-64.61,74.63-80.44,22-10.22,46.03-14.49,70.18-12.87,51.27,3.67,97.01,34.94,119.3,81.17l-45.2.02c-16.95-21.36-41.11-35.47-67.83-39.54-39.1-6.15-79.78,10.21-102.64,42.1-27.48,38.33-25.39,90.57,4.65,126.85l81.65,98.6,43.54-52.83,36.45-44.1c11.27-13.17,19.12-28.66,22.87-45.8h-102.6s0-38.77,0-38.77h142.37Z"/>
+  <rect class="cls-1" x="250" y="276.95" width="64.19" height="14.46" transform="translate(564.19 568.36) rotate(-180)"/>
+  <rect class="cls-1" x="250" y="253.67" width="64.19" height="14.46" transform="translate(564.19 521.8) rotate(-180)"/>
+  <rect class="cls-1" x="250" y="242.06" width="64.19" height="2.79" transform="translate(564.19 486.91) rotate(-180)"/>
 </svg>

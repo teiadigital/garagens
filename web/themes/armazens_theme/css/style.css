@@ -67,3 +67,291 @@
 .password-reset-intro {
   margin-bottom: 1.5rem;
 }
+
+/*
+ * Brand palette
+ * Yellow is reserved for calls to action and focus states, while warm gray
+ * keeps larger surfaces quiet and clean.
+ */
+:root {
+  --brand-yellow: #f9a902;
+  --brand-black: #171717;
+  --brand-steel: #2f5665;
+  --brand-surface: #f6f5f2;
+  --brand-border: #e2dfd8;
+}
+
+body {
+  background-color: #fff;
+  color: var(--brand-black);
+}
+
+::selection {
+  background-color: var(--brand-yellow);
+  color: var(--brand-black);
+}
+
+:where(a, button, input, select, textarea):focus-visible {
+  outline-color: var(--brand-yellow);
+}
+
+/* Keep legacy utility names working while the theme adopts the new palette. */
+.bg-green-custom {
+  background-color: var(--brand-steel) !important;
+}
+
+.bg-orange-custom {
+  background-color: var(--brand-yellow) !important;
+}
+
+.border-green-custom {
+  border-color: var(--brand-steel) !important;
+}
+
+.text-green-custom {
+  color: var(--brand-steel) !important;
+}
+
+.text-orange-custom {
+  color: var(--brand-yellow) !important;
+}
+
+.bg-gray-light,
+.bg-blue-dark {
+  background-color: var(--brand-surface) !important;
+}
+
+.border-blue-light {
+  border-color: var(--brand-border) !important;
+}
+
+.bg-blue-background {
+  background-color: var(--brand-black) !important;
+}
+
+/* Steel actions use white; yellow actions need dark text for contrast. */
+.bg-green-custom,
+a.bg-green-custom,
+button.bg-green-custom {
+  color: #fff !important;
+  font-weight: 600;
+}
+
+.bg-orange-custom,
+a.bg-orange-custom,
+button.bg-orange-custom {
+  color: var(--brand-black) !important;
+  font-weight: 600;
+}
+
+.hover\:bg-white:hover.bg-green-custom,
+.hover\:bg-transparent:hover.bg-green-custom {
+  background-color: transparent !important;
+  border-color: var(--brand-steel) !important;
+  color: var(--brand-steel) !important;
+}
+
+.hover\:bg-white:hover.bg-orange-custom,
+.hover\:bg-transparent:hover.bg-orange-custom {
+  background-color: var(--brand-black) !important;
+  border-color: var(--brand-black) !important;
+  color: #fff !important;
+}
+
+footer {
+  background-color: var(--brand-black) !important;
+}
+
+.footer-logo {
+  display: inline-block;
+  margin-bottom: 4rem;
+}
+
+.footer-logo img {
+  display: block;
+  height: auto;
+  width: 12rem;
+}
+
+@media (min-width: 640px) {
+  .footer-logo img {
+    width: 16rem;
+  }
+}
+
+/*
+ * Calls to action
+ * All actionable controls share the yellow-to-steel interaction pattern.
+ */
+:is(
+  button:not(.owl-dot, .owl-prev, .owl-next):not(#pesquisa-mapa-wrapper button):not(.leaflet-container button),
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"],
+  a.button,
+  a.bg-black,
+  a.bg-green-600,
+  a.bg-green-custom,
+  a.bg-orange-custom,
+  .button,
+  [role="button"]:not(#pesquisa-mapa-wrapper [role="button"]):not(.leaflet-container [role="button"]),
+  .btn-login a,
+  .btn-menu a,
+  .form-actions a,
+  .field--name-field-link a
+) {
+  background-color: var(--brand-yellow) !important;
+  border-color: var(--brand-yellow) !important;
+  border-radius: 9999px;
+  color: var(--brand-black) !important;
+  font-weight: 600;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease;
+}
+
+:is(
+  button:not(.owl-dot, .owl-prev, .owl-next):not(#pesquisa-mapa-wrapper button):not(.leaflet-container button),
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"],
+  a.button,
+  a.bg-black,
+  a.bg-green-600,
+  a.bg-green-custom,
+  a.bg-orange-custom,
+  .button,
+  [role="button"]:not(#pesquisa-mapa-wrapper [role="button"]):not(.leaflet-container [role="button"]),
+  .btn-login a,
+  .btn-menu a,
+  .form-actions a,
+  .field--name-field-link a
+):hover {
+  background-color: var(--brand-steel) !important;
+  border-color: var(--brand-steel) !important;
+  color: #fff !important;
+}
+
+:is(
+  button:not(.owl-dot, .owl-prev, .owl-next):not(#pesquisa-mapa-wrapper button):not(.leaflet-container button),
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"],
+  a.button,
+  a.bg-black,
+  a.bg-green-600,
+  a.bg-green-custom,
+  a.bg-orange-custom,
+  .button,
+  [role="button"]:not(#pesquisa-mapa-wrapper [role="button"]):not(.leaflet-container [role="button"]),
+  .btn-login a,
+  .btn-menu a,
+  .form-actions a,
+  .field--name-field-link a
+):focus-visible {
+  outline: 3px solid var(--brand-steel);
+  outline-offset: 3px;
+}
+
+:where(
+  button,
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"],
+  a.button,
+  .button
+):disabled,
+:where(
+  button,
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"],
+  a.button,
+  .button
+)[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+:where(
+  input:not([type="button"]):not([type="submit"]):not([type="reset"]),
+  select,
+  textarea
+):focus {
+  border-color: var(--brand-yellow) !important;
+  box-shadow: 0 0 0 3px rgb(249 169 2 / 20%) !important;
+}
+
+/* The map keeps its own neutral control palette. */
+#pesquisa-mapa-wrapper,
+.leaflet-container,
+#map-location-front,
+#map-armazens-list {
+  --brand-yellow: #111827;
+  --brand-steel: #000;
+}
+
+#pesquisa-mapa-wrapper :is(a, button, [role="button"]):focus-visible,
+.leaflet-container :is(a, button, [role="button"]):focus-visible {
+  outline-color: #111827 !important;
+}
+
+.leaflet-container :is(
+  .leaflet-control a,
+  .leaflet-bar a,
+  .leaflet-control [role="button"]
+) {
+  background-color: #fff !important;
+  color: #111827 !important;
+}
+
+.leaflet-container :is(
+  .leaflet-control a,
+  .leaflet-bar a,
+  .leaflet-control [role="button"]
+):hover {
+  background-color: #f4f4f4 !important;
+  color: #000 !important;
+}
+
+#pesquisa-mapa-wrapper #mapa-popup-fechar,
+#pesquisa-mapa-wrapper #mapa-popup-fechar:hover {
+  background-color: rgb(255 255 255 / 90%) !important;
+  color: inherit !important;
+}
+
+#pesquisa-mapa-wrapper .homepage-mapa-localizacao {
+  background-color: #111827 !important;
+  color: #fff !important;
+}
+
+#pesquisa-mapa-wrapper .homepage-mapa-localizacao:hover {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+/* Carousel navigation is not a CTA and retains its original visual language. */
+.owl-carousel .owl-dots .owl-dot,
+.owl-carousel .owl-dots .owl-dot:hover {
+  background-color: #d9d9d9 !important;
+  border-color: transparent !important;
+  border-radius: 0;
+}
+
+.owl-carousel .owl-dots .owl-dot.active,
+.owl-carousel .owl-dots .owl-dot.active:hover {
+  background-color: #fff !important;
+}
+
+#site-header .site-logo img {
+  display: block;
+  height: 2.5rem;
+  width: auto;
+}
+
+@media (min-width: 640px) {
+  #site-header .site-logo img {
+    height: 3.5rem;
+  }
+}

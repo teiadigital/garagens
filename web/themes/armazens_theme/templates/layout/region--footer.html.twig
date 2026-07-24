@@ -23,7 +23,13 @@
     <div class="container">
         <div class="grid grid-cols-12 gap-y-7">
             <div class="col-span-12 lg:col-span-6 xl:col-span-4">
-                {{ elements.armazens_theme_imagemdemarcadositio_3 }}
+                <a href="{{ path('<front>') }}" rel="home" class="footer-logo inline-block mb-16">
+                  <img
+                    class="w-48 sm:w-64 h-auto"
+                    src="{{ base_path ~ directory }}/logo-footer.svg"
+                    alt="{{ 'Garagens.pt — Página inicial'|t }}"
+                  />
+                </a>
                 {{ elements.armazens_theme_footercontacts }}
             </div>
             <div class="col-span-12 lg:col-span-6 xl:col-start-6 xl:col-span-8">

@@ -2073,11 +2073,6 @@ html {
   }
 }
 
-.change-logo-color .block-system-branding-block img{
-  --tw-invert: invert(100%);
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-
 .change-logo-color .block-user-menu-avatar-dropdown .btn-login a{
   border-width: 2px;
   --tw-border-opacity: 1;

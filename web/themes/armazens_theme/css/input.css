@@ -10,7 +10,7 @@ html {
 
 @layer components {
   body {
-    @apply font-Montserrat antialiased text-black-text;
+    @apply font-Montserrat antialiased text-black-text bg-white;
   }
 }
 
@@ -43,10 +43,6 @@ html {
   .container-big {
     max-width: 1640px;
   }
-}
-
-.change-logo-color .block-system-branding-block img {
-  @apply invert;
 }
 
 .change-logo-color .block-user-menu-avatar-dropdown .btn-login a {
@@ -219,7 +215,7 @@ fieldset.form-item {
 }
 
 .field--name-field-pre-title {
-  @apply text-black text-sm border-l-4 border-green-custom bg-[#E8E8E8]/50 py-1 px-2 w-fit mb-4;
+  @apply text-black text-sm border-l-4 border-green-custom bg-gray-light py-1 px-2 w-fit mb-4;
 }
 
 .field--name-field-title {
@@ -263,18 +259,18 @@ header .block-menu.navigation .menu .btn-menu a {
 }
 
 .paragraph--type--carousel-banner .field--name-field-link a {
-  @apply text-white text-base bg-green-custom px-5 py-3 block w-fit hover:text-green-custom hover:bg-white transition-all;
+  @apply text-white text-base font-semibold bg-green-custom px-5 py-3 block w-fit hover:text-white hover:bg-black-text transition-all;
 }
 
 /* paragraph--type--advertising */
 
 .paragraph--type--advertising .field--name-field-title {
   clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
-  @apply w-fit ml-auto bg-green-custom text-white font-normal text-xl lg:text-3xl py-1 pr-5 pl-16;
+  @apply w-fit ml-auto bg-green-custom text-white font-semibold text-xl lg:text-3xl py-1 pr-5 pl-16;
 }
 
 .view-display-id-block_advertising_carousel .field_link a {
-  @apply text-white font-normal text-base  bg-orange-custom px-12 py-2 md:py-5 w-fit block hover:bg-white hover:text-orange-custom;
+  @apply text-black-text font-semibold text-base bg-orange-custom px-12 py-2 md:py-5 w-fit block hover:bg-black-text hover:text-white;
 }
 
 /* paragraph--type--what-we-do */
@@ -329,7 +325,7 @@ header .block-menu.navigation .menu .btn-menu a {
 }
 
 .paragraph--type--why-choose-us .field--name-field-link a {
-  @apply block w-fit mt-9 text-white rounded-none bg-green-custom border-2 border-green-custom py-4 px-9 hover:text-green-custom hover:bg-transparent transition-all;
+  @apply block w-fit mt-9 text-white font-semibold rounded-none bg-green-custom border-2 border-green-custom py-4 px-9 hover:text-green-custom hover:bg-transparent transition-all;
 }
 
 /* paragraph--type--contact */
@@ -417,7 +413,7 @@ header .block-menu.navigation .menu .btn-menu a {
 /* Footer  */
 
 footer {
-  @apply bg-green-custom px-4 md:px-10 pt-12 relative;
+  @apply bg-black-text px-4 md:px-10 pt-12 relative;
 }
 
 footer .block-system-branding-block {
@@ -953,7 +949,7 @@ form table tbody td {
 }
 
 .owl-carousel .owl-dots .owl-dot.active {
-  @apply w-24 opacity-100;
+  @apply w-24 bg-white opacity-100;
 }
 
 .owl-carousel .owl-stage-outer,

@@ -363,6 +363,14 @@ body .faq-sections .faq-accordion button:hover {
   background-color: var(--brand-surface) !important;
 }
 
+.faq-sections > .faq-section {
+  margin-block: 3rem;
+}
+
+.faq-section__title {
+  padding-inline: 1.25rem;
+}
+
 @media (min-width: 640px) {
   #site-header .site-logo img {
     height: 3.5rem;

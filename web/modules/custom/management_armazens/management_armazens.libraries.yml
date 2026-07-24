@@ -3,3 +3,13 @@ eb_autoselect:
     js/eb_autoselect.js: {}
   dependencies:
     - core/drupal
+
+password_visibility:
+  css:
+    component:
+      css/password_visibility.css: {}
+  js:
+    js/password_visibility.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

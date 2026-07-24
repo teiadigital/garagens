@@ -64,6 +64,9 @@ function management_armazens_form_alter(&$form, FormStateInterface $form_state, 
  * Implements hook_form_FORM_ID_alter() for the user account form.
  */
 function management_armazens_form_user_form_alter(array &$form, FormStateInterface $form_state): void {
+  // The account form may use either the public or the administration theme.
+  $form['#attached']['library'][] = 'management_armazens/password_visibility';
+
   $account = $form_state->getFormObject()->getEntity();
   $request = \Drupal::request();
   $token = (string) $request->query->get('pass-reset-token', '');

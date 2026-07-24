@@ -3,7 +3,7 @@ _core:
 langcode: pt-pt
 uuid: 0461e63c-1765-4f82-8401-e0400fb452b6
 name: Garagens
-mail: geral@storitflex.com
+mail: geral@garagens.pt
 slogan: ''
 page:
   403: /user/login

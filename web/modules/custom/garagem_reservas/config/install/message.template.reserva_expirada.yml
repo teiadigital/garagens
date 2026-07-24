@@ -8,6 +8,9 @@ label: 'Reserva expirada'
 description: 'Notificação ao user quando a reserva expira.'
 text:
   -
+    value: 'A sua reserva expirou'
+    format: basic_html
+  -
     value: '<p>A sua reserva para <strong>@garagem</strong> expirou por não ter sido concluído o pagamento dentro do prazo.</p>'
     format: basic_html
 settings:

@@ -8,6 +8,9 @@ label: 'Pagamento pendente'
 description: 'Lembrete ao user para concluir o pagamento após iniciar checkout.'
 text:
   -
+    value: 'Pagamento da reserva pendente'
+    format: basic_html
+  -
     value: '<p>O seu processo de pagamento para <strong>@garagem</strong> foi iniciado. Por favor conclua o pagamento para confirmar a reserva.</p>'
     format: basic_html
 settings:

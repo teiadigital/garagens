@@ -8,6 +8,9 @@ label: 'Reserva rejeitada'
 description: 'Notificação ao user quando a reserva é rejeitada.'
 text:
   -
+    value: 'A sua reserva não foi aceite'
+    format: basic_html
+  -
     value: '<p>A sua reserva para <strong>@garagem</strong> não foi aceite pelo proprietário.@motivo</p>'
     format: basic_html
 settings:

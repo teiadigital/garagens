@@ -8,6 +8,9 @@ label: 'Cancelamento confirmado (proprietário)'
 description: 'Confirmação ao proprietário de que cancelou a reserva.'
 text:
   -
+    value: 'Cancelamento da reserva confirmado'
+    format: basic_html
+  -
     value: '<p>A reserva da garagem <strong>@garagem</strong> foi cancelada com sucesso.@motivo</p>'
     format: basic_html
 settings:

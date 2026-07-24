@@ -8,6 +8,9 @@ label: 'Nova reserva para aprovação'
 description: 'Notificação ao proprietário quando uma nova reserva é criada.'
 text:
   -
+    value: 'Nova reserva para aprovação'
+    format: basic_html
+  -
     value: '<p>Foi feito um novo pedido de reserva para a sua garagem <strong>@garagem</strong>. Aceda à plataforma para aprovar ou rejeitar.</p>'
     format: basic_html
 settings:

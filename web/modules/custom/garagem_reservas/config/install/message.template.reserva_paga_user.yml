@@ -8,6 +8,9 @@ label: 'Pagamento confirmado'
 description: 'Confirmação de pagamento ao user.'
 text:
   -
+    value: 'Pagamento confirmado'
+    format: basic_html
+  -
     value: '<p>O seu pagamento para <strong>@garagem</strong> foi confirmado. A sua reserva está ativa!</p>'
     format: basic_html
 settings:

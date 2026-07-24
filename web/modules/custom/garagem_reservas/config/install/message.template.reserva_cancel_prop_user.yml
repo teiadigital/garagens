@@ -8,6 +8,9 @@ label: 'Reserva cancelada pelo proprietário'
 description: 'Notificação ao user quando o proprietário cancela.'
 text:
   -
+    value: 'Reserva cancelada pelo proprietário'
+    format: basic_html
+  -
     value: '<p>A sua reserva para <strong>@garagem</strong> foi cancelada pelo proprietário. Lamentamos o inconveniente.@motivo</p>'
     format: basic_html
 settings:

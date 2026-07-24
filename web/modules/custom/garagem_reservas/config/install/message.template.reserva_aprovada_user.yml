@@ -8,6 +8,9 @@ label: 'Reserva aprovada'
 description: 'Notificação ao user quando a reserva é aprovada.'
 text:
   -
+    value: 'A sua reserva foi aprovada'
+    format: basic_html
+  -
     value: '<p>A sua reserva para <strong>@garagem</strong> foi aprovada! Aceda à plataforma para efetuar o pagamento dentro do prazo.</p>'
     format: basic_html
 settings:

@@ -245,3 +245,40 @@ function garagem_reservas_update_8004() {
     ]);
   }
 }
+
+/**
+ * Add the missing email subject part to reservation message templates.
+ */
+function garagem_reservas_update_8008() {
+  $subjects = [
+    'reserva_criada_proprietario' => 'Nova reserva para aprovação',
+    'reserva_criada_user' => 'Reserva submetida com sucesso',
+    'reserva_aprovada_user' => 'A sua reserva foi aprovada',
+    'reserva_aguarda_pagamento_user' => 'Pagamento da reserva pendente',
+    'reserva_rejeitada_user' => 'A sua reserva não foi aceite',
+    'reserva_paga_proprietario' => 'Pagamento da reserva recebido',
+    'reserva_paga_user' => 'Pagamento confirmado',
+    'reserva_cancelada_proprietario' => 'Reserva cancelada pelo arrendatário',
+    'reserva_cancel_user_confirm' => 'Cancelamento da reserva confirmado',
+    'reserva_cancel_prop_user' => 'Reserva cancelada pelo proprietário',
+    'reserva_cancel_prop_confirm' => 'Cancelamento da reserva confirmado',
+    'reserva_expirada' => 'A sua reserva expirou',
+    'reserva_expirada_proprietario' => 'Reserva expirada — garagem disponível',
+  ];
+
+  $config_factory = \Drupal::configFactory();
+  foreach ($subjects as $template_id => $subject) {
+    $config = $config_factory->getEditable("message.template.{$template_id}");
+    if ($config->isNew()) {
+      continue;
+    }
+
+    $text = $config->get('text') ?: [];
+    if (count($text) === 1) {
+      $config->set('text', [
+        ['value' => $subject, 'format' => 'basic_html'],
+        $text[0],
+      ])->save();
+    }
+  }
+}

@@ -184,7 +184,7 @@ footer {
  * All actionable controls share the yellow-to-steel interaction pattern.
  */
 :is(
-  button:not(.owl-dot):not(.owl-prev):not(.owl-next),
+  button:not(.owl-dot):not(.owl-prev):not(.owl-next):not(.faq-toggle),
   input[type="button"],
   input[type="submit"],
   input[type="reset"],
@@ -211,7 +211,7 @@ footer {
 }
 
 :is(
-  button:not(.owl-dot):not(.owl-prev):not(.owl-next),
+  button:not(.owl-dot):not(.owl-prev):not(.owl-next):not(.faq-toggle),
   input[type="button"],
   input[type="submit"],
   input[type="reset"],
@@ -232,7 +232,7 @@ footer {
 }
 
 :is(
-  button:not(.owl-dot):not(.owl-prev):not(.owl-next),
+  button:not(.owl-dot):not(.owl-prev):not(.owl-next):not(.faq-toggle),
   input[type="button"],
   input[type="submit"],
   input[type="reset"],
@@ -347,6 +347,20 @@ footer {
   display: block;
   height: 2.5rem;
   width: auto;
+}
+
+/* FAQ accordion controls are content navigation, not calls to action. */
+body .faq-sections .faq-accordion button,
+body .faq-sections .faq-accordion button:hover,
+body .faq-sections .faq-accordion button[aria-expanded="true"] {
+  background-color: #fff !important;
+  border-color: var(--brand-border) !important;
+  border-radius: 0;
+  color: var(--brand-black) !important;
+}
+
+body .faq-sections .faq-accordion button:hover {
+  background-color: var(--brand-surface) !important;
 }
 
 @media (min-width: 640px) {

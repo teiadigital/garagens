@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.storage.node.field_faqs
     - node.type.faqs
+    - paragraphs.paragraphs_type.faq_group
     - paragraphs.paragraphs_type.faqs
   module:
     - entity_reference_revisions
@@ -22,6 +23,7 @@ settings:
   handler: 'default:paragraph'
   handler_settings:
     target_bundles:
+      faq_group: faq_group
       faqs: faqs
     negate: 0
     target_bundles_drag_drop:
@@ -63,6 +65,9 @@ settings:
         enabled: false
       faqs:
         weight: 25
+        enabled: true
+      faq_group:
+        weight: 24
         enabled: true
       icon_text:
         weight: 38

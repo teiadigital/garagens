@@ -1,27 +1,86 @@
+{#
+/**
+ * FAQ groups.
+ *
+ * Supports the new category > FAQ structure while retaining direct legacy
+ * FAQ paragraphs already attached to the node.
+ */
+#}
 
-<div id="accordion-flush" data-accordion="collapse"
-    data-active-classes="bg-white text-gray-900 font-bold"
-    data-inactive-classes="text-gray-500 font-medium">
+<div class="faq-sections">
+  {% for key, item in items %}
+    {% set paragraph = item.content['#paragraph'] %}
 
-    {% for key,item in items %}
-        <h2 id="accordion-flush-heading-{{key}}">
-            <button type="button"
-                class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border-b border-gray-500 gap-3"
-                data-accordion-target="#accordion-flush-body-{{key}}" aria-expanded="false" aria-controls="accordion-flush-body-1">
-                <span>{{item.content['#paragraph'].field_title_accordion.value}}</span>
-                <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M9 5 5 1 1 5" />
-                </svg>
-            </button>
+    {% if paragraph.bundle() == 'faq_group' %}
+      {% set group_id = 'faq-group-' ~ paragraph.id() %}
+
+      <section class="faq-section mb-12" aria-labelledby="{{ group_id }}-title">
+        <h2 id="{{ group_id }}-title" class="faq-section__title text-2xl sm:text-3xl font-bold text-black-text mb-6">
+          {{ paragraph.field_title_accordion.value }}
         </h2>
-        <div id="accordion-flush-body-{{key}}" class="hidden" aria-labelledby="accordion-flush-heading-{{key}}">
-            <div class="p-5 border-b border-gray-500">
-                <div class="mb-2 text-gray-500 ">
-                    {{item.content['#paragraph'].field_body.value|raw}}
-                </div>
+
+        <div id="{{ group_id }}" class="faq-accordion" data-accordion="collapse"
+          data-active-classes="bg-white text-gray-900 font-bold"
+          data-inactive-classes="text-gray-500 font-medium">
+
+          {% for faq_key, faq_reference in paragraph.field_faq_items %}
+            {% set faq = faq_reference.entity %}
+            {% set question_id = group_id ~ '-question-' ~ faq_key %}
+            {% set answer_id = group_id ~ '-answer-' ~ faq_key %}
+
+            <h3 id="{{ question_id }}">
+              <button type="button"
+                class="flex items-center justify-between w-full p-5 font-medium text-left gap-3"
+                data-accordion-target="#{{ answer_id }}"
+                aria-expanded="false"
+                aria-controls="{{ answer_id }}">
+                <span>{{ faq.field_title_accordion.value }}</span>
+                <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="2" d="M9 5 5 1 1 5" />
+                </svg>
+              </button>
+            </h3>
+
+            <div id="{{ answer_id }}" class="hidden" aria-labelledby="{{ question_id }}">
+              <div class="faq-answer p-5 border-b border-gray-500">
+                {{ faq.field_body.0.processed|raw }}
+              </div>
             </div>
+          {% endfor %}
         </div>
-    {% endfor %}
+      </section>
+
+    {% else %}
+      {# Backwards compatibility for FAQs created before categories existed. #}
+      {% set question_id = 'legacy-faq-question-' ~ paragraph.id() %}
+      {% set answer_id = 'legacy-faq-answer-' ~ paragraph.id() %}
+
+      <div class="faq-accordion" data-accordion="collapse"
+        data-active-classes="bg-white text-gray-900 font-bold"
+        data-inactive-classes="text-gray-500 font-medium">
+        <h2 id="{{ question_id }}">
+          <button type="button"
+            class="flex items-center justify-between w-full p-5 font-medium text-left gap-3"
+            data-accordion-target="#{{ answer_id }}"
+            aria-expanded="false"
+            aria-controls="{{ answer_id }}">
+            <span>{{ paragraph.field_title_accordion.value }}</span>
+            <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M9 5 5 1 1 5" />
+            </svg>
+          </button>
+        </h2>
+
+        <div id="{{ answer_id }}" class="hidden" aria-labelledby="{{ question_id }}">
+          <div class="faq-answer p-5 border-b border-gray-500">
+            {{ paragraph.field_body.0.processed|raw }}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
 </div>

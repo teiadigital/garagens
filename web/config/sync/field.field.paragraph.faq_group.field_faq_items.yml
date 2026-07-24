@@ -1,0 +1,34 @@
+uuid: ddfd6e1a-4c79-464c-8848-6c395de7f2af
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_faq_items
+    - paragraphs.paragraphs_type.faq_group
+    - paragraphs.paragraphs_type.faqs
+  module:
+    - entity_reference_revisions
+id: paragraph.faq_group.field_faq_items
+field_name: field_faq_items
+entity_type: paragraph
+bundle: faq_group
+label: Perguntas
+description: 'Adicione as perguntas e respostas desta categoria.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      faqs: faqs
+    negate: 0
+    target_bundles_drag_drop:
+      faq_group:
+        weight: 1
+        enabled: false
+      faqs:
+        weight: 0
+        enabled: true
+field_type: entity_reference_revisions

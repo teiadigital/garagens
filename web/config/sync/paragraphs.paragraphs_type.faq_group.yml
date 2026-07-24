@@ -1,0 +1,10 @@
+uuid: 397baefd-baa6-4f11-9274-c07eb97592b5
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: faq_group
+label: 'Grupo de FAQs'
+icon_uuid: null
+icon_default: null
+description: 'Uma categoria com título e um conjunto de perguntas frequentes.'
+behavior_plugins: {  }

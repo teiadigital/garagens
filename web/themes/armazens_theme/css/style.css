@@ -184,7 +184,7 @@ footer {
  * All actionable controls share the yellow-to-steel interaction pattern.
  */
 :is(
-  button:not(.owl-dot, .owl-prev, .owl-next):not(#pesquisa-mapa-wrapper button):not(.leaflet-container button),
+  button:not(.owl-dot):not(.owl-prev):not(.owl-next),
   input[type="button"],
   input[type="submit"],
   input[type="reset"],
@@ -194,7 +194,6 @@ footer {
   a.bg-green-custom,
   a.bg-orange-custom,
   .button,
-  [role="button"]:not(#pesquisa-mapa-wrapper [role="button"]):not(.leaflet-container [role="button"]),
   .btn-login a,
   .btn-menu a,
   .form-actions a,
@@ -212,7 +211,7 @@ footer {
 }
 
 :is(
-  button:not(.owl-dot, .owl-prev, .owl-next):not(#pesquisa-mapa-wrapper button):not(.leaflet-container button),
+  button:not(.owl-dot):not(.owl-prev):not(.owl-next),
   input[type="button"],
   input[type="submit"],
   input[type="reset"],
@@ -222,7 +221,6 @@ footer {
   a.bg-green-custom,
   a.bg-orange-custom,
   .button,
-  [role="button"]:not(#pesquisa-mapa-wrapper [role="button"]):not(.leaflet-container [role="button"]),
   .btn-login a,
   .btn-menu a,
   .form-actions a,
@@ -234,7 +232,7 @@ footer {
 }
 
 :is(
-  button:not(.owl-dot, .owl-prev, .owl-next):not(#pesquisa-mapa-wrapper button):not(.leaflet-container button),
+  button:not(.owl-dot):not(.owl-prev):not(.owl-next),
   input[type="button"],
   input[type="submit"],
   input[type="reset"],
@@ -244,7 +242,6 @@ footer {
   a.bg-green-custom,
   a.bg-orange-custom,
   .button,
-  [role="button"]:not(#pesquisa-mapa-wrapper [role="button"]):not(.leaflet-container [role="button"]),
   .btn-login a,
   .btn-menu a,
   .form-actions a,
@@ -318,11 +315,13 @@ footer {
 #pesquisa-mapa-wrapper #mapa-popup-fechar,
 #pesquisa-mapa-wrapper #mapa-popup-fechar:hover {
   background-color: rgb(255 255 255 / 90%) !important;
+  border: none !important;
   color: inherit !important;
 }
 
 #pesquisa-mapa-wrapper .homepage-mapa-localizacao {
   background-color: #111827 !important;
+  border: none !important;
   color: #fff !important;
 }
 

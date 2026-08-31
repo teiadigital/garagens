@@ -5,7 +5,7 @@ cards:
       css/pesquisa.css: {}
 
 pesquisa:
-  version: 1.3
+  version: 1.4
   css:
     theme:
       https://unpkg.com/leaflet@1.9.4/dist/leaflet.css: { type: external, minified: true }

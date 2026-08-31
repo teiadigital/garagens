@@ -406,7 +406,7 @@
           if (!mapaEl || homepageMap) return;
 
           homepageMap = L.map(mapaEl, { scrollWheelZoom: true, zoomControl: true }).setView([39.5, -8.0], 7);
-          L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+          L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}{r}.png?key=cb1_2m2z_1_fc20cb66c7f2713a8fe6e4b7", {
             attribution: "© OpenStreetMap contributors © CARTO",
             subdomains: "abcd",
             maxZoom: 19,
@@ -764,7 +764,7 @@
       function initMapa() {
         if (map) return;
         map = L.map("pesquisa-map", { scrollWheelZoom: true, zoomControl: true }).setView([39.5, -8.0], 7);
-        L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+        L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}{r}.png?key=cb1_2m2z_1_fc20cb66c7f2713a8fe6e4b7", {
           attribution: "© OpenStreetMap contributors © CARTO",
           subdomains: "abcd",
           maxZoom: 19,

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\garagem_pesquisa\Controller;
 
-use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Url;
 use Drupal\garagem_reservas\Service\DisponibilidadeService;
@@ -36,7 +35,6 @@ class PesquisaController extends ControllerBase {
     $has_geolocation = $filters['lat'] !== NULL && $filters['lng'] !== NULL;
     $has_bbox = $this->hasBbox($filters);
     $should_show_map = TRUE;
-    $meta_description = $this->buildMetaDescription($filters);
 
     $heading = $filters['q'] !== ''
       ? $this->t('Garagens em @localidade', ['@localidade' => $filters['q']])
@@ -68,18 +66,11 @@ class PesquisaController extends ControllerBase {
       '#date_display' => $this->buildDateDisplay($filters['date_start'], $filters['date_end']),
       '#attached' => [
         'library' => ['garagem_pesquisa/pesquisa'],
-        'html_head' => [
-          [
-            [
-              '#tag' => 'meta',
-              '#attributes' => [
-                'name' => 'description',
-                'content' => $meta_description,
-              ],
-            ],
-            'garagem_pesquisa_meta_description',
-          ],
-        ],
+        // Drupal merges head elements by key; use Metatag's robots key.
+        'html_head' => empty($all_results) ? [[
+          ['#tag' => 'meta', '#attributes' => ['name' => 'robots', 'content' => 'noindex, follow']],
+          'robots',
+        ]] : [],
         'drupalSettings' => [
           'garagemPesquisa' => [
             'ajaxUrl' => Url::fromRoute('garagem_pesquisa.ajax')->toString(),
@@ -99,31 +90,6 @@ class PesquisaController extends ControllerBase {
       ],
       '#cache' => ['max-age' => 0],
     ];
-  }
-
-  private function buildMetaDescription(array $filters): string {
-    $parts = [];
-
-    if ($filters['q'] !== '') {
-      $parts[] = $this->t('Pesquise garagens disponíveis em @localidade.', [
-        '@localidade' => $filters['q'],
-      ])->render();
-    }
-    else {
-      $parts[] = $this->t('Pesquise garagens disponíveis em Portugal.')->render();
-    }
-
-    if ($filters['tipo'] === 'dia') {
-      $parts[] = $this->t('Refine por datas diárias e localização no mapa.')->render();
-    }
-    elseif ($filters['tipo'] === 'mes') {
-      $parts[] = $this->t('Compare opções de aluguer ao mês por localização.')->render();
-    }
-    elseif ($filters['tipo'] === 'ano') {
-      $parts[] = $this->t('Compare opções de aluguer ao ano por localização.')->render();
-    }
-
-    return Unicode::truncate(trim(implode(' ', $parts)), 155, TRUE, TRUE);
   }
 
   public function ajax(Request $request): JsonResponse {
@@ -238,7 +204,7 @@ class PesquisaController extends ControllerBase {
       ->condition('type', 'armazem')
       ->condition('status', 1)
       ->condition('field_estado', 3)
-      ->accessCheck(FALSE);
+      ->accessCheck(TRUE);
 
     if ($filters['date_start'] !== '') {
       if ($filters['tipo'] === 'dia') {

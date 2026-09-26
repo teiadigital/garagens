@@ -5,3 +5,7 @@ links:
     path: /
     priority: '1.0'
     changefreq: daily
+  -
+    path: /garagens
+    priority: '0.9'
+    changefreq: daily

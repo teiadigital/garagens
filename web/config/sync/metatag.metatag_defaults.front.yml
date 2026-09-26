@@ -7,7 +7,7 @@ _core:
 id: front
 label: 'Front page'
 tags:
+  title: 'Garagens para Alugar em Portugal | Garagens.pt'
+  description: 'Encontre garagens e lugares de estacionamento para alugar em Portugal. Pesquise por localização e disponibilidade ou anuncie a sua garagem.'
   canonical_url: '[site:url]'
-  description: 'Plataforma para encontrar e anunciar garagens em Portugal, com pesquisa por localização, disponibilidade e tipo de aluguer.'
-  keywords: 'garages, garage rental, rent a garage, garage for rent, private garage, parking space, private parking, garage in Portugal, garage sharing, garage platform, list your garage, find a garage, garage near me, secure garage, car storage, storage garage, monthly garage rental, parking rental, available garages, garage marketplace'
   shortlink: '[site:url]'

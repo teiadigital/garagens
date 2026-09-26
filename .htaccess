@@ -1,2 +1,11 @@
 RewriteEngine on
+
+  # Canonical production host. Keep local and staging hosts unchanged.
+  RewriteCond %{HTTP_HOST} ^www\.garagens\.pt(?::[0-9]+)?$ [NC]
+  RewriteRule ^ https://garagens.pt%{REQUEST_URI} [R=301,L,NE]
+  RewriteCond %{HTTP_HOST} ^garagens\.pt(?::[0-9]+)?$ [NC]
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !^https$ [NC]
+  RewriteRule ^ https://garagens.pt%{REQUEST_URI} [R=301,L,NE]
+
 RewriteRule (.*) web/$1 [L]

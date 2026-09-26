@@ -35,3 +35,81 @@ function garagem_pesquisa_theme($existing, $type, $theme, $path) {
     ],
   ];
 }
+
+/**
+ * Implements hook_metatags_alter().
+ *
+ * Keep page metadata in Metatag so Drupal emits only one description/title.
+ */
+function garagem_pesquisa_metatags_alter(array &$metatags, array &$context) {
+  unset($metatags['keywords']);
+  $route = \Drupal::routeMatch();
+  $front = \Drupal::service('path.matcher')->isFrontPage();
+  $listing = $route->getRouteName() === 'garagem_pesquisa.list';
+  $node = $context['entity'] ?? NULL;
+  $detail = $route->getRouteName() === 'entity.node.canonical'
+    && $node instanceof \Drupal\node\NodeInterface && $node->bundle() === 'armazem';
+
+  if ($front || $listing || $detail) {
+    $url = $front ? \Drupal\Core\Url::fromRoute('<front>') : ($listing
+      ? \Drupal\Core\Url::fromRoute('garagem_pesquisa.list') : $node->toUrl());
+    $metatags['canonical_url'] = 'https://garagens.pt' . $url->setAbsolute(FALSE)->toString();
+    unset($metatags['shortlink']);
+  }
+  if ($front) {
+    $metatags['title'] = (string) t('Garagens para Alugar em Portugal | Garagens.pt');
+    $metatags['description'] = (string) t('Encontre garagens e lugares de estacionamento para alugar em Portugal. Pesquise por localização e disponibilidade ou anuncie a sua garagem.');
+  }
+  elseif ($listing) {
+    $metatags['title'] = (string) t('Garagens Disponíveis para Alugar em Portugal | Garagens.pt');
+    $metatags['description'] = (string) t('Encontre garagens e lugares de estacionamento para alugar em Portugal. Pesquise por localização, disponibilidade e período de aluguer.');
+    $filters = array_intersect_key(\Drupal::request()->query->all(), array_flip([
+      'q', 'lat', 'lng', 'radius', 'bbox_n', 'bbox_s', 'bbox_e', 'bbox_w',
+      'tipo', 'date_start', 'date_end',
+    ]));
+    if (array_filter($filters, static fn($value) => $value !== '' && $value !== NULL)) {
+      $metatags['robots'] = 'noindex, follow';
+    }
+  }
+  elseif ($detail && $node->isPublished()) {
+    $locality = $node->hasField('field_localidade') && !$node->get('field_localidade')->isEmpty()
+      ? trim((string) $node->get('field_localidade')->first()->locality) : '';
+    $place = $locality ?: (string) t('Portugal');
+    $metatags['title'] = (string) t('Garagem para Alugar em @localidade | Garagens.pt', ['@localidade' => $place]);
+    $metatags['description'] = (string) t('Garagem em @localidade para alugar. Consulte características, períodos de aluguer, disponibilidade e preço na Garagens.pt.', ['@localidade' => $place]);
+  }
+  // Normalize only our production origins, including token-based global tags.
+  foreach (['canonical_url', 'og_url', 'og_image', 'twitter_cards_image'] as $key) {
+    if (!empty($metatags[$key])) {
+      $metatags[$key] = preg_replace('~^https?://(?:www\.)?garagens\.pt(?=/|$)~i', 'https://garagens.pt', $metatags[$key]);
+    }
+  }
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function garagem_pesquisa_page_attachments(array &$attachments) {
+  $attachments['#cache']['contexts'][] = 'url.query_args';
+  $attachments['#cache']['contexts'][] = 'url.path';
+  $attachments['#cache']['contexts'][] = 'languages:language_interface';
+  if (!\Drupal::service('path.matcher')->isFrontPage()) {
+    return;
+  }
+  $data = [
+    '@context' => 'https://schema.org',
+    '@graph' => [
+      ['@type' => 'Organization', '@id' => 'https://garagens.pt/#organization', 'name' => 'Garagens.pt', 'url' => 'https://garagens.pt'],
+      ['@type' => 'WebSite', '@id' => 'https://garagens.pt/#website', 'name' => 'Garagens.pt', 'url' => 'https://garagens.pt', 'publisher' => ['@id' => 'https://garagens.pt/#organization']],
+      ['@type' => 'WebApplication', 'name' => 'Garagens.pt', 'url' => 'https://garagens.pt', 'applicationCategory' => 'LifestyleApplication', 'description' => (string) t('Plataforma para encontrar e anunciar garagens para alugar em Portugal.')],
+    ],
+  ];
+  $attachments['#attached']['html_head'][] = [
+    [
+      '#tag' => 'script',
+      '#attributes' => ['type' => 'application/ld+json'],
+      '#value' => \Drupal\Core\Render\Markup::create(json_encode($data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)),
+    ],
+    'garagem_pesquisa_schema',
+  ];
+}

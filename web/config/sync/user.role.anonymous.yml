@@ -47,7 +47,6 @@ permissions:
   - 'view any homepage content'
   - 'view any page content'
   - 'view any termos_e_condicoes content'
-  - 'view any unpublished armazem content'
   - 'view commerce_product'
   - 'view media'
   - 'view own article content'

@@ -1,0 +1,49 @@
+<?php
+
+/**
+ * @file
+ * Updates for public garage discovery.
+ */
+
+/**
+ * Apply SEO settings without importing unrelated site configuration.
+ */
+function garagem_pesquisa_update_10001() {
+  $role = \Drupal\user\Entity\Role::load('anonymous');
+  if ($role) {
+    $role->grantPermission('access content');
+    if (\Drupal::moduleHandler()->moduleExists('node_view_permissions')) {
+      $role->grantPermission('view any armazem content');
+    }
+    $role->revokePermission('view any unpublished armazem content')->save();
+  }
+  // Let Drupal rebuild grants through its normal access system, never bypass it.
+  node_access_needs_rebuild(TRUE);
+
+  $factory = \Drupal::configFactory();
+  foreach ($factory->listAll('metatag.metatag_defaults.') as $name) {
+    $factory->getEditable($name)->clear('tags.keywords')->save();
+  }
+  // Remove language overrides too, otherwise they restore legacy keywords.
+  $storage = \Drupal::service('config.storage');
+  foreach ($storage->getAllCollectionNames() as $collection) {
+    if (str_starts_with($collection, 'language.')) {
+      $localized = $storage->createCollection($collection);
+      foreach ($localized->listAll('metatag.metatag_defaults.') as $name) {
+        $data = $localized->read($name);
+        unset($data['tags']['keywords']);
+        $localized->write($name, $data);
+      }
+    }
+  }
+  if (\Drupal::moduleHandler()->moduleExists('simple_sitemap')) {
+    $factory->getEditable('simple_sitemap.settings')->set('base_url', 'https://garagens.pt')->save();
+    $config = $factory->getEditable('simple_sitemap.custom_links.default');
+    $links = $config->get('links') ?? [];
+    if (!in_array('/garagens', array_column($links, 'path'), TRUE)) {
+      $links[] = ['path' => '/garagens', 'priority' => '0.9', 'changefreq' => 'daily'];
+      $config->set('links', $links)->save();
+    }
+  }
+  return t('SEO settings updated. Rebuild node access, clear caches and regenerate the sitemap before validating anonymous URLs.');
+}
